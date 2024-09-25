@@ -1,0 +1,111 @@
+<!-- index -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance Portal</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <link rel="stylesheet" href="/style/admin attendance.css">
+    <link rel="stylesheet" href="/style/adminDashboard.css">
+    <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <a href="/home"><img src="/img/logo.png" class="icon"></a>
+            <a href="/home">
+                <div class="logo_name">Egyptian Germany College</div>
+            </a>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+
+
+            <li>
+                <a href="/admin/ShowDoctors">
+                    <i class='bx bxs-school'></i>
+                    <span class="links_name">Show Doctor</span>
+                </a>
+                <span class="tooltip">Show Doctor</span>
+            </li>
+            <li>
+                <a href="/admin/ShowTeachingAssistants">
+                    <i class='bx bx-chalkboard'></i>
+                    <span class="links_name">Show Teaching Assistant</span>
+                </a>
+                <span class="tooltip">Show Teaching Assistant</span>
+            </li>
+            <li>
+                <a href="/admin/ShowStudents">
+                    <i class='bx bx-user'></i>
+                    <span class="links_name">Show Student</span>
+                </a>
+                <span class="tooltip">Show Student</span>
+            </li>
+            <li>
+                <a href="/admin/StudentAttendance">
+                    <i class='bx bx-spreadsheet'></i>
+                    <span class="links_name">Show Student Attendance</span>
+                </a>
+                <span class="tooltip">Show Student Attendance</span>
+            </li>
+            <li>
+                <a href="/admin/ClassSchedules">
+                    <i class='bx bx-calendar'></i>
+                    <span class="links_name">Class Schedules</span>
+                </a>
+                <span class="tooltip">Class Schedules</span>
+            </li>
+            <li class="profile">
+                <div class="profile-details">
+                    <img src="/img/person1.JPG" alt="profileImg">
+                    <div class="name_email">
+                        <div class="name">Mariam Magdy</div>
+                        <div class="email">mariammagdy@gmail.com</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out"></i>
+            </li>
+        </ul>
+    </div>
+    <main>
+        <div class="container">
+            <div class="text">
+                <h3>Show Student Attendance</h3>
+            </div>
+            <div id="formSection">
+
+                <h1>Attendance</h1>
+                <label for="department">Department:</label>
+                <select id="department" name="department">
+              <option value="mechanics">Mechanics</option>
+              <option value="electronics">Electronics</option>
+              <option value="computers">Computers</option>
+            </select>
+
+                <label for="class">Class:</label>
+                <select id="class" name="class">
+              <!-- The classes will be dynamically generated based on the selected department -->
+            </select>
+
+                <ul id="students-list">
+                    <!-- The students will be dynamically generated based on the selected class and department -->
+                </ul>
+
+
+                <p id="Summaryatt"></p>
+
+
+
+            </div>
+        </div>
+    </main>
+    <script src="/script/admin attendance.js"></script>
+    <script src="/script/AdminDashboard.js"></script>
+</body>
+
+</html>

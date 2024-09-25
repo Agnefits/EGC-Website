@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Course</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <link rel="stylesheet" href="/style/edit course.css">
+</head>
+
+<body>
+    <img src="/img/arrow.png" alt="Go Back" id="goBackImage" width="20px" height="20px" onclick="goBackToCoursePage()">
+
+    <main>
+        <form id="editCourseForm" method="POST" enctype="multipart/form-data">
+            <h2>Edit Course</h2>
+            <div class="picture-course">
+                <img id="picturecourse" src="/img/images.jpeg" alt="Course Picture">
+                <label for="course_image" class="course_label">Choose Image</label>
+                <input type="file" id="course_image" name="course_image" class="course-input">
+            </div>
+
+            <div class="form-group">
+                <label for="courseName">Course Name:</label>
+                <input type="text" id="courseName" name="name" placeholder="Enter the course name" required>
+            </div>
+            <div class="form-group">
+                <label for="courseID">Course ID:</label>
+                <input type="text" id="courseID" name="courseId" placeholder="Enter the course ID" required>
+            </div>
+            <div class="form-group">
+                <label for="courseDescription">Course Description:</label>
+                <textarea id="courseDescription" name="description" rows="4" placeholder="Enter a course description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="courseHours">Hours:</label>
+                <input type="text" id="courseHours" name="hours" placeholder="Enter the course hours" required>
+            </div>
+
+            <!-- Department and Year Dropdown Filters -->
+            <div class="form-group filter-section">
+                <div class="filter-dropdown">
+                    <label for="departmentFilter">Department:</label>
+                    <select id="departmentFilter" name="department" required>
+                        <option value="">Select Department</option>
+                        <option value="IT">IT</option>
+                        <option value="Electrical">Electrical</option>
+                        <option value="Mechanical">Mechanical</option>
+                    </select>
+                </div>
+
+                <div class="filter-dropdown">
+                    <label for="yearFilter">Year:</label>
+                    <select id="yearFilter" name="year" required>
+                        <option value="">Select Year Level</option>
+                        <option value="1st">1st</option>
+                        <option value="2nd">2nd</option>
+                        <option value="3rd">3rd</option>
+                        <option value="4th">4th</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Course Details -->
+            <div class="form-group">
+                <label for="lectureAttendance">Lecture Attendance:</label>
+                <input type="text" id="lectureAttendance" name="lectureAttendance" value="0" placeholder="Enter the lecture attendance" required>
+            </div>
+            <div class="form-group">
+                <label for="sectionAttendance">Section Attendance:</label>
+                <input type="text" id="sectionAttendance" name="sectionAttendance" value="0" placeholder="Enter the section attendance" required>
+            </div>
+            <div class="form-group">
+                <label for="practicalDegree">Practical Degree:</label>
+                <input type="text" id="practicalDegree" name="practicalDegree" value="0" placeholder="Enter the practical degree" required>
+            </div>
+            <div class="form-group">
+                <label for="midtermDegree">Midterm Degree:</label>
+                <input type="text" id="midtermDegree" name="midtermDegree" value="0" placeholder="Enter the midterm degree" required>
+            </div>
+            <div class="form-group">
+                <label for="finalDegree">Final Exam Degree:</label>
+                <input type="text" id="finalDegree" name="finalExamDegree" value="0" placeholder="Enter the final exam degree" required>
+            </div>
+            <div class="form-group">
+                <label for="totalDegree">Course Total Degree:</label>
+                <input type="text" id="totalDegree" value="0" readonly>
+            </div>
+            <button type="submit" id="edit-course-btn">Edit Course</button>
+        </form>
+    </main>
+    <script src="/script/edit course.js"></script>
+</body>
+
+</html>

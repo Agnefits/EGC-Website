@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>EGC Website</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <link rel="stylesheet" href="/style/login.css">
+</head>
+
+<body>
+    <header class="login_head">
+        <div class="login_back" onclick="history.back();"><img src="/img/back.png" alt="back" width="50"></div>
+        <div class="login_icon"><img src="/img/logo.png" alt="EGC" width="50"></div>
+    </header>
+    <nav class="login_nav">
+        <form class="login_form" id="login_form" method="POST" enctype="multipart/form-data">
+            <div class="login_title">Login</div>
+            <div class="login_user_mode">
+                <input type="radio" name="login_mode" value="Admin" class="login_admin_radio" checked>
+                <input type="radio" name="login_mode" value="Staff" class="login_staff_radio">
+                <input type="radio" name="login_mode" value="Student" class="login_student_radio">
+            </div>
+            <div class="login_username_title">Username</div>
+            <input type="text" name="username" class="login_username_field">
+            <div class="login_password_title">Password</div>
+            <input type="password" name="password" class="login_password_field">
+            <img src="/img/hide_password.png" alt="show password" class="login_password_icon" height="30">
+            <button class="login_button">Login</button>
+        </form>
+    </nav>
+    <script src="/script/login.js"></script>
+</body>
+
+</html>

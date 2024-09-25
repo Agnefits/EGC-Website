@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student Attendance</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <link rel="stylesheet" href="/style/add student att.css">
+    <link rel="stylesheet" href="/style/staffDashboard.css">
+    <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="logo-details">
+            <a href="/home"><img src="/img/logo.png" class="icon"></a>
+            <div class="logo_name"><a href="/home" class="logo_style">Egyptian Germany College</a></div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+
+            <li>
+                <a href="/staff/Dashboard">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="links_name">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+                <a href="/staff/ShowCourses">
+                    <i class='bx bx-book-bookmark'></i>
+                    <span class="links_name">Courses</span>
+                </a>
+                <span class="tooltip">Courses</span>
+            </li>
+            <li>
+                <a href="/staff/ShowStudentAttendance">
+                    <i class='bx bx-spreadsheet'></i>
+                    <span class="links_name">Student Attendance</span>
+                </a>
+                <span class="tooltip">Student Attendance</span>
+            </li>
+            <li>
+                <a href="/staff/AddStudentAttendance">
+                    <i class='bx bx-spreadsheet'></i>
+                    <span class="links_name">Add Student Attendance</span>
+                </a>
+                <span class="tooltip">Add Student Attendance</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-cog'></i>
+                    <span class="links_name">Setting</span>
+                </a>
+                <span class="tooltip">Setting</span>
+            </li>
+
+            <li class="profile">
+                <div class="profile-details">
+                    <img src="/img/person1.JPG" alt="profileImg">
+                    <div class="name_email">
+                        <div class="name">Mariam Magdy</div>
+                        <div class="email">mariammagdy@gmail.com</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out"></i>
+            </li>
+        </ul>
+    </div>
+
+    <main>
+        <div class="text">
+            <h3>Add Student Attendance</h3>
+        </div>
+        <div class="container">
+            <div id="formSection">
+                <h2>Mark Attendance</h2>
+                <button id="addStudentButton" onclick="showAddStudentForm()">
+                    Add Student
+                </button>
+                <button id="addClassButton" onclick="showAddClassForm()">
+                    Add Class
+                </button>
+                <button id="addDepartmentButton" onclick="showAddDepartmentForm()">
+                    Add Department
+                </button>
+
+
+                <label for="departmentSelector">Department:</label>
+                <select id="departmentSelector" required onchange="showStudentsList()">
+                    <!-- Populate classes dynamically -->
+                </select>
+
+                <label for="classSelector">Class:</label>
+                <select id="classSelector" required onchange="showStudentsList()">
+                    <!-- Populate classes dynamically -->
+                </select>
+                <ul id="studentsList">
+                    <!-- Populate students dynamically 
+                    based on the selected class -->
+                </ul>
+
+                <div id="summarySection">
+                    <h3>Summary</h3>
+                    <p>
+                        Total Students:
+                        <span id="totalStudents">0</span>
+                    </p>
+                    <p>
+                        Total Present:
+                        <span id="totalPresent">0</span>
+                    </p>
+                    <p>
+                        Total Absent:
+                        <span id="totalAbsent">0</span>
+                    </p>
+                    <p>
+                        Total Leave:
+                        <span id="totalLeave">0</span>
+                    </p>
+                </div>
+
+                <button class="submit_att" onclick="submitAttendance()">
+                    Submit Attendance
+                </button>
+
+                <!-- Result Section -->
+                <div id="resultSection" style="display: none;">
+                    <h3>Attendance Result</h3>
+                    <p>
+                        Date:
+                        <span id="attendanceDate"></span>
+                    </p>
+                    <p>
+                        Time:
+                        <span id="attendanceTime"></span>
+                    </p>
+                    <p>
+                        Class:
+                        <span id="attendanceClass"></span>
+                    </p>
+                    <p>
+                        Total Students:
+                        <span id="attendanceTotalStudents"></span>
+                    </p>
+                    <p>
+                        Present:
+                        <span id="attendancePresent"></span>
+                    </p>
+                    <p>
+                        Absent:
+                        <span id="attendanceAbsent"></span>
+                    </p>
+                    <p>
+                        Late:
+                        <span id="attendanceLeave"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="addStudentPopup" class="popup">
+            <h2>Add Student</h2>
+            <!-- Add Student Form Content -->
+            <label for="newStudentName">
+                Student Name:
+            </label>
+            <input type="text" id="newStudentName" required>
+            <label for="newStudentRoll">
+                Roll Number:
+            </label>
+            <input type="text" id="newStudentRoll" required>
+            <!-- Add more fields as needed -->
+
+            <button onclick="addStudent()">
+                submit
+            </button>
+            <button onclick="closePopup()">
+                Cancel
+            </button>
+        </div>
+
+        <div id="addClassPopup" class="popup">
+            <h2>Add Class</h2>
+            <!-- Add Class Form Content -->
+            <label for="newClassName">
+                Class Name:
+            </label>
+            <input type="text" id="newClassName" required>
+            <!-- Add more fields as needed -->
+
+            <button onclick="addClass()">
+                Submit
+            </button>
+            <button onclick="closePopup()">
+                Cancel
+            </button>
+        </div>
+
+
+        <div id="addDepartmentPopup" class="popup">
+            <h2>Add Department</h2>
+            <!-- Add Class Form Content -->
+            <label for="newDepartmentName">
+                Department Name:
+            </label>
+            <input type="text" id="newDepartmentName" required>
+            <!-- Add more fields as needed -->
+
+            <button onclick=" addDepartment()">
+                Submit
+            </button>
+            <button onclick="closePopup()">
+                Cancel
+            </button>
+        </div>
+    </main>
+
+
+
+    <script src="/script/add stident att.js"></script>
+    <script src="/script/StaffDashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Materials</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <link rel="stylesheet" href="/style/add_material.css">
+</head>
+
+<body>
+    <form class="upload-form" id="uploadForm" method="POST" enctype="multipart/form-data">
+        <div class="container">
+            <div class="header">
+                <img src="/img/materials.png" alt="Materials Icon" class="icon">
+                <h1>Upload Materials</h1>
+            </div>
+            <div class="input-group">
+                <label for="attachment"><b>Attachment</b></label>
+                <input type="file" id="attachment" name="attachment" required>
+            </div>
+            <div class="input-group">
+                <label for="saveAs"><b>Save as</b></label>
+                <input type="text" id="saveAs" name="saveAs" placeholder="Save as" required>
+            </div>
+            <div class="input-group">
+                <label for="date"><b>Date</b></label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <div class="input-group">
+                <label for="note"><b>Note</b></label>
+                <input type="text" id="note" name="note" placeholder="Enter Note">
+            </div>
+            <div class="submit-group">
+                <button type="submit" id="upload">Upload</button>
+            </div>
+        </div>
+    </form>
+
+    <script src="/script/addmaterial.js"></script>
+</body>
+
+</html>

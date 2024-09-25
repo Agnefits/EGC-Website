@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Assignments Page</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <link rel="stylesheet" href="/style/all-assignments.css">
+    <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+</head>
+
+<body>
+       
+    
+    <div class="sidebar">
+        <div class="logo-details">
+            <a href="/home"><img src="/img/logo.png" class="icon"></a>
+            <div class="logo_name"><a href="/home" class="logo_style">Egyptian Germany College</a></div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+
+            <li>
+                <a href="/student/Dashboard">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="links_name">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+                <a href="/student/Announcements">
+                    <i class='bx bx-bell'></i>
+                    <span class="links_name">Announcements</span>
+                </a>
+                <span class="tooltip">Announcements</span>
+            </li>
+            <li>
+                <a href="/student/AllMaterials">
+                    <i class='bx bx-file'></i>
+                    <span class="links_name">Materials</span>
+                </a>
+                <span class="tooltip">Materials</span>
+            </li>
+            <li>
+                <a href="/student/AllAssignments">
+                    <i class='bx bx-task'></i>
+                    <span class="links_name">Assignments</span>
+                </a>
+                <span class="tooltip">Assignments</span>
+            </li>
+            <li>
+                <a href="/student/AllQuizzes">
+                    <i class='bx bx-file'></i>
+                    <span class="links_name">Quizzes</span>
+                </a>
+                <span class="tooltip">Quizzes</span>
+            </li>
+            <li>
+                <a href="/student/Grades">
+                    <i class='bx bx-line-chart'></i>
+                    <span class="links_name">Grades</span>
+                </a>
+                <span class="tooltip">Grades</span>
+            </li>
+            <li>
+                <a href="/student/Staff">
+                    <i class='bx bx-mail-send'></i>
+                    <span class="links_name">Contact Staff</span>
+                </a>
+                <span class="tooltip">Contact Staff</span>
+            </li>
+            <li class="profile">
+                <div class="profile-details">
+                    <img src="/img/person1.JPG" alt="profileImg">
+                    <div class="name_email">
+                        <div class="name">Mariam Magdy</div>
+                        <div class="email">mariammagdy@gmail.com</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out"></i>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="home-section">
+        <div class="text">
+            <h3>All Assignments</h3>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Search for a course...">
+            <button id="search-button">Search</button>
+        </div>
+
+        <div id="assignments-container">
+            <div class="assignment">
+                <h3>Module 3 Assignment</h3>
+                <p>Title: Meeting preparation task</p>
+                <p>Description: Prepare the necessary documents and slides for the meeting.</p>
+                <p>Due date: 08-15-2023</p>
+                <p>Status: In progress</p>
+                <p>Points: 50</p>
+                <label for="file-upload-1">Upload your assignment:</label>
+                <input type="file" id="file-upload-1" name="file-upload-1" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png,.zip">
+                <br><br>
+                <button type="submit">Submit</button>
+            </div>
+
+            <div class="assignment">
+                <h3>Module 2 Assignment</h3>
+                <p>Title: Design a website</p>
+                <p>Description: Create a responsive website with modern design principles.</p>
+                <p>Due date: 08-20-2023</p>
+                <p>Status: Not started</p>
+                <p>Points: 75</p>
+                <label for="file-upload-2">Upload your assignment:</label>
+                <input type="file" id="file-upload-2" name="file-upload-2" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png,.zip">
+                <br><br>
+                <button type="submit">Submit</button>
+            </div>
+
+            <div class="assignment">
+                <h3>Module 2 Assignment</h3>
+                <p>Title: Design a website</p>
+                <p>Description: Create a responsive website with modern design principles.</p>
+                <p>Due date: 08-20-2023</p>
+                <p>Status: Not started</p>
+                <p>Points: 75</p>
+                <label for="file-upload-2">Upload your assignment:</label>
+                <input type="file" id="file-upload-2" name="file-upload-2" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png,.zip">
+                <br><br>
+                <button type="submit">Submit</button>
+            </div>
+            <!-- Add more assignments with the same structure -->
+        </div>
+
+
+    </div>
+
+    <script src="/script/all-assignments.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+.students-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    margin-top: 20px;
+}
+
+.students-table th,
+.students-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    color: #0f2b4e;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+
+
+.added{
+    background: #0F2B4E;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    right: 10px;
+    top: 15px;
+    position: absolute
+}
+
+.checkbox{margin-left: 900px;margin-top: 50px;  font-family: "Roboto Condensed", sans-serif;font-size: 18px;  color: #1d3c62;}
+.hide{margin-left: 20px;}
+.students-table th {
+    background-color: #0f2b4e;
+    color: #fff;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.students-table tr {
+    background-color: #ffffff;
+}
+
+.details-btn {
+    cursor: pointer;
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #0f2b4e;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.details-btn.edit {
+    background-color: #28a745;
+}
+
+.details-btn.delete {
+    background-color: #dc3545;
+}
+
+.search-bar {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar input {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #0f2b4e;
+}
+
+.search-bar .search-btn {
+    padding: 10px 15px;
+    margin-left: 10px;
+    background-color: #0f2b4e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+
+#selection{margin-top: 70px;}
+ #department{
+    margin-left: 250px;
+     background-color: #0f2b4e;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    text-align: center;
+}
+
+ #yearlevel{
+    margin-left: 200px;
+    background-color: #0f2b4e;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    text-align: center;
+}
+
+ #n_section{
+    margin-left: 200px;
+    background-color: #0f2b4e;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    text-align: center;
+}
+option{background-color: #fff;color:#000000;}

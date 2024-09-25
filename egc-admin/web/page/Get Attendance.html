@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Students Attendance Sheet</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/style/Get Attendance.css">
+    <link rel="stylesheet" href="/style/staffDashboard.css">
+    <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <a href="/home"><img src="/img/logo.png" class="icon"></a>
+            <div class="logo_name"><a href="/home" class="logo_style">Egyptian Germany College</a></div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+
+            <li>
+                <a href="/staff/Dashboard">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="links_name">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+                <a href="/staff/ShowCourses">
+                    <i class='bx bx-book-bookmark'></i>
+                    <span class="links_name">Courses</span>
+                </a>
+                <span class="tooltip">Courses</span>
+            </li>
+            <li>
+                <a href="/staff/ShowStudentAttendance">
+                    <i class='bx bx-spreadsheet'></i>
+                    <span class="links_name">Student Attendance</span>
+                </a>
+                <span class="tooltip">Student Attendance</span>
+            </li>
+            <li>
+                <a href="/staff/AddStudentAttendance">
+                    <i class='bx bx-spreadsheet'></i>
+                    <span class="links_name">Add Student Attendance</span>
+                </a>
+                <span class="tooltip">Add Student Attendance</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-cog'></i>
+                    <span class="links_name">Setting</span>
+                </a>
+                <span class="tooltip">Setting</span>
+            </li>
+
+            <li class="profile">
+                <div class="profile-details">
+                    <img src="/img/person1.JPG" alt="profileImg">
+                    <div class="name_email">
+                        <div class="name">Mariam Magdy</div>
+                        <div class="email">mariammagdy@gmail.com</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out"></i>
+            </li>
+        </ul>
+    </div>
+    <main>
+        <div class="content">
+            <div class="text">
+                <h3>Student Attendance</h3>
+            </div>
+            <table class="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Roll Number <i class='bx bx-chevron-down'></i></th>
+                        <th>Student Name <i class='bx bx-chevron-down'></i></th>
+                        <th>Department <i class='bx bx-chevron-down'></i></th>
+                        <th>Class <i class='bx bx-chevron-down'></i></th>
+                        <th>Present <i class='bx bx-chevron-down'></i></th>
+                        <th>Absent <i class='bx bx-chevron-down'></i></th>
+                        <th>Late <i class='bx bx-chevron-down'></i></th>
+                        <th>Percentage <i class='bx bx-chevron-down'></i></th>
+
+                        <!-- <th>Edit</th> -->
+                    </tr>
+                </thead>
+
+                <tbody id="attendanceTableBody">
+                    <!-- Rows will be dynamically added here -->
+                </tbody>
+            </table>
+            <div class="attendance-summary" id="attendanceSummary">
+                <!-- Summary will be dynamically added here -->
+            </div>
+        </div>
+    </main>
+
+    <script src="/script/StaffDashboard.js"></script>
+    <script src="/script/add stident att.js"></script>
+    <script src="/script/Get Attendance.js"></script>
+</body>
+
+</html>

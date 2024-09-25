@@ -1,0 +1,169 @@
+.content {
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+.btnAddClass {
+    position: absolute;
+}
+
+.btnAddClass {
+    background: #0F2B4E;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    right: 10px;
+    top: 15px;
+    position: absolute;
+}
+
+
+/* Style the filter dropdowns */
+
+.filter-section {
+    display: flex;
+    justify-content: center;
+    /* Align items to the left */
+    align-items: center;
+    /* Vertically center the dropdowns */
+    gap: 20px;
+    /* Add spacing between the dropdowns */
+    margin-bottom: 20px;
+}
+
+.filter-dropdown {
+    display: inline-block;
+}
+
+.filter-dropdown select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    width: 150px;
+    background-color: #0F2B4E;
+    color: #fefefe;
+}
+
+.filter-dropdown select:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.filter-dropdown select:focus option {
+    background-color: white;
+    /* Ensures white background on focus too */
+    color: #0F2B4E;
+}
+
+.scedule {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 0px 25px 0px 25px;
+}
+
+table {
+    margin-top: 10px;
+    width: 100%;
+    font-family: "Roboto Condensed", sans-serif;
+    border-collapse: collapse;
+    height: 700px;
+}
+
+thead th {
+    width: 8.3%;
+    font-weight: 600;
+    color: #333;
+    text-align: start;
+}
+
+.scedule td {
+    padding: 14px 0px 14px 0px;
+    text-align: center;
+}
+
+table tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.popup {
+    margin: -10px -5px;
+    padding-top: 1%;
+    background-color: rgba(30, 30, 30, .5);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    visibility: hidden;
+}
+
+.add-class {
+    position: relative;
+    background-color: #fff;
+    /* White background for form */
+    border-radius: 15px;
+    padding: 20px;
+    width: 600px;
+    /* Adjust width as needed */
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow effect */
+}
+
+.add-class>h2 {
+    font-size: 26px;
+    color: #0F2B4E;
+    font-weight: 600;
+}
+
+.add-class form input,
+.add-class form select,
+.add-class form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.add-class form label {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+#add-class-button {
+    background-color: rgb(42, 165, 232);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+}
+
+label {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#close-add-class-button {
+    background: #0F2B4E;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    border: none;
+    right: 10px;
+    top: 15px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <link rel="stylesheet" href="/style/quiz_details.css">
+    <title>Quiz Details</title>
+</head>
+
+<body>
+
+    <div class="nav">
+        <button class="back-button" onclick="goBack()">Back</button>
+        <h1>Quiz Details</h1>
+    </div>
+    <div class="quiz" id="quizzesContainer">
+        <div class="main-card">
+            <div class="card-left">
+                <div class="menu-icon" onclick="toggleDropdown(quizData.id)">&#x2022;&#x2022;&#x2022;</div>
+                <div>
+                    <div id="date"></div>
+                    <div id="questions"></div>
+                    <div id="degree"></div>
+                    <div id="deadline"></div>
+                </div>
+            </div>
+            <div class="card-right">
+                <div class="card-info">
+                    <div class="quizTitle" id="title"></div>
+                    <div class="instructorName" id="instructor"></div>
+                </div>
+                <img class="icon" src="/img/file_icon.png" alt="icon">
+            </div>
+            <div id="dropdown" class="dropdown-content2">
+                <a href="#" class="edit" onclick="editQuiz(quizData[0].id)">Edit</a>
+                <a href="#" class="delete" onclick="deleteQuiz(quizData[0].id)">Delete</a>
+            </div>
+        </div>
+        <h2>Student Attempts</h2>
+    </div>
+    <script src="/script/quiz_details.js"></script>
+</body>
+
+</html>

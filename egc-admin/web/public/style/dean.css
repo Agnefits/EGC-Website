@@ -1,0 +1,60 @@
+* {
+    font-family: "Roboto Condensed", sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+.dean {
+    /* padding: 2rem; */
+    box-sizing: border-box;
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+}
+
+
+/* .dean .line {
+    width: 6px;
+    height: 70px;
+    background-color: rgb(42, 165, 232);
+    position: absolute;
+    margin-left: 45px;
+    margin-top: 30px;
+} */
+
+.dean h2 {
+    color: #0F2B4E;
+    /*padding: 50px;
+    padding-top: 30px;
+    padding-bottom: 10px;
+    font-size: 4vw;
+    margin-top: 1px;
+    margin-left: 25px; */
+}
+
+.dean .content {
+    display: flex;
+    align-items: center;
+    /* margin-bottom: 5rem; */
+}
+
+.dean .content .dean_text {
+    color: #0F2B4E;
+    font-size: 2vw;
+    line-height: 1.5;
+    padding-left: 60px;
+    flex: 1;
+}
+
+.dean .content .image {
+    text-align: center;
+    flex: 1;
+}
+
+.dean .content img {
+    max-width: 70%;
+    height: auto;
+    border-radius: 3.5vw;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-width: 3px;
+    border-style: solid;
+    border-color: #0F2B4E;
+}

@@ -1,0 +1,30 @@
+/* .linne {
+    width: 6px;
+    height: 60px;
+    background-color: rgb(42, 165, 232);
+    position: absolute;
+    margin-left: 50px;
+    margin-top: 120px;
+} */
+
+.header2 h2 {
+    /* padding: 50px;
+    font-size: 3vw;
+    margin-top: 60px;
+    margin-left: 25px; */
+    color: #0F2B4E;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+div.container2 {
+    overflow: auto;
+    white-space: nowrap;
+    max-width: 1100px;
+    margin: auto;
+    padding: 10px;
+}
+
+div.container2 img {
+    padding: 5px;
+    scroll-snap-align: center;
+}

@@ -1,0 +1,165 @@
+body {
+    font-family: "Roboto Condensed", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    /* Light gray background */
+}
+
+main {
+    padding: 50px;
+}
+
+.add-doctor {
+    background-color: #fff;
+    /* White background for form */
+    border-radius: 15px;
+    padding: 20px;
+    width: 600px;
+    /* Adjust width as needed */
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow effect */
+}
+
+.add-doctor>h2 {
+    font-size: 26px;
+    color: #0F2B4E;
+    font-weight: 600;
+}
+
+.profile-picture {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.profile-picture img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: -5px 5px 10px gray;
+    margin-right: 20px;
+}
+
+.add-doctor form input,
+.add-doctor form select,
+.add-doctor form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.add-doctor form label {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+#add-doctor-button {
+    background-color: rgb(42, 165, 232);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+}
+
+#added-fields {
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
+#scientific-fields {
+    width: 93%;
+}
+
+#add-scientific-field {
+    height: 100%;
+    width: 6%;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.scientific-field {
+    background-color: #eee;
+    padding: 5px 15px;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 5px;
+}
+
+.delete-scientific-field {
+    float: right;
+    font-size: 12px;
+    position: relative;
+    right: -10px;
+    padding: 2px 5px;
+    background-color: red;
+    color: white;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+label {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#profilePicUpload {
+    visibility: hidden;
+}
+
+
+/*.btnProfilePicUpload {
+    background-color: #4CAF50;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    width: 170px;
+}*/
+
+.btnProfilePicUpload {
+    text-wrap: nowrap;
+    display: inline-block;
+    padding: 0.5em 1em;
+    background-color: rgb(42, 165, 232);
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btnCvUpload {
+    background-color: #4CAF50;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    width: 97%;
+    text-align: center;
+}
+
+#showPassword {
+    width: max-content;
+}
+
+.lblShowPassword {
+    font-weight: lighter;
+}

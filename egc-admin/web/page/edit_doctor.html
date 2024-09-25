@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Doctor</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <link rel="stylesheet" href="/style/edit_doctor.css">
+</head>
+
+<body>
+    <header>
+    </header>
+    <main>
+        <section class="add-doctor">
+            <h2>Edit Doctor</h2>
+            <form id="UploadDoctorForm" method="POST" enctype="multipart/form-data">
+
+                <div class="profile-picture">
+                    <img id="picture" src="/img/professor.png" alt="Doctor Profile Picture">
+                    <label for="profilePicUpload" class="btnProfilePicUpload">Choose Image</label>
+                    <input type="file" id="profilePicUpload" name="picture" accept="image/*">
+                </div>
+                <div class="personal-info">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter Doctor's Name">
+                    <!--
+                        <label for="qualification">Qualification:</label>
+                        <input type="text" id="qualification" name="qualification" required placeholder="Enter Doctor's Qualification">
+                    -->
+                </div>
+                <div class="contact-details">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter Doctor's Email">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="Enter Phone Number">
+                </div>
+                <div class="user-details">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required placeholder="Enter Doctor's Username">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[!@#$%^&*]).{8,20}" title="Must contain at least one number , lowercase letter, a special character and at least 8 or more characters">
+
+                    <input type="checkbox" id="showPassword">
+                    <label for="showPassword" class="lblShowPassword">Show Password</label>
+                </div>
+                <div class="major">
+                    <label for="major">Major:</label>
+                    <select id="major" name="major" required>
+                        <option value="General">General</option>
+                        <option value="IT">Information Technology</option>
+                        <option value="Elec">Electrica</option>
+                        <option value="Mech">Mechanic</option>
+                    </select>
+                    <label for="cv">CV:</label>
+                    <input type="file" id="cvUpload" name="cvUpload" accept="application/pdf">
+                </div>
+                <button type="submit" id="add-doctor-button">Save Changes</button>
+            </form>
+        </section>
+
+    </main>
+    <footer>
+    </footer>
+    <script src="/script/edit_doctor.js"></script>
+</body>
+
+</html>

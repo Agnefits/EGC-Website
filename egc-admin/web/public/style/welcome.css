@@ -1,0 +1,41 @@
+.line {
+    width: 6px;
+    height: 150px;
+    background-color: rgb(42, 165, 232);
+    position: absolute;
+    margin-left: 45px;
+    margin-top: 9px;
+}
+
+.contant h2 {
+    color: #0F2B4E;
+    /*font-size: 3vw;
+     margin-top: 85px; 
+    margin-left: 60px;*/
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+div.cardes div {
+    width: 26vw;
+    height: 12vw;
+    padding: 1vw 0;
+    display: flex;
+    align-items: center;
+    border-radius: 3vw;
+    background-color: #0F2B4E;
+    color: white;
+    margin-left: 5vw;
+    margin-top: 3vh;
+    float: left;
+}
+
+.contant p {
+    font-size: 2vw;
+    font-family: "Roboto Condensed", sans-serif;
+    text-align: center;
+}
+
+.contant img {
+    width: 30%;
+    margin: 0 10%;
+}

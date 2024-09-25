@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Quiz</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <link rel="stylesheet" href="/style/edit_quiz.css">
+</head>
+
+<body>
+    <main>
+        <section class="edit-quiz">
+            <h2>Edit Quiz</h2>
+            <form id="editQuizForm" method="POST" enctype="multipart/form-data">
+                <div id="container">
+                    <br><br>
+                    <label class="l">Title</label>
+                    <input id="title" name="title" type="text" required placeholder="Quiz Title" style="width:95%; height: 30px;  margin-left: 25px;" required><br><br>
+                    <label class="l">DeadLine</label>
+                    <input id="deadline" name="deadline" type="date" required style=" width:95%; height: 30px;margin-left: 25px;" required>
+
+                </div>
+
+                <button id="add-question">
+                    <h5>Add Quisetion</h5>
+                </button>
+                <button class="upload">
+                    <h5>Edit Quiz</h5>
+                </button>
+            </form>
+        </section>
+    </main>
+
+
+
+    <script src="/script/editQuiz.js"></script>
+</body>
+
+</html>

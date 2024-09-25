@@ -1,0 +1,95 @@
+/* Side navigation panel style */
+
+.sidenav {
+    height: 100%;
+    /* Full-height */
+    width: 0;
+    /* 0 width - change this with JavaScript */
+    position: fixed;
+    /* Stay in place */
+    z-index: 150;
+    /* Stay on top */
+    top: 0;
+    /* Stay at the top */
+    right: 0;
+    /* Slide from the right */
+    background-color: #0F2B4E;
+    /* Black */
+    border-left: 0.5vw solid rgb(42, 165, 232);
+    /* Grey border */
+    overflow-x: hidden;
+    /* Disable horizontal scroll */
+    transition: 0.7s;
+    /* Smooth slide in/out transition */
+    padding-top: 60px;
+    /* Place content 60px from the top */
+    border-radius: 2vw 0 0 2vw;
+    /* Rounded corners on the left side */
+}
+
+
+/* The navigation menu links */
+
+.sidenav a {
+    padding: 1vw 1vw 1vw 3vw;
+    /* Padding */
+    text-decoration: none;
+    /* No underline */
+    font-size: 1.8vw;
+    /* Font size */
+    color: #ccc;
+    /* Light grey color */
+    display: block;
+    /* Display block to fill the whole space */
+    transition: color 0.5s ease-in-out;
+    /* Color change transition */
+    text-wrap: nowrap;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+
+/* Change color on hover */
+
+.sidenav a:hover {
+    color: #f1f1f1;
+    /* Lighter grey color */
+}
+
+
+/* The close button */
+
+.closebtn {
+    position: absolute;
+    top: -0.2vw;
+    left: -1.5vw;
+    /* Position to the left */
+    font-size: 36px;
+}
+
+
+/* Button to open the side navigation */
+
+.popup-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 30px;
+    /* Position to the left */
+    z-index: 2;
+    /* Sit on top */
+    border-radius: 1.5vw;
+    /* Rounded corners */
+    padding: 10px 20px;
+    /* Padding */
+    font-size: 18px;
+    /* Font size */
+    transition: background-color 0.3s;
+    /* Background color transition */
+}
+
+
+/* Change button color on hover */
+
+.popup-btn:hover {
+    background-color: #555;
+    /* Darker background color */
+}

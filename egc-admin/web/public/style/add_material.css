@@ -1,0 +1,86 @@
+body {
+  font-family: "Roboto Condensed", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+  }
+  
+  .upload-form {
+    padding: 23px;
+    background-color: #ffffff;
+    margin: 4% auto;
+    width: 40%;
+    box-shadow: 0 10px 10px rgba(5, 5, 5, 0.1);
+    border-radius: 15px;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .header .icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  
+  .header h1 {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  .input-group {
+    margin-bottom: 15px;
+  }
+  
+  .input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .input-group input[type="text"],
+  .input-group input[type="date"],
+  .input-group input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    box-sizing: border-box;
+  }
+  
+  .input-group input[type="text"]:focus,
+  .input-group input[type="date"]:focus,
+  .input-group input[type="file"]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+  
+  .submit-group {
+    text-align: center;
+  }
+  
+  .submit-group button {
+    background-color: #42a5f5;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .submit-group button:hover {
+    background-color: #1e88e5;
+  }
+  

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <link rel="stylesheet" href="/style/staff.css">
+    <!-- <link rel="stylesheet" href="/css/nav.css"> -->
+    <link rel="stylesheet" href="/style/staffDashboard.css">
+    <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="logo-details">
+            <a href="/index.html?privilage=Staff"><img src="/img/logo.png" class="icon"></a>
+            <div class="logo_name">Egyptian Germany College</div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+
+            <li>
+                <a href="Dashboard.html">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="links_name">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+                <a href="course.html">
+                    <i class='bx bx-book-bookmark'></i>
+                    <span class="links_name">Courses</span>
+                </a>
+                <span class="tooltip">Courses</span>
+            </li>
+            <li>
+                <a href="Get Attendance.html">
+                    <i class='bx bx-spreadsheet'></i>
+                    <span class="links_name">Student Attendance</span>
+                </a>
+                <span class="tooltip">Student Attendance</span>
+            </li>
+            <li>
+                <a href="add student att.html">
+                    <i class='bx bx-spreadsheet'></i>
+                    <span class="links_name">Add Student Attendance</span>
+                </a>
+                <span class="tooltip">Add Student Attendance</span>
+            </li>
+     
+
+            <li class="profile">
+                <div class="profile-details">
+                    <img src="/img/person1.JPG" alt="profileImg">
+                    <div class="name_email">
+                        <div class="name">Mariam Magdy</div>
+                        <div class="email">mariammagdy@gmail.com</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out"></i>
+            </li>
+        </ul>
+    </div>
+
+    <main>
+        <div class="text">
+            <h3>Students</h3>
+        </div>
+        <section class="staff">
+            <div class="column">
+                <img class="im" src="/img/img1.jfif">
+                <div class="icon"> <img class="img" src="/img/email1.png"></div>
+                <h3>Ph.D Mohamed Rafat</h3>
+                <p>Developer and Lead Instructor</p>
+            </div>
+            <div class="column">
+                <img class="im" src="/img/img2.jpg">
+                <div class="icon"> <img class="img" src="/img/email1.png"></div>
+                <h3>Ph.D Rania Mahmoud</h3>
+                <p>Developer and Lead Instructor</p>
+            </div>
+            <div class="column">
+                <img class="im" src="/img/img3.jfif">
+                <div class="icon"> <img class="img" src="/img/email1.png"></div>
+                <h3>Ph.D Hassan Mustafa</h3>
+                <p>Developer and Lead Instructor</p>
+            </div>
+            <div class="column">
+                <img class="im" src="/img/img1.jfif">
+                <div class="icon"> <img class="img" src="/img/email1.png"></div>
+                <h3>Ph.D Mohamed Rafat</h3>
+                <p>Developer and Lead Instructor</p>
+            </div>
+            <div class="column">
+                <img class="im" src="/img/img2.jpg">
+                <div class="icon"> <img class="img" src="/img/email1.png"></div>
+                <h3>Ph.D Rania Mahmoud</h3>
+                <p>Developer and Lead Instructor</p>
+            </div>
+            <div class="column">
+                <img class="im" src="/img/img3.jfif">
+                <div class="icon"> <img class="img" src="/img/email1.png"></div>
+                <h3>Ph.D Hassan Mustafa</h3>
+                <p>Developer and Lead Instructor</p>
+            </div>
+        </section>
+
+    </main>
+    <script src="/script/StaffDashboard.js"></script>
+    <script>
+        document.getElementsByClassName("btnJoinInstructor")[0].addEventListener("click", (e) => {
+            e.preventDefault();
+            window.location.href = "join.html";
+        });
+    </script>
+</body>
+
+</html>

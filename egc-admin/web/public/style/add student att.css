@@ -1,0 +1,139 @@
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    border-radius: 20px;
+}
+
+.container {
+    background-color: #fff;
+    /* White background for form */
+    border-radius: 15px;
+    padding: 20px;
+    width: 600px;
+    /* Adjust width as needed */
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow effect */
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+h2 {
+    color: #333;
+    font-family:"Libre Baskerville", serif;
+}
+h3{
+    font-family:"Libre Baskerville", serif;
+}
+
+label {
+    margin-top: 10px;
+    display: block;
+}
+
+select {
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    width: 250px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+main li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #ecf0f1;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+strong {
+    margin-right: 10px;
+    flex-basis: auto;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+button {
+    padding: 8px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    border-radius: 20px;
+}
+
+button.absent,
+button.present,
+button.leave {
+    background-color: #0F2B4E;
+    
+}
+
+button {
+    background-color: rgb(42, 165, 232);
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+
+/* Responsive styles for mobile view */
+
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+}
+
+.submit_att {
+    background-color: rgb(42, 165, 232);
+    /* Green button */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+}
+
+#resultSection {
+    margin-top: 20px;
+}
+
+#resultSection h3 {
+    margin-top: 10px;
+}
+
+#resultSection p {
+    margin-bottom: 5px;
+}
+
+#resultSection span {
+    font-weight: bold;
+}

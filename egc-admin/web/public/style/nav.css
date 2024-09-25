@@ -1,0 +1,168 @@
+body {
+    background: #f0f1f6;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+.nav {
+    display: flex;
+    flex-direction: row-reverse; /* Reverse the order of the flex items */
+    justify-content: space-between; /* Space between ul and nav-items */
+    align-items: center; /* Center items vertically */
+    position: fixed;
+    width: 100%;
+    background-color: none; /* Add background if needed */
+    z-index: 100; /* Ensure it's on top */
+}
+
+.ul {
+    display: flex; /* Use flex for the ul */
+    list-style-type: none;
+    margin-top: 13px;
+    margin-left: -10px;
+    margin-right: 10px;
+}
+
+.ul li {
+    padding-right: 70px;
+}
+
+.nav-items {
+    display: flex;
+    align-items: center; /* Align items vertically */
+}
+
+#goBackImage {
+    margin-right: 20px; /* Space between elements */
+}
+
+.name_c {
+    color: #0F2C4E;
+    font-size: 30px;
+    font-weight: bold;
+    margin-right: 5px; /* Reduced space */
+    margin-left: 15px; /* Adjust for slight right shift */
+}
+
+.log img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: -5px 5px 10px gray;
+}
+
+
+
+a {
+    text-decoration: none;
+    color: #0F2B4E;
+    font-size: 20px;
+    padding: 20px;
+    font-weight: bold;
+}
+
+
+/* body {
+    font-family: "Roboto Condensed", sans-serif;
+} */
+
+.container {
+    position: absolute;
+    width: 600px;
+    margin: 10% 25%;
+    padding: 20px; /* Add padding inside the container */
+    background-color: white; /* Light background color */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    color: #0F2B4E;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px; /* Increased font size */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin-bottom: 15px; /* Increased margin */
+    border-radius: 15px; /* Rounded edges */
+}
+
+.button {
+    background-color: rgb(42, 165, 232);
+    color: white;
+    padding: 10px 30px;
+    margin-bottom: 20px;
+    border: none;
+    width: 100%; /* Full width */
+    font-size: 17px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 15px; /* Rounded corners */
+    font-weight:bold;
+}
+
+.button:hover {
+    background-color: #0F2B4E; /* Darker on hover */
+}
+
+#messages-container {
+    margin-top: 20px;
+}
+
+.message {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.file-preview {
+    margin-bottom: 10px;
+    border: 1px solid #ddd; /* Light border for file previews */
+    padding: 10px; /* Padding around file previews */
+    border-radius: 15px; /* Rounded edges */
+}
+
+.file-preview img {
+    max-width: 100%;
+    height: auto;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px; /* Space between file items */
+}
+
+.file-item a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: #0F2B4E;
+    font-size: 18px; /* Slightly smaller font */
+    font-weight: bold;
+}
+
+
+
+/* .link{
+  text-decoration:none;
+  color:#0F2C4E;
+  font-size: 20px;
+  padding: 20px;
+  padding-left: 50px;
+  margin-top: -20px;
+  font-weight: bold;
+} */

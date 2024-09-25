@@ -1,0 +1,126 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    transform: translate(0);
+    height: 100vh;
+    background: linear-gradient(to right, rgba(16, 42, 79, 0.75), rgb(16, 42, 79) 20%, rgb(16, 42, 79) 80%, rgba(16, 42, 79, 0.75)), url("/img/login_background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, 100% 100%;
+}
+
+.login_head div {
+    position: absolute;
+    float: left;
+    margin: 20px;
+}
+
+.login_icon {
+    right: 0;
+}
+
+.login_nav {
+    display: flex;
+    height: 80vh;
+    width: fit-content;
+    align-items: center;
+    padding-top: 100px;
+    margin: auto;
+}
+
+.login_title {
+    font-family: "Libre Baskerville", serif;
+    font-size: 4rem;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    text-align: start;
+    margin-bottom: 8vh;
+}
+
+.login_title::before {
+    content: "";
+    position: relative;
+    display: inline-block;
+    height: 85px;
+    width: 6px;
+    right: 20px;
+    background-color: rgb(42, 165, 232);
+}
+
+.login_user_mode,
+.login_form {
+    width: 100%;
+}
+
+.login_user_mode {
+    margin-bottom: 20vh;
+}
+
+.login_user_mode>input {
+    appearance: none;
+    display: block;
+    width: 120px;
+    margin: 0 20px;
+    height: 50px;
+    float: left;
+}
+
+.login_user_mode>input,
+.login_username_title,
+.login_password_title,
+.login_username_field,
+.login_password_field,
+.login_button {
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+    color: white;
+}
+
+.login_admin_radio::before {
+    content: "Admin";
+}
+
+.login_staff_radio::before {
+    content: "Staff";
+}
+
+.login_student_radio::before {
+    content: "Student";
+}
+
+.login_user_mode>input:checked {
+    border-bottom: 3px solid white;
+}
+
+.login_username_title,
+.login_password_title {
+    text-align: start;
+    margin: 2vh 0;
+}
+
+.login_username_field,
+.login_password_field {
+    background: transparent;
+    border: 3px solid rgb(42, 165, 232);
+    border-radius: 25px;
+    text-align: start;
+    padding: 5px 15px;
+    width: 400px;
+}
+
+.login_password_icon {
+    transform: translate(-50px, 2px);
+}
+
+.login_button {
+    display: flex;
+    margin: 5vh 130px;
+    background-color: rgb(42, 165, 232);
+    border-radius: 25px;
+    padding: 10px 50px;
+}

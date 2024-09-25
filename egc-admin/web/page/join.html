@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Instructor</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <link rel="stylesheet" href="/style/join.css">
+</head>
+
+<body>
+    <img src="/img/arrow.png" alt="Go Back" id="goBackImage" width="20px" height="20px" onclick="goBackToCoursePage()">
+    <form class="join-Student">
+        <div class="container">
+            <h1>Join Instructor</h1>
+            <div class="profile-picture">
+                <img src="/img/pictur.jpg">
+            </div>
+            <br>
+            <hr><br>
+            <label for="Username"><b>Username </b></label>
+            <input type="text" placeholder="Enter Username" required>
+            <label for="Address"><b>Address </b></label>
+            <input type="text" placeholder="Enter Address" required>
+            <label for="Department"><b>Department</b></label><br>
+            <select name="Department" id="Department" required>
+            <option value="Information Technology">Information Technology</option>
+            <option value="Electricity">Electricity</option>
+            <option value="Mechanics">Mechanics</option>
+          </select>
+
+            <label for="Year"><b>Year Level</b></label><br>
+            <select name="Year" id="Year" required>
+            <option value="TSS 1st Year">TSS 1st Year</option>
+            <option value="TSS 2st Year">TSS 2st Year</option>
+            <option value="TSS 3st Year">TSS 3st Year</option>
+            <option value="ITC 1st Year">ITC 1st Year</option>
+            <option value="ITC 2st Year">ITC 2st Year</option>
+            <option value="ATC 1st Year">ATC 1st Year</option>
+            <option value="ATC 2st Year">ATC 2st Year</option>
+          </select>
+
+            <div class="submit">
+                <button type="submit" id="join">Join Instructor</button>
+            </div>
+        </div>
+    </form>
+    </body>
+    <script>
+        function goBackToCoursePage() {
+    window.location.href = '/staff/Course/TeachingAssistants';
+}
+    </script>
+
+</html>

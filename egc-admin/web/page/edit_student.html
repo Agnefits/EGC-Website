@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <link rel="stylesheet" href="/style/edit_student.css">
+</head>
+
+<body>
+    <main>
+        <form id="updatestudentForm" method="POST" enctype="multipart/form-data">
+            <h2>Edit Student</h2>
+            <div class="profile-picture-student">
+                <img id="picture" src="/img/studentpic.JPG" alt="Student Profile Picture">
+                <label for="student_image" class="image_label">Choose Image</label>
+                <input type="file" id="student_image" name="picture" class="image-input" accept="image/*">
+            </div>
+            <div class="student_name">
+                <div class="firstname">
+                    <label for="firstname">First Name:</label>
+                    <input type="text" id="firstname" name="firstname" placeholder="First Name" required>
+                </div>
+                <div class="lastname">
+                    <label for="lastname">Last Name:</label>
+                    <input type="text" id="lastname" name="lastname" placeholder="Last Name" required>
+                </div>
+            </div>
+            <div class="student_info">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter Username" required>
+                <div class="show-password">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Enter Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[!@#$%^&*]).{8,20}" title="Must contain at least one number, lowercase letter, a special character, and be at least 8 characters long" required>
+                    <input type="checkbox" onclick="togglePassword()">
+                    <label for="showPassword" class="lblShowPassword">Show Password</label>
+                </div>
+                <label for="nationalId">National Identity:</label>
+                <input type="text" id="national_id" name="national_id" placeholder="Enter National Identity" pattern="\d{14}" title="Must contain 14 digits" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter Email" required>
+                <label for="phone_no">Phone Number:</label>
+                <input type="text" id="phone_no" name="phone_no" placeholder="Enter Phone Number" pattern="\d{11}" title="Must contain 11 digits" required>
+                <label>Gender:</label>
+                <div id="gender-radio">
+                    <input type="radio" id="male" name="gender" value="male" class="gender" required>
+                    <label for="male" class="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="female" class="gender" required>
+                    <label for="female" class="female">Female</label>
+                </div>
+                <div class="department-year-format">
+                    <div class="Dep-Year">
+                        <label for="department">Department:</label>
+                        <select id="department" name="department" required>
+                    <option value="IT">Information Technology</option>
+                    <option value="Mechanic">Mechanic</option>
+                    <option value="Electrical">Electrical</option>
+                </select>
+                    </div>
+                    <div class="Dep-Year">
+                        <label for="yearlevel">Year Level:</label>
+                        <select id="yearlevel" name="year_level" required>
+                    <option value="1st">1st Year</option>
+                    <option value="2nd">2nd Year</option>
+                    <option value="3rd">3rd Year</option>
+                    <option value="4th">4th Year</option>
+                </select>
+                    </div>
+                </div>
+                <div class="list-format">
+                    <div class="list">
+                        <label for="No_list">Number:</label>
+                        <input type="text" name="No_list" id="No_list" value="15" readonly>
+                    </div>
+                    <div class="list">
+                        <label for="No_section">Section:</label>
+                        <input type="text" name="No_section" id="No_section" value="Section 2" readonly>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" id="add-student-btn">Save Changes</button>
+        </form>
+    </main>
+    <script src="/script/edit_student.js" defer></script>
+</body>
+
+</html>
