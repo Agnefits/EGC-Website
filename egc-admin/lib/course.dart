@@ -83,14 +83,6 @@ class DatabaseHelper {
       ...(image != null ? [image] : []),
       id,
     ];
-
-    statement.execute(data);
-    statement.dispose();
-
-    if (image != null && image.isNotEmpty) {
-      data.add(image);
-    }
-    data.add(id);
     statement.execute(data);
     statement.dispose();
   }
