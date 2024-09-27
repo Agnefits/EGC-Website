@@ -19,12 +19,12 @@ body {
     display: flex; /* Use flex for the ul */
     list-style-type: none;
     margin-top: 13px;
-    margin-left: 200px;
+    margin-left: 400px;
     margin-right: -10px;
 }
 
 .ul li {
-    padding-right: 50px;
+    padding-right: 10px;
     margin-top: 20px;
 }
 
