@@ -70,6 +70,33 @@ class DatabaseHelper {
     statement.dispose();
   }
 
+
+  static List<Map<String, dynamic>> getAllQuizzes(String studentId) {
+final results = _db.select(
+  'SELECT Q.id, Q.title, Q.date, Q.deadline, '
+  'CASE WHEN Q.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor '
+  'FROM quizzes Q '
+  'LEFT JOIN doctors D ON Q.doctorId = D.id '
+  'LEFT JOIN teaching_assistants T ON Q.teaching_assistantId = T.id '
+  'WHERE Q.courseId IN ('
+  'SELECT C.id FROM courses C '
+  'WHERE C.department = (SELECT department FROM students WHERE id = ?) '
+  'AND C.year = (SELECT year_level FROM students WHERE id = ?))',
+  [studentId, studentId]
+);
+
+    return results
+        .map((row) => {
+              'id': row['id'],
+              'title': row['title'],
+              'date': row['date'],
+              'deadline': row['deadline'],
+              'instructor': row['instructor'],
+            })
+        .toList();
+  }
+
+
   static List<Map<String, dynamic>> getQuizzes(String courseId) {
     final results = _db.select(
         'SELECT Q.id, Q.title, Q.date, Q.deadline, CASE WHEN Q.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor FROM quizzes Q LEFT JOIN doctors D ON Q.doctorId = D.id LEFT JOIN teaching_assistants T ON Q.teaching_assistantId = T.id WHERE Q.courseId = $courseId');
@@ -165,6 +192,25 @@ class Quiz {
   void main() async {
     // تهيئة قاعدة البيانات
     DatabaseHelper.init();
+
+    router.get('/quizzes/<studentId>',
+        (Request request, String studentId) async {
+      try {
+        final quizzes = DatabaseHelper.getAllQuizzes(studentId);
+        final jsonQuizzes = jsonEncode(quizzes);
+        return Response.ok(
+          jsonQuizzes,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        );
+      } catch (e) {
+        print(e);
+        return Response.internalServerError(body: 'Error: $e');
+      }
+    });
+
 
     // عرض كويز
     router.get('/courses-quizzes/<courseId>',
