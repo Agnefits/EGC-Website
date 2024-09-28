@@ -88,7 +88,7 @@ void main() async {
 
   //Course
   router.get('/staff/Course/', getCourseHomeHandler);
-  router.post('/insertStudentDegrees', insertStudentDegrees);
+  router.post('/staff/Course/grades', insertStudentDegrees);
   router.get('/staff/Course/Home', getCourseHomeHandler);
   router.get('/staff/Course/Content', getCourseContentHandler);
   router.get(
