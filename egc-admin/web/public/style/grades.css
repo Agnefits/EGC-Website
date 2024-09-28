@@ -92,40 +92,6 @@ body {
 
 
 
-
-/* Style the filter dropdowns */
-.filter-section {
-    display: flex;
-    justify-content: center; /* Align items to the left */
-    align-items: center; /* Vertically center the dropdowns */
-    gap: 20px; /* Add spacing between the dropdowns */
-    margin-bottom: 20px;
-
-}
-
-.filter-dropdown {
-    display: inline-block;
-    
-}
-
-.filter-dropdown select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 15px;
-    width: 150px;
-    background-color: #0F2B4E;
-    color: #fefefe;
-
-}
-
-.filter-dropdown select:focus {
-    border-color: #aaa;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    
-}
-.filter-dropdown select:focus option {
-    background-color: white;   /* Ensures white background on focus too */
-    color: #0F2B4E;
-}
-
-
+.text{margin-top: 150px;}
+.content{margin-bottom: 50px;}
+.nav{margin-top: -140px;}

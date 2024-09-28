@@ -11,23 +11,27 @@ body {
     width: 100%;
     background-color: none; /* Add background if needed */
     z-index: 100; /* Ensure it's on top */
+ 
+   
 }
 
 .ul {
     display: flex; /* Use flex for the ul */
     list-style-type: none;
     margin-top: 13px;
-    margin-left: -10px;
-    margin-right: 10px;
+    margin-left: 400px;
+    margin-right: -10px;
 }
 
 .ul li {
-    padding-right: 70px;
+    padding-right: 10px;
+    margin-top: 20px;
 }
 
 .nav-items {
     display: flex;
     align-items: center; /* Align items vertically */
+    margin-top: -60px;
 }
 
 #goBackImage {

@@ -70,6 +70,23 @@ class DatabaseHelper {
     statement.dispose();
   }
 
+  static List<Map<String, dynamic>> getAllMaterials() {
+    final results = _db.select(
+        'SELECT M.id, M.filename, M.saveAs, M.date, M.note, M.file, CASE WHEN M.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor FROM materials M LEFT JOIN doctors D ON M.doctorId = D.id LEFT JOIN teaching_assistants T ON M.teaching_assistantId = T.id');
+    return results
+        .map((row) => {
+              'id': row['id'],
+              'filename': row['filename'],
+              'saveAs': row['saveAs'],
+              'date': row['date'],
+              'note': row['note'],
+              'file': row['file'].length > 0,
+              'instructor' : row['instructor'],
+            })
+        .toList();
+  }
+
+
   static List<Map<String, dynamic>> getMaterials(String courseId) {
     final results = _db.select(
         'SELECT M.id, M.filename, M.saveAs, M.date, M.note, M.file, CASE WHEN M.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor FROM materials M LEFT JOIN doctors D ON M.doctorId = D.id LEFT JOIN teaching_assistants T ON M.teaching_assistantId = T.id WHERE M.courseId = $courseId');
@@ -111,6 +128,28 @@ class Material {
   void main() async {
     // تهيئة قاعدة البيانات
     DatabaseHelper.init();
+
+  router.get('/materials', (Request request) async {
+    try {
+      final materials = DatabaseHelper.getAllMaterials();
+      final jsonMaterials = jsonEncode(materials);
+      return Response.ok(
+        jsonMaterials,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      );
+    } catch (e) {
+      print(e);
+      return Response.internalServerError(body: 'Error: $e');
+    }
+  });
+
+
+
+
+
 
     // عرض المواد
     router.get('/courses-materials/<courseId>',

@@ -7,24 +7,37 @@
     <link rel="icon" href="/img/logo.png" sizes="48x32">
     <title>Student Grades</title>
     <link rel="stylesheet" href="/style/grades.css">
+    <link rel="stylesheet" href="/style/nav.css">
     <script src="/script/grades.js" defer></script>
+    <script src="/script/course-nav.js" defer></script>
 
 </head>
 
 <body>
     <main>
+        <div class="nav">
+            <ul class="ul">
+                <li><a href="/staff/Course/Home" class="a">Home</a></li>
+                <li><a href="/staff/Course/Content" class="a">Course Content</a></li>
+                <li><a href="/staff/Course/TeachingAssistants" class="a">Teaching Assistants</a></li>
+                <li><a href="/staff/Course/Students" class="a">Students</a></li>
+                <li><a href="/staff/Course/grades" class="a">Grades</a></li>
+                
+                
+            </ul>
+            <div class="nav-items">
+                <img src="/img/arrow.png" alt="Go Back" id="goBackImage" width="20px" height="20px" onclick="goBackToCoursePage()">
+                <div class="log"><img src="/img/images.jpeg" alt="Profile"></div>
+                <label class="name_c a">c#</label>
+                
+            </div>
+        </div>
+    
+
         <div class="content">
             <div class="text">
-                <h3>Grades and Attendance</h3>
+                <!-- <h3>Grades and Attendance</h3> -->
             </div>
-            <div class="filter-section">
-                <div class="filter-dropdown">
-                    Filter By Course
-                    <select id="CoursesFilter">
-                        <option value="">Select a course</option>
-                    </select>
-                </div>
-                </div>
             </div>
             <input type="text" id="id" name="id" placeholder="ID" required style="display: none;">
             <table class="grades-table" id="grades-table">
