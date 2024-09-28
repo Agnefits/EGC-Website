@@ -6,6 +6,7 @@ if (storedUserData) {
 
     // Fetch courses for the student
     fetchCoursesForStudent(studentId);
+    fetchMaterialsForAllCourses(studentId);
 } else {
     console.error('No user data found in localStorage');
 }
@@ -33,7 +34,7 @@ function fetchCoursesForStudent(studentId) {
         const selectedCourseId = coursesFilter.value;
         if (selectedCourseId === "all") {
             // If "All" is selected, fetch all materials
-            fetchMaterialsForAllCourses();
+            fetchMaterialsForAllCourses(studentId);
         } else {
             fetchMaterialsForCourse(selectedCourseId); // Fetch materials for the selected course
         }
@@ -119,8 +120,8 @@ if (userData) {
 }
 
 
-function fetchMaterialsForAllCourses() {
-  fetch('/materials') // جلب جميع المواد
+function fetchMaterialsForAllCourses(studentId) {
+  fetch(`/materials/${studentId}`) // جلب جميع المواد
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
