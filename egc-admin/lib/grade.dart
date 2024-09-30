@@ -50,6 +50,7 @@ class DatabaseHelper {
           ]); // استخدم courseId هنا
         }
 
+
         return Response.ok(
             jsonEncode({'message': 'Data inserted successfully'}),
             headers: {'Content-Type': 'application/json'});
@@ -85,10 +86,27 @@ class DatabaseHelper {
              scd.practicalDegree, 
              scd.midtermDegree, 
              scd.finalExamDegree, 
-             scd.lectureAttendance, 
-             scd.sectionAttendance
-      FROM students s LEFT JOIN student_course_degrees scd
-      ON s.id = scd.student_id
+             c.lectureAttendance * (
+                SELECT COUNT(*)
+                FROM student_attendance sa
+                JOIN attendance a ON sa.attendanceId = a.id
+                WHERE sa.status = 'p'
+                AND sa.studentId = s.id
+                AND a.courseId = scd.course_id
+                AND a.sectionNo = 1
+             ) AS lectureAttendance,
+             c.sectionAttendance * (
+                SELECT COUNT(*)
+                FROM student_attendance sa
+                JOIN attendance a ON sa.attendanceId = a.id
+                WHERE sa.status = 'p'
+                AND sa.studentId = s.id
+                AND a.courseId = scd.course_id
+                AND a.sectionNo = 2
+             ) AS sectionAttendance
+      FROM students s 
+      LEFT JOIN student_course_degrees scd ON s.id = scd.student_id
+      LEFT JOIN courses c ON scd.course_id = c.id
     ''');
 
     return results
@@ -102,7 +120,8 @@ class DatabaseHelper {
               'sectionAttendance': row['sectionAttendance'],
             })
         .toList();
-  }
+}
+
 }
 
 class Grades {

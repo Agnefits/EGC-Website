@@ -6,39 +6,43 @@ if (storedUserData) {
 
     // Fetch courses for the student
     fetchCoursesForStudent(studentId);
+    fetchMaterialsForAllCourses(studentId);
 } else {
     console.error('No user data found in localStorage');
 }
 
 // Fetch courses for the student
 function fetchCoursesForStudent(studentId) {
-    fetch(`/student/courses/${studentId}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(courses => {
-        const coursesFilter = document.getElementById('CoursesFilter');
-        courses.forEach(course => {
-          const option = document.createElement('option');
-          option.value = course.id; // Assuming courseId corresponds to the course
-          option.textContent = course.name;
-          coursesFilter.appendChild(option);
-        });
-
-        // Add event listener to fetch materials when a course is selected
-        coursesFilter.addEventListener('change', () => {
-          const selectedCourseId = coursesFilter.value;
-          if (selectedCourseId) {
-            fetchMaterialsForCourse(selectedCourseId); // Fetch materials for the selected course
-          }
-        });
-      })
-      .catch(error => {
-        console.error('Error fetching courses:', error);
+  fetch(`/student/courses/${studentId}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(courses => {
+      const coursesFilter = document.getElementById('CoursesFilter');
+      courses.forEach(course => {
+        const option = document.createElement('option');
+        option.value = course.id; // Assuming courseId corresponds to the course
+        option.textContent = course.name;
+        coursesFilter.appendChild(option);
       });
+
+      // Add event listener to fetch materials when a course is selected
+      coursesFilter.addEventListener('change', () => {
+        const selectedCourseId = coursesFilter.value;
+        if (selectedCourseId === "all") {
+            // If "All" is selected, fetch all materials
+            fetchMaterialsForAllCourses(studentId);
+        } else {
+            fetchMaterialsForCourse(selectedCourseId); // Fetch materials for the selected course
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching courses:', error);
+    });
 }
 
 // Fetch materials based on the selected course
@@ -113,4 +117,46 @@ if (userData) {
     if (userData.photo) {
         document.querySelector(".profile-details img").src = (userData.role == "Student") + '/photo/' + userData.id;
     }
+}
+
+
+function fetchMaterialsForAllCourses(studentId) {
+  fetch(`/materials/${studentId}`) // جلب جميع المواد
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const materialContainer = document.querySelector('.content');
+      materialContainer.innerHTML = ''; // مسح المواد السابقة
+
+      data.forEach(material => {
+        const materialHTML = `
+          <div class="material-container">
+            <div class="material-title">
+              <img src="/img/material_icon.png" alt="Material icon">
+              <div class="material-title-details">
+                <div class="material-name">${material.saveAs}</div>
+                <div class="material-date">Publication Date: ${material.date}</div>
+              </div>
+            </div>
+            <div class="material-details">
+              <div class="student-quiz-dead-line">
+                <p>Note: ${material.note}</p>
+              </div>
+              <div class="student-quiz-dead-line">
+                <p>Instructor: ${material.instructor}</p>
+              </div>
+            </div>
+            <button class="btn-preview-quiz" onclick="location.href='/download/${material.filename}'">Download Material</button>
+          </div>
+        `;
+        materialContainer.innerHTML += materialHTML;
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching materials:', error);
+    });
 }
