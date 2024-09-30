@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td><input type="number" value="${grade.lectureAttendance || 0}" class="lecture-attendance" readonly></td>
                     <td><input type="number" value="${grade.sectionAttendance || 0}" class="section-attendance" readonly></td>
                 `;
-                gradesTableBody.appendChild(row);
+                 gradesTableBody.appendChild(row);
             });
 
             // Display the "Update" button if grades are available
@@ -85,54 +85,54 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load grades on page load
     loadGrades();
-    loadCourses();
+    // loadCourses();
 });
 
 
 
 
 
-async function loadCourses() {
-    const doctorData = JSON.parse(localStorage.getItem('userData'));
-    fetch(`/doctor/courses/${doctorData.id}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(courses => {
-            const coursesFilter = document.getElementById('CoursesFilter');
-            courses.forEach(course => {
-                const option = document.createElement('option');
-                option.value = course.id; // Assuming course.id corresponds to the course
-                option.textContent = course.name;
-                // تخزين معلومات القسم والسنة لكل كورس في data attributes
-                option.setAttribute('data-year', course.year);
-                option.setAttribute('data-department', course.department);
-                coursesFilter.appendChild(option);
-            });
+// async function loadCourses() {
+    // const doctorData = JSON.parse(localStorage.getItem('userData'));
+    // fetch(`/doctor/courses/${doctorData.id}`)
+    //     .then(response => {
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+    //         return response.json();
+    //     })
+    //     .then(courses => {
+    //         const coursesFilter = document.getElementById('CoursesFilter');
+    //         courses.forEach(course => {
+    //             const option = document.createElement('option');
+    //             option.value = course.id; // Assuming course.id corresponds to the course
+    //             option.textContent = course.name;
+    //             // تخزين معلومات القسم والسنة لكل كورس في data attributes
+    //             option.setAttribute('data-year', course.year);
+    //             option.setAttribute('data-department', course.department);
+    //             coursesFilter.appendChild(option);
+    //         });
 
-            // إضافة مستمع عند اختيار الكورس
-            coursesFilter.addEventListener('change', (event) => {
-                const selectedOption = event.target.selectedOptions[0];
-                const selectedYear = selectedOption.getAttribute('data-year');
-                const selectedDepartment = selectedOption.getAttribute('data-department');
+        //     // إضافة مستمع عند اختيار الكورس
+        //     coursesFilter.addEventListener('change', (event) => {
+        //         const selectedOption = event.target.selectedOptions[0];
+        //         const selectedYear = selectedOption.getAttribute('data-year');
+        //         const selectedDepartment = selectedOption.getAttribute('data-department');
 
-                const selectedCourseId = selectedOption.value; // الحصول على ID الكورس المحدد
+        //         const selectedCourseId = selectedOption.value; // الحصول على ID الكورس المحدد
 
-                console.log('Selected Year:', selectedYear);
-                console.log('Selected Department:', selectedDepartment);
-                console.log('Selected Course ID:', selectedCourseId);
+        //         console.log('Selected Year:', selectedYear);
+        //         console.log('Selected Department:', selectedDepartment);
+        //         console.log('Selected Course ID:', selectedCourseId);
 
-                // هنا يتم استدعاء الكود الجديد باستخدام السنة والقسم وcourseId
-                insertStudentDegreesByYearAndDepartment(selectedYear, selectedDepartment, selectedCourseId);
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching courses:', error);
-        });
-}
+        //         // هنا يتم استدعاء الكود الجديد باستخدام السنة والقسم وcourseId
+        //         insertStudentDegreesByYearAndDepartment(selectedYear, selectedDepartment, selectedCourseId);
+        //     });
+        // })
+        // .catch(error => {
+        //     console.error('Error fetching courses:', error);
+        // });
+// }
 
 // الدالة التي تقوم بإدراج الدرجات بصفر بناءً على السنة والقسم
 function insertStudentDegreesByYearAndDepartment(year, department, courseId) {

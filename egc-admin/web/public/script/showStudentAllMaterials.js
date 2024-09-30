@@ -3,12 +3,15 @@ const storedUserData = localStorage.getItem('userData');
 if (storedUserData) {
     const userData = JSON.parse(storedUserData);
     const studentId = userData.id;
+
+    // Fetch courses for the student
     fetchCoursesForStudent(studentId);
     fetchMaterialsForAllCourses(studentId);
 } else {
     console.error('No user data found in localStorage');
 }
 
+// Fetch courses for the student
 function fetchCoursesForStudent(studentId) {
   fetch(`/student/courses/${studentId}`)
     .then(response => {
@@ -21,17 +24,19 @@ function fetchCoursesForStudent(studentId) {
       const coursesFilter = document.getElementById('CoursesFilter');
       courses.forEach(course => {
         const option = document.createElement('option');
-        option.value = course.id; 
+        option.value = course.id; // Assuming courseId corresponds to the course
         option.textContent = course.name;
         coursesFilter.appendChild(option);
       });
 
+      // Add event listener to fetch materials when a course is selected
       coursesFilter.addEventListener('change', () => {
         const selectedCourseId = coursesFilter.value;
         if (selectedCourseId === "all") {
+            // If "All" is selected, fetch all materials
             fetchMaterialsForAllCourses(studentId);
         } else {
-            fetchMaterialsForCourse(selectedCourseId); 
+            fetchMaterialsForCourse(selectedCourseId); // Fetch materials for the selected course
         }
       });
     })
@@ -40,8 +45,9 @@ function fetchCoursesForStudent(studentId) {
     });
 }
 
+// Fetch materials based on the selected course
 function fetchMaterialsForCourse(courseId) {
-    fetch(`/courses-materials/${courseId}`) 
+    fetch(`/courses-materials/${courseId}`) // Update the endpoint as necessary
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -49,8 +55,8 @@ function fetchMaterialsForCourse(courseId) {
         return response.json();
       })
       .then(data => {
-        const materialContainer = document.querySelector('.content'); 
-        materialContainer.innerHTML = ''; 
+        const materialContainer = document.querySelector('.content'); // Adjust class if necessary
+        materialContainer.innerHTML = ''; // Clear previous materials
 
         data.forEach(material => {
           const materialHTML = `
@@ -115,7 +121,7 @@ if (userData) {
 
 
 function fetchMaterialsForAllCourses(studentId) {
-  fetch(`/materials/${studentId}`) 
+  fetch(`/materials/${studentId}`) // جلب جميع المواد
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -124,7 +130,7 @@ function fetchMaterialsForAllCourses(studentId) {
     })
     .then(data => {
       const materialContainer = document.querySelector('.content');
-      materialContainer.innerHTML = ''; 
+      materialContainer.innerHTML = ''; // مسح المواد السابقة
 
       data.forEach(material => {
         const materialHTML = `
