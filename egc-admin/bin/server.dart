@@ -3,7 +3,7 @@ import 'dart:io';
 //import 'package:dart_backend/auth.dart';
 //import 'package:firebase_dart/firebase_dart.dart';
 import 'package:egc_website/assignment.dart';
-//import 'package:egc_website/attendence.dart';
+// import 'package:egc_website/attendence.dart';
 import 'package:egc_website/class_schedules.dart';
 import 'package:egc_website/course.dart';
 import 'package:egc_website/doctor.dart';

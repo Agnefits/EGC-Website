@@ -8,62 +8,66 @@ class DatabaseHelper {
   static void init() {
     _db = sqlite3.open('egcDB.db');
 
-    Future<Response> insertStudentDegrees(Request request) async {
-      try {
-        // قراءة البيانات من الطلب (السنة والقسم وcourseId)
-        final payload = await request.readAsString();
-        final data = jsonDecode(payload);
+    // Future<Response> insertStudentDegrees(Request request) async {
+    //   try {
+    //     // قراءة البيانات من الطلب (السنة والقسم وcourseId)
+    //     final payload = await request.readAsString();
+    //     final data = jsonDecode(payload);
 
-        final String year = data['year'];
-        final String department = data['department'];
-        final int courseId = data['courseId']; // استقبل courseId
+    //     final String year = data['year'];
+    //     final String department = data['department'];
+    //     final int courseId = data['courseId']; // استقبل courseId
 
-        // جلب الطلاب الذين يتطابقون مع السنة والقسم
-        final ResultSet students = _db.select('''
-      SELECT id FROM students WHERE year_level = ? AND department = ?
-    ''', [year, department]);
+    //     // جلب الطلاب الذين يتطابقون مع السنة والقسم
+    //     final ResultSet students = _db.select('''
+    //   SELECT id FROM students WHERE year_level = ? AND department = ?
+    // ''', [year, department]);
 
-        // التحقق من وجود طلاب
-        if (students.isEmpty) {
-          return Response.ok(
-              jsonEncode({
-                'message':
-                    'No students found for the specified year and department.'
-              }),
-              headers: {'Content-Type': 'application/json'});
-        }
+    //     // التحقق من وجود طلاب
+    //     if (students.isEmpty) {
+    //       return Response.ok(
+    //           jsonEncode({
+    //             'message':
+    //                 'No students found for the specified year and department.'
+    //           }),
+    //           headers: {'Content-Type': 'application/json'});
+    //     }
 
-        // إدراج الدرجات الافتراضية لكل طالب
-        for (final student in students) {
-          _db.execute('''
-        INSERT INTO student_course_degrees (
-          finalExamDegree, midtermDegree, practicalDegree, sectionAttendance, lectureAttendance, course_id, student_id
-        ) VALUES (?, ?, ?, ?, ?, ?, ?)
-      ''', [
-            '0',
-            '0',
-            '0',
-            '0',
-            '0',
-            courseId,
-            student['id']
-          ]); // استخدم courseId هنا
-        }
+    //     // إدراج الدرجات الافتراضية لكل طالب
+    //     for (final student in students) {
+    //       _db.execute('''
+    //     INSERT INTO student_course_degrees (
+    //       finalExamDegree, midtermDegree, practicalDegree, sectionAttendance, lectureAttendance, course_id, student_id
+    //     ) VALUES (?, ?, ?, ?, ?, ?, ?)
+    //   ''', [
+    //         '0',
+    //         '0',
+    //         '0',
+    //         '0',
+    //         '0',
+    //         courseId,
+    //         student['id']
+    //       ]); // استخدم courseId هنا
+    //     }
 
 
-        return Response.ok(
-            jsonEncode({'message': 'Data inserted successfully'}),
-            headers: {'Content-Type': 'application/json'});
-      } catch (e) {
-        return Response.internalServerError(
-            body: jsonEncode({'error': e.toString()}),
-            headers: {'Content-Type': 'application/json'});
-      }
-    }
+    //     return Response.ok(
+    //         jsonEncode({'message': 'Data inserted successfully'}),
+    //         headers: {'Content-Type': 'application/json'});
+    //   } catch (e) {
+    //     return Response.internalServerError(
+    //         body: jsonEncode({'error': e.toString()}),
+    //         headers: {'Content-Type': 'application/json'});
+    //   }
+    // }
 
-    //  _db.execute('''
-    //    DROP TABLE student_course_degrees;  -- Only if you're okay with losing data
-    // ''');
+
+     _db.execute('''
+       DROP TABLE attendance;
+    ''');
+         _db.execute('''
+       DROP TABLE student_attendance;
+    ''');
     _db.execute('''
       CREATE TABLE IF NOT EXISTS student_course_degrees (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -78,35 +82,129 @@ class DatabaseHelper {
         FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE
       )
     ''');
+
+    _db.execute('''
+      CREATE TABLE IF NOT EXISTS attendance (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        date TEXT NOT NULL,
+        sectionNo INTEGER NOT NULL,
+        note TEXT,
+        courseId INTEGER NOT NULL REFERENCES courses(id),
+        doctorId INTEGER REFERENCES doctors(id),
+        teaching_assistantId INTEGER REFERENCES teaching_assistants(id)
+      )
+    ''');
+
+
+        _db.execute('''
+      CREATE TABLE IF NOT EXISTS student_attendance (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        status TEXT NOT NULL,
+        attendanceId INTEGER NOT NULL REFERENCES attendance(id),
+        studentId INTEGER REFERENCES students(id)
+      )
+    ''');
+
+   // إدخال المحاضرة الأولى (sectionNo = 1)
+_db.execute('''
+  INSERT INTO attendance (
+     date, sectionNo, note, courseId, doctorId, teaching_assistantId
+  ) VALUES (?, ?, ?, ?, ?, ?)
+''', [
+    'today',  // التاريخ
+    '1',      // رقم المحاضرة (sectionNo = 1)
+    'NOTE',   // ملاحظة
+    '1',      // معرف الكورس
+    '1',      // معرف الدكتور
+    '1',      // معرف مساعد التدريس
+]);
+
+// إدخال المحاضرة الثانية (sectionNo = 2)
+_db.execute('''
+  INSERT INTO attendance (
+     date, sectionNo, note, courseId, doctorId, teaching_assistantId
+  ) VALUES (?, ?, ?, ?, ?, ?)
+''', [
+    'today',  // التاريخ
+    '2',      // رقم المحاضرة (sectionNo = 2)
+    'NOTE',   // ملاحظة
+    '1',      // معرف الكورس
+    '1',      // معرف الدكتور
+    '1',      // معرف مساعد التدريس
+]);
+
+// تسجيل حضور للمحاضرة الأولى (sectionNo = 1)
+_db.execute('''
+  INSERT INTO student_attendance (
+     status, attendanceId, studentId
+  ) VALUES (?, ?, ?)
+''', [
+    'p',  // حضر الطالب
+    '1',  // معرف الحضور (للمحاضرة الأولى)
+    '1',  // معرف الطالب
+]);
+
+// تسجيل غياب للمحاضرة الثانية (sectionNo = 2)
+_db.execute('''
+  INSERT INTO student_attendance (
+     status, attendanceId, studentId
+  ) VALUES (?, ?, ?)
+''', [
+    't',  // غاب الطالب
+    '2',  // معرف الحضور (للمحاضرة الثانية)
+    '1',  // معرف الطالب
+]);
+
+
+
+          final tables = _db.select('''
+  SELECT name FROM sqlite_master WHERE type='table' AND name='student_attendance';
+''');
+
+if (tables.isNotEmpty) {
+  print('Table student_attendance exists');
+} else {
+  print('Table student_attendance does not exist');
+}
   }
 
   static List<Map<String, dynamic>> getGrades() {
     final results = _db.select('''
       SELECT s.id, s.name AS studentName, 
-             scd.practicalDegree, 
-             scd.midtermDegree, 
-             scd.finalExamDegree, 
-             c.lectureAttendance * (
-                SELECT COUNT(*)
-                FROM student_attendance sa
-                JOIN attendance a ON sa.attendanceId = a.id
-                WHERE sa.status = 'p'
-                AND sa.studentId = s.id
-                AND a.courseId = scd.course_id
-                AND a.sectionNo = 1
-             ) AS lectureAttendance,
-             c.sectionAttendance * (
-                SELECT COUNT(*)
-                FROM student_attendance sa
-                JOIN attendance a ON sa.attendanceId = a.id
-                WHERE sa.status = 'p'
-                AND sa.studentId = s.id
-                AND a.courseId = scd.course_id
-                AND a.sectionNo = 2
-             ) AS sectionAttendance
-      FROM students s 
-      LEFT JOIN student_course_degrees scd ON s.id = scd.student_id
-      LEFT JOIN courses c ON scd.course_id = c.id
+       scd.practicalDegree, 
+       scd.midtermDegree, 
+       scd.finalExamDegree, 
+       c.lectureAttendance * (
+          (SELECT COUNT(*)
+           FROM student_attendance sa
+           JOIN attendance a ON sa.attendanceId = a.id
+           WHERE sa.status = 'p'
+           AND sa.studentId = s.id
+           AND a.courseId = scd.course_id
+           AND a.sectionNo = 1)
+        ) / 
+        (SELECT COUNT(*)
+           FROM attendance a
+           WHERE a.courseId = scd.course_id
+           AND a.sectionNo = 1
+        ) AS lectureAttendance,
+       c.sectionAttendance * (
+          (SELECT COUNT(*)
+           FROM student_attendance sa
+           JOIN attendance a ON sa.attendanceId = a.id
+           WHERE sa.status = 'p'
+           AND sa.studentId = s.id
+           AND a.courseId = scd.course_id
+           AND a.sectionNo = 2)
+        ) / 
+        (SELECT COUNT(*)
+           FROM attendance a
+           WHERE a.courseId = scd.course_id
+           AND a.sectionNo = 2
+        ) AS sectionAttendance
+FROM students s 
+LEFT JOIN student_course_degrees scd ON s.id = scd.student_id
+LEFT JOIN courses c ON scd.course_id = c.id;
     ''');
 
     return results
