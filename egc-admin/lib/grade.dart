@@ -50,7 +50,6 @@ class DatabaseHelper {
     //       ]); // استخدم courseId هنا
     //     }
 
-
     //     return Response.ok(
     //         jsonEncode({'message': 'Data inserted successfully'}),
     //         headers: {'Content-Type': 'application/json'});
@@ -61,13 +60,12 @@ class DatabaseHelper {
     //   }
     // }
 
-
-     _db.execute('''
-       DROP TABLE attendance;
-    ''');
-         _db.execute('''
-       DROP TABLE student_attendance;
-    ''');
+    //  _db.execute('''
+    //    DROP TABLE attendance;
+    // ''');
+    //      _db.execute('''
+    //    DROP TABLE student_attendance;
+    // ''');
     _db.execute('''
       CREATE TABLE IF NOT EXISTS student_course_degrees (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -95,8 +93,7 @@ class DatabaseHelper {
       )
     ''');
 
-
-        _db.execute('''
+    _db.execute('''
       CREATE TABLE IF NOT EXISTS student_attendance (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         status TEXT NOT NULL,
@@ -105,67 +102,65 @@ class DatabaseHelper {
       )
     ''');
 
-   // إدخال المحاضرة الأولى (sectionNo = 1)
-_db.execute('''
+    // إدخال المحاضرة الأولى (sectionNo = 1)
+    _db.execute('''
   INSERT INTO attendance (
      date, sectionNo, note, courseId, doctorId, teaching_assistantId
   ) VALUES (?, ?, ?, ?, ?, ?)
 ''', [
-    'today',  // التاريخ
-    '1',      // رقم المحاضرة (sectionNo = 1)
-    'NOTE',   // ملاحظة
-    '1',      // معرف الكورس
-    '1',      // معرف الدكتور
-    '1',      // معرف مساعد التدريس
-]);
+      'today', // التاريخ
+      '1', // رقم المحاضرة (sectionNo = 1)
+      'NOTE', // ملاحظة
+      '1', // معرف الكورس
+      '1', // معرف الدكتور
+      '1', // معرف مساعد التدريس
+    ]);
 
 // إدخال المحاضرة الثانية (sectionNo = 2)
-_db.execute('''
+    _db.execute('''
   INSERT INTO attendance (
      date, sectionNo, note, courseId, doctorId, teaching_assistantId
   ) VALUES (?, ?, ?, ?, ?, ?)
 ''', [
-    'today',  // التاريخ
-    '2',      // رقم المحاضرة (sectionNo = 2)
-    'NOTE',   // ملاحظة
-    '1',      // معرف الكورس
-    '1',      // معرف الدكتور
-    '1',      // معرف مساعد التدريس
-]);
+      'today', // التاريخ
+      '2', // رقم المحاضرة (sectionNo = 2)
+      'NOTE', // ملاحظة
+      '1', // معرف الكورس
+      '1', // معرف الدكتور
+      '1', // معرف مساعد التدريس
+    ]);
 
 // تسجيل حضور للمحاضرة الأولى (sectionNo = 1)
-_db.execute('''
+    _db.execute('''
   INSERT INTO student_attendance (
      status, attendanceId, studentId
   ) VALUES (?, ?, ?)
 ''', [
-    'p',  // حضر الطالب
-    '1',  // معرف الحضور (للمحاضرة الأولى)
-    '1',  // معرف الطالب
-]);
+      'p', // حضر الطالب
+      '1', // معرف الحضور (للمحاضرة الأولى)
+      '1', // معرف الطالب
+    ]);
 
 // تسجيل غياب للمحاضرة الثانية (sectionNo = 2)
-_db.execute('''
+    _db.execute('''
   INSERT INTO student_attendance (
      status, attendanceId, studentId
   ) VALUES (?, ?, ?)
 ''', [
-    't',  // غاب الطالب
-    '2',  // معرف الحضور (للمحاضرة الثانية)
-    '1',  // معرف الطالب
-]);
+      't', // غاب الطالب
+      '2', // معرف الحضور (للمحاضرة الثانية)
+      '1', // معرف الطالب
+    ]);
 
-
-
-          final tables = _db.select('''
+    final tables = _db.select('''
   SELECT name FROM sqlite_master WHERE type='table' AND name='student_attendance';
 ''');
 
-if (tables.isNotEmpty) {
-  print('Table student_attendance exists');
-} else {
-  print('Table student_attendance does not exist');
-}
+    if (tables.isNotEmpty) {
+      print('Table student_attendance exists');
+    } else {
+      print('Table student_attendance does not exist');
+    }
   }
 
   static List<Map<String, dynamic>> getGrades() {
@@ -218,8 +213,31 @@ LEFT JOIN courses c ON scd.course_id = c.id;
               'sectionAttendance': row['sectionAttendance'],
             })
         .toList();
-}
+  }
 
+  static List<Map<String, dynamic>> fetchStudentGrades(int studentId) {
+    final db = sqlite3.open('egcDB.db');
+    final results = db.select(
+        'SELECT * FROM student_course_degrees WHERE student_id = ?',
+        [studentId]);
+
+    // Convert the results to a list of maps
+    final List<Map<String, dynamic>> grades = [];
+    for (var row in results) {
+      grades.add({
+        'id': row['id'],
+        'finalExamDegree': row['finalExamDegree'],
+        'midtermDegree': row['midtermDegree'],
+        'practicalDegree': row['practicalDegree'],
+        'sectionAttendance': row['sectionAttendance'],
+        'lectureAttendance': row['lectureAttendance'],
+        'course_id': row['course_id'],
+      });
+    }
+
+    db.dispose();
+    return grades;
+  }
 }
 
 class Grades {
@@ -297,6 +315,24 @@ class Grades {
         return Response.ok('Grades updated successfully');
       } catch (e) {
         print(e);
+        return Response.internalServerError(body: 'Error: $e');
+      }
+    });
+
+    router.get('/student/get-student-grades/<studentId>',
+        (Request request, String studentId) async {
+      try {
+        // Fetch student grades
+        final grades = DatabaseHelper.fetchStudentGrades(int.parse(studentId));
+        // Send response in JSON format
+        return Response.ok(
+          jsonEncode(grades),
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        );
+      } catch (e) {
         return Response.internalServerError(body: 'Error: $e');
       }
     });

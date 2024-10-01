@@ -13,7 +13,7 @@ body {
     top: 0;
     height: 100%;
     width: 78px;
-    background: #0f2c4e;
+    background: #0F2B4E;
     padding: 6px 14px;
     z-index: 99;
     transition: all 0.5s ease;
@@ -44,9 +44,9 @@ body {
 .sidebar .logo-details .logo_name {
     color: #fff;
     font-size: 20px;
-    text-align: center;
     font-weight: 600;
     opacity: 0;
+    text-align: center;
     transition: all 0.5s ease;
     margin-top: 20px;
 }
@@ -55,12 +55,10 @@ body {
 .sidebar.open .logo-details .logo_name {
     opacity: 1;
 }
-
-.logo_style {
+.logo_style{
     text-decoration: none;
     color: #fff;
 }
-
 .sidebar .logo-details #btn {
     position: absolute;
     top: 50%;
@@ -237,30 +235,9 @@ body {
     width: 50px;
     background: none;
 }
-
-.home-section {
-    position: relative;
-    background: #f0f0f0;
-    min-height: 100vh;
-    top: 0;
-    left: 78px;
-    width: calc(100% - 78px);
-    transition: all 0.5s ease;
-    z-index: 2;
-}
-
-.sidebar.open~.home-section {
+.sidebar.open~.container {
     left: 250px;
-    width: calc(100% - 250px);
-}
-
-.home-section .text {
-    display: inline-block;
-    color: #11101d;
-    font-size: 25px;
-    font-weight: 500px;
-      position: relative;
-    font-family: "Libre Baskerville", serif;
+    width: calc(90% - 80px);
 }
 
 @media (max-width: 420px) {
@@ -269,140 +246,55 @@ body {
     }
 }
 
-
-
-/* General Reset */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* Main home-section styles */
-.home-section {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f0f0f0;
-    padding: 40px;
+.container {
+    background: #f0f0f0;
     min-height: 100vh;
+    top: 0;
+    left: 78px;
+    width: calc(100% - 78px);
+    transition: all 0.5s ease;
+    z-index: 2;
+    position: relative;
+}
+.container .text{
+    display: inline-block;
+    color: #11101d;
+    font-size: 25px;
+    font-weight: 500px;
+    font-family:"Libre Baskerville", serif;
+}
+table {
+    width: 90%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    margin-left: 80px; 
+    box-shadow: 0 5px 10px rgba(14, 13, 13, 0.3);
 }
 
-/* Section Title */
-.home-section .text h3 {
-    font-size: 36px;
-    font-weight: 600;
-    color: #0F2B4E;
-    text-align: center;
-    margin-bottom: 40px;
+table th,
+table td {
+    padding: 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-family: "Roboto Condensed", sans-serif;
 }
 
-/* Filter container styles */
-.filter-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 40px;
-}
-
-.filter-container label {
-    font-weight: 500;
-    margin-right: 10px;
+table th {
+    background-color: #f2f2f2;
     color: #333;
+    font-size: 21px;
+    font-family:"Libre Baskerville", serif;
 }
 
-.filter-container select {
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    background-color: #0F2B4E;
-    color: #fefefe;
-    width: 180px;
-    font-size: 16px;
-    transition: all 0.3s ease;
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
-.filter-container select:focus {
-    border-color: #aaa;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+table tr:hover {
+    background-color: #c0bdbd;
 }
 
-/* Assignments Container */
-#assignments-container {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    width: 100%;
-    max-width: 800px; /* Adjust this for larger card width */
-    align-items: center; /* Center the cards */
-}
-
-/* Assignment card styling */
-.assignment {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 800px; /* Makes the card large */
-    transition: transform 0.3s ease;
-}
-
-.assignment:hover {
-    transform: translateY(-10px);
-}
-
-.assignment h3 {
-    color: #0F2B4E;
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-.assignment p {
-    font-size: 18px;
-    color: #555;
-    margin-bottom: 10px;
-}
-
-.assignment label {
+strong {
     display: block;
-    margin-top: 20px;
-    font-weight: 500;
-    color: #333;
+    margin: 10px 0;
 }
-
-.assignment input[type="file"] {
-    margin-top: 10px;
-}
-
-.assignment button {
-    margin-top: 20px;
-    padding: 12px 25px;
-    background-color: #0F2B4E;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.assignment button:hover {
-    background-color: #0D2340;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .assignment {
-        padding: 20px;
-        max-width: 100%;
-    }
-
-    #assignments-container {
-        padding: 10px;
-    }
-}
-
-

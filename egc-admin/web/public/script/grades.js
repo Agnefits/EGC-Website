@@ -1,5 +1,9 @@
+
 document.addEventListener('DOMContentLoaded', function() {
 
+    const courseId = 123;  // تأكد من أنك استبدلت 123 بالقيمة الصحيحة لـ courseId الخاص بك.
+
+    // تحميل الدرجات عند تحميل الصفحة
     async function loadGrades() {
         try {
             const response = await fetch('/get-grades');
@@ -10,14 +14,14 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(grades);
             const gradesTableBody = document.getElementById('gradesTableBody');
 
-            // Clear existing rows
+            // تفريغ الصفوف الحالية
             gradesTableBody.innerHTML = '';
 
-            // Populate table with data
+            // تعبئة الجدول بالبيانات
             grades.forEach((grade, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                <input type="hidden" value="${grade.id || 'N/A'}" class="student-id" readonly>
+                    <input type="hidden" value="${grade.id || 'N/A'}" class="student-id" readonly>
                     <td><input type="text" value="${grade.studentName || 'N/A'}" class="student-name" readonly></td>
                     <td><input type="number" value="${grade.practicalDegree || 0}" class="practical-degree"></td>
                     <td><input type="number" value="${grade.midtermDegree || 0}" class="midterm-degree"></td>
@@ -25,10 +29,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td><input type="number" value="${grade.lectureAttendance || 0}" class="lecture-attendance" readonly></td>
                     <td><input type="number" value="${grade.sectionAttendance || 0}" class="section-attendance" readonly></td>
                 `;
-                 gradesTableBody.appendChild(row);
+                gradesTableBody.appendChild(row);
             });
 
-            // Display the "Update" button if grades are available
+            // عرض زر "التحديث" إذا كانت هناك درجات
             if (grades.length > 0) {
                 let updateButton = document.getElementById('updateButton');
                 if (!updateButton) {
@@ -39,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 updateButton.addEventListener('click', async function() {
-                    await updateGrades(grades);
+                    await updateGrades(grades, courseId);  // تمرير courseId هنا
                 });
             }
         } catch (error) {
@@ -47,15 +51,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to update grades
-    async function updateGrades(grades) {
+    // دالة تحديث الدرجات
+    async function updateGrades(grades, courseId) {
         const updatedGrades = [];
         const rows = document.querySelectorAll('#gradesTableBody tr');
 
         rows.forEach((row, index) => {
             const updatedGrade = {
                 id: row.querySelector('.student-id').value,
-                courseId: document.getElementById('CoursesFilter').value,
+                courseId: courseId,  // استخدام courseId مباشرة
                 studentName: grades[index].studentName,
                 practicalDegree: row.querySelector('.practical-degree').value,
                 midtermDegree: row.querySelector('.midterm-degree').value,
@@ -83,81 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Load grades on page load
+    // استدعاء الدالة لتحميل الدرجات عند تحميل الصفحة
     loadGrades();
-    // loadCourses();
 });
 
-
-
-
-
-// async function loadCourses() {
-    // const doctorData = JSON.parse(localStorage.getItem('userData'));
-    // fetch(`/doctor/courses/${doctorData.id}`)
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(courses => {
-    //         const coursesFilter = document.getElementById('CoursesFilter');
-    //         courses.forEach(course => {
-    //             const option = document.createElement('option');
-    //             option.value = course.id; // Assuming course.id corresponds to the course
-    //             option.textContent = course.name;
-    //             // تخزين معلومات القسم والسنة لكل كورس في data attributes
-    //             option.setAttribute('data-year', course.year);
-    //             option.setAttribute('data-department', course.department);
-    //             coursesFilter.appendChild(option);
-    //         });
-
-        //     // إضافة مستمع عند اختيار الكورس
-        //     coursesFilter.addEventListener('change', (event) => {
-        //         const selectedOption = event.target.selectedOptions[0];
-        //         const selectedYear = selectedOption.getAttribute('data-year');
-        //         const selectedDepartment = selectedOption.getAttribute('data-department');
-
-        //         const selectedCourseId = selectedOption.value; // الحصول على ID الكورس المحدد
-
-        //         console.log('Selected Year:', selectedYear);
-        //         console.log('Selected Department:', selectedDepartment);
-        //         console.log('Selected Course ID:', selectedCourseId);
-
-        //         // هنا يتم استدعاء الكود الجديد باستخدام السنة والقسم وcourseId
-        //         insertStudentDegreesByYearAndDepartment(selectedYear, selectedDepartment, selectedCourseId);
-        //     });
-        // })
-        // .catch(error => {
-        //     console.error('Error fetching courses:', error);
-        // });
-// }
-
-// الدالة التي تقوم بإدراج الدرجات بصفر بناءً على السنة والقسم
-function insertStudentDegreesByYearAndDepartment(year, department, courseId) {
-    console.log('Selected Year:', year);
-    console.log('Selected Department:', department);
-    console.log('Selected Course ID:', courseId);
-
-    // استدعاء API لإدراج البيانات في الجدول
-    fetch('/insertStudentDegrees', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ year: year, department: department, courseId: courseId }), // إضافة courseId هنا
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Data inserted successfully:', data);
-        })
-        .catch(error => {
-            console.error('Error inserting data:', error);
-        });
-}

@@ -8,75 +8,109 @@ const resultBox = document.querySelector(".result-box");
 
 let questionCounter = 0;
 let currentQuestion;
-let availableQuestion = [];
 let availableOptions = [];
 let correctAnswers = 0;
 let attempt = 0;
 
 // Fetch quizzes from database
+// Get the quizId from the URL
+// استخراج quizId من عنوان الـ URL
+// استخراج quizId من عنوان الـ URL
+const urlParams = new URLSearchParams(window.location.search);
+const quizId = urlParams.get('quizId');
+
+let availableQuestion = []; // مصفوفة لتخزين الأسئلة
+
 async function fetchQuizzes() {
     try {
-        const response = await fetch('/student-quizzes/<quizId>'); // Adjust the endpoint as necessary
+        const response = await fetch(`/student-quizzes/${quizId}`);
+        if (!response.ok) throw new Error('Network response was not ok');
+
         const quizzes = await response.json();
-        return quizzes.map(quiz => ({
-            q: quiz.title,
-            options: JSON.parse(quiz.answers), // Assuming answers is a JSON string
-            answer: quiz.correctAnswer // Adjust according to your DB schema
-        }));
+        console.log('Fetched quizzes:', quizzes); // طباعة الأسئلة في وحدة التحكم
+
+        if (!quizzes || quizzes.length === 0) {
+            console.error('No quizzes found or empty response:', quizzes);
+            document.querySelector('.Total-question').innerText = '0';
+            return;
+        }
+
+        availableQuestion = quizzes; // تخزين الأسئلة في المصفوفة
+        document.querySelector('.Total-question').innerText = availableQuestion.length; // عرض عدد الأسئلة
+
+        getNewQuestion(); // بدء عرض السؤال الأول
     } catch (error) {
         console.error('Error fetching quizzes:', error);
     }
 }
 
-// Check if student already attempted the quiz
+// استدعاء الدالة عند تحميل الصفحة
+window.onload = fetchQuizzes;
+
+
+
 async function checkPreviousAttempt() {
-    const response = await fetch(`/courses/student-quizzes/<studentId>`); // Adjust the endpoint
+    const studentId = JSON.parse(localStorage.getItem('userData')).id;
+    const response = await fetch(`/courses/student-quizzes/${studentId}`);
     const attempts = await response.json();
-    return attempts.some(attempt => attempt.quizId === '<quizId>'); // Check if the quizId matches
+    return attempts.some(attempt => attempt.quizId === quizId); // Compare with the current quizId
 }
 
+
 // Start the quiz
-async function startQuiz() {
-    const hasAttempted = await checkPreviousAttempt();
-    if (hasAttempted) {
-        alert('You have already attempted this quiz.');
+function startQuiz() {
+    // تحقق من أن هناك أسئلة متاحة
+    if (availableQuestion.length === 0) {
+        alert('No questions available to start the quiz.');
         return;
     }
 
-    homeBox.classList.add("hide");
-    quizBox.classList.remove("hide");
+    // إخفاء قسم التعليمات وعرض قسم الكويز
+    document.querySelector('.quiz-info').classList.add("hide");
+    document.querySelector('.quiz-box').classList.remove("hide");
 
-    availableQuestion = await fetchQuizzes();
+    // استدعاء دالة لعرض السؤال الأول
     getNewQuestion();
-    answersIndicator();
+    answersIndicator(); // تأكد من أن هذه الدالة تستدعي أيضًا
 }
+
+
+
+
 
 // Set available questions
 function getNewQuestion() {
+    if (availableQuestion.length === 0) {
+        alert('No more questions available.');
+        return;
+    }
+
     questionNumber.innerHTML = " Question " + (questionCounter + 1) + " of " + availableQuestion.length;
+
+    // احصل على سؤال عشوائي
     const questionIndex = availableQuestion[Math.floor(Math.random() * availableQuestion.length)];
     currentQuestion = questionIndex;
     questionText.innerHTML = currentQuestion.q;
 
+    // احصل على موضع 'questionIndex' من مصفوفة 'availableQuestion'
     const index1 = availableQuestion.indexOf(questionIndex);
+    // إزالة 'questionIndex' من مصفوفة 'availableQuestion' حتى لا يتكرر السؤال
     availableQuestion.splice(index1, 1);
 
-    optionContainer.innerHTML = '';
-    let animationDelay = 0.15;
+    // إعداد الخيارات
+    optionContainer.innerHTML = ''; // مسح خيارات الإجابة السابقة
     currentQuestion.options.forEach((option, i) => {
-        const optonIndex = i; // use original index
         const optionElement = document.createElement("div");
         optionElement.innerHTML = option;
-        optionElement.id = optonIndex;
-        optionElement.style.animationDelay = animationDelay + 's';
-        animationDelay += 0.15;
+        optionElement.id = i; // استخدام المعرف الأصلي
         optionElement.className = "option";
         optionContainer.appendChild(optionElement);
-        optionElement.setAttribute("onclick", "getResult(this)");
+        optionElement.setAttribute("onclick", "getResult(this)"); // تعيين وظيفة النقر
     });
 
-    questionCounter++;
+    questionCounter++; // زيادة عدد الأسئلة
 }
+
 
 // Get result of current attempt
 function getResult(element) {
@@ -116,31 +150,23 @@ function next() {
 
 // Handle quiz over
 function quizOver() {
+    const studentId = JSON.parse(localStorage.getItem('userData')).id;
+    
     quizBox.classList.add("hide");
     resultBox.classList.remove("hide");
     quizResult();
+
+    recordAnswers(collectedAnswers); // حفظ إجابات الطالب
+    
     recordAttempt({
-        quizId: '<quizId>', // Set the appropriate quizId
-        studentId: '<studentId>', // Get this from session or local storage
+        quizId: quizId,
+        studentId: studentId,
         date: new Date().toISOString(),
-        score: correctAnswers
+        score: correctAnswers // إرسال النتيجة
     });
 }
 
-// Record attempt in the database
-async function recordAttempt(attemptData) {
-    try {
-        await fetch('/add-student-quiz', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(attemptData)
-        });
-    } catch (error) {
-        console.error('Error recording attempt:', error);
-    }
-}
+
 
 // Get quiz result
 function quizResult() {
@@ -160,4 +186,37 @@ function myFunction() {
 // Starting point
 window.onload = async function () {
     homeBox.querySelector(".Total-question").innerHTML = await fetchQuizzes().length; // Assuming this gets the total questions
+}
+
+async function recordAnswers(answers) {
+    try {
+        await fetch('/add-student-question-answers', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                quizId: quizId,
+                studentId: JSON.parse(localStorage.getItem('userData')).id,
+                answers: answers // Send the selected answers
+            })
+        });
+    } catch (error) {
+        console.error('Error recording answers:', error);
+    }
+}
+
+
+async function recordAttempt(attemptData) {
+    try {
+        await fetch('/add-student-quiz', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(attemptData)
+        });
+    } catch (error) {
+        console.error('Error recording attempt:', error);
+    }
 }

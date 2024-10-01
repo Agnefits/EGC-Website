@@ -148,23 +148,23 @@ function fetchQuizzesForCourse(courseId) {
           data.forEach(quiz => {
             const quizHTML = `
               <div class="student-quiz-container">
-                <div class="student-quiz-title">
-                  <img src="/img/quiz.png" alt="Quiz icon">
-                  <div class="student-quiz-title-details">
-                    <div class="student-quiz-name">${quiz.title}</div>
-                    <div class="student-quiz-date">Publication date: ${quiz.date}</div>
-                  </div>
-                </div>
-                <div class="student-quiz-details">
-                  <div class="student-quiz-dead-line">
-                    <p>Deadline: ${quiz.deadline}</p>
-                  </div>
-                  <div class="student-quiz-instructor">
-                    <p>Instructor: ${quiz.instructor}</p>
-                  </div>
-                </div>
-                <button class="btn-preview-quiz">Preview Quiz</button>
-              </div>
+    <div class="student-quiz-title">
+      <img src="/img/quiz.png" alt="Quiz icon">
+      <div class="student-quiz-title-details">
+        <div class="student-quiz-name">${quiz.title}</div>
+        <div class="student-quiz-date">Publication date: ${quiz.date}</div>
+      </div>
+    </div>
+    <div class="student-quiz-details">
+      <div class="student-quiz-dead-line">
+        <p>Deadline: ${quiz.deadline}</p>
+      </div>
+      <div class="student-quiz-instructor">
+        <p>Instructor: ${quiz.instructor}</p>
+      </div>
+    </div>
+    <button class="btn-preview-quiz" onclick="location.href='/quiz.html?quizId=${quiz.id}'">Preview Quiz</button>
+  </div>
             `;
             quizContainer.innerHTML += quizHTML;
           });

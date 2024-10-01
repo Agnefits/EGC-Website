@@ -8,16 +8,22 @@
     <title>Show Students Grades</title>
     <link rel="icon" href="/img/logo.png" sizes="48x32">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/Show studentsGrades.css">
+    <link rel="stylesheet" href="/style/Show studentsGrades.css">
     <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <!-- <link rel="stylesheet" href="/style/nav.css"> -->
 </head>
 
 <body>
     <main>
+        <div class="header">
+            <img src="/img/arrow.png" alt="Go Back" id="goBackImage" width="20px" height="20px" onclick="goBackToCoursePage()">  
+            <h3>Show Students Grades</h3>
+        </div>
+
         <div class="content">
-            <div class="text">
+            <!-- <div class="text">
                 <h3>Show Students Grades</h3>
-            </div>
+            </div> -->
             <!-- <a href="/pages/Add_Student.html" class="added">Add Student</a> -->
             <div id="selection">
                 <select id="department" name="department" required>
@@ -72,8 +78,13 @@
         </div>
 
     </main>
-    <script src="/js/show student grade.js"></script>
+    <script src="/script/show student grade.js"></script>
     <script>
+        function goBackToCoursePage() 
+{
+    console.log('Go Back button clicked!'); // Debug log
+    window.location.href = '/admin/Students';
+}
     </script>
 </body>
 
