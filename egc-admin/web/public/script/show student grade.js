@@ -1,6 +1,10 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     // Load students when the page loads
     loadStudents();
+
+    // Restore checkbox states from localStorage
+    restoreCheckboxStates();
 
     // Add event listeners for dropdowns
     document.getElementById('department').addEventListener('change', loadStudents);
@@ -56,19 +60,24 @@ async function loadStudents() {
                 <td>${student.no_section || 'N/A'}</td>
                 <td>${student.total_grade || 'N/A'}</td>
                 <td>
-                    <input type="checkbox" class="grade-checkbox show-grade" name="gradeVisibility-${student.id}-show" data-id="${student.id}" ${student.show_grade ? 'checked' : ''}>
+                    <input type="checkbox" class="grade-checkbox show-grade" name="gradeVisibility-${student.id}-show" data-id="${student.id}">
                     Show Grade
-                    <input type="checkbox" class="grade-checkbox hide-grade" name="gradeVisibility-${student.id}-hide" data-id="${student.id}" ${student.hide_grade ? 'checked' : ''}>
+                    <input type="checkbox" class="grade-checkbox hide-grade" name="gradeVisibility-${student.id}-hide" data-id="${student.id}">
                     Hide Grade
                 </td>
                 <td>
-                    <button class="details-btn show-details" data-id="${student.id}">Show Details</button>
+                    <button class="details-btn show-details" data-id="${student.id}" onclick="window.location.href='/admin/Grades?studentId=${student.id}'">
+                        Show Details
+                    </button>
                 </td>
             `;
             studentsTableBody.appendChild(row);
         });
 
-        // Reattach event listeners for checkboxes
+        // Restore checkbox states after appending rows
+        restoreCheckboxStates();
+
+        // Attach event listeners for checkboxes
         document.querySelectorAll('.grade-checkbox').forEach(checkbox => {
             checkbox.addEventListener('change', handleCheckboxChange);
         });
@@ -83,20 +92,21 @@ function handleShowAllChange(event) {
     const isChecked = event.target.checked;
 
     if (isChecked) {
-        // Uncheck 'Hide All Grades'
         document.getElementById('hide-all-grades').checked = false;
 
         // Check all 'Show Grade' checkboxes and uncheck 'Hide Grade'
         document.querySelectorAll('.show-grade').forEach(checkbox => {
             checkbox.checked = true;
+            localStorage.setItem(checkbox.name, true); // Save to localStorage
         });
         document.querySelectorAll('.hide-grade').forEach(checkbox => {
             checkbox.checked = false;
+            localStorage.setItem(checkbox.name, false); // Save to localStorage
         });
     } else {
-        // Uncheck all 'Show Grade' checkboxes when 'Show All' is unchecked
         document.querySelectorAll('.show-grade').forEach(checkbox => {
             checkbox.checked = false;
+            localStorage.setItem(checkbox.name, false); // Save to localStorage
         });
     }
 }
@@ -105,20 +115,21 @@ function handleHideAllChange(event) {
     const isChecked = event.target.checked;
 
     if (isChecked) {
-        // Uncheck 'Show All Grades'
         document.getElementById('show-all-grades').checked = false;
 
         // Check all 'Hide Grade' checkboxes and uncheck 'Show Grade'
         document.querySelectorAll('.hide-grade').forEach(checkbox => {
             checkbox.checked = true;
+            localStorage.setItem(checkbox.name, true); // Save to localStorage
         });
         document.querySelectorAll('.show-grade').forEach(checkbox => {
             checkbox.checked = false;
+            localStorage.setItem(checkbox.name, false); // Save to localStorage
         });
     } else {
-        // Uncheck all 'Hide Grade' checkboxes when 'Hide All' is unchecked
         document.querySelectorAll('.hide-grade').forEach(checkbox => {
             checkbox.checked = false;
+            localStorage.setItem(checkbox.name, false); // Save to localStorage
         });
     }
 }
@@ -131,7 +142,19 @@ function handleCheckboxChange(event) {
     document.querySelectorAll(`input[name^="gradeVisibility-${id}"]`).forEach(checkbox => {
         if (checkbox !== clickedCheckbox) {
             checkbox.checked = false;
+            localStorage.setItem(checkbox.name, false); // Save to localStorage
         }
+    });
+
+    // Save the state of the clicked checkbox to localStorage
+    localStorage.setItem(clickedCheckbox.name, clickedCheckbox.checked);
+}
+
+function restoreCheckboxStates() {
+    // Restore states for all grade checkboxes
+    document.querySelectorAll('.grade-checkbox').forEach(checkbox => {
+        const storedValue = localStorage.getItem(checkbox.name);
+        checkbox.checked = storedValue === 'true'; // Convert stored value to boolean
     });
 }
 
