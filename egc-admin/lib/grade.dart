@@ -62,12 +62,12 @@ class DatabaseHelper {
     // }
 
 
-     _db.execute('''
-       DROP TABLE attendance;
-    ''');
-         _db.execute('''
-       DROP TABLE student_attendance;
-    ''');
+    //  _db.execute('''
+    //    DROP TABLE attendance;
+    // ''');
+    //      _db.execute('''
+    //    DROP TABLE student_attendance;
+    // ''');
     _db.execute('''
       CREATE TABLE IF NOT EXISTS student_course_degrees (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

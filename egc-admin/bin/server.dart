@@ -83,6 +83,7 @@ void main() async {
   router.get('/admin/ClassSchedules', getAdminClassSchedulesHandler);
   router.get('/admin/ShowClassSchedules', getShowAdminClassSchedulesHandler);
   router.get('/admin/AddClassSchedule', getAddAdminClassSchedulesHandler);
+  router.get('/admin/ShowStudentGrades', getShowStudentGradesHandler);
 
   ///Staff
   //Dashboard
@@ -136,8 +137,8 @@ void main() async {
   router.get('/student/AllMaterials', getStudentAllMaterialsHandler);
   router.get('/student/Grades', getStudentGradesHandler);
   router.get('/student/Staff', getStudentStaffHandler);
-  router.get('/student/Quiz',getQuizHandler);
-  router.get('/student/quiz.html',getQuizHandler);
+  // router.get('/student/Quiz',getQuizHandler);
+
   ///Get Files
   router.get('/style/<name>', () {
     return Response.ok({}, headers: {
