@@ -104,13 +104,3 @@ Future<Response> getStudentStaffHandler(Request request) async {
     return Response.internalServerError(body: e.toString());
   }
 }
-
-
-Future<Response> getQuizHandler(Request request) async {
-  try {
-    var html = File('web/page/Quiz.html').readAsStringSync();
-    return Response.ok(html, headers: {'Content-Type': 'text/html'});
-  } catch (e) {
-    return Response.internalServerError(body: e.toString());
-  }
-}

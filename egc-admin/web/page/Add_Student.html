@@ -7,10 +7,15 @@
     <title>Add Student</title>
     <link rel="icon" href="/img/logo.png" sizes="48x32">
     <link rel="stylesheet" href="/style/Add_Student.css">
+    <link rel="stylesheet" href="/style/nav.css">
 </head>
 
 <body>
     <main>
+        <div class="nav-items">
+            <img src="/img/arrow.png" alt="Go Back" id="goBackImage" width="20px" height="20px" onclick="goBackToCoursePage()">  
+        </div>
+
         <form id="addstudentForm" method="POST" enctype="multipart/form-data">
             <h2>Add Student</h2>
             <div class="profile-picture-student">
@@ -84,6 +89,13 @@
         </form>
     </main>
     <script src="/script/Add_Student.js" defer></script>
+    <script>
+        function goBackToCoursePage() 
+{
+    console.log('Go Back button clicked!'); // Debug log
+    window.location.href = '/admin/Students';
+}
+    </script>
 </body>
 
 </html>
