@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Class Schedule</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <link rel="stylesheet" href="/style/add-class-schedule.css">
+</head>
+
+<body>
+    <main>
+        <h2>Add a Class</h2>
+        <form id="addClassForm" method="POST" enctype="multipart/form-data">
+            <div class="info">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required placeholder="Enter Class Title">
+                <label for="instructor">Staff:</label>
+                <input type="text" id="instructor" name="instructor" required placeholder="Enter Staff Name">
+                <label for="department">Department:</label>
+                <select id="department" name="department" required>
+                    <option value="">Select Department</option>
+                    <option value="IT">IT</option>
+                    <option value="Electrical">Electrical</option>
+                    <option value="Mechanical">Mechanical</option>
+                </select>
+                <label for="year_level">Year:</label>
+                <select id="year_level" name="year_level" required>
+                    <option value="">Select Year</option>
+                    <option value="1st">1st</option>
+                    <option value="2nd">2nd</option>
+                    <option value="3rd">3rd</option>
+                    <option value="4th">4th</option>
+                </select>
+                <label for="section">Section:</label>
+                <select id="section" name="sectionNo" required>
+                    <option value="">Select Section</option>
+                    <option value="1">section 1</option>
+                    <option value="2">section 2</option>
+                    <option value="3">section 3</option>
+                    <option value="4">section 4</option>
+                    <option value="5">section 5</option>
+                    <option value="6">section 6</option>
+                    <option value="7">section 7</option>
+                    <option value="8">section 8</option>
+                    <option value="9">section 9</option>
+                    <option value="10">section 10</option>
+                    <option value="11">section 11</option>
+                    <option value="12">section 12</option>
+                </select>
+                <label for="place">Place:</label>
+                <input type="text" id="place" name="place" required placeholder="Enter Class Place">
+                <label for="day">Day:</label>
+                <select id="day" name="day" required>
+                <option value="">Select Day</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+            </select>
+                <label for="timeFrom">Time From:</label>
+                <input type="time" id="timeFrom" name="timeFrom" required placeholder="Enter Class Time From" min="8:00" max="21:00" step="300">
+                <label for="timeTo">Time To:</label>
+                <input type="time" id="timeTo" name="timeTo" required placeholder="Enter Class Time To" min="8:00" max="21:00" step="300">
+            </div>
+
+            <button type="submit" id="add-class-button">Add Class</button>
+
+        </form>
+    </main>
+    <script src="/script/add-class-schedule.js" defer></script>
+</body>
+
+</html>
