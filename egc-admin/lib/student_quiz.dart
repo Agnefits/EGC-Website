@@ -26,6 +26,25 @@ class DatabaseHelper {
     ''');
   }
 
+
+
+  // دالة لإضافة إجابات الطالب
+  static void addStudentQuestionAnswers(Map<String, dynamic> answersData) {
+    final statement = _db.prepare('''
+      INSERT INTO student_question_answers (answers, questionId, studentId)
+      VALUES (?, ?, ?)
+    ''');
+
+    statement.execute([
+      answersData['answers'], // الإجابات
+      answersData['questionId'], // رقم السؤال
+      answersData['studentId'], // رقم الطالب
+    ]);
+
+    statement.dispose();
+  }
+
+
   static void addStudentQuizAttempt(Map<String, dynamic> quizData) {
     final statement = _db.prepare('''
       INSERT INTO student_quiz_attempts (quizId, studentId, date, score)
@@ -91,8 +110,24 @@ class DatabaseHelper {
       'date': studentQuiz['date'],
       'score': studentQuiz['score'],
       'student': studentQuiz['student'],
+      'quizId': studentQuiz['quizId'], // إضافته
+
     };
   }
+
+
+static List<Map<String, dynamic>> getQuizQuestions(String quizId) {
+    final results = _db.select('SELECT * FROM quiz_questions WHERE quizId = ?', [quizId]);
+    return results.map((row) => {
+        'id': row['id'],
+        'title': row['title'],
+        'type': row['type'],
+        'answers': jsonDecode(row['answers']), // افترض أنك خزنت الإجابات كـ JSON
+        'correctAnswer': row['correctAnswer'],
+        'degree': row['degree'],
+    }).toList();
+}
+
 }
 
 class StudentQuiz {
@@ -106,98 +141,108 @@ class StudentQuiz {
     DatabaseHelper.init();
 
     // عرض المواد
-    router.get('/student-quizzes/<quizId>',
-        (Request request, String quizId) async {
-      try {
-        final quizzes = DatabaseHelper.getStudentQuizAttempts(quizId);
-        final jsonQuizzes = jsonEncode(quizzes);
+router.get('/student-quizzes/<quizId>', (Request request, String quizId) async {
+    try {
+        final questions = DatabaseHelper.getQuizQuestions(quizId);
+        final jsonQuestions = jsonEncode(questions);
         return Response.ok(
-          jsonQuizzes,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
+            jsonQuestions,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
         );
-      } catch (e) {
+    } catch (e) {
         print(e);
         return Response.internalServerError(body: 'Error: $e');
-      }
-    });
+    }
+});
+
 
     // عرض أحد المواد
-    router.get('/courses/student-quizzes/<id>',
-        (Request request, String id) async {
-      try {
-        final quizzes = DatabaseHelper.getStudentQuizAttempt(id);
-        final jsonQuizzes = jsonEncode(quizzes);
+    // Endpoint لجلب المحاولات السابقة للطالب بناءً على studentId
+router.get('/courses/student-quizzes/<studentId>', (Request request, String studentId) async {
+    try {
+        final attempts = DatabaseHelper.getStudentQuizAttempt(studentId);
+        final jsonAttempts = jsonEncode(attempts);
         return Response.ok(
-          jsonQuizzes,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
+            jsonAttempts,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
         );
-      } catch (e) {
+    } catch (e) {
         return Response.internalServerError(body: 'Error: $e');
-      }
-    });
+    }
+});
+
+
 
     // إضافة مادة جديدة
     router.post('/add-student-quiz', (Request request) async {
-      try {
-        final form = request.multipartFormData;
-        final data = <String, dynamic>{};
-
-        await for (final formData in form) {
-          data.addAll({formData.name: await formData.part.readString()});
-        }
-        data.addAll({"date": DateTime.now().toString()});
-
-        DatabaseHelper.addStudentQuizAttempt(data);
+    try {
+        final payload = jsonDecode(await request.readAsString());
+        DatabaseHelper.addStudentQuizAttempt(payload);
 
         return Response.ok('Quiz added successfully', headers: {
-          'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Origin': '*',
         });
-      } catch (e) {
+    } catch (e) {
         return Response.internalServerError(
             body: 'Error processing request',
-            headers: {'Content-Type': 'application/json', "Error": '$e'});
-      }
-    });
+            headers: {'Content-Type': 'application/json', "Error": '$e'}
+        );
+    }
+});
 
-    // تعديل مادة
-    router.put('/update-student-quiz/<id>', (Request request, String id) async {
-      try {
-        final form = request.multipartFormData;
-        final data = <String, dynamic>{};
 
-        await for (final formData in form) {
-          data.addAll({formData.name: await formData.part.readString()});
-        }
+// Endpoint لتسجيل إجابات الطالب
+router.post('/add-student-question-answers', (Request request) async {
+    try {
+        final payload = jsonDecode(await request.readAsString());
+        DatabaseHelper.addStudentQuestionAnswers(payload);  // تسجيل الإجابات في قاعدة البيانات
 
-        DatabaseHelper.updateStudentQuizAttempt(id, data);
+        return Response.ok('Answers recorded successfully', headers: {
+          'Access-Control-Allow-Origin': '*',
+        });
+    } catch (e) {
+        return Response.internalServerError(
+            body: 'Error processing request',
+            headers: {'Content-Type': 'application/json', "Error": '$e'}
+        );
+    }
+});
+
+
+   // Endpoint لتحديث بيانات محاولة الطالب
+router.put('/update-student-quiz/<id>', (Request request, String id) async {
+    try {
+        final payload = jsonDecode(await request.readAsString());
+        DatabaseHelper.updateStudentQuizAttempt(id, payload);
 
         return Response.ok('Quiz updated successfully', headers: {
-          'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Origin': '*',
         });
-      } catch (e) {
+    } catch (e) {
         return Response.internalServerError(
             body: 'Error processing request',
-            headers: {'Content-Type': 'application/json', "Error": '$e'});
-      }
-    });
+            headers: {'Content-Type': 'application/json', "Error": '$e'}
+        );
+    }
+});
 
-    // حذف مادة
-    router.delete('/delete-student-quiz/<id>',
-        (Request request, String id) async {
-      try {
+// Endpoint لحذف محاولة الطالب بناءً على id
+router.delete('/delete-student-quiz/<id>', (Request request, String id) async {
+    try {
         DatabaseHelper.deleteStudentQuizAttempt(int.parse(id));
         return Response.ok('Quiz deleted successfully', headers: {
-          'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Origin': '*',
         });
-      } catch (e) {
+    } catch (e) {
         return Response.internalServerError(body: 'Error: $e');
-      }
-    });
+    }
+});
+
   }
 }
