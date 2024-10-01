@@ -10,6 +10,15 @@ let allCourses = [];
 document.addEventListener('DOMContentLoaded', () => {
     loadCourses();
     setupEventListeners();
+    const userData = localStorage.getItem('userData');
+    const parsedData = JSON.parse(userData); // Parse the JSON string
+    const role = parsedData.role; // Get the role
+    const btnAddCourse = document.querySelector('.btnAddCourse'); // Adjust selector as needed
+    if (role === 'Doctor') {
+        btnAddCourse.style.display = 'block'; // Show button
+    } else {
+        btnAddCourse.style.display = 'none'; // Hide button for other roles
+    }
 });
 
 async function loadCourses() {
@@ -69,6 +78,9 @@ function displayCourses(courses, page = 0) {
         return;
     }
 
+    const userData = localStorage.getItem('userData');
+    const parsedData = JSON.parse(userData); // Parse the JSON string
+    const role = parsedData.role; // Get the role
     coursesToDisplay.forEach(course => {
                 const row = document.createElement('div');
                 row.className = "course_details";
@@ -97,7 +109,7 @@ function displayCourses(courses, page = 0) {
                         <p>Department: <span class="float-right">${course.department}</span></p>
                         <hr>
                         <p>Year: <span class="float-right">${course.year}</span></p>
-                        <button class="edit-btn" data-id="${course.id}">Edit Course</button> <!-- Add Edit Button -->
+                        ${role === 'Doctor'?`<button class="edit-btn" data-id="${course.id}">Edit Course</button> <!-- Add Edit Button -->` : "<br><br>"}
                     </div>
                 </div>
             </div>
@@ -163,7 +175,7 @@ function setupEventListeners() {
 
 function addEventListeners() {
     document.querySelectorAll('.course_details').forEach(button => {
-        button.querySelector('.course-image').addEventListener('click', async(event) => {
+        button.querySelector('.course-image').addEventListener('click', async (event) => {
             const courseId = button.dataset.id;
             if (!courseId) {
                 alert('Course ID is missing');
@@ -209,7 +221,7 @@ function changePage(direction) {
 function updatePagination(totalCourses) {
     const prevPageBtn = document.getElementById('prevPage');
     const nextPageBtn = document.getElementById('nextPage');
-    
+
     // Enable or disable pagination buttons
     prevPageBtn.disabled = currentPage === 0;
     nextPageBtn.disabled = (currentPage + 1) * coursesPerPage >= totalCourses;
