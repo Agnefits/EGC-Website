@@ -130,6 +130,7 @@ void main() async {
   router.get('/student/AllMaterials', getStudentAllMaterialsHandler);
   router.get('/student/Grades', getStudentGradesHandler);
   router.get('/student/Staff', getStudentStaffHandler);
+  router.get('/student/Quiz',getQuizHandler);
 
   ///Get Files
   router.get('/style/<name>', () {
