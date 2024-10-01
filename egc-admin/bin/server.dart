@@ -53,7 +53,8 @@ void main() async {
 
   ///Admin
   ///Doctor Pages
-  router.get('/admin/ShowDoctors', getDoctorsHandler);
+  router.get('/admin/Doctors', getDoctorsHandler);
+  router.get('/admin/ShowDoctors', getShowDoctorsHandler);
   router.get('/admin/AddDoctor', getAddDoctorHandler);
   //router.post('/admin/AddDoctor', postAddDoctorHandler);
   router.get('/admin/EditDoctor', getEditDoctorHandler);
@@ -61,7 +62,8 @@ void main() async {
   //router.post('/admin/DeleteDoctor', deleteDoctorHandler);
 
   ///Teaching Assistant Pages
-  router.get('/admin/ShowTeachingAssistants', getTeachingAssistantsHandler);
+  router.get('/admin/TeachingAssistants', getTeachingAssistantsHandler);
+  router.get('/admin/ShowTeachingAssistants', getShowTeachingAssistantsHandler);
   router.get('/admin/AddTeachingAssistant', getAddTeachingAssistantHandler);
   //router.post('/admin/AddTeachingAssistant', postAddTeachingAssistantHandler);
   router.get('/admin/EditTeachingAssistant', getEditTeachingAssistantHandler);
@@ -69,7 +71,8 @@ void main() async {
   //router.post('/admin/DeleteTeachingAssistant', deleteTeachingAssistantHandler);
 
   ///Student Pages
-  router.get('/admin/ShowStudents', getStudentsHandler);
+  router.get('/admin/Students', getStudentsHandler);
+  router.get('/admin/ShowStudents', getShowStudentsHandler);
   router.get('/admin/AddStudent', getAddStudentHandler);
   //router.post('/admin/AddStudent', postAddStudentHandler);
   router.get('/admin/EditStudent', getEditStudentHandler);
@@ -78,6 +81,8 @@ void main() async {
 
   router.get('/admin/StudentAttendance', getAdminStudentAttendanceHandler);
   router.get('/admin/ClassSchedules', getAdminClassSchedulesHandler);
+  router.get('/admin/ShowClassSchedules', getShowAdminClassSchedulesHandler);
+  router.get('/admin/AddClassSchedule', getAddAdminClassSchedulesHandler);
 
   ///Staff
   //Dashboard
@@ -91,6 +96,7 @@ void main() async {
   //Course
   router.get('/staff/Course/', getCourseHomeHandler);
   router.post('/staff/Course/grades', insertStudentDegrees);
+  router.post('/insertStudentDegrees', insertStudentDegrees);
   router.get('/staff/Course/Home', getCourseHomeHandler);
   router.get('/staff/Course/Content', getCourseContentHandler);
   router.get(

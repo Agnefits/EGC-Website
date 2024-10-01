@@ -14,41 +14,6 @@
 </head>
 
 <body>
-    <div class="popup">
-        <section class="add-class">
-            <h2>Add a Class</h2>
-
-            <form id="addClassForm" method="POST" enctype="multipart/form-data">
-                <button id="close-add-class-button">X</button>
-                <div class="info">
-                    <label for="title">Title:</label>
-                    <input type="text" id="title" name="title" required placeholder="Enter Class Title">
-                    <label for="instructor
-                    ">Instructor:</label>
-                    <input type="text" id="instructor" name="instructor" required placeholder="Enter Instructor Name">
-                    <label for="place">Place:</label>
-                    <input type="text" id="place" name="place" required placeholder="Enter Class Place">
-                    <label for="day">Day:</label>
-                    <select id="day" name="day" required>
-                        <option value="">Select Day</option>
-                        <option value="Saturday">Saturday</option>
-                        <option value="Sunday">Sunday</option>
-                        <option value="Monday">Monday</option>
-                        <option value="Tuesday">Tuesday</option>
-                        <option value="Wednesday">Wednesday</option>
-                        <option value="Thursday">Thursday</option>
-                    </select>
-                    <label for="timeFrom">Time From:</label>
-                    <input type="time" id="timeFrom" name="timeFrom" required placeholder="Enter Class Time From">
-                    <label for="timeTo">Time To:</label>
-                    <input type="time" id="timeTo" name="timeTo" required placeholder="Enter Class Time To">
-                </div>
-
-                <button type="submit" id="add-class-button">Add Class</button>
-
-            </form>
-        </section>
-    </div>
     <div class="sidebar">
         <div class="logo-details">
             <a href="/home"><img src="/img/logo.png" class="icon"></a>
@@ -61,25 +26,25 @@
 
 
             <li>
-                <a href="/admin/ShowDoctors">
+                <a href="/admin/Doctors">
                     <i class='bx bxs-school'></i>
-                    <span class="links_name">Show Doctor</span>
+                    <span class="links_name">Doctor</span>
                 </a>
                 <span class="tooltip">Show Doctor</span>
             </li>
             <li>
-                <a href="/admin/ShowTeachingAssistants">
+                <a href="/admin/TeachingAssistants">
                     <i class='bx bx-chalkboard'></i>
-                    <span class="links_name">Show Teaching Assistant</span>
+                    <span class="links_name">Teaching Assistant</span>
                 </a>
-                <span class="tooltip">Show Teaching Assistant</span>
+                <span class="tooltip">Teaching Assistant</span>
             </li>
             <li>
-                <a href="/admin/ShowStudents">
+                <a href="/admin/Students">
                     <i class='bx bx-user'></i>
-                    <span class="links_name">Show Student</span>
+                    <span class="links_name"> Student</span>
                 </a>
-                <span class="tooltip">Show Student</span>
+                <span class="tooltip">Student</span>
             </li>
             <li>
                 <a href="/admin/StudentAttendance">
@@ -113,10 +78,10 @@
                 <h3>Class Schedules</h3>
             </div>
 
-            <button id="addClassButton" class="btnAddClass">Add Class</button>
+            <!-- <button id="addClassButton" class="btnAddClass">Add Class</button> -->
             <div class="filter-section">
                 <div class="filter-dropdown">
-                    <select id="department" required>
+                    <select id="department" name="department" required>
                         <option value="">Select Department</option>
                         <option value="IT">IT</option>
                         <option value="Electrical">Electrical</option>
@@ -124,7 +89,7 @@
                     </select>
                 </div>
                 <div class="filter-dropdown">
-                    <select id="year_level" required>
+                    <select id="year_level" nam="year_level" required>
                         <option value="">Select Year</option>
                         <option value="1st">1st</option>
                         <option value="2nd">2nd</option>
@@ -133,7 +98,7 @@
                     </select>
                 </div>
                 <div class="filter-dropdown">
-                    <select id="section" required>
+                    <select id="section" name="sectionNo" required>
                         <option value="">Select Section</option>
                         <option value="1">section 1</option>
                         <option value="2">section 2</option>

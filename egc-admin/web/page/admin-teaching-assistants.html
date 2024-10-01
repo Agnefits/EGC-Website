@@ -5,10 +5,10 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Show Students</title>
+    <title>Teaching Assistants</title>
     <link rel="icon" href="/img/logo.png" sizes="48x32">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/style/ShowStudents.css">
+    <link rel="stylesheet" href="/style/admin-doctors.css">
     <link rel="stylesheet" href="/style/AdminDashboard.css">
     <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
 </head>
@@ -24,14 +24,12 @@
             <i class='bx bx-menu' id="btn"></i>
         </div>
         <ul class="nav-list">
-
-
             <li>
                 <a href="/admin/Doctors">
                     <i class='bx bxs-school'></i>
-                    <span class="links_name">Doctor</span>
+                    <span class="links_name">Doctors</span>
                 </a>
-                <span class="tooltip">Show Doctor</span>
+                <span class="tooltip">Doctors</span>
             </li>
             <li>
                 <a href="/admin/TeachingAssistants">
@@ -73,46 +71,30 @@
             </li>
         </ul>
     </div>
-
     <main>
         <div class="content">
             <div class="text">
-                <h3>Show Students</h3>
+                <h3>Teaching Assistants</h3>
             </div>
-
-            <!-- <button class="add-btn" onclick="">Add student</button> -->
-
-            <!-- Search Bar -->
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search by Student Name or Department..." />
-                <button class="search-btn" onclick="searchStudents()">Search</button>
-            </div>
-
-            <table class="students-table" id="students-table">
-                <thead>
-                    <tr>
-
-                        <th>Student Name <i class='bx bx-chevron-down'></i></th>
-                        <th>Department <i class='bx bx-chevron-down'></i></th>
-                        <th>Year Level <i class='bx bx-chevron-down'></i></th>
-                        <th>Email <i class='bx bx-chevron-down'></i></th>
-                        <th>Phone Number <i class='bx bx-chevron-down'></i></th>
-                        <th>National Identity <i class='bx bx-chevron-down'></i></th>
-                        <th>Gender <i class='bx bx-chevron-down'></i></th>
-                        <th>Username <i class='bx bx-chevron-down'></i></th>
-                        <th>Details <i class='bx bx-chevron-down'></i></th>
-
-                    </tr>
-                </thead>
-
-                <tbody id="studentsTableBody">
-                    <!-- Rows will be dynamically added here -->
-                </tbody>
-            </table>
-        </div>
-
+            <section class="items">
+                <a href="/admin/ShowTeachingAssistants">
+                    <div class="item">
+                        <div class="blog-img">
+                            <img src="/img/showteaching-assistants.png" alt="Show Teaching Assistants" class="item-img">
+                        </div>
+                        <h3>Show Teaching Assistants</h3>
+                    </div>
+                </a>
+                <a href="/admin/AddTeachingAssistant">
+                    <div class="item">
+                        <div class="blog-img">
+                            <img src="/img/addteaching-assistant.png" alt="Add Teaching Assistant" class="item-img">
+                        </div>
+                        <h3>Add Teaching Assistant</h3>
+                    </div>
+                </a>
+            </section>
     </main>
-    <script src="/script/ShowStudents.js"></script>
     <script src="/script/AdminDashboard.js"></script>
 </body>
 
