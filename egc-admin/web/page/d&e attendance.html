@@ -75,36 +75,48 @@
         </div>
 
         <div class="container">
-            <div id="formSection">
-                <h1>Mark Attendance</h1>
-
-                <label for="department">Department:</label>
-                <select id="department" name="department">
-              <option value="mechanics">Mechanics</option>
-              <option value="electronics">Electronics</option>
-              <option value="computers">Computers</option>
-            </select>
-
-                <label for="class">Class:</label>
-                <select id="class" name="class">
-              <!-- The classes will be dynamically generated based on the selected department -->
-            </select>
-
-                <ul id="students-list">
-                    <!-- The students will be dynamically generated based on the selected class and department -->
-                </ul>
-
-
-
-
-                <!-- Add a new section for notes -->
-                <section id="notes">
-                    <h2>Notes</h2>
-                    <textarea id="notes-textarea" placeholder="Add your notes here..."></textarea>
-                    <button id="save-notes-btn">Save Notes</button>
-                    <div id="notes-display"></div>
-                </section>
-
+            <div id="formSection" style="display: flex; flex-wrap: wrap;">
+                <div style="flex: 1; margin-right: 20px;">
+                    <div class="form-group">
+                        <label for="department">Department:</label>
+                        <select id="department" name="department">
+                            <option>Select Department</option>
+                            <option value="IT">Information Technology</option>
+                            <option value="Mechanic">Mechanic</option>
+                            <option value="Electrical">Electrical</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="yearlevel">Year Level:</label>
+                        <select id="yearlevel" name="year_level" required>
+                            <option>Select Year Level</option>
+                            <option value="1st">1st Year</option>
+                            <option value="2nd">2nd Year</option>
+                            <option value="3rd">3rd Year</option>
+                            <option value="4th">4th Year</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="class">Section:</label>
+                        <select id="n_section" name="class">
+                            <option value="">1</option>
+                            <option value="2">2</option>
+                        </select>
+                        
+                    </div>
+                    <ul id="studentsTableBody">
+                        <!-- Filtered students will be populated here -->
+                    </ul>
+                </div>
+            
+                <div class="test" style="flex: 0;">
+                    <section id="notes">
+                        <h2>Notes</h2>
+                        <textarea id="notes-textarea" placeholder="Add your notes here..."></textarea>
+                        <button id="save-notes-btn">Save Notes</button>
+                        <div id="notes-display"></div>
+                    </section>
+                    
                 <div id="summarySection">
                     <h3>Summary</h3>
                     <p>
@@ -119,19 +131,8 @@
                         Total Absent:
                         <span id="totalAbsent">0</span>
                     </p>
-                    <p>
-                        Total Leave:
-                        <span id="totalLeave">0</span>
-                    </p>
-                </div>
-
-                <button class="submit_att" onclick="submitAttendance()">
-                Submit Attendance
-            </button>
-
-                <!-- Result Section -->
+  <!-- Result Section -->
                 <div id="resultSection" style="display: none;">
-                    <h3>Attendance Result</h3>
                     <p>
                         Date:
                         <span id="attendanceDate"></span>
@@ -140,27 +141,23 @@
                         Time:
                         <span id="attendanceTime"></span>
                     </p>
-                    <p>
-                        Class:
-                        <span id="attendanceClass"></span>
-                    </p>
-                    <p>
-                        Total Students:
-                        <span id="attendanceTotalStudents"></span>
-                    </p>
-                    <p>
-                        Present:
-                        <span id="attendancePresent"></span>
-                    </p>
-                    <p>
-                        Absent:
-                        <span id="attendanceAbsent"></span>
-                    </p>
-                    <p>
-                        Leave:
-                        <span id="attendanceLeave"></span>
-                    </p>
+                  
                 </div>
+
+                    
+                </div>
+                </div>
+            </div>
+
+        
+                
+
+
+                <button class="submit_att" onclick="submitAttendance()">
+                Submit Attendance
+            </button>
+
+              
             </div>
         </div>
     </section>
