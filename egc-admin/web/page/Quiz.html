@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +7,10 @@
     <link rel="icon" href="/img/logo.png" sizes="48x32">
     <link rel="stylesheet" href="/style/Quiz.css">
 </head>
-
 <body>
     <form class="quiz_page">
-        <div class="home-box cutom-box ">
-            <h1>Quiz</h1>
+        <div class="home-box cutom-box">
+            <h1>Quiz <span class="Quiz_id"></span></h1>
             <div class="profile-picture">
                 <img src="/img/picture.png">
             </div>
@@ -22,25 +20,17 @@
             <button type="button" class="btn" onclick="startQuiz()">Start Quiz</button>
         </div>
 
-        <div class="quiz-box cutom-box hide ">
-            <div class="question-number">
-
-            </div>
-            <div class="question-text">
-
-            </div>
-            <div class="option-container">
-
-            </div>
+        <div class="quiz-box cutom-box hide">
+            <div class="question-number"></div>
+            <div class="question-text"></div>
+            <div class="option-container"></div>
             <div class="next-question-btn">
                 <button type="button" class="btn" onclick="next()"> Next</button>
             </div>
-            <div class="answers-indicator">
-
-            </div>
+            <div class="answers-indicator"></div>
         </div>
 
-        <div class="result-box cutom-box hide ">
+        <div class="result-box cutom-box hide">
             <h1>Quiz Result</h1>
             <table>
                 <tr>
@@ -68,12 +58,9 @@
                     <td><span class="Total-Score"></span></td>
                 </tr>
             </table>
-            <button type="submit" class="btn" onclick="myFunction()"> Submit</button>
+            <button type="button" class="btn" onclick="myFunction()"> Submit</button>
         </div>
     </form>
     <script src="/script/Quiz.js"></script>
-    <script src="/script/app.js"></script>
-
 </body>
-
 </html>

@@ -18,7 +18,6 @@ import 'package:egc_website/student_handlers.dart';
 import 'package:egc_website/student_quiz.dart';
 import 'package:egc_website/teaching_assistants.dart';
 import 'package:egc_website/admin.dart';
-import 'package:egc_website/assignment.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_router/shelf_router.dart';
@@ -137,7 +136,7 @@ void main() async {
   router.get('/student/AllMaterials', getStudentAllMaterialsHandler);
   router.get('/student/Grades', getStudentGradesHandler);
   router.get('/student/Staff', getStudentStaffHandler);
-  // router.get('/student/Quiz',getQuizHandler);
+  router.get('/student/Quiz.html',getQuizHandler);
 
   ///Get Files
   router.get('/style/<name>', () {

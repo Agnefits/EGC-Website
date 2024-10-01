@@ -163,7 +163,7 @@ function fetchQuizzesForCourse(courseId) {
         <p>Instructor: ${quiz.instructor}</p>
       </div>
     </div>
-    <button class="btn-preview-quiz" onclick="location.href='/quiz.html?quizId=${quiz.id}'">Preview Quiz</button>
+    <button class="btn-preview-quiz" onclick="location.href='/student/Quiz.html?quizId=${quiz.id}'">Preview Quiz</button>
   </div>
             `;
             quizContainer.innerHTML += quizHTML;
