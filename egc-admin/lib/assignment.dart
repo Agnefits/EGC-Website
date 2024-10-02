@@ -54,7 +54,7 @@ class DatabaseHelper {
       String id, Map<String, dynamic> assignmentData, Uint8List? file) {
     final statement = _db.prepare('''
       UPDATE assignments
-      SET title = ?, date = ?, deadline = ?, description = ?, degree = ? ${file != null && !file.isEmpty ? ", filename = ?, file = ?" : ""}
+      SET title = ?, date = ?, deadline = ?, description = ?, degree = ? ${file != null && file.isNotEmpty ? ", filename = ?, file = ?" : ""}
       WHERE id = ?
     ''');
     List data = [
@@ -65,7 +65,7 @@ class DatabaseHelper {
       assignmentData['degree'],
     ];
 
-    if (file != null && !file.isEmpty) {
+    if (file != null && file.isNotEmpty) {
       data.add(assignmentData['fileName']);
       data.add(file);
     }
