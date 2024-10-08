@@ -274,23 +274,23 @@
                 font-family: "Roboto Condensed", sans-serif;
             }
 
-            .main-content {
+         
+            
+            .announcement {
+                background-color: #fff;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                font-size: 18px;
+                font-weight: 500;
+                font-family: "Roboto Condensed", sans-serif;
                 margin-left: 15%;
                 margin-right: 15%;
-                margin-bottom: 5%;
+                margin-bottom: 2%;
                 flex: 1;
                 padding: 20px;
                 overflow-y: auto;
                 width: 70%;
-            }
-            
-            .announcement {
-                background-color: #fff;
-                padding: 20px;
-                margin-bottom: 20px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                font-size: 18px;
-                font-weight: 500;
+                border-radius: 15px;
+
             }
             
             .announcement textarea {
@@ -305,27 +305,7 @@
                 font-weight: 500;
             }
             
-            button {
-                background: #0F2B4E;
-                color: white;
-                text-decoration: none;
-                font-size: 18px;
-                font-weight: 200;
-                padding: 8px 15px;
-                border-radius: 5px;
-                cursor: pointer;
-                border: none;
-                margin: 10px 0px;
-                font-family:"Roboto Condensed", sans-serif;
-            }
-            
-            .posts .post {
-                background-color: #fff;
-                padding: 15px;
-                margin: 30px 0px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                position: relative;
-            }
+       
             
             p {
                 margin: 5px 0;
@@ -337,28 +317,8 @@
                 overflow-wrap: break-word;
             }
             
-            .post-controls {
-                position: absolute;
-                top: 5px;
-                right: 10px;
-                display: flex;
-                gap: 5px;
-            }
-            .comment2 {
-                background-color: #fff;
-                padding: 10px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-                margin-bottom: 25px;
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                min-height: 200px;
-            }
-            
-            .comment2 p {
-                flex-grow: 1;
-            }
+        
+     
             
             .profile-container {
                 display: flex;
@@ -395,6 +355,7 @@
                 background-color: #0F2B4E;
                 border: 6px solid transparent;
                 margin-left: 16.7%;
+                border-radius: 15px;
               }
               
               option{

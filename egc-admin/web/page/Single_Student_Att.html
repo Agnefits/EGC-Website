@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance</title>
+    <link rel="stylesheet" href="/style/Single_Student_Att.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Student Attendance Record</h1>
+        </header>
+        
+        <section class="filters">
+            <select id="major" onchange="filterAttendance()">
+                <option value="all">Select Major</option>
+                <option value="science">Mechanical</option>
+                <option value="arts">Electric</option>
+                <option value="commerce">Information Technolgy</option>
+            </select>
+
+            <select id="year" onchange="filterAttendance()">
+                <option value="all">Select Year</option>
+                <option value="1">1st Year</option>
+                <option value="2">2nd Year</option>
+                <option value="3">3rd Year</option>
+            </select>
+
+            <select id="section" onchange="filterAttendance()">
+                <option value="all">Select Section</option>
+                <option value="a">Section 1</option>
+                <option value="b">Section 2</option>
+                <option value="c">Section 3</option>
+                <option value="d">Section 4</option>
+                <option value="e">Section 5</option>
+            </select>
+
+            <select id="coursefilter" onchange="filterAttendance()">
+                <option value="all">Select Course</option>
+                <option value="network">Network</option>
+                <option value="programming">Programming</option>
+                <option value="english">English</option>  
+            </select>
+            <select id="name" onchange="filterAttendance()">
+                <option value="">Select Name</option>
+                <option value="">Mariam Magdy</option>
+                <option value="">Salma Hussien</option>
+                <option value="">Mariem Mohamed</option>
+            </select>
+            <label for="date-from">Date From:</label>
+            <input type="date" id="date-from" onchange="filterAttendance()">
+
+            <label for="date-to">Date To:</label>
+            <input type="date" id="date-to" onchange="filterAttendance()">
+        </section>
+
+        <section class="student-info">
+            <h2>Student Name: Mariam Magdy</h2>
+            <p>ID: 123456</p>
+            <p>Year: 2nd Year</p>
+            <p>Section: 5</p>
+        </section>
+
+        <table id="attendance-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-major="science" data-year="1" data-section="a" data-course="network" data-date="2024-09-01">
+                    <td>2024-09-01</td>
+                    <td>Present</td>
+                </tr>
+                <tr data-major="science" data-year="1" data-section="b" data-course="programming" data-date="2024-09-02">
+                    <td>2024-09-02</td>
+                    <td>Absent</td>
+                </tr>
+                <tr data-major="arts" data-year="2" data-section="c" data-course="english" data-date="2024-09-03">
+                    <td>2024-09-03</td>
+                    <td>Present</td>
+                </tr>
+                <tr data-major="commerce" data-year="3" data-section="a" data-course="network" data-date="2024-09-04">
+                    <td>2024-09-04</td>
+                    <td>Present</td>
+                </tr>
+                <tr data-major="science" data-year="1" data-section="c" data-course="programming" data-date="2024-09-05">
+                    <td>2024-09-05</td>
+                    <td>Absent</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="/script/Single_Student_Att.js"></script>
+</body>
+</html>

@@ -1,22 +1,38 @@
-let sidebar = document.querySelector(".sidebar");
-let closeBtn = document.querySelector("#btn");
-closeBtn.addEventListener("click", () => {
-    sidebar.classList.toggle("open");
-    menuBtnChange();
-});
 document.addEventListener('DOMContentLoaded', () => {
-    const courseFilter = document.getElementById('coursefilter');
-    const announcementRows = Array.from(document.querySelectorAll('.comment2'));
+    const messagesContainer = document.getElementById('messages-container');
 
-    // Filter announcements based on selected course
-    courseFilter.addEventListener('change', (e) => {
-        const selectedCourse = e.target.value;
-        announcementRows.forEach(row => {
-            if (selectedCourse === "" || row.getAttribute('data-course') === selectedCourse) {
-                row.style.display = ''; // Show the row
+    async function loadAnnouncements() {
+        const messagesContainer = document.getElementById('messages-container');
+    
+        try {
+            const response = await fetch('/student/announcements');
+            if (response.ok) {
+                const announcements = await response.json();
+                messagesContainer.innerHTML = ''; // Clear previous announcements
+    
+                announcements.forEach(announcement => {
+                    const announcementDiv = document.createElement('div');
+                    announcementDiv.classList.add('announcement'); // Optional: Add a class for styling
+    
+                    // Create content for the announcement
+                    announcementDiv.innerHTML = `
+                        <strong>Sender: ${announcement.senderName}</strong>
+                        <p><strong>Description:</strong> ${announcement.description}</p>
+                        ${announcement.file ? `<p><strong>File:</strong> <a href="${announcement.file}" target="_blank">Download File</a></p>` : ''}
+                        <p><strong>Date:</strong> ${new Date(announcement.date).toLocaleString()}</p>
+                    `;
+    
+                    messagesContainer.appendChild(announcementDiv);
+                });
             } else {
-                row.style.display = 'none'; // Hide the row
+                messagesContainer.innerHTML = '<p>Failed to load announcements</p>';
             }
-        });
-    });
+        } catch (error) {
+            console.error('Error loading announcements:', error);
+            messagesContainer.innerHTML = '<p>An error occurred while loading announcements.</p>';
+        }
+    }
+    
+
+    loadAnnouncements(); // Load announcements when the page is loaded
 });

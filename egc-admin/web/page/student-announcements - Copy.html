@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Announcements</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel="stylesheet" href="/style/student-announcements.css" />
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <a href="../index.html?privilage=Student"><img src="../img/logo.png" class="icon"></a>
+            <div class="logo_name"><a href="../index.html?privilage=Student" class="logo_style">Egyptian Germany College</a></div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+
+            <li>
+                <a href="/student/Dashboard">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="links_name">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+                <a href="/student/announcements">
+                    <i class='bx bx-bell'></i>
+                    <span class="links_name">Announcements</span>
+                </a>
+                <span class="tooltip">Announcements</span>
+            </li>
+            <li>
+                <a href="/student/AllAssignments">
+                    <i class='bx bx-task'></i>
+                    <span class="links_name">Assignments</span>
+                </a>
+                <span class="tooltip">Assignments</span>
+            </li>
+            <li>
+                <a href="/student/AllQuizzes">
+                    <i class='bx bx-file'></i>
+                    <span class="links_name">Quizzes</span>
+                </a>
+                <span class="tooltip">Quizzes</span>
+            </li>
+            <li>
+                <a href="student-all-grades.html">
+                    <i class='bx bx-line-chart'></i>
+                    <span class="links_name">Grades</span>
+                </a>
+                <span class="tooltip">Grades</span>
+            </li>
+            <li>
+                <a href="student-staff.html">
+                    <i class='bx bx-mail-send'></i>
+                    <span class="links_name">Contact Staff</span>
+                </a>
+                <span class="tooltip">Contact Staff</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-cog'></i>
+                    <span class="links_name">Setting</span>
+                </a>
+                <span class="tooltip">Setting</span>
+            </li>
+            <li class="profile">
+                <div class="profile-details">
+                    <img src="../img/person1.JPG" alt="profileImg">
+                    <div class="name_email">
+                        <div class="name">Mariam Magdy</div>
+                        <div class="email">mariammagdy@gmail.com</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out"></i>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <div class="container">
+        <div class="text">
+            <h3>Announcements</h3>
+        </div>
+        <div class="filter">
+        <select id="coursefilter">
+            <option value="">Select Course</option>
+            <option value="network">Network</option>
+            <option value="programming">Programming</option>
+            <option value="english">English</option>  
+        </select>
+        </div>
+        <div id="messages-container">
+            <!-- Announcements will appear here -->
+        </div>
+
+    </div>
+    <script src="/script/student-announcement.js"></script>
+</body>
+
+</html>
