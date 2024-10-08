@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:shelf/shelf.dart';
-import 'package:shelf_multipart/form_data.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 class DatabaseHelper {
@@ -25,6 +24,34 @@ class DatabaseHelper {
       )
     ''');
   }
+
+
+  // دالة لإضافة إجابات الطالب
+static void addStudentQuestionAnswers(String quizId, String studentId, List<Map<String, dynamic>> answersList) {
+    final statement = _db.prepare(''' 
+      INSERT INTO student_question_answers (answers, questionId, studentId) 
+      VALUES (?, ?, ?) 
+    ''');
+
+    print('Executing statement for quizId: $quizId, studentId: $studentId, answersList: $answersList');
+    
+    try {
+    for (var answerData in answersList) {
+        statement.execute([
+            answerData['answers'], 
+            answerData['questionId'], 
+            studentId,
+        ]);
+    }
+} catch (e) {
+    print('Database insertion error: $e');
+    throw Exception('Error inserting student answers');
+}
+
+    statement.dispose();
+}
+
+
 
   static void addStudentQuizAttempt(Map<String, dynamic> quizData) {
     final statement = _db.prepare('''
@@ -81,18 +108,28 @@ class DatabaseHelper {
         .toList();
   }
 
-  static Map<String, dynamic> getStudentQuizAttempt(String id) {
-    final results = _db.select(
-        'SELECT SQ.id, SQ.date, SQ.score, S.Name student FROM student_quiz_attempts SQ LEFT JOIN students S ON SQ.studentId = S.id WHERE SQ.id = ' +
-            id);
-    var studentQuiz = results.first;
+
+static Map<String, dynamic> getQuizQuestionsWithCount(String quizId) {
+    final results = _db.select('SELECT * FROM quiz_questions WHERE quizId = ?', [quizId]);
+
+    List<Map<String, dynamic>> questions = results.map((row) => {
+        'id': row['id'],
+        'title': row['title'],
+        'type': row['type'],
+        'answers': jsonDecode(row['answers']), // افترض أنك خزنت الإجابات كـ JSON
+        'correctAnswer': row['correctAnswer'],
+        'degree': row['degree'],
+    }).toList();
+
+    int count = results.length;
+
     return {
-      'id': studentQuiz['id'],
-      'date': studentQuiz['date'],
-      'score': studentQuiz['score'],
-      'student': studentQuiz['student'],
+        'questions': questions,
+        'count': count,
     };
-  }
+}
+
+
 }
 
 class StudentQuiz {
@@ -106,98 +143,121 @@ class StudentQuiz {
     DatabaseHelper.init();
 
     // عرض المواد
-    router.get('/student-quizzes/<quizId>',
-        (Request request, String quizId) async {
-      try {
-        final quizzes = DatabaseHelper.getStudentQuizAttempts(quizId);
-        final jsonQuizzes = jsonEncode(quizzes);
+router.get('/student-quizzes/<quizId>', (Request request, String quizId) async {
+    try {
+        final questions = DatabaseHelper.getQuizQuestionsWithCount(quizId);
+        final jsonQuestions = jsonEncode(questions);
         return Response.ok(
-          jsonQuizzes,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
+            jsonQuestions,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
         );
-      } catch (e) {
+    } catch (e) {
         print(e);
         return Response.internalServerError(body: 'Error: $e');
-      }
-    });
+    }
+});
+
 
     // عرض أحد المواد
-    router.get('/courses/student-quizzes/<id>',
-        (Request request, String id) async {
-      try {
-        final quizzes = DatabaseHelper.getStudentQuizAttempt(id);
-        final jsonQuizzes = jsonEncode(quizzes);
+    // Endpoint لجلب المحاولات السابقة للطالب بناءً على studentId
+router.get('/courses/student-quizzes/<studentId>', (Request request, String studentId) async {
+    try {
+        final attempts = DatabaseHelper.getStudentQuizAttempts(studentId);
+        final jsonAttempts = jsonEncode(attempts);
         return Response.ok(
-          jsonQuizzes,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
+            jsonAttempts,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
         );
-      } catch (e) {
+    } catch (e) {
         return Response.internalServerError(body: 'Error: $e');
-      }
-    });
+    }
+});
+
+
 
     // إضافة مادة جديدة
     router.post('/add-student-quiz', (Request request) async {
-      try {
-        final form = request.multipartFormData;
-        final data = <String, dynamic>{};
-
-        await for (final formData in form) {
-          data.addAll({formData.name: await formData.part.readString()});
-        }
-        data.addAll({"date": DateTime.now().toString()});
-
-        DatabaseHelper.addStudentQuizAttempt(data);
+    try {
+        final payload = jsonDecode(await request.readAsString());
+        DatabaseHelper.addStudentQuizAttempt(payload);
 
         return Response.ok('Quiz added successfully', headers: {
-          'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Origin': '*',
         });
-      } catch (e) {
+    } catch (e) {
         return Response.internalServerError(
             body: 'Error processing request',
-            headers: {'Content-Type': 'application/json', "Error": '$e'});
-      }
-    });
+            headers: {'Content-Type': 'application/json', "Error": '$e'}
+        );
+    }
+});
 
-    // تعديل مادة
-    router.put('/update-student-quiz/<id>', (Request request, String id) async {
-      try {
-        final form = request.multipartFormData;
-        final data = <String, dynamic>{};
 
-        await for (final formData in form) {
-          data.addAll({formData.name: await formData.part.readString()});
-        }
+// Endpoint for registering student's answers
+router.post('/add-student-question-answers', (Request request) async {
+    try {
+        final payload = jsonDecode(await request.readAsString());
 
-        DatabaseHelper.updateStudentQuizAttempt(id, data);
+        String quizId = payload['quizId'];
+        String studentId = payload['studentId'];
+        List<Map<String, dynamic>> answers = payload['answers'];
+
+        print('Quiz ID: $quizId, Student ID: $studentId, Answers: $answers');
+
+        DatabaseHelper.addStudentQuestionAnswers(quizId, studentId, answers);
+
+        return Response.ok('Answers recorded successfully', headers: {
+            'Access-Control-Allow-Origin': '*',
+        });
+    } catch (e) {
+        print('Error: $e');
+        return Response.internalServerError(
+            body: 'Error processing request',
+            headers: {'Content-Type': 'application/json', "Error": '$e'}
+        );
+    }
+});
+
+
+
+
+
+
+
+   // Endpoint لتحديث بيانات محاولة الطالب
+router.put('/update-student-quiz/<id>', (Request request, String id) async {
+    try {
+        final payload = jsonDecode(await request.readAsString());
+        DatabaseHelper.updateStudentQuizAttempt(id, payload);
 
         return Response.ok('Quiz updated successfully', headers: {
-          'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Origin': '*',
         });
-      } catch (e) {
+    } catch (e) {
         return Response.internalServerError(
             body: 'Error processing request',
-            headers: {'Content-Type': 'application/json', "Error": '$e'});
-      }
-    });
+            headers: {'Content-Type': 'application/json', "Error": '$e'}
+        );
+    }
+});
 
-    // حذف مادة
-    router.delete('/delete-student-quiz/<id>',
-        (Request request, String id) async {
-      try {
+// Endpoint لحذف محاولة الطالب بناءً على id
+router.delete('/delete-student-quiz/<id>', (Request request, String id) async {
+    try {
         DatabaseHelper.deleteStudentQuizAttempt(int.parse(id));
         return Response.ok('Quiz deleted successfully', headers: {
-          'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Origin': '*',
         });
-      } catch (e) {
+    } catch (e) {
         return Response.internalServerError(body: 'Error: $e');
-      }
-    });
+    }
+});
+
   }
 }

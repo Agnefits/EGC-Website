@@ -105,11 +105,10 @@ function populateSchedule(classList) {
         // Merge the cells spanning the class duration
         const duration = toIndex - fromIndex + 1;
         const cell = row.cells[fromIndex]; // Get the starting cell
-
+        cell.classList += "cell";
         if (cell) {
             cell.colSpan = duration; // Merge cells to show the entire class span
-            cell.innerHTML = `${title}<br>${instructor}<br>${place}<br>${timeFrom} - ${timeTo}`;
-            cell.style.backgroundColor = "#e6f7ff"; // Optional styling
+            cell.innerHTML = `<div>${title}<br>${instructor}<br>${place}<br>${timeFrom} - ${timeTo}</div>`;
             // Remove the next cells that are now part of the span
             for (let i = fromIndex + 1; i <= toIndex; i++) {
                 row.deleteCell(fromIndex + 1); // Keep deleting the next cell after the first one
@@ -172,6 +171,7 @@ const classList = [{
 // Call populateSchedule with the class list
 populateSchedule(classList);
 */
+/*
 document.getElementById("addClassButton").addEventListener("click", (e) => {
     if (document.getElementById("department").value && document.getElementById("year_level").value && document.getElementById("section").value) {
         e.preventDefault();
@@ -185,8 +185,7 @@ document.getElementById("close-add-class-button").addEventListener("click", (e) 
     e.preventDefault();
     document.getElementsByClassName("popup")[0].style.visibility = "hidden";
 });
-
-
+*/
 document.getElementById("department").addEventListener("change", loadClasses);
 document.getElementById("year_level").addEventListener("change", loadClasses);
 document.getElementById("section").addEventListener("change", loadClasses);
@@ -207,26 +206,4 @@ async function loadClasses() {
     }
 }
 
-document.getElementById('addClassForm').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Prevent the form from submitting the default way
-
-    const formData = new FormData(this); // Automatically handles file inputs
-
-    formData.append("department", document.getElementById("department").value);
-    formData.append("year_level", document.getElementById("year_level").value);
-    formData.append("sectionNo", document.getElementById("section").value);
-
-    const response = await fetch('/add-class-schedule', {
-        method: 'POST',
-        body: formData // Send FormData object directly
-    });
-
-    if (!response.ok) {
-        alert(response.headers.get('Error'));
-    } else {
-        alert('Class added successfully');
-        document.getElementsByClassName("popup")[0].style.visibility = "hidden";
-        document.getElementById('addClassForm').reset();
-        loadClasses();
-    }
-});
+populateSchedule([]);

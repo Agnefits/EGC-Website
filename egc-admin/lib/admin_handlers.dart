@@ -146,6 +146,15 @@ Future<Response> postLoginHandler(Request request) async {
 ///Doctor Pages
 Future<Response> getDoctorsHandler(Request request) async {
   try {
+    var html = File('web/page/admin-doctors.html').readAsStringSync();
+    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
+
+Future<Response> getShowDoctorsHandler(Request request) async {
+  try {
     var html = File('web/page/ShowDoctors.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
@@ -233,6 +242,22 @@ Future<Response> deleteDoctorHandler(Request request) async {
 
 ///Teaching Assistant Pages
 Future<Response> getTeachingAssistantsHandler(Request request) async {
+  try {
+    /*
+    data = {};
+    String modeP = mode;
+    String statusP = status;
+    */
+    var html = File('web/page/admin-teaching-assistants.html').readAsStringSync();
+    return Response.ok(html, headers: {
+      'Content-Type': 'text/html',
+    });
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
+
+Future<Response> getShowTeachingAssistantsHandler(Request request) async {
   try {
     /*
     data = {};
@@ -416,6 +441,15 @@ Future<Response> deleteTeachingAssistantHandler(Request request) async {
 ///Student Pages
 Future<Response> getStudentsHandler(Request request) async {
   try {
+    var html = File('web/page/admin-students.html').readAsStringSync();
+    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
+
+Future<Response> getShowStudentsHandler(Request request) async {
+  try {
     var html = File('web/page/ShowStudents.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
@@ -426,6 +460,24 @@ Future<Response> getStudentsHandler(Request request) async {
 Future<Response> getAddStudentHandler(Request request) async {
   try {
     var html = File('web/page/Add_Student.html').readAsStringSync();
+    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
+Future<Response> getAdminGradesHandler(Request request) async {
+  try {
+    var html = File('web/page/student-all-grades.html').readAsStringSync();
+    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
+
+
+Future<Response> getShowStudentGradesHandler(Request request) async {
+  try {
+    var html = File('web/page/ShowStudentsGrades.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
     return Response.internalServerError(body: e.toString());
@@ -521,6 +573,40 @@ Future<Response> getAdminStudentAttendanceHandler(Request request) async {
 }
 
 getAdminClassSchedulesHandler(Request request) async {
+  try {
+    final body = await request.readAsString();
+    Uri uri = Uri.parse("https://example.com/params?" + body);
+
+    // Get the query parameters as a map
+    Map<String, String> queryParams = uri.queryParameters;
+
+    // Print the map
+    print(queryParams);
+
+    var html = File('web/page/admin-schedules.html').readAsStringSync();
+    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
+getAddAdminClassSchedulesHandler(Request request) async {
+  try {
+    final body = await request.readAsString();
+    Uri uri = Uri.parse("https://example.com/params?" + body);
+
+    // Get the query parameters as a map
+    Map<String, String> queryParams = uri.queryParameters;
+
+    // Print the map
+    print(queryParams);
+
+    var html = File('web/page/add-class-schedule.html').readAsStringSync();
+    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
+getShowAdminClassSchedulesHandler(Request request) async {
   try {
     final body = await request.readAsString();
     Uri uri = Uri.parse("https://example.com/params?" + body);

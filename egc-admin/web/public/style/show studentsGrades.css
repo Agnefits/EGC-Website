@@ -5,6 +5,16 @@
     margin-top: 20px;
 }
 
+.header {
+    display: flex;
+    align-items: center; /* محاذاة العناصر عموديًا في المنتصف */
+    margin-bottom: 20px; /* إضافة مسافة أسفل شريط العنوان */
+}
+
+.header img {
+    margin-right: 10px; /* إضافة مسافة بين الصورة والعنوان */
+}
+
 .students-table th,
 .students-table td {
     border: 1px solid #ddd;
@@ -13,7 +23,6 @@
     color: #0f2b4e;
     font-family: "Roboto Condensed", sans-serif;
 }
-
 
 
 .added{

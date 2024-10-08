@@ -89,81 +89,28 @@ table tr {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.popup {
-    margin: -10px -5px;
-    padding-top: 1%;
-    background-color: rgba(30, 30, 30, .5);
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    z-index: 100;
-    visibility: hidden;
-}
-
-.add-class {
-    position: relative;
-    background-color: #fff;
-    /* White background for form */
-    border-radius: 15px;
-    padding: 20px;
-    width: 600px;
-    /* Adjust width as needed */
-    margin: 0 auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow effect */
-}
-
-.add-class>h2 {
-    font-size: 26px;
-    color: #0F2B4E;
-    font-weight: 600;
-}
-
-.add-class form input,
-.add-class form select,
-.add-class form textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-}
-
-.add-class form label {
-    display: inline-block;
-    margin-bottom: 5px;
-}
-
-#add-class-button {
-    background-color: rgb(42, 165, 232);
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    width: 100%;
-}
-
-label {
-    font-size: 16px;
-    font-weight: 600;
-}
-
-#close-add-class-button {
-    background: #0F2B4E;
-    color: white;
-    text-decoration: none;
+table th {
+    background-color: #0f2b4e;
+    color: #fff;
     font-weight: 500;
-    padding: 8px 15px;
-    border-radius: 15px;
-    cursor: pointer;
-    border: none;
-    right: 10px;
-    top: 15px;
-    position: absolute;
-    right: 10px;
-    top: 10px;
+    font-size: 16px;
+}
+
+table tr td:first-child {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+table tr {
+    height: 15%;
+}
+
+.cell div {
+    margin: 2PX;
+    height: 100%;
+    border: 1px solid #0f2b4e;
+    border-radius: 10px;
+    background-color: #cfd8e9;
+    color: #0f2b4e;
+    font-family: "Roboto Condensed", sans-serif;
 }

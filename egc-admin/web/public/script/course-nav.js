@@ -10,24 +10,30 @@ async function loadDoctorData() {
         alert('Course ID is missing');
         window.location.href = '/staff/ShowCourses';
     }
+
+    const userData = localStorage.getItem('userData');
+    const parsedData = JSON.parse(userData); // Parse the JSON string
+    const role = parsedData.role; // Get the role
+    if (role !== 'Doctor') {
+        document.getElementById("joinInstructorButton").style.display = "none";
+    }
 }
 
 
 
-function goBackToCoursePage() 
-{
+function goBackToCoursePage() {
     console.log('Go Back button clicked!'); // Debug log
     window.location.href = '/staff/Dashboard';
 }
 
 
-document.getElementById('message-form').addEventListener('submit', async (event) => {
+document.getElementById('message-form').addEventListener('submit', async(event) => {
     event.preventDefault(); // Prevent default form submission
 
     const description = document.getElementById('description').value;
     const fileInput = document.getElementById('fileInput');
     const formData = new FormData();
-    
+
     // Append the description to the FormData
     formData.append('description', description);
 

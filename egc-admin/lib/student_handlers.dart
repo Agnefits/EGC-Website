@@ -89,7 +89,7 @@ Future<Response> getStudentAllMaterialsHandler(Request request) async {
 
 Future<Response> getStudentGradesHandler(Request request) async {
   try {
-    var html = File('web/page/student-grades.html').readAsStringSync();
+    var html = File('web/page/student-all-grades.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
     return Response.internalServerError(body: e.toString());
@@ -99,6 +99,15 @@ Future<Response> getStudentGradesHandler(Request request) async {
 Future<Response> getStudentStaffHandler(Request request) async {
   try {
     var html = File('web/page/student-staff.html').readAsStringSync();
+    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
+
+Future<Response> getQuizHandler(Request request) async {
+  try {
+    var html = File('web/page/Quiz.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
     return Response.internalServerError(body: e.toString());

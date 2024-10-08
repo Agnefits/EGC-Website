@@ -28,21 +28,24 @@ class DatabaseHelper {
     ''');
   }
 
-  static void addAssignment(Map<String, dynamic> assignmentData, Uint8List? file) {
+  static void addAssignment(
+      Map<String, dynamic> assignmentData, Uint8List? file) {
     final statement = _db.prepare('''
-      INSERT INTO assignments (courseId, filename, title, date, deadline, description, degree, file, ${assignmentData.containsKey("doctorId")? "doctorId" : "teaching_assistantId"})
+      INSERT INTO assignments (courseId, filename, title, date, deadline, description, degree, file, ${assignmentData.containsKey("doctorId") ? "doctorId" : "teaching_assistantId"})
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''');
     statement.execute([
-     assignmentData['courseId'],
-     assignmentData['fileName'],
-     assignmentData['title'],
-     assignmentData['date'],
-     assignmentData['deadline'],
-     assignmentData['description'],
-     assignmentData['degree'],
+      assignmentData['courseId'],
+      assignmentData['fileName'],
+      assignmentData['title'],
+      assignmentData['date'],
+      assignmentData['deadline'],
+      assignmentData['description'],
+      assignmentData['degree'],
       file ?? "NULL",
-      assignmentData[assignmentData.containsKey("doctorId")? "doctorId" : "teaching_assistantId"]
+      assignmentData[assignmentData.containsKey("doctorId")
+          ? "doctorId"
+          : "teaching_assistantId"]
     ]);
     statement.dispose();
   }
@@ -55,11 +58,11 @@ class DatabaseHelper {
       WHERE id = ?
     ''');
     List data = [
-     assignmentData['title'],
-     assignmentData['date'],
-     assignmentData['deadline'],
-     assignmentData['description'] ?? '',
-     assignmentData['degree'],
+      assignmentData['title'],
+      assignmentData['date'],
+      assignmentData['deadline'],
+      assignmentData['description'] ?? '',
+      assignmentData['degree'],
     ];
 
     if (file != null && !file.isEmpty) {
@@ -91,7 +94,7 @@ class DatabaseHelper {
               'description': row['description'],
               'degree': row['degree'],
               'file': row['file'].length > 0,
-              'instructor' : row['instructor'],
+              'instructor': row['instructor'],
             })
         .toList();
   }
@@ -102,22 +105,22 @@ class DatabaseHelper {
             id);
     var assignment = results.first;
     return {
-      'id':assignment['id'],
-      'filename':assignment['filename'],
-      'title':assignment['title'],
-      'date':assignment['date'],
-      'deadline':assignment['deadline'],
-      'description':assignment['description'],
-      'degree':assignment['degree'],
-      'file':assignment['file'].length > 0,
-      'instructor' : assignment['instructor'],
+      'id': assignment['id'],
+      'filename': assignment['filename'],
+      'title': assignment['title'],
+      'date': assignment['date'],
+      'deadline': assignment['deadline'],
+      'description': assignment['description'],
+      'degree': assignment['degree'],
+      'file': assignment['file'].length > 0,
+      'instructor': assignment['instructor'],
     };
   }
 }
 
 class Assignment {
   final router;
- Assignment(this.router) {
+  Assignment(this.router) {
     main();
   }
 
@@ -165,8 +168,8 @@ class Assignment {
         (Request request, String id) async {
       try {
         // Query the database to get the profile picture
-        final result = DatabaseHelper._db
-            .select('SELECT filename, file FROM assignments WHERE id = ?', [id]);
+        final result = DatabaseHelper._db.select(
+            'SELECT filename, file FROM assignments WHERE id = ?', [id]);
 
         if (result.isNotEmpty) {
           final fileBytes = result.first['file'];
@@ -264,9 +267,10 @@ class Assignment {
             headers: {'Content-Type': 'application/json', "Error": '$e'});
       }
     });
-  
+
     // حذف مادة
-    router.delete('/delete-assignment/<id>', (Request request, String id) async {
+    router.delete('/delete-assignment/<id>',
+        (Request request, String id) async {
       try {
         DatabaseHelper.deleteAssignment(int.parse(id));
         return Response.ok('Assignment deleted successfully', headers: {
@@ -276,6 +280,41 @@ class Assignment {
         return Response.internalServerError(body: 'Error: $e');
       }
     });
+    router.post('/student/submit-assignment',
+        (Request request, String id) async {
+      try {
+        var data = await request.readAsString(); // Expecting a JSON payload
+        var params = Uri.splitQueryString(data);
 
-   }
+        // Extracting fields from POST request
+        var studentId = params['studentId'];
+        var assignmentId = params['assignmentId'];
+        var filename = params['filename'];
+
+        // You can handle file uploads here if necessary
+
+        DatabaseHelper._db.execute('''
+          INSERT INTO assignments (studentId, filename, assignmentId)
+          VALUES (?, ?, ?);
+        ''', [studentId, filename, assignmentId]);
+
+        DatabaseHelper._db.dispose();
+
+        return Response.ok('Assignment submitted successfully');
+      } catch (e) {
+        return Response.internalServerError(body: 'Error: $e');
+      }
+    });
+    router.get('/student/get-assignments', (Request request, String id) async {
+      try {
+        var result = DatabaseHelper._db.select('SELECT * FROM assignments');
+
+        DatabaseHelper._db.dispose();
+
+        return Response.ok(result.toString());
+      } catch (e) {
+        return Response.internalServerError(body: 'Error: $e');
+      }
+    });
+  }
 }

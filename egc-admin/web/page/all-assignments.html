@@ -83,16 +83,26 @@
 
 
     <div class="home-section">
-        <div class="text">
+        <div style="   position: relative;
+        font-family: 'Arial', sans-serif; font-size: 28px;
+        text-align:left;
+        color: #0F2B4E;
+    ">
             <h3>All Assignments</h3>
         </div>
-        <div class="search-container">
-            <input type="text" id="search-input" placeholder="Search for a course...">
-            <button id="search-button">Search</button>
+        
+        <div class="filter-container">
+            <label for="subject-filter">Filter by subject:</label>
+            <select id="subject-filter">
+                <option value="all">All Subjects</option>
+                <option value="Module 2">Module 2</option>
+                <option value="Module 3">Module 3</option>
+                <!-- Add more subjects as needed -->
+            </select>
         </div>
-
+    
         <div id="assignments-container">
-            <div class="assignment">
+            <div class="assignment" data-subject="Module 3">
                 <h3>Module 3 Assignment</h3>
                 <p>Title: Meeting preparation task</p>
                 <p>Description: Prepare the necessary documents and slides for the meeting.</p>
@@ -104,8 +114,8 @@
                 <br><br>
                 <button type="submit">Submit</button>
             </div>
-
-            <div class="assignment">
+    
+            <div class="assignment" data-subject="Module 2">
                 <h3>Module 2 Assignment</h3>
                 <p>Title: Design a website</p>
                 <p>Description: Create a responsive website with modern design principles.</p>
@@ -117,24 +127,9 @@
                 <br><br>
                 <button type="submit">Submit</button>
             </div>
-
-            <div class="assignment">
-                <h3>Module 2 Assignment</h3>
-                <p>Title: Design a website</p>
-                <p>Description: Create a responsive website with modern design principles.</p>
-                <p>Due date: 08-20-2023</p>
-                <p>Status: Not started</p>
-                <p>Points: 75</p>
-                <label for="file-upload-2">Upload your assignment:</label>
-                <input type="file" id="file-upload-2" name="file-upload-2" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png,.zip">
-                <br><br>
-                <button type="submit">Submit</button>
-            </div>
-            <!-- Add more assignments with the same structure -->
         </div>
-
-
     </div>
+    
 
     <script src="/script/all-assignments.js"></script>
 </body>
