@@ -164,4 +164,4 @@ label {
     font-weight: lighter;
 }
 
-.nav-items{margin-top: -40px;margin-left: -40px;}
+.nav-items{margin-top: -40px;margin-left: -40px;cursor: pointer;}

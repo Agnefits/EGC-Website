@@ -1,0 +1,86 @@
+body {
+    font-family: "Roboto Condensed", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    /* Light gray background */
+}
+
+.students-table {
+    width: 95%;
+    border-collapse: collapse;
+    margin: 0px 40px 0px 40px;
+}
+
+.students-table th,
+.students-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    color: #0f2b4e;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+.checkbox{margin-left: 880px;margin-top: 50px;  font-family: "Roboto Condensed", sans-serif;font-size: 18px;  color: #1d3c62;}
+.hide{margin-left: 20px;}
+.students-table th {
+    background-color: #0f2b4e;
+    color: #fff;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.students-table tr {
+    background-color: #ffffff;
+}
+
+.details-btn {
+    cursor: pointer;
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #0f2b4e;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+}
+
+
+option{background-color: #fff;color:#000000;}
+
+
+.filter-section {
+    display: flex;
+    justify-content: center;
+    /* Align items to the left */
+    align-items: center;
+    /* Vertically center the dropdowns */
+    gap: 20px;
+    /* Add spacing between the dropdowns */
+    margin-bottom: 20px;
+}
+
+.filter-dropdown {
+    display: inline-block;
+}
+
+.filter-dropdown select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    width: 180px;
+    background-color: #0F2B4E;
+    color: #fff;
+    font-size: 1em;
+}
+
+.filter-dropdown select:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.filter-dropdown select:focus option {
+    background-color: white;
+    /* Ensures white background on focus too */
+    color: #0F2B4E;
+}
