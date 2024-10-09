@@ -37,37 +37,28 @@
 
 .details-btn.edit {
     background-color: #28a745;
+    cursor: pointer;
+    margin: 0 5px;
+    padding: 6px 10px; 
+    color: #fff;
+    border-radius: 10px;
+    font-size: 17px;
+    border: 1px solid #ccc;
 }
 
 .details-btn.delete {
     background-color: #dc3545;
-}
-
-.search-bar {
-    margin: 20px 0;
-    display: flex;
-    justify-content: center;
-}
-
-.search-bar input {
-    padding: 10px;
-    width: 300px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    color: #0f2b4e;
-}
-
-.search-bar .search-btn {
-    padding: 10px 15px;
-    margin-left: 10px;
-    background-color: #0f2b4e;
-    color: white;
-    border: none;
-    border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    margin: 0 5px;
+    padding: 6px 10px; 
+    color: #fff;
+    border-radius: 10px;
+    font-size: 17px;
+    border: 1px solid #ccc;
 }
+
+
+
 
 .add-btn {
     background: #0F2B4E;
@@ -82,4 +73,47 @@
     right: 10px;
     top: 15px;
     position: absolute
+}
+
+
+
+
+
+option{background-color: #fff;color:#000000;}
+
+
+.filter-section {
+    display: flex;
+    justify-content: center;
+    /* Align items to the left */
+    align-items: center;
+    /* Vertically center the dropdowns */
+    gap: 20px;
+    /* Add spacing between the dropdowns */
+    margin-bottom: 20px;
+}
+
+.filter-dropdown {
+    display: inline-block;
+}
+
+.filter-dropdown select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    width: 180px;
+    background-color: #0F2B4E;
+    color: #fff;
+    font-size: 1em;
+}
+
+.filter-dropdown select:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.filter-dropdown select:focus option {
+    background-color: white;
+    /* Ensures white background on focus too */
+    color: #0F2B4E;
 }
