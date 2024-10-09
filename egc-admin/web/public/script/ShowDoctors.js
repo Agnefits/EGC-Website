@@ -1,25 +1,12 @@
-function searchDoctors() {
-    const searchInput = document.getElementById('searchInput').value.toLowerCase();
-    const tableRows = document.querySelectorAll('#doctorsTableBody tr');
-
-    tableRows.forEach(row => {
-        // Get the columns for name, department, and email
-        const name = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
-        const department = row.querySelector('td:nth-child(6)').textContent.toLowerCase();
-        const email = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-
-        // Check if any of the columns contain the search input
-        if (name.includes(searchInput) || department.includes(searchInput) || email.includes(searchInput)) {
-            row.style.display = ''; // Show the row
-        } else {
-            row.style.display = 'none'; // Hide the row
-        }
-    });
-}
 
 
 
-document.addEventListener('DOMContentLoaded', loadDoctors);
+document.addEventListener('DOMContentLoaded', () => {
+    loadDoctors();
+
+    // إضافة مستمع حدث لقائمة الأقسام
+    document.getElementById('major').addEventListener('change', loadDoctors);
+});
 
 async function loadDoctors() {
 
@@ -37,8 +24,13 @@ async function loadDoctors() {
     }
 
     DoctorsTableBody.innerHTML = ''; // Clear the table before adding new rows
+    const selectedMajor = document.getElementById('major').value;
+    const filtereddoctors = doctors.filter(doctor => {
+        return !selectedMajor || doctor.major === selectedMajor;
+    });
 
-    doctors.forEach(doctor => {
+  
+    filtereddoctors.forEach(doctor => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${doctor.name || 'N/A'}</td>
