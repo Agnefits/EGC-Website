@@ -623,3 +623,13 @@ getShowAdminClassSchedulesHandler(Request request) async {
     return Response.internalServerError(body: e.toString());
   }
 }
+
+
+Future<Response> getShowAdminTotalStudentsAttendanceHandler(Request request) async {
+  try {
+    var html = File('web/page/Total Students Att.html').readAsStringSync();
+    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
