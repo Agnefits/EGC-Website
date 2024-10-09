@@ -2,11 +2,19 @@
     text-decoration: none;
     color: black;
 }
+
 .Items a {
     text-decoration: none;
     color: black;
 }
 
+.Items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    grid-gap: 5%;
+    font-family: "Roboto Condensed", sans-serif;
+}
 .items {
     display: grid;
     grid-template-columns: repeat(2, 30%);
@@ -15,20 +23,9 @@
     font-family: "Roboto Condensed", sans-serif;
 }
 
-.Items {
-    display: grid;
-    grid-template-columns: repeat(3, 20%);
-    justify-content: center;
-    grid-gap: 10%;
-    font-family: "Roboto Condensed", sans-serif;
-}
-
 .item {
     padding-right: 15px;
     padding-left: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .item img {
