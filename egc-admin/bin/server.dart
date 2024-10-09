@@ -79,10 +79,12 @@ void main() async {
   //router.post('/admin/DeleteStudent', deleteStudentHandler);
 
   router.get('/admin/StudentAttendance', getAdminStudentAttendanceHandler);
+  router.get('/admin/TotalStudentsAttendance', getShowAdminTotalStudentsAttendanceHandler);
   router.get('/admin/ClassSchedules', getAdminClassSchedulesHandler);
   router.get('/admin/ShowClassSchedules', getShowAdminClassSchedulesHandler);
   router.get('/admin/AddClassSchedule', getAddAdminClassSchedulesHandler);
   router.get('/admin/ShowStudentGrades', getShowStudentGradesHandler);
+
   router.get('/admin/Grades', getAdminGradesHandler);
   ///Staff
   //Dashboard

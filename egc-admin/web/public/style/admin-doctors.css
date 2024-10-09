@@ -19,7 +19,7 @@
     display: grid;
     grid-template-columns: repeat(2, 30%);
     justify-content: center;
-    grid-gap: 10%;
+    grid-gap: 5%;
     font-family: "Roboto Condensed", sans-serif;
 }
 

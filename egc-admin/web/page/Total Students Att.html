@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Total Students Attendance</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/style/AdminDashboard.css">
+    <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <style>
+
+body {
+    font-family: "Roboto Condensed", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    /* Light gray background */
+}
+
+.table {
+    width: 90%;
+    border-collapse: collapse;
+    margin: 0px 0px 0px 60px;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    color: #0f2b4e;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+.table th {
+    background-color: #0f2b4e;
+    color: #fff;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.table tr {
+    background-color: #ffffff;
+}
+
+.filter-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.filter-dropdown {
+    display: inline-block;
+}
+
+.filter-dropdown select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    width: 180px;
+    background-color: #0F2B4E;
+    color: #fff;
+    font-size: 1em;
+}
+
+.filter-dropdown select:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.filter-dropdown select:focus option {
+    background-color: white;
+    /* Ensures white background on focus too */
+    color: #0F2B4E;
+}
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="logo-details">
+            <a href="/home"><img src="/img/logo.png" class="icon"></a>
+            <a href="/home">
+                <div class="logo_name">Egyptian Germany College</div>
+            </a>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+            <li>
+                <a href="/admin/Doctors">
+                    <i class='bx bxs-school'></i>
+                    <span class="links_name">Doctors</span>
+                </a>
+                <span class="tooltip">Doctors</span>
+            </li>
+            <li>
+                <a href="/admin/TeachingAssistants">
+                    <i class='bx bx-chalkboard'></i>
+                    <span class="links_name">Teaching Assistant</span>
+                </a>
+                <span class="tooltip">Teaching Assistant</span>
+            </li>
+            <li>
+                <a href="/admin/Students">
+                    <i class='bx bx-user'></i>
+                    <span class="links_name"> Student</span>
+                </a>
+                <span class="tooltip">Student</span>
+            </li>
+            <li>
+                <a href="/admin/StudentAttendance">
+                    <i class='bx bx-spreadsheet'></i>
+                    <span class="links_name">Show Student Attendance</span>
+                </a>
+                <span class="tooltip">Show Student Attendance</span>
+            </li>
+            <li>
+                <a href="/admin/ClassSchedules">
+                    <i class='bx bx-calendar'></i>
+                    <span class="links_name">Class Schedules</span>
+                </a>
+                <span class="tooltip">Class Schedules</span>
+            </li>
+            <li class="profile">
+                <div class="profile-details">
+                    <img src="/img/person1.JPG" alt="profileImg">
+                    <div class="name_email">
+                        <div class="name">Mariam Magdy</div>
+                        <div class="email">mariammagdy@gmail.com</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out"></i>
+            </li>
+        </ul>
+    </div>
+    <main>
+        <div class="content">
+            <div class="text">
+                <h3 style="padding: 10px;padding-top: 20px;">Total Students Attendance</h3>
+            </div>
+            <div class="filter-section">
+                <div class="filter-dropdown">
+                    <select id="department" name="department" required>
+                    <option value="">Select Department</option>
+                    <option value="IT">IT</option>
+                    <option value="Mechanic">Mechanical</option>
+                    <option value="Electrical">Electrical</option>
+                    </select>
+                </div>
+                <div class="filter-dropdown">
+                    <select id="yearlevel" name="year_level" required>
+                    <option value="">Select Year Level</option>
+                    <option value="1st">1st Year</option>
+                    <option value="2nd">2nd Year</option>
+                    <option value="3rd">3rd Year</option>
+                    <option value="4th">4th Year</option>
+                    </select>
+                </div>
+                <div class="filter-dropdown">
+                    <select id="course" name="course" required>
+                    <option value="">Select Course</option>
+                    </select>
+                </div>
+                <div class="filter-dropdown">
+                    <select id="n_section" name="section" required>
+                    <option value="">Select Section</option>
+                    <option value="1">Section 1</option>
+                    <option value="2">Section 2</option>
+                    <option value="3">Section 3</option>
+                    <option value="4">Section 4</option>
+                    <option value="5">Section 5</option>
+                    <option value="6">Section 6</option>
+                    <option value="7">Section 7</option>
+                    <option value="8">Section 8</option>
+                    </select>
+                </div>
+                </div>
+
+                <table class="table" id="table">
+                    <thead>
+                        <tr>
+                            <th class="sortable">Student Name <i class='bx bx-chevron-down'></i></th>
+                            <th class="sortable">Department <i class='bx bx-chevron-down'></i></th>
+                            <th class="sortable">Year Level <i class='bx bx-chevron-down'></i></th>
+                            <th class="sortable">Course <i class='bx bx-chevron-down'></i></th>
+                            <th class="sortable">Section <i class='bx bx-chevron-down'></i></th>
+                            <th class="sortable">Presence<i class='bx bx-chevron-down'></i></th>
+                            <th class="sortable">Absence<i class='bx bx-chevron-down'></i></th>
+                            <th class="sortable">Percentage<i class='bx bx-chevron-down'></i></th>
+                        </tr>
+                    </thead>
+    
+                    <tbody id="TableBody">
+                        <!-- Rows will be dynamically added here -->
+                    </tbody>
+                </table>
+    </main>
+    <script src="/script/AdminDashboard.js"></script>
+    <script>
+
+document.querySelector('th.sortable').addEventListener('click', () => {
+    sortTableByName();
+});
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('/courses');
+        const courses = await response.json();
+
+        const courseSelect = document.getElementById('course');
+
+        courses.forEach(course => {
+            const option = document.createElement('option');
+            option.value = course.courseId;
+            option.textContent = course.name;
+            courseSelect.appendChild(option);
+        });
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', loadAttendance);
+
+async function loadAttendance() {
+    try {
+        const department = document.getElementById('department').value;
+        const yearLevel = document.getElementById('yearlevel').value;
+        const section = document.getElementById('n_section').value;
+        const courseId = document.getElementById('course').value;
+
+        const response = await fetch(`/TotalAttendance`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch attendance data');
+        }
+
+        const attendanceData = await response.json();
+        console.log('Fetched attendance data:', attendanceData);
+
+        const studentsTableBody = document.getElementById('TableBody');
+        if (!studentsTableBody) {
+            throw new Error('Table body element not found');
+        }
+
+        studentsTableBody.innerHTML = ''; 
+
+        attendanceData.forEach(record => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${record.studentName || 'N/A'}</td>
+                <td>${record.department || 'N/A'}</td>
+                <td>${record.yearLevel || 'N/A'}</td>
+                <td>${record.courseName || 'N/A'}</td>
+                <td>${record.section || 'N/A'}</td>
+                <td>${record.presenceTotal || 'N/A'}</td>
+                <td>${record.absenceTotal || 'N/A'}</td>
+                <td>${record.percentage || 'N/A'}</td>
+            `;
+            studentsTableBody.appendChild(row);
+        });
+
+        addEventListeners();
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error loading attendance data');
+    }
+}
+
+function addEventListeners() {
+
+}
+
+
+function sortTableByName() {
+    const table = document.querySelector('.table');
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
+    const isAscending = table.dataset.sortDirection === 'asc';
+    table.dataset.sortDirection = isAscending ? 'desc' : 'asc';
+
+    rows.sort((rowA, rowB) => {
+        const cellA = rowA.children[0].textContent.trim(); 
+        const cellB = rowB.children[0].textContent.trim();
+
+        if (cellA > cellB) return isAscending ? 1 : -1;
+        if (cellA < cellB) return isAscending ? -1 : 1;
+        return 0;
+    });
+
+    const tbody = table.querySelector('tbody');
+    rows.forEach(row => tbody.appendChild(row));
+}
+    </script>
+</body>
+
+</html>
