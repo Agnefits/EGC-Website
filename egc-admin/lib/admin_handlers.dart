@@ -651,3 +651,12 @@ Future<Response> getShowAdminTotalStudentsAttendanceHandler(Request request) asy
     return Response.internalServerError(body: e.toString());
   }
 }
+
+Future<Response> getShowAdminSingleStudentsAttendanceHandler(Request request) async {
+  try {
+    var html = File('web/page/Single_Student_Att.html').readAsStringSync();
+    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
