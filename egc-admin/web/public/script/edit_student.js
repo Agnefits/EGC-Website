@@ -39,7 +39,7 @@ async function loadStudentData() {
             document.getElementById('national_id').value = studentData.national_id;
             document.getElementById('password').value = studentData.password;
             document.getElementById('No_list').value = studentData.number;
-            document.getElementById('No_section').value = studentData.section;
+            document.getElementById('No_section').value = studentData.no_section;            ;
             //document.getElementById('id').value = id;
             document.querySelector(`input[name="gender"][value="${studentData.gender}"]`).checked = true;
 

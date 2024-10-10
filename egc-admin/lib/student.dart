@@ -155,7 +155,7 @@ class Student {
                   'national_id': row['national_id'],
                   'gender': row['gender'],
                   'number': row['number'],
-                  'no_section': row['sectionNo']
+                  'No_section': row['sectionNo']
                 })
             .toList();
 
@@ -194,7 +194,7 @@ class Student {
           'national_id': student['national_id'],
           'gender': student['gender'],
           'number': student['number'],
-          'no_section': "Section ${student['sectionNo']}",
+          'No_section': "Section ${student['sectionNo']}",
           "photo": student['photo'].length > 0
         };
 

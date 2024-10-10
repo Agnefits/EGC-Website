@@ -5,12 +5,14 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Show Students</title>
+    <title>Total Students Attendance</title>
     <link rel="icon" href="/img/logo.png" sizes="48x32">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/style/ShowStudents.css">
     <link rel="stylesheet" href="/style/AdminDashboard.css">
+    <link rel="stylesheet" href="/style/TotalAttendance.css">
     <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <style>
+    </style>
 </head>
 
 <body>
@@ -24,14 +26,12 @@
             <i class='bx bx-menu' id="btn"></i>
         </div>
         <ul class="nav-list">
-
-
             <li>
                 <a href="/admin/Doctors">
                     <i class='bx bxs-school'></i>
-                    <span class="links_name">Doctor</span>
+                    <span class="links_name">Doctors</span>
                 </a>
-                <span class="tooltip">Show Doctor</span>
+                <span class="tooltip">Doctors</span>
             </li>
             <li>
                 <a href="/admin/TeachingAssistants">
@@ -73,14 +73,11 @@
             </li>
         </ul>
     </div>
-
     <main>
         <div class="content">
             <div class="text">
-                <h3>Show Students</h3>
+                <h3 style="padding: 10px;padding-top: 20px;">Total Students Attendance</h3>
             </div>
-
-
             <div class="filter-section">
                 <div class="filter-dropdown">
                     <select id="department" name="department" required>
@@ -100,48 +97,46 @@
                     </select>
                 </div>
                 <div class="filter-dropdown">
-                    <select id="n_section" name="No_section" required>
+                    <select id="course" name="course" required>
+                    <option value="">Select Course</option>
+                    </select>
+                </div>
+                <div class="filter-dropdown">
+                    <select id="n_section" name="section" required>
                     <option value="">Select Section</option>
-                    <option value="1"> section 1</option>
-                    <option value="2">section 2</option>
-                    <option value="3">section 3</option>
-                    <option value="4">section 4</option>
-                    <option value="5">section 5</option>
-                    <option value="6">section 6</option>
-                    <option value="7">section 7</option>
-                    <option value="8">section 8</option>
+                    <option value="1">Section 1</option>
+                    <option value="2">Section 2</option>
+                    <option value="3">Section 3</option>
+                    <option value="4">Section 4</option>
+                    <option value="5">Section 5</option>
+                    <option value="6">Section 6</option>
+                    <option value="7">Section 7</option>
+                    <option value="8">Section 8</option>
                     </select>
                 </div>
                 </div>
 
-            <table class="students-table" id="students-table">
-                <thead>
-                    <tr>
-
-                        <th>Student Name </th>
-                        <th>Department </th>
-                        <th>Year Level </th>
-                        <th>Email </th>
-                        <th>Phone Number</th>
-                        <th>National Identity </th>
-                        <th>Gender </th>
-                        <th>Username</th>
-                        <th>Details </th>
-
-                    </tr>
-                </thead>
-
-                <tbody id="studentsTableBody">
-                    <!-- Rows will be dynamically added here -->
-                </tbody>
-            </table>
-        </div>
-
+                <table class="table" id="table">
+                    <thead>
+                        <tr>
+                            <th class="sortable">Student Name <i class='bx bx-chevron-down'></i></th>
+                            <th class="sortable">Department <i class='bx bx-chevron-down'></i></th>
+                            <th class="sortable">Year Level <i class='bx bx-chevron-down'></i></th>
+                            <th class="sortable">Course <i class='bx bx-chevron-down'></i></th>
+                            <th class="sortable">Section <i class='bx bx-chevron-down'></i></th>
+                            <th class="sortable">Total Presence<i class='bx bx-chevron-down'></i></th>
+                            <th class="sortable">Total Absence<i class='bx bx-chevron-down'></i></th>
+                            <th class="sortable">Percentage<i class='bx bx-chevron-down'></i></th>
+                        </tr>
+                    </thead>
+    
+                    <tbody id="TableBody">
+                        <!-- Rows will be dynamically added here -->
+                    </tbody>
+                </table>
     </main>
-    <script src="/script/ShowStudents.js"></script>
     <script src="/script/AdminDashboard.js"></script>
-    <!-- <script src="/script/show student grade.js"></script> -->
-
+    <script src="/script/TotalAttendance.js"></script>
 </body>
 
 </html>

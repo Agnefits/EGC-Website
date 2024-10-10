@@ -26,22 +26,31 @@ class DatabaseHelper {
   }
 
 
-
   // دالة لإضافة إجابات الطالب
-  static void addStudentQuestionAnswers(Map<String, dynamic> answersData) {
-    final statement = _db.prepare('''
-      INSERT INTO student_question_answers (answers, questionId, studentId)
-      VALUES (?, ?, ?)
+static void addStudentQuestionAnswers(String quizId, String studentId, List<Map<String, dynamic>> answersList) {
+    final statement = _db.prepare(''' 
+      INSERT INTO student_question_answers (answers, questionId, studentId) 
+      VALUES (?, ?, ?) 
     ''');
 
-    statement.execute([
-      answersData['answers'], // الإجابات
-      answersData['questionId'], // رقم السؤال
-      answersData['studentId'], // رقم الطالب
-    ]);
+    print('Executing statement for quizId: $quizId, studentId: $studentId, answersList: $answersList');
+    
+    try {
+    for (var answerData in answersList) {
+        statement.execute([
+            answerData['answers'], 
+            answerData['questionId'], 
+            studentId,
+        ]);
+    }
+} catch (e) {
+    print('Database insertion error: $e');
+    throw Exception('Error inserting student answers');
+}
 
     statement.dispose();
-  }
+}
+
 
 
   static void addStudentQuizAttempt(Map<String, dynamic> quizData) {
@@ -97,21 +106,6 @@ class DatabaseHelper {
               'student': row['student'],
             })
         .toList();
-  }
-
-  static Map<String, dynamic> getStudentQuizAttempt(String id) {
-    final results = _db.select(
-        'SELECT SQ.id, SQ.date, SQ.score, S.Name student FROM student_quiz_attempts SQ LEFT JOIN students S ON SQ.studentId = S.id WHERE SQ.id = ' +
-            id);
-    var studentQuiz = results.first;
-    return {
-      'id': studentQuiz['id'],
-      'date': studentQuiz['date'],
-      'score': studentQuiz['score'],
-      'student': studentQuiz['student'],
-      'quizId': studentQuiz['quizId'], // إضافته
-
-    };
   }
 
 
@@ -171,7 +165,7 @@ router.get('/student-quizzes/<quizId>', (Request request, String quizId) async {
     // Endpoint لجلب المحاولات السابقة للطالب بناءً على studentId
 router.get('/courses/student-quizzes/<studentId>', (Request request, String studentId) async {
     try {
-        final attempts = DatabaseHelper.getStudentQuizAttempt(studentId);
+        final attempts = DatabaseHelper.getStudentQuizAttempts(studentId);
         final jsonAttempts = jsonEncode(attempts);
         return Response.ok(
             jsonAttempts,
@@ -205,22 +199,35 @@ router.get('/courses/student-quizzes/<studentId>', (Request request, String stud
 });
 
 
-// Endpoint لتسجيل إجابات الطالب
+// Endpoint for registering student's answers
 router.post('/add-student-question-answers', (Request request) async {
     try {
         final payload = jsonDecode(await request.readAsString());
-        DatabaseHelper.addStudentQuestionAnswers(payload);  // تسجيل الإجابات في قاعدة البيانات
+
+        String quizId = payload['quizId'];
+        String studentId = payload['studentId'];
+        List<Map<String, dynamic>> answers = payload['answers'];
+
+        print('Quiz ID: $quizId, Student ID: $studentId, Answers: $answers');
+
+        DatabaseHelper.addStudentQuestionAnswers(quizId, studentId, answers);
 
         return Response.ok('Answers recorded successfully', headers: {
-          'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Origin': '*',
         });
     } catch (e) {
+        print('Error: $e');
         return Response.internalServerError(
             body: 'Error processing request',
             headers: {'Content-Type': 'application/json', "Error": '$e'}
         );
     }
 });
+
+
+
+
+
 
 
    // Endpoint لتحديث بيانات محاولة الطالب

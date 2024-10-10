@@ -11,9 +11,8 @@ let currentQuestion;
 let availableQuestion = [];
 let correctAnswers = 0;
 let attempt = 0;
-
 document.addEventListener('DOMContentLoaded', (event) => {
-    fetchQuizzes(); // استدعاء الدالة عند تحميل الصفحة
+    fetchQuizzes();
 });
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -26,7 +25,7 @@ async function fetchQuizzes() {
         if (!response.ok) throw new Error('Network response was not ok');
 
         const { questions, count } = await response.json();
-        console.log('Fetched quizzes:', questions); // تسجيل الأسئلة المحمّلة
+        console.log('Fetched quizzes:', questions);
 
         if (!questions || questions.length === 0) {
             console.error('No quizzes found or empty response:', questions);
@@ -34,60 +33,61 @@ async function fetchQuizzes() {
             return;
         }
 
-        availableQuestion = questions; 
-        document.querySelector('.Total-question').innerText = count; 
+        availableQuestion = questions.sort((a, b) => a.id - b.id); 
+        document.querySelector('.Total-question').innerText = count;
     } catch (error) {
         console.error('Error fetching quizzes:', error);
     }
 }
 
-// Set available questions
+
 function getNewQuestion() {
-    if (availableQuestion.length === 0) {
+    if (questionCounter >= availableQuestion.length) {
         alert('No more questions available.');
         return;
     }
 
     questionNumber.innerHTML = "Question " + (questionCounter + 1) + " of " + availableQuestion.length;
 
-    const questionIndex = Math.floor(Math.random() * availableQuestion.length);
-    currentQuestion = availableQuestion[questionIndex];
-    
-    console.log('Current Question:', currentQuestion); // تسجيل السؤال الحالي
+    currentQuestion = availableQuestion[questionCounter];
+
+    console.log('Current Question:', currentQuestion);
 
     questionText.innerHTML = currentQuestion.title;
 
     optionContainer.innerHTML = '';
     currentQuestion.answers.forEach((option, i) => {
         const optionElement = document.createElement("div");
-        optionElement.innerHTML = option;
+        optionElement.innerHTML = String.fromCharCode(65 + i) + " : " + option;
         optionElement.id = i;
         optionElement.className = "option";
         optionContainer.appendChild(optionElement);
         optionElement.setAttribute("onclick", "getResult(this)");
     });
 
-    availableQuestion.splice(questionIndex, 1);
     questionCounter++; 
 }
 
-// Start the quiz
+function next() {
+    if (questionCounter >= availableQuestion.length) {
+        quizOver();
+    } else {
+        getNewQuestion();
+    }
+}
+
 function startQuiz() {
     if (availableQuestion.length === 0) {
         alert('No questions available to start the quiz.');
         return;
     }
 
-    // إخفاء قسم التعليمات وعرض قسم الكويز
     homeBox.classList.add("hide");
     quizBox.classList.remove("hide");
 
-    // استدعاء دالة لعرض السؤال الأول
     getNewQuestion();
 }
 
-
-// Make options unclickable
 function unclickableOptions() {
     const optionLen = optionContainer.children.length;
     for (let i = 0; i < optionLen; i++) {
@@ -95,26 +95,37 @@ function unclickableOptions() {
     }
 }
 
+let totalScore = 0; 
+let answers = []; 
 
-// Get result of current attempt
 function getResult(element) {
     const id = parseInt(element.id);
-    console.log('Selected Option ID:', id); // تسجيل الخيار المحدد
-    console.log('Correct Answer ID:', currentQuestion.correctAnswer); // تسجيل الإجابة الصحيحة
+    const selectedOptionValue = String.fromCharCode(65 + id); 
 
-    if (id === currentQuestion.correctAnswer) {
+    const answerData = {
+        answers: selectedOptionValue, 
+        questionId: currentQuestion.id, 
+        studentId: JSON.parse(localStorage.getItem('userData')).id 
+    };
+
+    answers.push(answerData); 
+    recordAnswers();
+
+    if (selectedOptionValue === currentQuestion.correctAnswer) {
+        console.log('Correct Answer Selected!');
         element.classList.add("correct");
         correctAnswers++;
+        totalScore += currentQuestion.degree; 
     } else {
+        console.log('Wrong Answer Selected!');
         element.classList.add("wrong");
         const optionLen = optionContainer.children.length;
         for (let i = 0; i < optionLen; i++) {
-            if (parseInt(optionContainer.children[i].id) === currentQuestion.correctAnswer) {
+            if (String.fromCharCode(65 + i) === currentQuestion.correctAnswer) {
                 optionContainer.children[i].classList.add("correct");
             }
         }
     }
-    attempt++;
     unclickableOptions();
 
     setTimeout(() => {
@@ -122,47 +133,48 @@ function getResult(element) {
     }, 1000);
 }
 
-
-
-// Next question
-function next() {
-    if (questionCounter === availableQuestion.length) {
-        quizOver();
-    } else {
-        getNewQuestion();
-    }
-}
-
-
-// Handle quiz over
-function quizOver() {
+async function quizOver() {
     quizBox.classList.add("hide");
     resultBox.classList.remove("hide");
     quizResult();
+
+    const attemptData = {
+        date: new Date().toISOString(), 
+        score: totalScore,
+        quizId: quizId, 
+        studentId: JSON.parse(localStorage.getItem('userData')).id 
+    };
+    await recordAttempt(attemptData); 
 }
 
-// Get quiz result
 function quizResult() {
     console.log('Total Questions:', questionCounter);
     console.log('Total Attempts:', attempt);
     console.log('Correct Answers:', correctAnswers);
 
     resultBox.querySelector(".Total-question").innerHTML = questionCounter;
-    resultBox.querySelector(".Total-attempt").innerHTML = attempt;
     resultBox.querySelector(".Total-correct").innerHTML = correctAnswers;
-    resultBox.querySelector(".Total-wrong").innerHTML = attempt - correctAnswers;
+    resultBox.querySelector(".Total-wrong").innerHTML = questionCounter - correctAnswers;
+    
     const percentage = (correctAnswers / questionCounter) * 100;
     resultBox.querySelector(".Total-Percentage").innerHTML = percentage.toFixed(2) + "%";
-    resultBox.querySelector(".Total-Score").innerHTML = correctAnswers + " / " + questionCounter;
+    resultBox.querySelector(".Total-Score").innerHTML = `${totalScore} / ${questionCounter * currentQuestion.degree}`; 
 }
-
 
 function myFunction() {
-    alert("Successful!");
+    window.location.href = '/student/AllQuizzes'; 
 }
 
-async function recordAnswers(answers) {
+async function recordAnswers() {
+    const studentId = JSON.parse(localStorage.getItem('userData')).id;
+
     try {
+        console.log({
+            quizId: quizId, 
+            studentId: studentId,
+            answers: answers 
+        });
+
         await fetch('/add-student-question-answers', {
             method: 'POST',
             headers: {
@@ -170,10 +182,12 @@ async function recordAnswers(answers) {
             },
             body: JSON.stringify({
                 quizId: quizId,
-                studentId: JSON.parse(localStorage.getItem('userData')).id,
-                answers: answers // Send the selected answers
+                studentId: studentId,
+                answers: answers 
             })
-        });
+        });        
+
+        answers = [];
     } catch (error) {
         console.error('Error recording answers:', error);
     }
