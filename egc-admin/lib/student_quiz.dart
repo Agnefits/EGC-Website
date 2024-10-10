@@ -115,9 +115,10 @@ class DatabaseHelper {
   }
 
 
-static List<Map<String, dynamic>> getQuizQuestions(String quizId) {
+static Map<String, dynamic> getQuizQuestionsWithCount(String quizId) {
     final results = _db.select('SELECT * FROM quiz_questions WHERE quizId = ?', [quizId]);
-    return results.map((row) => {
+
+    List<Map<String, dynamic>> questions = results.map((row) => {
         'id': row['id'],
         'title': row['title'],
         'type': row['type'],
@@ -125,7 +126,15 @@ static List<Map<String, dynamic>> getQuizQuestions(String quizId) {
         'correctAnswer': row['correctAnswer'],
         'degree': row['degree'],
     }).toList();
+
+    int count = results.length;
+
+    return {
+        'questions': questions,
+        'count': count,
+    };
 }
+
 
 }
 
@@ -142,7 +151,7 @@ class StudentQuiz {
     // عرض المواد
 router.get('/student-quizzes/<quizId>', (Request request, String quizId) async {
     try {
-        final questions = DatabaseHelper.getQuizQuestions(quizId);
+        final questions = DatabaseHelper.getQuizQuestionsWithCount(quizId);
         final jsonQuestions = jsonEncode(questions);
         return Response.ok(
             jsonQuestions,

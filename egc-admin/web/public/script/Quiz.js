@@ -8,75 +8,38 @@ const resultBox = document.querySelector(".result-box");
 
 let questionCounter = 0;
 let currentQuestion;
-let availableOptions = [];
+let availableQuestion = [];
 let correctAnswers = 0;
 let attempt = 0;
 
-// Fetch quizzes from database
-// Get the quizId from the URL
-// استخراج quizId من عنوان الـ URL
-// استخراج quizId من عنوان الـ URL
+document.addEventListener('DOMContentLoaded', (event) => {
+    fetchQuizzes(); // استدعاء الدالة عند تحميل الصفحة
+});
+
 const urlParams = new URLSearchParams(window.location.search);
 const quizId = urlParams.get('quizId');
-
-let availableQuestion = []; // مصفوفة لتخزين الأسئلة
+document.querySelector('.Quiz_id').innerText = quizId; 
 
 async function fetchQuizzes() {
     try {
         const response = await fetch(`/student-quizzes/${quizId}`);
         if (!response.ok) throw new Error('Network response was not ok');
 
-        const quizzes = await response.json();
-        console.log('Fetched quizzes:', quizzes); // طباعة الأسئلة في وحدة التحكم
+        const { questions, count } = await response.json();
+        console.log('Fetched quizzes:', questions); // تسجيل الأسئلة المحمّلة
 
-        if (!quizzes || quizzes.length === 0) {
-            console.error('No quizzes found or empty response:', quizzes);
+        if (!questions || questions.length === 0) {
+            console.error('No quizzes found or empty response:', questions);
             document.querySelector('.Total-question').innerText = '0';
             return;
         }
 
-        availableQuestion = quizzes; // تخزين الأسئلة في المصفوفة
-        document.querySelector('.Total-question').innerText = availableQuestion.length; // عرض عدد الأسئلة
-
-        getNewQuestion(); // بدء عرض السؤال الأول
+        availableQuestion = questions; 
+        document.querySelector('.Total-question').innerText = count; 
     } catch (error) {
         console.error('Error fetching quizzes:', error);
     }
 }
-
-// استدعاء الدالة عند تحميل الصفحة
-window.onload = fetchQuizzes;
-
-
-
-async function checkPreviousAttempt() {
-    const studentId = JSON.parse(localStorage.getItem('userData')).id;
-    const response = await fetch(`/courses/student-quizzes/${studentId}`);
-    const attempts = await response.json();
-    return attempts.some(attempt => attempt.quizId === quizId); // Compare with the current quizId
-}
-
-
-// Start the quiz
-function startQuiz() {
-    // تحقق من أن هناك أسئلة متاحة
-    if (availableQuestion.length === 0) {
-        alert('No questions available to start the quiz.');
-        return;
-    }
-
-    // إخفاء قسم التعليمات وعرض قسم الكويز
-    document.querySelector('.quiz-info').classList.add("hide");
-    document.querySelector('.quiz-box').classList.remove("hide");
-
-    // استدعاء دالة لعرض السؤال الأول
-    getNewQuestion();
-    answersIndicator(); // تأكد من أن هذه الدالة تستدعي أيضًا
-}
-
-
-
-
 
 // Set available questions
 function getNewQuestion() {
@@ -85,51 +48,44 @@ function getNewQuestion() {
         return;
     }
 
-    questionNumber.innerHTML = " Question " + (questionCounter + 1) + " of " + availableQuestion.length;
+    questionNumber.innerHTML = "Question " + (questionCounter + 1) + " of " + availableQuestion.length;
 
-    // احصل على سؤال عشوائي
-    const questionIndex = availableQuestion[Math.floor(Math.random() * availableQuestion.length)];
-    currentQuestion = questionIndex;
-    questionText.innerHTML = currentQuestion.q;
+    const questionIndex = Math.floor(Math.random() * availableQuestion.length);
+    currentQuestion = availableQuestion[questionIndex];
+    
+    console.log('Current Question:', currentQuestion); // تسجيل السؤال الحالي
 
-    // احصل على موضع 'questionIndex' من مصفوفة 'availableQuestion'
-    const index1 = availableQuestion.indexOf(questionIndex);
-    // إزالة 'questionIndex' من مصفوفة 'availableQuestion' حتى لا يتكرر السؤال
-    availableQuestion.splice(index1, 1);
+    questionText.innerHTML = currentQuestion.title;
 
-    // إعداد الخيارات
-    optionContainer.innerHTML = ''; // مسح خيارات الإجابة السابقة
-    currentQuestion.options.forEach((option, i) => {
+    optionContainer.innerHTML = '';
+    currentQuestion.answers.forEach((option, i) => {
         const optionElement = document.createElement("div");
         optionElement.innerHTML = option;
-        optionElement.id = i; // استخدام المعرف الأصلي
+        optionElement.id = i;
         optionElement.className = "option";
         optionContainer.appendChild(optionElement);
-        optionElement.setAttribute("onclick", "getResult(this)"); // تعيين وظيفة النقر
+        optionElement.setAttribute("onclick", "getResult(this)");
     });
 
-    questionCounter++; // زيادة عدد الأسئلة
+    availableQuestion.splice(questionIndex, 1);
+    questionCounter++; 
 }
 
-
-// Get result of current attempt
-function getResult(element) {
-    const id = parseInt(element.id);
-    if (id === currentQuestion.answer) {
-        element.classList.add("correct");
-        correctAnswers++;
-    } else {
-        element.classList.add("wrong");
-        const optionLen = optionContainer.children.length;
-        for (let i = 0; i < optionLen; i++) {
-            if (parseInt(optionContainer.children[i].id) === currentQuestion.answer) {
-                optionContainer.children[i].classList.add("correct");
-            }
-        }
+// Start the quiz
+function startQuiz() {
+    if (availableQuestion.length === 0) {
+        alert('No questions available to start the quiz.');
+        return;
     }
-    attempt++;
-    unclickableOptions();
+
+    // إخفاء قسم التعليمات وعرض قسم الكويز
+    homeBox.classList.add("hide");
+    quizBox.classList.remove("hide");
+
+    // استدعاء دالة لعرض السؤال الأول
+    getNewQuestion();
 }
+
 
 // Make options unclickable
 function unclickableOptions() {
@@ -138,6 +94,35 @@ function unclickableOptions() {
         optionContainer.children[i].classList.add("already-answered");
     }
 }
+
+
+// Get result of current attempt
+function getResult(element) {
+    const id = parseInt(element.id);
+    console.log('Selected Option ID:', id); // تسجيل الخيار المحدد
+    console.log('Correct Answer ID:', currentQuestion.correctAnswer); // تسجيل الإجابة الصحيحة
+
+    if (id === currentQuestion.correctAnswer) {
+        element.classList.add("correct");
+        correctAnswers++;
+    } else {
+        element.classList.add("wrong");
+        const optionLen = optionContainer.children.length;
+        for (let i = 0; i < optionLen; i++) {
+            if (parseInt(optionContainer.children[i].id) === currentQuestion.correctAnswer) {
+                optionContainer.children[i].classList.add("correct");
+            }
+        }
+    }
+    attempt++;
+    unclickableOptions();
+
+    setTimeout(() => {
+        next();
+    }, 1000);
+}
+
+
 
 // Next question
 function next() {
@@ -148,44 +133,32 @@ function next() {
     }
 }
 
+
 // Handle quiz over
 function quizOver() {
-    const studentId = JSON.parse(localStorage.getItem('userData')).id;
-    
     quizBox.classList.add("hide");
     resultBox.classList.remove("hide");
     quizResult();
-
-    recordAnswers(collectedAnswers); // حفظ إجابات الطالب
-    
-    recordAttempt({
-        quizId: quizId,
-        studentId: studentId,
-        date: new Date().toISOString(),
-        score: correctAnswers // إرسال النتيجة
-    });
 }
-
-
 
 // Get quiz result
 function quizResult() {
-    resultBox.querySelector(".Total-question").innerHTML = availableQuestion.length;
+    console.log('Total Questions:', questionCounter);
+    console.log('Total Attempts:', attempt);
+    console.log('Correct Answers:', correctAnswers);
+
+    resultBox.querySelector(".Total-question").innerHTML = questionCounter;
     resultBox.querySelector(".Total-attempt").innerHTML = attempt;
     resultBox.querySelector(".Total-correct").innerHTML = correctAnswers;
     resultBox.querySelector(".Total-wrong").innerHTML = attempt - correctAnswers;
-    const percentage = (correctAnswers / availableQuestion.length) * 100;
+    const percentage = (correctAnswers / questionCounter) * 100;
     resultBox.querySelector(".Total-Percentage").innerHTML = percentage.toFixed(2) + "%";
-    resultBox.querySelector(".Total-Score").innerHTML = correctAnswers + " / " + availableQuestion.length;
+    resultBox.querySelector(".Total-Score").innerHTML = correctAnswers + " / " + questionCounter;
 }
+
 
 function myFunction() {
     alert("Successful!");
-}
-
-// Starting point
-window.onload = async function () {
-    homeBox.querySelector(".Total-question").innerHTML = await fetchQuizzes().length; // Assuming this gets the total questions
 }
 
 async function recordAnswers(answers) {
@@ -205,7 +178,6 @@ async function recordAnswers(answers) {
         console.error('Error recording answers:', error);
     }
 }
-
 
 async function recordAttempt(attemptData) {
     try {

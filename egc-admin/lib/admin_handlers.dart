@@ -465,6 +465,15 @@ Future<Response> getAddStudentHandler(Request request) async {
     return Response.internalServerError(body: e.toString());
   }
 }
+Future<Response> getAdminGradesHandler(Request request) async {
+  try {
+    var html = File('web/page/student-all-grades.html').readAsStringSync();
+    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
+
 
 Future<Response> getShowStudentGradesHandler(Request request) async {
   try {
