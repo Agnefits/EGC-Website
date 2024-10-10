@@ -58,7 +58,7 @@ async function loadStudents() {
                 <td>${student.department || 'N/A'}</td>
                 <td>${student.year_level || 'N/A'}</td>
                 <td>${student.No_section || 'N/A'}</td>
-                <td>${student.total_grade || '0'}</td>
+                <td>${student.total_grade || 'N/A'}</td>
                 <td>
                     <input type="checkbox" class="grade-checkbox show-grade" name="gradeVisibility-${student.id}-show" data-id="${student.id}">
                     Show Grade
