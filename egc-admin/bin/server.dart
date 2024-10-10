@@ -156,7 +156,7 @@ void main() async {
   var staticFileHandler = createStaticHandler(staticFilesPath.path);
 
   // Add a cascade to handle different requests
-  var cascade = Cascade().add(staticFileHandler).add(router);
+  var cascade = Cascade().add(staticFileHandler).add(router.call);
 
   // Create a server handler
   var handler =

@@ -71,7 +71,7 @@ class DatabaseHelper {
       Uint8List? cvFile) {
     final statement = _db.prepare('''
       UPDATE teaching_assistants
-      SET name = ?, email = ?, phone = ?, username = ?, major = ?, password = ? ${image != null && !image.isEmpty ? ", photo = ?" : ""} ${cvFile != null && !cvFile.isEmpty ? ", cvFile = ?" : ""}
+      SET name = ?, email = ?, phone = ?, username = ?, major = ?, password = ? ${image != null && image.isNotEmpty ? ", photo = ?" : ""} ${cvFile != null && cvFile.isNotEmpty ? ", cvFile = ?" : ""}
       WHERE id = ?
     ''');
     List data = [
@@ -82,10 +82,10 @@ class DatabaseHelper {
       teachingAssistantData['major'] ?? '',
       teachingAssistantData['password'] ?? '',
     ];
-    if (image != null && !image.isEmpty) {
+    if (image != null && image.isNotEmpty) {
       data.add(image);
     }
-    if (cvFile != null && !cvFile.isEmpty) {
+    if (cvFile != null && cvFile.isNotEmpty) {
       data.add(cvFile);
     }
     data.add(id);
@@ -295,7 +295,7 @@ class TeachingAssistant {
   // Function to authenticate user
   static Future<Map<String, dynamic>?> authenticateUser(
       String username, String password) async {
-    final result = await DatabaseHelper._db.select(
+    final result = DatabaseHelper._db.select(
         "SELECT id, username, name, email, phone, major, photo FROM teaching_assistants WHERE username = '$username' AND password = '$password'");
     if (result.isNotEmpty) {
       return result.first;

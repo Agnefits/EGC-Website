@@ -277,7 +277,7 @@ body {
     /* White background for form */
     border-radius: 15px;
     padding: 20px;
-    width: 600px;
+    width: 990px;
     /* Adjust width as needed */
     margin: 0 auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -296,6 +296,7 @@ body {
 label {
     margin-top: 10px;
     display: block;
+    font-weight: bold;
 }
 
 select {
@@ -317,6 +318,7 @@ li {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    width: 95%;
 }
 
 strong {
@@ -337,8 +339,7 @@ button {
 }
 
 button.absent,
-button.present,
-button.leave {
+button.present {
     background-color: #0F2B4E;
 }
 
@@ -349,6 +350,7 @@ button {
     border: none;
     cursor: pointer;
     margin-right: 10px;
+    
 }
 
 button:hover {
@@ -403,8 +405,8 @@ button:hover {
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
-    width: 100%;
-    margin-top: 20px;
+    width: 52%;
+    margin-top: -60px;
 }
 
 #resultSection {
@@ -427,11 +429,12 @@ button:hover {
 /* Add some basic styling to the notes section */
 
 #notes {
-    margin-top: 20px;
+    margin-top: -30px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300%;
 }
 
 #notes-textarea {
@@ -461,4 +464,51 @@ button:hover {
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: #f9f9f9;
+}
+.present {
+    background-color: #c6efce; /* Light green */
+}
+
+.absent {
+    background-color: #ffc7ce; /* Light red */
+}
+
+label {
+    margin-right: 5px; /* Add space between label and select */
+}
+
+
+
+.form-group{
+   
+    display: inline-block; /* Make the groups inline */
+    margin-right: 20px; /* Add some space between groups */
+}
+.form-group {
+    margin-bottom: 15px;
+}
+
+.test {
+    margin-right: 30%;
+    width: 70%; /* Space between form and notes section */
+    margin-top: 6%;
+}
+
+#notes-textarea {
+    width: 100%; /* Makes the textarea take full width */
+    height: 100px; /* Set a height for the textarea */
+}
+#resultSection{
+    width: 100%;
+}
+
+#summarySection{
+
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300%;
+    background-color: #ecf0f1;
 }

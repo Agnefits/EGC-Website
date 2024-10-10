@@ -65,7 +65,7 @@ class Admin {
   // Function to authenticate user
   static Future<Map<String, dynamic>?> authenticateUser(
       String username, String password) async {
-    final result = await DatabaseHelper._db.select(
+    final result = DatabaseHelper._db.select(
         "SELECT id, username, name, email, phone, photo FROM admins WHERE username = '$username' AND password = '$password'");
     if (result.isNotEmpty) {
       return result.first;

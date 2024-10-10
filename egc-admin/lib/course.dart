@@ -123,19 +123,19 @@ class Course {
         s.year_level AS "Year Level", 
         c.name AS "Course Name", 
         s.sectionNo AS "Section", 
-        COUNT(CASE WHEN sa.status = 'P' THEN 1 ELSE NULL END) AS "Presence Total", 
-        COUNT(CASE WHEN sa.status = 'A' THEN 1 ELSE NULL END) AS "Absence Total", 
+        COUNT(CASE WHEN sa.status = 'p' THEN 1 ELSE NULL END) AS "Presence Total", 
+        COUNT(CASE WHEN sa.status = 't' THEN 1 ELSE NULL END) AS "Absence Total", 
         ROUND(
-          (COUNT(CASE WHEN sa.status = 'Present' THEN 1 ELSE NULL END) * 100.0) / 
+          (COUNT(CASE WHEN sa.status = 'p' THEN 1 ELSE NULL END) * 100.0) / 
           COUNT(sa.status), 2) AS "Percentage" 
       FROM 
         students s
-      JOIN 
+      LEFT JOIN 
         student_attendance sa ON s.id = sa.studentId
-      JOIN 
+      LEFT JOIN 
         attendance a ON sa.attendanceId = a.id
-      JOIN 
-        courses c ON a.courseId = c.id
+      LEFT JOIN 
+        courses c ON a.courseId = c.id AND c.year = s.year_level
       GROUP BY 
         s.id, c.id
       ORDER BY 
