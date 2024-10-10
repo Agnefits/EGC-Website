@@ -77,15 +77,19 @@ void main() async {
   router.get('/admin/EditStudent', getEditStudentHandler);
   //router.post('/admin/EditStudent', postEditStudentHandler);
   //router.post('/admin/DeleteStudent', deleteStudentHandler);
+  router.get('/admin/ShowStudentGrades', getShowStudentGradesHandler);
+  router.get('/admin/Grades', getAdminGradesHandler);
 
+  ///Student Attendance
   router.get('/admin/StudentAttendance', getAdminStudentAttendanceHandler);
+  router.get('/admin/ShowStudentAttendance', getAdminShowStudentAttendanceHandler);
   router.get('/admin/TotalStudentsAttendance', getShowAdminTotalStudentsAttendanceHandler);
+
+  ///Class Schedule
   router.get('/admin/ClassSchedules', getAdminClassSchedulesHandler);
   router.get('/admin/ShowClassSchedules', getShowAdminClassSchedulesHandler);
   router.get('/admin/AddClassSchedule', getAddAdminClassSchedulesHandler);
-  router.get('/admin/ShowStudentGrades', getShowStudentGradesHandler);
 
-  router.get('/admin/Grades', getAdminGradesHandler);
   ///Staff
   //Dashboard
   router.get('/staff/Dashboard', getStaffDashboardHandler);
@@ -156,7 +160,7 @@ void main() async {
   var staticFileHandler = createStaticHandler(staticFilesPath.path);
 
   // Add a cascade to handle different requests
-  var cascade = Cascade().add(staticFileHandler).add(router.call);
+  var cascade = Cascade().add(staticFileHandler).add(router);
 
   // Create a server handler
   var handler =

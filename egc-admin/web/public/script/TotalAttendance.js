@@ -57,7 +57,7 @@ async function loadAttendance() {
         const filteredStudents = attendanceData.filter(record => {
             return (!department || record.department === department) &&
                 (!yearLevel || record.yearLevel === yearLevel) &&
-                (!courseId || course.courseId === courseId) &&
+                (!courseId || record.courseId === courseId) &&
                 (!section || record.section == section);
         });
 
@@ -81,7 +81,7 @@ async function loadAttendance() {
         alert('Error loading attendance data');
     }
 }
-
+/*
 function sortTableByName() {
     const table = document.querySelector('.table');
     const rows = Array.from(table.querySelectorAll('tbody tr'));
@@ -99,4 +99,4 @@ function sortTableByName() {
 
     const tbody = table.querySelector('tbody');
     rows.forEach(row => tbody.appendChild(row));
-}
+}*/

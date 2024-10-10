@@ -565,6 +565,24 @@ Future<Response> getAdminStudentAttendanceHandler(Request request) async {
     // Print the map
     print(queryParams);
 
+    var html = File('web/page/admin-student-attendance.html').readAsStringSync();
+    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
+
+Future<Response> getAdminShowStudentAttendanceHandler(Request request) async {
+  try {
+    final body = await request.readAsString();
+    Uri uri = Uri.parse("https://example.com/params?" + body);
+
+    // Get the query parameters as a map
+    Map<String, String> queryParams = uri.queryParameters;
+
+    // Print the map
+    print(queryParams);
+
     var html = File('web/page/admin attendance.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
