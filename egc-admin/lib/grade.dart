@@ -103,55 +103,78 @@ class DatabaseHelper {
     ''');
 
     // إدخال المحاضرة الأولى (sectionNo = 1)
-    _db.execute('''
-  INSERT INTO attendance (
-     date, sectionNo, note, courseId, doctorId, teaching_assistantId
-  ) VALUES (?, ?, ?, ?, ?, ?)
-''', [
-      'today', // التاريخ
-      '1', // رقم المحاضرة (sectionNo = 1)
-      'NOTE', // ملاحظة
-      '1', // معرف الكورس
-      '1', // معرف الدكتور
-      '1', // معرف مساعد التدريس
-    ]);
+//     _db.execute('''
+//   INSERT INTO attendance (
+//      date, sectionNo, note, courseId, doctorId, teaching_assistantId
+//   ) VALUES (?, ?, ?, ?, ?, ?)
+// ''', [
+//       'today', // التاريخ
+//       '1', // رقم المحاضرة (sectionNo = 1)
+//       'NOTE', // ملاحظة
+//       '1', // معرف الكورس
+//       '1', // معرف الدكتور
+//       '1', // معرف مساعد التدريس
+//     ]);
 
-// إدخال المحاضرة الثانية (sectionNo = 2)
-    _db.execute('''
-  INSERT INTO attendance (
-     date, sectionNo, note, courseId, doctorId, teaching_assistantId
-  ) VALUES (?, ?, ?, ?, ?, ?)
-''', [
-      'today', // التاريخ
-      '2', // رقم المحاضرة (sectionNo = 2)
-      'NOTE', // ملاحظة
-      '1', // معرف الكورس
-      '1', // معرف الدكتور
-      '1', // معرف مساعد التدريس
-    ]);
+// // إدخال المحاضرة الثانية (sectionNo = 2)
+//     _db.execute('''
+//   INSERT INTO attendance (
+//      date, sectionNo, note, courseId, doctorId, teaching_assistantId
+//   ) VALUES (?, ?, ?, ?, ?, ?)
+// ''', [
+//       'today', // التاريخ
+//       '2', // رقم المحاضرة (sectionNo = 2)
+//       'NOTE', // ملاحظة
+//       '1', // معرف الكورس
+//       '1', // معرف الدكتور
+//       '1', // معرف مساعد التدريس
+//     ]);
 
 // تسجيل حضور للمحاضرة الأولى (sectionNo = 1)
-    _db.execute('''
-  INSERT INTO student_attendance (
-     status, attendanceId, studentId
-  ) VALUES (?, ?, ?)
-''', [
-      'p', // حضر الطالب
-      '1', // معرف الحضور (للمحاضرة الأولى)
-      '1', // معرف الطالب
-    ]);
+//     _db.execute('''
+//   INSERT INTO student_attendance (
+//      status, attendanceId, studentId
+//   ) VALUES (?, ?, ?)
+// ''', [
+//       'p', // حضر الطالب
+//       '1', // معرف الحضور (للمحاضرة الأولى)
+//       '1', // معرف الطالب
+//     ]);
 
-// تسجيل غياب للمحاضرة الثانية (sectionNo = 2)
-    _db.execute('''
-  INSERT INTO student_attendance (
-     status, attendanceId, studentId
-  ) VALUES (?, ?, ?)
-''', [
-      't', // غاب الطالب
-      '2', // معرف الحضور (للمحاضرة الثانية)
-      '1', // معرف الطالب
-    ]);
+// // تسجيل غياب للمحاضرة الثانية (sectionNo = 2)
+//     _db.execute('''
+//   INSERT INTO student_attendance (
+//      status, attendanceId, studentId
+//   ) VALUES (?, ?, ?)
+// ''', [
+//       't', // غاب الطالب
+//       '2', // معرف الحضور (للمحاضرة الثانية)
+//       '1', // معرف الطالب
+//     ]);
 
+// تسجيل حضور للمحاضرة الأولى (sectionNo = 1)
+//     _db.execute('''
+//   INSERT INTO student_attendance (
+//      status, attendanceId, studentId
+//   ) VALUES (?, ?, ?)
+// ''', [
+//       'p', // حضر الطالب
+//       '1', // معرف الحضور (للمحاضرة الأولى)
+//       '6', // معرف الطالب
+//     ]);
+
+// // تسجيل غياب للمحاضرة الثانية (sectionNo = 2)
+//     _db.execute('''
+//   INSERT INTO student_attendance (
+//      status, attendanceId, studentId
+//   ) VALUES (?, ?, ?)
+// ''', [
+//       't', // غاب الطالب
+//       '2', // معرف الحضور (للمحاضرة الثانية)
+//       '6', // معرف الطالب
+//     ]);
+
+    
     final tables = _db.select('''
   SELECT name FROM sqlite_master WHERE type='table' AND name='student_attendance';
 ''');
