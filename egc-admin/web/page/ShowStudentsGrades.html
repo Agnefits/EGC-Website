@@ -8,39 +8,104 @@
     <title>Show Students Grades</title>
     <link rel="icon" href="/img/logo.png" sizes="48x32">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/style/Show studentsGrades.css">
+    <link rel="stylesheet" href="/style/show_studentsGrades.css">
+    <link rel="stylesheet" href="/style/AdminDashboard.css">
     <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
     <!-- <link rel="stylesheet" href="/style/nav.css"> -->
 </head>
 
 <body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <a href="/home"><img src="/img/logo.png" class="icon"></a>
+            <a href="/home">
+                <div class="logo_name">Egyptian Germany College</div>
+            </a>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+
+
+            <li>
+                <a href="/admin/Doctors">
+                    <i class='bx bxs-school'></i>
+                    <span class="links_name">Doctor</span>
+                </a>
+                <span class="tooltip">Show Doctor</span>
+            </li>
+            <li>
+                <a href="/admin/TeachingAssistants">
+                    <i class='bx bx-chalkboard'></i>
+                    <span class="links_name">Teaching Assistant</span>
+                </a>
+                <span class="tooltip">Teaching Assistant</span>
+            </li>
+            <li>
+                <a href="/admin/Students">
+                    <i class='bx bx-user'></i>
+                    <span class="links_name"> Student</span>
+                </a>
+                <span class="tooltip">Student</span>
+            </li>
+            <li>
+                <a href="/admin/StudentAttendance">
+                    <i class='bx bx-spreadsheet'></i>
+                    <span class="links_name">Student Attendance</span>
+                </a>
+                <span class="tooltip">Student Attendance</span>
+            </li>
+            <li>
+                <a href="/admin/ClassSchedules">
+                    <i class='bx bx-calendar'></i>
+                    <span class="links_name">Class Schedules</span>
+                </a>
+                <span class="tooltip">Class Schedules</span>
+            </li>
+            <li class="profile">
+                <div class="profile-details">
+                    <img src="/img/person1.JPG" alt="profileImg">
+                    <div class="name_email">
+                        <div class="name">Mariam Magdy</div>
+                        <div class="email">mariammagdy@gmail.com</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out"></i>
+            </li>
+        </ul>
+    </div>
     <main>
-        <div class="header">
+        <div class="content">
+            <div class="text">
+                <h3 style="padding: 10px;">Show Students Grades</h3>
+            </div>
+    <!-- <main> -->
+        <!-- <div class="header">
             <img src="/img/arrow.png" alt="Go Back" id="goBackImage" width="20px" height="20px" onclick="goBackToCoursePage()">  
             <h3>Show Students Grades</h3>
-        </div>
+        </div> -->
 
-        <div class="content">
-            <!-- <div class="text">
-                <h3>Show Students Grades</h3>
-            </div> -->
-            <!-- <a href="/pages/Add_Student.html" class="added">Add Student</a> -->
-            <div id="selection">
+        <!-- <div class="content"> -->
+            <div class="filter-section">
+            <div class="filter-dropdown">
                 <select id="department" name="department" required>
                 <option value="">Select Department</option>
-                <option value="IT">Information Technology</option>
-                <option value="Mechanic">Mechanic</option>
+                <option value="IT">IT</option>
+                <option value="Mechanic">Mechanical</option>
                 <option value="Electrical">Electrical</option>
-            </select>
+                </select>
+            </div>
+            <div class="filter-dropdown">
                 <select id="yearlevel" name="year_level" required>
                 <option value="">Select Year Level</option>
                 <option value="1st">1st Year</option>
                 <option value="2nd">2nd Year</option>
                 <option value="3rd">3rd Year</option>
                 <option value="4th">4th Year</option>
-            </select>
-                <select id="n_section" name="section" required>
-                <option value="">Select Number of Section</option>
+                </select>
+            </div>
+            <div class="filter-dropdown">
+                <select id="n_section" name="No_section" required>
+                <option value="">Select Section</option>
                 <option value="1"> section 1</option>
                 <option value="2">section 2</option>
                 <option value="3">section 3</option>
@@ -49,9 +114,9 @@
                 <option value="6">section 6</option>
                 <option value="7">section 7</option>
                 <option value="8">section 8</option>
-            </select>
+                </select>
             </div>
-
+            </div>
             <div class="checkbox">
                 <input type="checkbox" id="show-all-grades" /> Show All Grades
                 <input type="checkbox" id="hide-all-grades" class="hide" /> Hide All Grades
@@ -61,13 +126,13 @@
                 <thead>
                     <tr>
 
-                        <th class="sortable">Student Name <i class='bx bx-chevron-down'></i></th>
-                        <th>Department <i class='bx bx-chevron-down'></i></th>
-                        <th>Year Level <i class='bx bx-chevron-down'></i></th>
-                        <th>Section <i class='bx bx-chevron-down'></i></th>
-                        <th>Total Grade <i class='bx bx-chevron-down'></i></th>
-                        <th> hidden or show grade<i class='bx bx-chevron-down'></i></th>
-                        <th>Show Details <i class='bx bx-chevron-down'></i></th>
+                        <th class="sortable">Student Name</th>
+                        <th>Department</th>
+                        <th>Year Level </th>
+                        <th>Section </th>
+                        <th>Total Grade </th>
+                        <th> hidden or show grade</th>
+                        <th>Show Grades </th>
                     </tr>
                 </thead>
 
@@ -75,8 +140,7 @@
                     <!-- Rows will be dynamically added here -->
                 </tbody>
             </table>
-        </div>
-
+        <!-- </div> -->
     </main>
     <script src="/script/show student grade.js"></script>
     <script>
@@ -86,6 +150,7 @@
     window.location.href = '/admin/Students';
 }
     </script>
+        <script src="/script/AdminDashboard.js"></script>
 </body>
 
 </html>

@@ -1,25 +1,12 @@
-function searchTeachingAssistants() {
-    const searchInput = document.getElementById('searchInput').value.toLowerCase();
-    const tableRows = document.querySelectorAll('#teachingAssistantsTableBody tr');
 
-    tableRows.forEach(row => {
-        // Get the columns for name, department, and email
-        const name = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
-        const department = row.querySelector('td:nth-child(6)').textContent.toLowerCase();
-        const email = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+document.addEventListener('DOMContentLoaded', () => {
+    loadTeachingAssistants();
 
-        // Check if any of the columns contain the search input
-        if (name.includes(searchInput) || department.includes(searchInput) || email.includes(searchInput)) {
-            row.style.display = ''; // Show the row
-        } else {
-            row.style.display = 'none'; // Hide the row
-        }
-    });
-}
+    // إضافة مستمع حدث لقائمة الأقسام
+    document.getElementById('major').addEventListener('change', loadTeachingAssistants);
+});
 
-document.addEventListener('DOMContentLoaded', loadteachingAssistants);
-
-async function loadteachingAssistants() {
+async function loadTeachingAssistants() {
     try {
         const response = await fetch('/teaching-assistants');
         if (!response.ok) {
@@ -36,23 +23,31 @@ async function loadteachingAssistants() {
 
         teachingAssistantsTableBody.innerHTML = ''; // Clear the table before adding new rows
 
-        teachingAssistants.forEach(teachingAssistant => {
+        // الحصول على قيمة القسم المحدد
+        const selectedMajor = document.getElementById('major').value;
+
+        // فلترة المساعدين بناءً على القسم المحدد
+        const filteredTeachingAssistants = teachingAssistants.filter(teachingAssistant => {
+            return !selectedMajor || teachingAssistant.major === selectedMajor;
+        });
+
+        filteredTeachingAssistants.forEach(teachingAssistant => {
             const row = document.createElement('tr');
             row.innerHTML = `
-            <td>${teachingAssistant.name || 'N/A'}</td>
-            <td>${teachingAssistant.email || 'N/A'}</td>
-            <td>${teachingAssistant.phone || 'N/A'}</td>
-            <td>${teachingAssistant.username || 'N/A'}</td>
-            <td>${teachingAssistant.major || 'N/A'}</td>
-            <td>
-                <button class="details-btn edit" data-id="${teachingAssistant.id}">Edit</button>
-                <button class="details-btn delete" data-id="${teachingAssistant.id}">Delete</button>
-            </td>
-        `;
+                <td>${teachingAssistant.name || 'N/A'}</td>
+                <td>${teachingAssistant.email || 'N/A'}</td>
+                <td>${teachingAssistant.phone || 'N/A'}</td>
+                <td>${teachingAssistant.username || 'N/A'}</td>
+                <td>${teachingAssistant.major || 'N/A'}</td>
+                <td>
+                    <button class="details-btn edit" data-id="${teachingAssistant.id}">Edit</button>
+                    <button class="details-btn delete" data-id="${teachingAssistant.id}">Delete</button>
+                </td>
+            `;
             teachingAssistantsTableBody.appendChild(row);
         });
 
-        addEventListeners(); // Add event listeners for edit and delete buttons
+        addEventListeners(); // إضافة مستمعات الأحداث لأزرار التعديل والحذف
     } catch (error) {
         console.error('Error:', error);
         alert('Error loading teaching assistants');
@@ -79,7 +74,7 @@ function addEventListeners() {
                         throw new Error('Failed to delete Teaching Assistant');
                     }
 
-                    loadteachingAssistants(); // Reload the list of teaching assistants after deletion
+                    loadTeachingAssistants(); // إعادة تحميل قائمة المساعدين بعد الحذف
                 } catch (error) {
                     console.error('Error:', error);
                     alert('Error deleting Teaching Assistant');

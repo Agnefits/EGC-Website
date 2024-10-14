@@ -1,25 +1,13 @@
-function searchStudents() {
-    const searchInput = document.getElementById('searchInput').value.toLowerCase();
-    const tableRows = document.querySelectorAll('#studentsTableBody tr');
 
-    tableRows.forEach(row => {
-        // Get the columns for name, department, and email
-        const name = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
-        const department = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-        const email = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
+document.addEventListener('DOMContentLoaded', () => {
+    // Load students when the page loads
+    loadStudents();
 
-        // Check if any of the columns contain the search input
-        if (name.includes(searchInput) || department.includes(searchInput) || email.includes(searchInput)) {
-            row.style.display = ''; // Show the row
-        } else {
-            row.style.display = 'none'; // Hide the row
-        }
-    });
-}
-
-
-
-document.addEventListener('DOMContentLoaded', loadStudents);
+    // Add event listeners for dropdowns
+    document.getElementById('department').addEventListener('change', loadStudents);
+    document.getElementById('yearlevel').addEventListener('change', loadStudents);
+    document.getElementById('n_section').addEventListener('change', loadStudents);
+});
 
 async function loadStudents() {
     try {
@@ -29,7 +17,7 @@ async function loadStudents() {
         }
 
         const students = await response.json();
-        console.log('Fetched students:', students); // أضف هذا السطر للتحقق من البيانات
+        console.log('Fetched students:', students); // For debugging
 
         const studentsTableBody = document.getElementById('studentsTableBody');
         if (!studentsTableBody) {
@@ -38,7 +26,19 @@ async function loadStudents() {
 
         studentsTableBody.innerHTML = ''; // Clear the table before adding new rows
 
-        students.forEach(student => {
+        // Get values from dropdowns
+        const department = document.getElementById('department').value;
+        const yearLevel = document.getElementById('yearlevel').value;
+        const section = document.getElementById('n_section').value;
+
+        // Filter students based on selections
+        const filteredStudents = students.filter(student => {
+            return (!department || student.department === department) &&
+                (!yearLevel || student.year_level === yearLevel) &&
+                (!section || student.No_section == section);
+        });
+
+        filteredStudents.forEach(student => {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${student.name || 'N/A'}</td>
@@ -57,7 +57,7 @@ async function loadStudents() {
             studentsTableBody.appendChild(row);
         });
 
-        addEventListeners(); // نقل عملية إضافة المستمعات إلى دالة منفصلة
+        addEventListeners(); // Add event listeners for buttons after loading students
     } catch (error) {
         console.error('Error:', error);
         alert('Error loading students');
@@ -110,7 +110,7 @@ function addEventListeners() {
                 }
 
                 const student = await response.json();
-                console.log('Fetched student:', student); // أضف هذا السطر للتحقق من البيانات
+                console.log('Fetched student:', student); // For debugging
 
                 // Ensure the data contains ID
                 if (student && student.id) {

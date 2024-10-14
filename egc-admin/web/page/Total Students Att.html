@@ -5,12 +5,15 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Show Doctors</title>
+    <title>Total Students Attendance</title>
     <link rel="icon" href="/img/logo.png" sizes="48x32">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/style/ShowDoctors.css">
-    <link rel="stylesheet" href="/style/adminDashboard.css">
+    <link rel="stylesheet" href="/style/AdminDashboard.css">
+    <link rel="stylesheet" href="/style/TotalAttendance.css">
     <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -27,9 +30,9 @@
             <li>
                 <a href="/admin/Doctors">
                     <i class='bx bxs-school'></i>
-                    <span class="links_name">Doctor</span>
+                    <span class="links_name">Doctors</span>
                 </a>
-                <span class="tooltip">Show Doctor</span>
+                <span class="tooltip">Doctors</span>
             </li>
             <li>
                 <a href="/admin/TeachingAssistants">
@@ -74,40 +77,67 @@
     <main>
         <div class="content">
             <div class="text">
-                <h3>Show Doctors</h3>
+                <h3 style="padding: 10px;padding-top: 20px;">Total Students Attendance</h3>
             </div>
             <div class="filter-section">
                 <div class="filter-dropdown">
-                    <select id="major" name="major" required >
-                        <option value="">Select Department</option>
-                        <option value="IT">IT</option>
-                        <option value="Mech">Mechanical</option>
-                        <option value="Elec">Electrical</option>
+                    <select id="department" name="department" required>
+                    <option value="">Select Department</option>
+                    <option value="IT">IT</option>
+                    <option value="Mechanic">Mechanical</option>
+                    <option value="Electrical">Electrical</option>
                     </select>
-                </div>     
+                </div>
+                <div class="filter-dropdown">
+                    <select id="yearlevel" name="year_level" required>
+                    <option value="">Select Year Level</option>
+                    <option value="1st">1st Year</option>
+                    <option value="2nd">2nd Year</option>
+                    <option value="3rd">3rd Year</option>
+                    <option value="4th">4th Year</option>
+                    </select>
+                </div>
+                <div class="filter-dropdown">
+                    <select id="course" name="course" required>
+                    <option value="">Select Course</option>
+                    </select>
+                </div>
+                <div class="filter-dropdown">
+                    <select id="n_section" name="section" required>
+                    <option value="">Select Section</option>
+                    <option value="1">Section 1</option>
+                    <option value="2">Section 2</option>
+                    <option value="3">Section 3</option>
+                    <option value="4">Section 4</option>
+                    <option value="5">Section 5</option>
+                    <option value="6">Section 6</option>
+                    <option value="7">Section 7</option>
+                    <option value="8">Section 8</option>
+                    </select>
+                </div>
             </div>
-            
-            <table class="doctors-table" id="doctors-table">
+
+            <table class="table" id="table">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone </th>
-                        <th>Username </th>
-                        <th>Major </th>
-                        <th>Details </th>
+                        <th class="sortable">Student Name</th>
+                        <th class="sortable">Department</th>
+                        <th class="sortable">Year Level</th>
+                        <th class="sortable">Course</th>
+                        <th class="sortable">Section</th>
+                        <th class="sortable">Total Presence</th>
+                        <th class="sortable">Total Absence</th>
+                        <th class="sortable">Percentage</th>
                     </tr>
                 </thead>
 
-                <!--<tbody id="doctorsTableBody">-->
-                <tbody id="doctorsTableBody">
-
+                <tbody id="TableBody">
+                    <!-- Rows will be dynamically added here -->
                 </tbody>
             </table>
-        </div>
     </main>
-    <script src="/script/ShowDoctors.js"></script>
     <script src="/script/AdminDashboard.js"></script>
+    <script src="/script/TotalAttendance.js"></script>
 </body>
 
 </html>

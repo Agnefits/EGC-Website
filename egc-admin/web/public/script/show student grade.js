@@ -47,7 +47,7 @@ async function loadStudents() {
         const filteredStudents = students.filter(student => {
             return (!department || student.department === department) &&
                 (!yearLevel || student.year_level === yearLevel) &&
-                (!section || student.no_section === section);
+                (!section || student.No_section ==section);
         });
 
         // Display filtered students in the table
@@ -57,8 +57,8 @@ async function loadStudents() {
                 <td>${student.name || 'N/A'}</td>
                 <td>${student.department || 'N/A'}</td>
                 <td>${student.year_level || 'N/A'}</td>
-                <td>${student.no_section || 'N/A'}</td>
-                <td>${student.total_grade || 'N/A'}</td>
+                <td>${student.No_section || 'N/A'}</td>
+                <td>${student.total_grade || '0'}</td>
                 <td>
                     <input type="checkbox" class="grade-checkbox show-grade" name="gradeVisibility-${student.id}-show" data-id="${student.id}">
                     Show Grade
@@ -67,7 +67,7 @@ async function loadStudents() {
                 </td>
                 <td>
                     <button class="details-btn show-details" data-id="${student.id}" onclick="window.location.href='/admin/Grades?studentId=${student.id}'">
-                        Show Details
+                        Show Grades
                     </button>
                 </td>
             `;

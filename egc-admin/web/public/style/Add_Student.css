@@ -117,3 +117,5 @@ label {
 .image-input {
     display: none;
 }
+
+.nav-items{margin-top: 10px;margin-left: 5px;cursor: pointer;}

@@ -112,6 +112,93 @@ class Course {
   void main() async {
     DatabaseHelper.init();
     // عرض الكورس
+
+ router.get('/TotalAttendance', (Request request) async {
+  try {
+    // استعلام SQL لجلب البيانات المطلوبة من الجداول المختلفة
+    final results = await DatabaseHelper._db.select('''
+      SELECT 
+        s.name AS "Student Name", 
+        s.department AS "Department", 
+        s.year_level AS "Year Level", 
+        c.name AS "Course Name", 
+        c.courseId,
+        s.sectionNo AS "Section", 
+        COUNT(CASE WHEN sa.status = 'p' THEN 1 ELSE NULL END) AS "Presence Total", 
+        COUNT(CASE WHEN sa.status = 't' THEN 1 ELSE NULL END) AS "Absence Total", 
+        ROUND(
+          (COUNT(CASE WHEN sa.status = 'p' THEN 1 ELSE NULL END) * 100.0) / 
+          COUNT(sa.status), 2) AS "Percentage" 
+      FROM 
+        students s
+      LEFT JOIN 
+        student_attendance sa ON s.id = sa.studentId
+      LEFT JOIN 
+        attendance a ON sa.attendanceId = a.id
+      LEFT JOIN 
+        courses c ON a.courseId = c.id AND c.year = s.year_level
+      GROUP BY 
+        s.id, c.id
+      ORDER BY 
+        s.name, c.name;
+    ''');
+
+    final attendanceList = results.map((row) => {
+      'studentName': row['Student Name'],
+      'department': row['Department'],
+      'yearLevel': row['Year Level'],
+      'courseName': row['Course Name'],
+      'courseId': row['courseId'],
+      'section': row['Section'],
+      'presenceTotal': row['Presence Total'],
+      'absenceTotal': row['Absence Total'],
+      'percentage': row['Percentage'],
+    }).toList();
+
+    // تحويل القائمة إلى JSON وإرجاعها كاستجابة
+    final jsonResponse = jsonEncode(attendanceList);
+    return Response.ok(jsonResponse, headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+  } catch (e) {
+    print('Error: $e');
+    return Response.internalServerError(
+      body: 'Error processing request',
+      headers: {'Access-Control-Allow-Origin': '*'}
+    );
+  }
+});
+
+
+    router.get('/courses', (Request request) async {
+  try {
+    final results = await DatabaseHelper._db.select(
+      'SELECT id, name, courseId, year FROM courses'  // اختيار فقط الأعمدة المطلوبة
+    );
+
+    final courseList = results.map((row) => {
+      'id': row['id'],
+      'name': row['name'],
+      'courseId': row['courseId'],
+      'year': row['year'],
+    }).toList();
+
+    final jsonResponse = jsonEncode(courseList);
+    return Response.ok(jsonResponse, headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+  } catch (e) {
+    print('Error: $e');
+    return Response.internalServerError(
+      body: 'Error processing request',
+      headers: {'Access-Control-Allow-Origin': '*'}
+    );
+  }
+});
+
+
    router.get('/doctor/courses/<doctorId>', (Request request, String doctorId) async {
   try {
     final queryParams = request.url.queryParameters;

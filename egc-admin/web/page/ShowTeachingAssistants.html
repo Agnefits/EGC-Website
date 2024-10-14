@@ -49,9 +49,9 @@
             <li>
                 <a href="/admin/StudentAttendance">
                     <i class='bx bx-spreadsheet'></i>
-                    <span class="links_name">Show Student Attendance</span>
+                    <span class="links_name">Student Attendance</span>
                 </a>
-                <span class="tooltip">Show Student Attendance</span>
+                <span class="tooltip">Student Attendance</span>
             </li>
             <li>
                 <a href="/admin/ClassSchedules">
@@ -78,23 +78,27 @@
                 <h3>Show Teaching Assistants</h3>
             </div>
 
-            <!-- <button class="add-btn" onclick="">Add Teaching Assistants</button> -->
-
-            <!-- Search Bar -->
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search by TA Name or Department..." />
-                <button class="search-btn" onclick="searchTeachingAssistants()">Search</button>
+            <div class="filter-section">
+                <div class="filter-dropdown">
+                    <select id="major" name="major" required >
+                        <option value="">Select Department</option>
+                        <option value="IT">IT</option>
+                        <option value="Mech">Mechanical</option>
+                        <option value="Elec">Electrical</option>
+                    </select>
+                </div>     
             </div>
+            
 
             <table class="assistants-table">
                 <thead>
                     <tr>
-                        <th>Teaching Assistant Name <i class='bx bx-chevron-down'></i></th>
-                        <th>Email <i class='bx bx-chevron-down'></i></th>
-                        <th>Phone Number <i class='bx bx-chevron-down'></i></th>
-                        <th>Username <i class='bx bx-chevron-down'></i></th>
-                        <th>Major <i class='bx bx-chevron-down'></i></th>
-                        <th>Details <i class='bx bx-chevron-down'></i></th>
+                        <th>Teaching Assistant Name </th>
+                        <th>Email </th>
+                        <th>Phone Number </th>
+                        <th>Username </th>
+                        <th>Major </th>
+                        <th>Details</th>
                     </tr>
                 </thead>
 

@@ -565,6 +565,24 @@ Future<Response> getAdminStudentAttendanceHandler(Request request) async {
     // Print the map
     print(queryParams);
 
+    var html = File('web/page/admin-student-attendance.html').readAsStringSync();
+    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
+
+Future<Response> getAdminShowStudentAttendanceHandler(Request request) async {
+  try {
+    final body = await request.readAsString();
+    Uri uri = Uri.parse("https://example.com/params?" + body);
+
+    // Get the query parameters as a map
+    Map<String, String> queryParams = uri.queryParameters;
+
+    // Print the map
+    print(queryParams);
+
     var html = File('web/page/admin attendance.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
@@ -618,6 +636,25 @@ getShowAdminClassSchedulesHandler(Request request) async {
     print(queryParams);
 
     var html = File('web/page/admin-class-schedules.html').readAsStringSync();
+    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
+
+
+Future<Response> getShowAdminTotalStudentsAttendanceHandler(Request request) async {
+  try {
+    var html = File('web/page/Total Students Att.html').readAsStringSync();
+    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
+
+Future<Response> getShowAdminSingleStudentsAttendanceHandler(Request request) async {
+  try {
+    var html = File('web/page/Single_Student_Att.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
     return Response.internalServerError(body: e.toString());
