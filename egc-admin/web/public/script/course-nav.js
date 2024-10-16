@@ -26,7 +26,7 @@ function goBackToCoursePage() {
     window.location.href = '/staff/Dashboard';
 }
 
-
+/*
 document.getElementById('message-form').addEventListener('submit', async(event) => {
     event.preventDefault(); // Prevent default form submission
 
@@ -53,4 +53,4 @@ document.getElementById('message-form').addEventListener('submit', async(event) 
     } else {
         alert('Failed to send announcement');
     }
-});
+});*/

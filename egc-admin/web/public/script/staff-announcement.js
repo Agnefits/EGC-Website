@@ -1,88 +1,83 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const messageForm = document.getElementById('message-form');
+            const messageForm = document.getElementById('message-form');
 
-    if (messageForm) {
-        messageForm.addEventListener('submit', async function(event) { // Use 'function' to maintain 'this' context
-            event.preventDefault();
+            if (messageForm) {
+                messageForm.addEventListener('submit', async function(event) { // Use 'function' to maintain 'this' context
+                    event.preventDefault();
 
-            // Create FormData object from the form
-            const formData = new FormData(this); // Automatically handles file inputs
-            
-            const description = document.getElementById('description').value.trim();
+                    // Create FormData object from the form
+                    const formData = new FormData(this); // Automatically handles file inputs
 
-            if (!description) {
-                alert('Please enter a description');
-                return;
-            }
+                    const description = document.getElementById('description').value.trim();
 
-            // Fetch course data from localStorage
-            const courseData = JSON.parse(localStorage.getItem('courseData'));
-            formData.append("courseId", courseData.id); // Append courseId to formData
+                    if (!description) {
+                        alert('Please enter a description');
+                        return;
+                    }
 
-            // Fetch user data from localStorage
-            const userData = JSON.parse(localStorage.getItem('userData'));
-            
-            // Add senderId and role (either doctor or teaching assistant) to the form
-            formData.append("senderId", userData.id);
-            formData.append("senderName", userData.name); // Add sender's name
-            formData.append("senderRole", userData.role); // role should be 'Doctor' or 'Teaching Assistant'
+                    // Fetch course data from localStorage
+                    const courseData = JSON.parse(localStorage.getItem('courseData'));
+                    formData.append("courseId", courseData.id); // Append courseId to formData
 
-            // Append doctor or teaching assistant ID based on the role
-            if (userData["role"] === 'Doctor') {
-                formData.append("doctorId", userData.id);
-            } else {
-                formData.append("teaching_assistantId", userData.id);
-            }
+                    // Fetch user data from localStorage
+                    const userData = JSON.parse(localStorage.getItem('userData'));
 
-            try {
-                const response = await fetch('/add-announcement', {
-                    method: 'POST',
-                    body: formData
+                    // Add senderId and role (either doctor or teaching assistant) to the form
+                    formData.append("senderId", userData.id);
+                    formData.append("senderName", userData.name); // Add sender's name
+                    formData.append("senderRole", userData.role); // role should be 'Doctor' or 'Teaching Assistant'
+
+                    // Append doctor or teaching assistant ID based on the role
+                    if (userData["role"] === 'Doctor') {
+                        formData.append("doctorId", userData.id);
+                    } else {
+                        formData.append("teaching_assistantId", userData.id);
+                    }
+
+                    try {
+                        const response = await fetch('/add-announcement', {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        if (response.ok) {
+                            alert('Announcement sent successfully!');
+                            loadAnnouncements(); // Load updated announcements
+                            messageForm.reset(); // Reset form after success
+                        } else {
+                            alert('Failed to send announcement');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('An error occurred. Please try again.');
+                    }
                 });
 
-                if (response.ok) {
-                    alert('Announcement sent successfully!');
-                    loadAnnouncements(); // Load updated announcements
-                    messageForm.reset(); // Reset form after success
-                } else {
-                    alert('Failed to send announcement');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again.');
-            }
-        });
+                async function loadAnnouncements() {
+                    const messagesContainer = document.getElementById('messages-container');
 
-        async function loadAnnouncements() {
-            const messagesContainer = document.getElementById('messages-container');
-        
-            try {
-                const response = await fetch('/courses/announcements');
-                if (response.ok) {
-                    const announcements = await response.json();
-                    console.log(announcements); // Check the structure of the response
-                    messagesContainer.innerHTML = '';
-        
-                    announcements.forEach(announcement => {
-                        const announcementDiv = document.createElement('div');
-                        announcementDiv.classList.add('announcement');
-        
-                        let fileName = '';
-                        if (announcement.file && typeof announcement.file === 'string' && announcement.file !== '') {
-                            fileName = announcement.file.split('/').pop();
-                        }
-        
-                        announcementDiv.innerHTML = `
-                            <strong>Sender: ${announcement.senderName}</strong>
+                    try {
+                        const courseData = JSON.parse(localStorage.getItem('courseData'));
+                        const response = await fetch('/courses/announcements/' + courseData.id);
+                        if (response.ok) {
+                            const announcements = await response.json();
+                            console.log(announcements); // Check the structure of the response
+                            messagesContainer.innerHTML = '';
+
+                            announcements.forEach(announcement => {
+                                        const announcementDiv = document.createElement('div');
+                                        announcementDiv.classList.add('announcement');
+                                        announcementDiv.innerHTML = `
+                            <strong>Sender: ${announcement.instructor}</strong>
                             <p><strong>Description:</strong> ${announcement.description}</p>
-                            ${fileName ? `
+                            ${announcement.file ? `
                                 <div class="file-item">
                                     <p><strong>File:</strong> 
-                                    <a href="${announcement.file}" target="_blank">${fileName}</a></p>
+                                    <a href="/courses/announcements/file/${announcement.id}" target="_blank">${announcement.filename}</a></p>
                                 </div>` : '<p>No file attached</p>'}
                             <p><strong>Date:</strong> ${new Date(announcement.date).toLocaleString()}</p>
                         `;
-        
+
                         messagesContainer.appendChild(announcementDiv);
                     });
                 } else {

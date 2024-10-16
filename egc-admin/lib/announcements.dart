@@ -13,7 +13,7 @@ class DatabaseHelper {
     _db = sqlite3.open('egcDB.db');
 
     // Drop the old table if it exists
-  dropTableIfExists('announcements');
+    //dropTableIfExists('announcements');
 
     // Create the new table with the updated schema
     _db.execute('''
@@ -29,12 +29,15 @@ class DatabaseHelper {
         )
     ''');
   }
- static void dropTableIfExists(String tableName) {
+
+  static void dropTableIfExists(String tableName) {
     _db.execute('DROP TABLE IF EXISTS $tableName');
   }
-  static void addAnnouncement(Map<String, dynamic> announcementData, Uint8List? file) {
+
+  static void addAnnouncement(
+      Map<String, dynamic> announcementData, Uint8List? file) {
     final statement = _db.prepare('''
-      INSERT INTO announcements (courseId, date, description, filename, file, ${announcementData.containsKey("doctorId") ? "doctorId" : "teaching_assistantId"})
+      INSERT INTO announcements (courseId, date, description, filename, file, ${announcementData.containsKey("doctorId") ? "doctorId" : "teachingAssistantId"})
       VALUES (?, ?, ?, ?, ?, ?)
     ''');
 
@@ -44,49 +47,48 @@ class DatabaseHelper {
       announcementData['description'],
       announcementData['fileName'],
       file ?? "NULL",
-      announcementData[announcementData.containsKey("doctorId")? "doctorId" : "teaching_assistantId"]
+      announcementData[announcementData.containsKey("doctorId")
+          ? "doctorId"
+          : "teaching_assistantId"]
     ]);
 
     statement.dispose();
   }
 
-  static List<Map<String, dynamic>> getAnnouncements() {
-    final results = _db.select('SELECT * FROM announcements ORDER BY date DESC');
-    return results.map((row) {
-      return {
-        'id': row['id'],
-        'date': row['date'],
-        'description': row['description'],
-        'filename': row['filename'],
-        'file': row['file'].length > 0,
-        'doctorId': row['doctorId'],
-        'teachingAssistantId': row['teachingAssistantId'],
-      };
-    }).toList();
+  static List<Map<String, dynamic>> getAnnouncements(String id) {
+    final results = _db.select(
+        'SELECT An.id, An.date, An.description, An.filename, An.file, CASE WHEN An.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor FROM announcements An LEFT JOIN doctors D ON An.doctorId = D.id LEFT JOIN teaching_assistants T ON An.teachingAssistantId = T.id WHERE An.courseId = $id ORDER BY An.date DESC');
+    return results
+        .map((row) => {
+              'id': row['id'],
+              'date': row['date'],
+              'description': row['description'],
+              'filename': row['filename'],
+              'file': row['file'].length > 0,
+              'instructor': row['instructor'],
+            })
+        .toList();
   }
 
   static Map<String, dynamic> getAnnouncement(String id) {
-    final results = _db.select('SELECT * FROM announcements WHERE id = ?', [id]);
-    if (results.isNotEmpty) {
-      var announcement = results.first;
-      return {
-        'id': announcement['id'],
-        'date': announcement['date'],
-        'description': announcement['description'],
-        'filename': announcement['filename'],
-          'file':announcement['file'].length > 0,
-        'doctorId': announcement['doctorId'],
-        'teachingAssistantId': announcement['teachingAssistantId'],
-      };
-    } else {
-      throw Exception('Announcement not found');
-    }
+    final results = _db.select(
+        'SELECT An.id, An.date, An.description, An.filename, An.file, CASE WHEN An.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor FROM announcements An LEFT JOIN doctors D ON An.doctorId = D.id LEFT JOIN teaching_assistants T ON An.teachingAssistantId = T.id WHERE An.courseId = $id ORDER BY An.date DESC');
+    var announcement = results.first;
+    return {
+      'id': announcement['id'],
+      'date': announcement['date'],
+      'description': announcement['description'],
+      'filename': announcement['filename'],
+      'file': announcement['file'].length > 0,
+      'instructor': announcement['instructor'],
+    };
   }
 }
 
 class AnnouncementService {
   // Save a new announcement to the database
-  static void saveAnnouncement(Map<String, dynamic> announcementData, Uint8List? file) {
+  static void saveAnnouncement(
+      Map<String, dynamic> announcementData, Uint8List? file) {
     try {
       DatabaseHelper.addAnnouncement(announcementData, file);
       print('Announcement saved successfully!');
@@ -97,9 +99,10 @@ class AnnouncementService {
   }
 
   // Fetch all announcements from the database
-  static List<Map<String, dynamic>> fetchAnnouncements() {
+  static List<Map<String, dynamic>> fetchAnnouncements(String id) {
     try {
-      List<Map<String, dynamic>> announcements = DatabaseHelper.getAnnouncements();
+      List<Map<String, dynamic>> announcements =
+          DatabaseHelper.getAnnouncements(id);
       print('Fetched ${announcements.length} announcements successfully!');
       return announcements;
     } catch (e) {
@@ -122,9 +125,10 @@ class Announcement {
     DatabaseHelper.init();
 
     // Get a specific announcement details
-    router.get('/courses/announcements/1', (Request request, String id) async {
+    router.get('/courses/announcements/<id>',
+        (Request request, String id) async {
       try {
-        final announcement = DatabaseHelper.getAnnouncement(id);
+        final announcement = DatabaseHelper.getAnnouncements(id);
         final jsonAnnouncement = jsonEncode(announcement);
         return Response.ok(
           jsonAnnouncement,
@@ -134,6 +138,7 @@ class Announcement {
           },
         );
       } catch (e) {
+        print(e);
         return Response.internalServerError(body: 'Error: $e');
       }
     });
@@ -142,8 +147,8 @@ class Announcement {
         (Request request, String id) async {
       try {
         // Query the database to get the profile picture
-        final result = DatabaseHelper._db
-            .select('SELECT filename, file FROM announcements WHERE id = ?', [id]);
+        final result = DatabaseHelper._db.select(
+            'SELECT filename, file FROM announcements WHERE id = ?', [id]);
 
         if (result.isNotEmpty) {
           final fileBytes = result.first['file'];
@@ -168,24 +173,7 @@ class Announcement {
       }
     });
 
-    // Get all announcements
-    router.get('/courses/announcements', (Request request) async {
-      try {
-        final announcements = AnnouncementService.fetchAnnouncements();
-        final jsonAnnouncements = jsonEncode(announcements);
-        return Response.ok(
-          jsonAnnouncements,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
-        );
-      } catch (e) {
-        return Response.internalServerError(body: 'Error: $e');
-      }
-    });
-
-      // Add a new announcement
+    // Add a new announcement
     router.post('/add-announcement', (Request request) async {
       try {
         final form = request.multipartFormData;
@@ -212,11 +200,13 @@ class Announcement {
 
         // Determine if the sender is a doctor or a teaching assistant
         if (data['senderRole'] == 'Doctor') {
-          data['doctorId'] = data['senderId']; // Use the senderId from form data
+          data['doctorId'] =
+              data['senderId']; // Use the senderId from form data
           data['teachingAssistantId'] = null;
         } else if (data['senderRole'] == 'Teaching Assistant') {
           data['doctorId'] = null;
-          data['teachingAssistantId'] = data['senderId']; // Use the senderId from form data
+          data['teachingAssistantId'] =
+              data['senderId']; // Use the senderId from form data
         }
 
         AnnouncementService.saveAnnouncement(data, file);
@@ -225,7 +215,8 @@ class Announcement {
           'Access-Control-Allow-Origin': '*',
         });
       } catch (e) {
-        return Response.internalServerError(body: 'Error processing request: $e');
+        return Response.internalServerError(
+            body: 'Error processing request: $e');
       }
     });
   }

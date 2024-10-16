@@ -2,6 +2,7 @@ import 'dart:io';
 
 //import 'package:dart_backend/auth.dart';
 //import 'package:firebase_dart/firebase_dart.dart';
+import 'package:egc_website/announcements.dart';
 import 'package:egc_website/assignment.dart';
 // import 'package:egc_website/attendence.dart';
 import 'package:egc_website/class_schedules.dart';
@@ -41,6 +42,7 @@ void main() async {
   ClassSchedule(router);
   StudentHandlers(router);
   Grades(router);
+  Announcement(router);
 
   ///Define your routes
   ///Home, News and Login Pag
