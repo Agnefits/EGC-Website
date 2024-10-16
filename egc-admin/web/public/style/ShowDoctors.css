@@ -1,7 +1,17 @@
+h3 {
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+.nav-items {
+    margin-top: -55px;
+    position: absolute;
+}
+
 .doctors-table {
-    width: 100%;
+    width: 95%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin: 20px 40px 0px 40px;
 }
 
 .doctors-table th,
@@ -39,7 +49,7 @@
     background-color: #28a745;
     cursor: pointer;
     margin: 0 5px;
-    padding: 6px 10px; 
+    padding: 6px 10px;
     color: #fff;
     border-radius: 10px;
     font-size: 17px;
@@ -50,15 +60,12 @@
     background-color: #dc3545;
     cursor: pointer;
     margin: 0 5px;
-    padding: 6px 10px; 
+    padding: 6px 10px;
     color: #fff;
     border-radius: 10px;
     font-size: 17px;
     border: 1px solid #ccc;
 }
-
-
-
 
 .add-btn {
     background: #0F2B4E;
@@ -72,12 +79,12 @@
     border: none;
     right: 10px;
     top: 15px;
-    position: absolute
 }
 
-
-option{background-color: #fff;color:#000000;}
-
+option {
+    background-color: #fff;
+    color: #000000;
+}
 
 .filter-section {
     display: flex;
@@ -87,7 +94,7 @@ option{background-color: #fff;color:#000000;}
     /* Vertically center the dropdowns */
     gap: 20px;
     /* Add spacing between the dropdowns */
-    margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 .filter-dropdown {
@@ -113,4 +120,8 @@ option{background-color: #fff;color:#000000;}
     background-color: white;
     /* Ensures white background on focus too */
     color: #0F2B4E;
+}
+
+.btn-disabled {
+    background-color: #aaa;
 }

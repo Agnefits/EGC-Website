@@ -1,6 +1,3 @@
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
     loadDoctors();
 
@@ -29,7 +26,7 @@ async function loadDoctors() {
         return !selectedMajor || doctor.major === selectedMajor;
     });
 
-  
+
     filtereddoctors.forEach(doctor => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -37,12 +34,17 @@ async function loadDoctors() {
             <td>${doctor.email || 'N/A'}</td>
             <td>${doctor.phone || 'N/A'}</td>
             <td>${doctor.username || 'N/A'}</td>
-            <td>${doctor.major || 'N/A'}</td>
-         
+            <td>${doctor.major || 'N/A'}</td> 
+            <td>
+                    <button class="details-btn show-details showCV ${doctor.cvFile? "" : "btn-disabled"}" data-id="${doctor.id}" ${doctor.cvFile? "" : "disabled"}>
+                        Show Cvs
+                    </button>
+                </td>
             <td>
                 <button class="details-btn edit" data-id="${doctor.id}">Edit</button>
                 <button class="details-btn delete" data-id="${doctor.id}">Delete</button>
             </td>
+           
         `;
 
         DoctorsTableBody.appendChild(row);
@@ -111,6 +113,18 @@ function addEventListeners() {
                 console.error('Error:', error);
                 alert('Error fetching doctor details');
             }
+        });
+    });
+
+    document.querySelectorAll('.showCV').forEach(button => {
+        button.addEventListener('click', async(event) => {
+            const doctorId = event.target.dataset.id;
+
+            if (!doctorId) {
+                alert('doctor ID is missing');
+                return;
+            }
+            window.open('/doctors/cvFile/' + doctorId, "_blank");
         });
     });
 }
