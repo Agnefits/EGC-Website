@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+
 //import 'package:dart_backend/auth.dart';
 //import 'package:dart_backend/configurations.dart';
 //import 'package:firebase_dart/firebase_dart.dart';
@@ -88,7 +89,7 @@ Future<Response> getEditCourseHandler(Request request) async {
 }
   Future<Response> getCourseTeachingAssistantsHandler(Request request) async {
   try {
-    var html = File('web/page/staff.html').readAsStringSync();
+    var html = File('web/page/teaching.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
     return Response.internalServerError(body: e.toString());
@@ -104,7 +105,7 @@ Future<Response> getCourseJoinTeachingAssistantsHandler(Request request) async {
 }
   Future<Response> getCourseStudentsHandler(Request request) async {
   try {//Note: change to student.html
-    var html = File('web/page/staff.html').readAsStringSync();
+    var html = File('web/page/student.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
     return Response.internalServerError(body: e.toString());

@@ -1,20 +1,28 @@
 body {
   font-family: "Roboto Condensed", sans-serif;
-  
   margin: 0;
   padding: 0;
   background-color: #f0f0f0;
 }
-
-.join-Student{
-  background-color: hsl(0, 0%, 100%);
-  margin: 4% auto 5% auto; 
-  width: 45%; 
+#header
+{
+  text-align: center;
+}
+#cont
+{
+  display: flex;
+  justify-content: center;
+}
+#join-Student{
+  background-color: hsl(0, 0%, 100%);  
+  width: 450px; 
+  height: 470px;
   box-shadow: 0 10px 10px rgba(5, 5, 5, 0.1);
   padding: 20px;
   border-radius: 15px;
 }
 .profile-picture img {
+  display: flex;
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -22,8 +30,30 @@ body {
   box-shadow: -5px 5px 10px gray;
   margin-right: 20px;
   padding: 5px;
-  margin-top: -90px;
+  margin-top: -70px;
 }
+
+
+@media (max-width: 560px) {
+
+  #header
+{
+  text-align: center;
+  font-size: 15px;
+  margin-top: 40px;
+  margin-left: 70px;
+}
+.join-Student{
+  background-color: hsl(0, 0%, 100%);  
+  width: 360px; 
+  height: 440px;
+  box-shadow: 0 10px 10px rgba(5, 5, 5, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+}
+}
+
+
 h1{
   padding-left: 130px;
 }
@@ -53,6 +83,11 @@ form select{
   margin-bottom: 30px;
   box-sizing: border-box;
 } 
+
+#dep
+{
+  border: 1px solid rgba(128, 128, 128, 0.514);
+}
 
 button {
   background-color: rgb(42, 165, 232);

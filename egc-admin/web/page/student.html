@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style/student.css" />
+    <title>Student</title>
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav>
+      <div id="logo">
+        <a id="Back" href="/staff/Dashboard">&larr;</a>
+        <img
+          id="imgnav"
+          src="/img/data-network-icon-image-gallery-27.png"
+          alt="img"
+        />
+        <label id="course">networking</label>
+      </div>
+      <ul id="containernav">
+        <li><a href="/staff/Course/Home" id="list">Home</a></li>
+        <li><a href="/staff/Course/Content" id="list">Course Content</a></li>
+        <li>
+          <a href="/staff/Course/TeachingAssistants" id="list"
+            >Teaching Assistants</a
+          >
+        </li>
+        <li><a href="/staff/Course/Students" id="list">Students</a></li>
+        <li><a href="/staff/Course/grades" id="list">Grade</a></li>
+      </ul>
+    </nav>
+
+    <hr />
+
+    <!-- end navbar -->
+    <h1 id="filterheader">Students</h1>
+    <div id="filterscontainer">
+      <div>
+        <h2 id="hselect">section</h2>
+        <select id="filter" name="filter" required>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+      </div>
+    </div>
+    <hr />
+
+    <!-- cards -->
+
+    <div id="cards-container"></div>
+    <!-- end cards -->
+  </body>
+  <script src="/script/student.js"></script>
+</html>

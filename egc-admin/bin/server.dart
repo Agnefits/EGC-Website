@@ -7,6 +7,7 @@ import 'package:egc_website/assignment.dart';
 // import 'package:egc_website/attendence.dart';
 import 'package:egc_website/class_schedules.dart';
 import 'package:egc_website/course.dart';
+import 'package:egc_website/course_teaching_assistant.dart';
 import 'package:egc_website/doctor.dart';
 import 'package:egc_website/admin_handlers.dart';
 import 'package:egc_website/grade.dart';
@@ -43,6 +44,7 @@ void main() async {
   StudentHandlers(router);
   Grades(router);
   Announcement(router);
+  CourseTeachingAssistant(router);
 
   ///Define your routes
   ///Home, News and Login Pag
