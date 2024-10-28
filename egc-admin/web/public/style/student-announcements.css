@@ -30,7 +30,7 @@
                 display: flex;
                 align-items: center;
                 position: relative;
-                font-family:"Roboto Condensed", sans-serif;
+                font-family: "Roboto Condensed", sans-serif;
             }
             
             .sidebar .logo-details .icon {
@@ -55,10 +55,12 @@
             .sidebar.open .logo-details .logo_name {
                 opacity: 1;
             }
-            .logo_style{
+            
+            .logo_style {
                 text-decoration: none;
                 color: #fff;
             }
+            
             .sidebar .logo-details #btn {
                 position: absolute;
                 top: 50%;
@@ -257,7 +259,7 @@
                 color: #11101d;
                 font-size: 25px;
                 font-weight: 500px;
-                font-family:"Libre Baskerville", serif;
+                font-family: "Libre Baskerville", serif;
             }
             
             @media (max-width: 420px) {
@@ -270,11 +272,10 @@
             h4 {
                 color: #0F2B4E;
             }
-            p{
+            
+            p {
                 font-family: "Roboto Condensed", sans-serif;
             }
-
-         
             
             .announcement {
                 background-color: #fff;
@@ -290,7 +291,6 @@
                 overflow-y: auto;
                 width: 70%;
                 border-radius: 15px;
-
             }
             
             .announcement textarea {
@@ -305,8 +305,6 @@
                 font-weight: 500;
             }
             
-       
-            
             p {
                 margin: 5px 0;
                 margin-right: 20px;
@@ -316,9 +314,6 @@
                 word-wrap: break-word;
                 overflow-wrap: break-word;
             }
-            
-        
-     
             
             .profile-container {
                 display: flex;
@@ -345,23 +340,47 @@
                 height: 30px;
                 margin-right: 10px;
             }
-            #coursefilter {
-                width: 15%;
-                text-align: center;
-                padding: 5px;
-                margin-bottom: 10px;
-                box-sizing: border-box;
-                color: #fff;
-                background-color: #0F2B4E;
-                border: 6px solid transparent;
-                margin-left: 16.7%;
+            /* Style the filter dropdowns */
+            
+            .filter-section {
+                display: flex;
+                justify-content: center;
+                /* Align items to the left */
+                align-items: center;
+                /* Vertically center the dropdowns */
+                gap: 20px;
+                /* Add spacing between the dropdowns */
+                margin-bottom: 20px;
+            }
+            
+            .filter-dropdown {
+                display: inline-block;
+            }
+            
+            .filter-dropdown select {
+                padding: 10px;
+                border: 1px solid #ccc;
                 border-radius: 15px;
-              }
-              
-              option{
+                width: 150px;
+                background-color: #0F2B4E;
+                color: #fefefe;
+            }
+            
+            .filter-dropdown select:focus {
+                border-color: #aaa;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            }
+            
+            .filter-dropdown select:focus option {
+                background-color: white;
+                /* Ensures white background on focus too */
+                color: #0F2B4E;
+            }
+            
+            option {
                 color: #000;
-                background-color: #fff;   
-              }
+                background-color: #fff;
+            }
             
             @media (max-width: 850px) {
                 .main-content {

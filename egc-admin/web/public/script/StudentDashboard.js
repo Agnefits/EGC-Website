@@ -154,11 +154,11 @@ function populateSchedule(classList) {
         // Merge the cells spanning the class duration
         const duration = toIndex - fromIndex + 1;
         const cell = row.cells[fromIndex]; // Get the starting cell
+        cell.classList += "cell";
 
         if (cell) {
             cell.colSpan = duration; // Merge cells to show the entire class span
-            cell.innerHTML = `${title}<br>${instructor}<br>${place}<br>${timeFrom} - ${timeTo}`;
-            cell.style.backgroundColor = "#e6f7ff"; // Optional styling
+            cell.innerHTML = `<div>${title}<br>${instructor}<br>${place}<br>${timeFrom} - ${timeTo}</div>`;
             // Remove the next cells that are now part of the span
             for (let i = fromIndex + 1; i <= toIndex; i++) {
                 row.deleteCell(fromIndex + 1); // Keep deleting the next cell after the first one

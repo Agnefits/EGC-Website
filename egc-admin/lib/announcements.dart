@@ -83,6 +83,30 @@ class DatabaseHelper {
       'instructor': announcement['instructor'],
     };
   }
+
+  static List<Map<String, dynamic>> getAllStudentAssignments(String studentId) {
+    final results = _db.select(
+        'SELECT An.id, An.date, An.description, An.filename, An.file, '
+        'CASE WHEN An.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor '
+        'FROM announcements An '
+        'LEFT JOIN doctors D ON An.doctorId = D.id '
+        'LEFT JOIN teaching_assistants T ON An.teachingAssistantId = T.id '
+        'WHERE An.courseId IN ('
+        'SELECT C.id FROM courses C '
+        'WHERE C.department = (SELECT department FROM students WHERE id = ?) '
+        'AND C.year = (SELECT year_level FROM students WHERE id = ?))',
+        [studentId, studentId]);
+    return results
+        .map((row) => {
+              'id': row['id'],
+              'date': row['date'],
+              'description': row['description'],
+              'filename': row['filename'],
+              'file': row['file'].length > 0,
+              'instructor': row['instructor'],
+            })
+        .toList();
+  }
 }
 
 class AnnouncementService {
@@ -132,6 +156,24 @@ class Announcement {
         final jsonAnnouncement = jsonEncode(announcement);
         return Response.ok(
           jsonAnnouncement,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        );
+      } catch (e) {
+        print(e);
+        return Response.internalServerError(body: 'Error: $e');
+      }
+    });
+
+    router.get('/student/courses-announcements/<studentId>',
+        (Request request, String studentId) async {
+      try {
+        final assignments = DatabaseHelper.getAllStudentAssignments(studentId);
+        final jsonMaterials = jsonEncode(assignments);
+        return Response.ok(
+          jsonMaterials,
           headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',

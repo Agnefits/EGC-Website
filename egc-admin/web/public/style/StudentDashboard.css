@@ -394,7 +394,7 @@ a {
 .scedule {
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    padding: 0px 25px 0px 25px;
+    margin: 0px 70px 0px 70px;
 }
 
 table {
@@ -419,4 +419,30 @@ thead th {
 
 table tr {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+table th {
+    background-color: #0f2b4e;
+    color: #fff;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+table tr td:first-child {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+table tr {
+    height: 15%;
+}
+
+.cell div {
+    margin: 2PX;
+    height: 100%;
+    border: 1px solid #0f2b4e;
+    border-radius: 10px;
+    background-color: #cfd8e9;
+    color: #0f2b4e;
+    font-family: "Roboto Condensed", sans-serif;
 }

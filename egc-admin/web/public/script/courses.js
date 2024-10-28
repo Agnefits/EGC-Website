@@ -22,15 +22,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function loadCourses() {
-    const doctorData = JSON.parse(localStorage.getItem('userData'));
+    const instructorData = JSON.parse(localStorage.getItem('userData'));
 
-    if (!doctorData || !doctorData.id) {
+    if (!instructorData || !instructorData.id) {
         console.error('User data is missing or invalid');
         return;
     }
 
     try {
-        const response = await fetch(`/doctor/courses/${doctorData.id}`);
+        let response;
+        if (instructorData.role == "Doctor")
+            response = await fetch(`/doctor/courses/${instructorData.id}`);
+        else
+            response = await fetch(`/teaching-assistant/courses/${instructorData.id}`);
+
         if (!response.ok) {
             throw new Error('Failed to fetch courses');
         }
