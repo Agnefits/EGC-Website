@@ -1,3 +1,141 @@
+
+
+// document.addEventListener('DOMContentLoaded', loadAttendance);
+
+// async function loadAttendance() {
+
+//     try {
+
+//         const response = await fetch(`/TodayAttendance`);
+//         if (!response.ok) {
+//             throw new Error('Failed to fetch attendance data');
+//         }
+
+//         const attendanceData = await response.json();
+//         console.log('Fetched attendance data:', attendanceData);
+
+        
+//         // const department = document.getElementById('department').value;
+//         // const yearLevel = document.getElementById('yearlevel').value;
+//         // const section = document.getElementById('n_section').value;
+//         // const courseId = document.getElementById('course').value;
+
+//         const studentsTableBody = document.getElementById('TableBody');
+//         if (!studentsTableBody) {
+//             throw new Error('Table body element not found');
+//         }
+
+//         studentsTableBody.innerHTML = ''; 
+
+//         // const filteredStudents = attendanceData.filter(record => {
+//         //     return (!department || record.department === department) &&
+//         //         (!yearLevel || record.yearLevel === yearLevel) &&
+//         //         (!courseId || record.courseId === courseId) &&
+//         //         (!section || record.section == section);
+//         // });
+
+//         attendanceData.forEach(record => {
+//             const row = document.createElement('tr');
+//             row.innerHTML = `
+//                 <td>${record.studentName || 'N/A'}</td>
+//                 <td>${record.department || 'N/A'}</td>
+//                 <td>${record.yearLevel || 'N/A'}</td>
+//                 <td>${record.courseName || 'N/A'}</td>
+//                 <td>${record.section || 'N/A'}</td>
+//                 <td>${record.presenceTotal || 'N/A'}</td>
+//                 <td>${record.absenceTotal || 'N/A'}</td>
+//                 <td>${record.percentage + ' % '|| 'N/A'}</td>
+//             `;
+//             studentsTableBody.appendChild(row);
+//         });
+
+//     } catch (error) {
+//         console.error('Error:', error);
+//         alert('Error loading attendance data');
+//     }
+// }
+
+
+
+
+
+
+
+
+
+async function fetchAttendance() {
+    try {
+        const response = await fetch('/TodayAttendance');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+        const attendanceData = await response.json();
+        
+        // Clear the existing list
+        const studentsTableBody = document.getElementById('studentsTableBody');
+        studentsTableBody.innerHTML = '';
+
+        let totalStudents = 0;
+        let totalPresent = 0;
+        let totalAbsent = 0;
+
+        attendanceData.forEach(student => {
+            totalStudents++; // Increment total students
+            
+            // Add present and absent counts
+            totalPresent += student.totalPresent || 0; // Fallback to 0 if undefined
+            totalAbsent += student.totalAbsent || 0; // Fallback to 0 if undefined
+
+            // Create a list item for each student
+            // const listItem = document.createElement('li');
+            // listItem.textContent = `${student.studentName} - Present: ${student.totalPresent}, Absent: ${student.totalAbsent}`;
+            // studentsTableBody.appendChild(listItem);
+        });
+
+        // Update the summary counts in the HTML
+        document.getElementById('totalStudents').textContent = totalStudents;
+        document.getElementById('totalPresent').textContent = totalPresent;
+        document.getElementById('totalAbsent').textContent = totalAbsent;
+        
+    } catch (error) {
+        console.error('Error fetching attendance data:', error);
+    }
+}
+
+// Call the function to fetch attendance data when the page loads
+document.addEventListener('DOMContentLoaded', fetchAttendance);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 document.getElementById('department').addEventListener('change', loadStudents);
 document.getElementById('yearlevel').addEventListener('change', loadStudents);
 document.getElementById('n_section').addEventListener('change', loadStudents);
@@ -40,17 +178,13 @@ function populateStudentsTable(students) {
     const listItem = document.createElement('li');
     listItem.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <button class="attendance-button" data-attendance="A">A</button>
-                <button class="attendance-button" data-attendance="P">P</button>
-            </div>
             <span style="margin-left: auto;">${student.name || 'N/A'}</span>
         </div>
     `;
 
     // Add event listeners for attendance buttons
-    listItem.querySelector('button[data-attendance="P"]').addEventListener('click', () => markAttendance(listItem, 'P'));
-    listItem.querySelector('button[data-attendance="A"]').addEventListener('click', () => markAttendance(listItem, 'A'));
+    // listItem.querySelector('button[data-attendance="P"]').addEventListener('click', () => markAttendance(listItem, 'P'));
+    // listItem.querySelector('button[data-attendance="A"]').addEventListener('click', () => markAttendance(listItem, 'A'));
 
     studentsTableBody.appendChild(listItem);
 });

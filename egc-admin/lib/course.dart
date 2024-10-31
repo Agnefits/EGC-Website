@@ -113,6 +113,59 @@ class Course {
     DatabaseHelper.init();
     // عرض الكورس
 
+
+
+ router.get('/TodayAttendance', (Request request) async {
+  try {
+    final results = await DatabaseHelper._db.select('''
+SELECT 
+    s.id AS studentId,
+    s.name AS studentName,
+    COUNT(CASE WHEN sa.status = 'P' THEN 1 END) AS totalPresent,
+    COUNT(CASE WHEN sa.status = 'A' THEN 1 END) AS totalAbsent,
+    (SELECT COUNT(*) FROM students) AS totalStudents 
+FROM 
+    students s
+LEFT JOIN 
+    student_attendance sa ON s.id = sa.studentId
+GROUP BY 
+    s.id, s.name;
+    ''');
+
+    final attendanceList = results.map((row) => {
+      'studentId': row['Student ID'],
+      'studentName': row['Student Name'],
+      'totalPresent': row['Presence Total'],
+      'totalAbsent': row['Absence Total'],
+      'totalStudents': row['Total Students'],
+    }).toList();
+
+    // تحويل القائمة إلى JSON وإرجاعها كاستجابة
+    final jsonResponse = jsonEncode(attendanceList);
+    return Response.ok(jsonResponse, headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+  } catch (e) {
+    print('Error: $e');
+    return Response.internalServerError(
+      body: 'Error processing request',
+      headers: {'Access-Control-Allow-Origin': '*'}
+    );
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
  router.get('/TotalAttendance', (Request request) async {
   try {
     // استعلام SQL لجلب البيانات المطلوبة من الجداول المختلفة
@@ -124,10 +177,10 @@ class Course {
         c.name AS "Course Name", 
         c.courseId,
         s.sectionNo AS "Section", 
-        COUNT(CASE WHEN sa.status = 'p' THEN 1 ELSE NULL END) AS "Presence Total", 
-        COUNT(CASE WHEN sa.status = 't' THEN 1 ELSE NULL END) AS "Absence Total", 
+        COUNT(CASE WHEN sa.status = 'P' THEN 1 ELSE NULL END) AS "Presence Total", 
+        COUNT(CASE WHEN sa.status = 'A' THEN 1 ELSE NULL END) AS "Absence Total", 
         ROUND(
-          (COUNT(CASE WHEN sa.status = 'p' THEN 1 ELSE NULL END) * 100.0) / 
+          (COUNT(CASE WHEN sa.status = 'P' THEN 1 ELSE NULL END) * 100.0) / 
           COUNT(sa.status), 2) AS "Percentage" 
       FROM 
         students s

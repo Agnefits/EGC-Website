@@ -84,6 +84,7 @@ void main() async {
   router.get('/admin/StudentAttendance', getAdminStudentAttendanceHandler);
   router.get('/admin/ShowStudentAttendance', getAdminShowStudentAttendanceHandler);
   router.get('/admin/TotalStudentsAttendance', getShowAdminTotalStudentsAttendanceHandler);
+  router.get('/admin/SingleStudentAttendance', getAdminSingleStudentAttendanceHandler);
 
   ///Class Schedule
   router.get('/admin/ClassSchedules', getAdminClassSchedulesHandler);
