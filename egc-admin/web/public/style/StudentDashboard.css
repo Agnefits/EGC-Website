@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 * {
     box-sizing: border-box;
+    font-family: "Roboto Condensed", sans-serif;
 }
 
 body {
@@ -13,7 +14,7 @@ body {
     top: 0;
     height: 100%;
     width: 78px;
-    background: #0f2c4e;
+    background: #0F2B4E;
     padding: 6px 14px;
     z-index: 99;
     transition: all 0.5s ease;
@@ -22,7 +23,7 @@ body {
 }
 
 .sidebar.open {
-    width: 250px;
+    width: 270px;
 }
 
 .sidebar .logo-details {
@@ -43,17 +44,19 @@ body {
 
 .sidebar .logo-details .logo_name {
     color: #fff;
+    display: none;
     font-size: 20px;
-    text-align: center;
     font-weight: 600;
     opacity: 0;
+    text-align: center;
     transition: all 0.5s ease;
-    margin-top: 20px;
+    margin: 20px 40px 0px 0px;
 }
 
 .sidebar.open .logo-details .icon,
 .sidebar.open .logo-details .logo_name {
     opacity: 1;
+    display: block;
 }
 
 .logo_style {
@@ -66,9 +69,8 @@ body {
     top: 50%;
     right: 0;
     transform: translateY(-50%);
-    font-size: 22px;
+    font-size: 35px;
     transition: all 0.4s ease;
-    font-size: 23px;
     text-align: center;
     cursor: pointer;
     transition: all 0.5s ease;
@@ -84,7 +86,7 @@ body {
     color: #fff;
     height: 60px;
     min-width: 50px;
-    font-size: 28px;
+    font-size: 30px;
     text-align: center;
     line-height: 60px;
 }
@@ -168,12 +170,13 @@ body {
 .sidebar li a:hover i {
     transition: all 0.5s ease;
     color: #0F2B4E;
+    cursor: pointer;
 }
 
 .sidebar li i {
     height: 50px;
     line-height: 50px;
-    font-size: 18px;
+    font-size: 30px;
     border-radius: 12px;
     margin-left: 2.5px;
 }
@@ -183,7 +186,7 @@ body {
     height: 60px;
     width: 78px;
     left: 0;
-    bottom: -8px;
+    bottom: 5px;
     padding: 10px 14px;
     background: #0F2B4E;
     transition: all 0.5s ease;
@@ -233,9 +236,23 @@ body {
     transition: all 0.5s ease;
 }
 
+.sidebar .profile #log_out:hover {
+    background: #fff;
+    color: #0F2B4E;
+    cursor: pointer;
+}
+
 .sidebar.open .profile #log_out {
     width: 50px;
     background: none;
+    color: #fff;
+}
+
+.sidebar.open .profile #log_out:hover {
+    background: #fff;
+    width: 60px;
+    color: #0F2B4E;
+    cursor: pointer;
 }
 
 .home-section {
@@ -250,7 +267,7 @@ body {
 }
 
 .sidebar.open~.home-section {
-    left: 250px;
+    left: 280px;
     width: calc(100% - 250px);
 }
 
