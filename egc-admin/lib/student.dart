@@ -87,7 +87,7 @@ class DatabaseHelper {
       String id, Map<String, dynamic> studentData, Uint8List? image) {
     final statement = _db.prepare('''
       UPDATE students
-      SET name = ?, email = ?, phone = ?, username = ?, department = ?, year_level = ?, password = ?, national_id = ?, gender = ?, number = ?, sectionNo = ? ${image != null && image.isNotEmpty ? ", photo = ?" : ""}
+      SET name = ?, email = ?, phone = ?, username = ?, department = ?, year_level = ?, password = ?, national_id = ?, gender = ?, number = ?, sectionNo = ? ${image != null && image.isNotEmpty ? ", photo = ? ,  showDegrees = ?" : ""}
       WHERE id = ?
     ''');
     List data = [
@@ -100,6 +100,7 @@ class DatabaseHelper {
       studentData['password'],
       studentData['national_id'],
       studentData['gender'],
+      studentData['showDegrees'],
       studentData['No_list'],
       ((int.parse(studentData['No_list'].toString()) - 1) / 30 + 1)
           .floor()
@@ -142,7 +143,7 @@ class Student {
     router.get('/students', (Request request) async {
       try {
         final results = DatabaseHelper._db.select(
-            'SELECT id, name, email, phone, username, department, year_level, national_id, gender, number, sectionNo, photo FROM students');
+            'SELECT id, name, email, phone, username, department, year_level, national_id, gender, number, sectionNo, showDegrees, photo FROM students');
         final studentList = results
             .map((row) => {
                   'id': row['id'],
@@ -155,6 +156,7 @@ class Student {
                   'national_id': row['national_id'],
                   'gender': row['gender'],
                   'number': row['number'],
+                  'showDegrees': row['showDegrees'],
                   'No_section': row['sectionNo'],
                   "photo": row['photo'].length > 0
                 })
@@ -177,7 +179,7 @@ class Student {
     router.get('/students/<id>', (Request request, String id) async {
       try {
         final result = DatabaseHelper._db.select(
-            'SELECT id, name, email, phone, username, department, year_level, password, national_id, gender, number, sectionNo, photo FROM students WHERE id = ?',
+            'SELECT id, name, email, phone, username, department, year_level, password, national_id, gender, number, sectionNo, photo, showDegrees FROM students WHERE id = ?',
             [id]);
         if (result.isEmpty) {
           return Response.notFound('Student not found');
@@ -195,6 +197,7 @@ class Student {
           'national_id': student['national_id'],
           'gender': student['gender'],
           'number': student['number'],
+          'showDegrees': student['showDegrees'],
           'No_section': "Section ${student['sectionNo']}",
           "photo": student['photo'].length > 0
         };
@@ -211,6 +214,29 @@ class Student {
             headers: {'Access-Control-Allow-Origin': '*'});
       }
     });
+
+
+router.put('/update-student-degree-visibility/<id>', (Request request, String id) async {
+    try {
+      final form = await request.readAsString();
+      final data = jsonDecode(form);
+      final showDegrees = data['showDegrees'];
+
+      // تنفيذ عملية التحديث
+      final statement = DatabaseHelper._db.prepare('UPDATE students SET showDegrees = ? WHERE id = ?');
+      statement.execute([showDegrees, int.parse(id)]);
+      statement.dispose();
+
+      return Response.ok('Degree visibility updated successfully', headers: {'Access-Control-Allow-Origin': '*'});
+    } catch (e) {
+      print('Error: $e');
+      return Response.internalServerError(
+          body: 'Error processing request',
+          headers: {'Content-Type': 'application/json', 'Error': '$e'});
+    }
+  });
+
+    
 
     router.get('/students/photo/<id>', (Request request, String id) async {
       try {

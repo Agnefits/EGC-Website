@@ -652,20 +652,12 @@ Future<Response> getShowAdminTotalStudentsAttendanceHandler(Request request) asy
   }
 }
 
-<<<<<<< HEAD
 
 Future<Response> getAdminSingleStudentAttendanceHandler(Request request) async {
-=======
-Future<Response> getShowAdminSingleStudentsAttendanceHandler(Request request) async {
->>>>>>> 4c672dc4b39cdc8c218bcd7dd6241c9b6ed0722a
   try {
     var html = File('web/page/Single_Student_Att.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
     return Response.internalServerError(body: e.toString());
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 4c672dc4b39cdc8c218bcd7dd6241c9b6ed0722a

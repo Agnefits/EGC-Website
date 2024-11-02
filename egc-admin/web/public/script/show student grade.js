@@ -1,22 +1,9 @@
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Load students when the page loads
     loadStudents();
-
-    // Restore checkbox states from localStorage
-    restoreCheckboxStates();
-
-    // Add event listeners for dropdowns
     document.getElementById('department').addEventListener('change', loadStudents);
     document.getElementById('yearlevel').addEventListener('change', loadStudents);
     document.getElementById('n_section').addEventListener('change', loadStudents);
-
-    // Add event listener for sorting by name
-    document.querySelector('th.sortable').addEventListener('click', () => {
-        sortTableByName();
-    });
-
-    // Add event listeners for the master checkboxes
+    document.querySelector('th.sortable').addEventListener('click', sortTableByName);
     document.getElementById('show-all-grades').addEventListener('change', handleShowAllChange);
     document.getElementById('hide-all-grades').addEventListener('change', handleHideAllChange);
 });
@@ -29,28 +16,22 @@ async function loadStudents() {
         }
 
         const students = await response.json();
-        console.log('Fetched students:', students); // For debugging
+        const studentsTableBody = document.getElementById('studentsTableBody');
+        studentsTableBody.innerHTML = '';
+        studentsTableBody.innerHTML = ''; // Clear the table before adding new rows
 
         // Get values from dropdowns
         const department = document.getElementById('department').value;
         const yearLevel = document.getElementById('yearlevel').value;
         const section = document.getElementById('n_section').value;
 
-        const studentsTableBody = document.getElementById('studentsTableBody');
-        if (!studentsTableBody) {
-            throw new Error('Table body element not found');
-        }
-
-        studentsTableBody.innerHTML = ''; // Clear table before adding new rows
-
         // Filter students based on selections
         const filteredStudents = students.filter(student => {
             return (!department || student.department === department) &&
                 (!yearLevel || student.year_level === yearLevel) &&
-                (!section || student.No_section ==section);
+                (!section || student.No_section == section);
         });
 
-        // Display filtered students in the table
         filteredStudents.forEach(student => {
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -60,9 +41,9 @@ async function loadStudents() {
                 <td>${student.No_section || 'N/A'}</td>
                 <td>${student.total_grade || '0'}</td>
                 <td>
-                    <input type="checkbox" class="grade-checkbox show-grade" name="gradeVisibility-${student.id}-show" data-id="${student.id}">
+                    <input type="checkbox" class="grade-checkbox show-grade" data-id="${student.id}" ${student.showDegrees === 'show' ? 'checked' : ''}>
                     Show Grade
-                    <input type="checkbox" class="grade-checkbox hide-grade" name="gradeVisibility-${student.id}-hide" data-id="${student.id}">
+                    <input type="checkbox" class="grade-checkbox hide-grade" data-id="${student.id}" ${student.showDegrees === 'hide' ? 'checked' : ''}> 
                     Hide Grade
                 </td>
                 <td>
@@ -74,10 +55,6 @@ async function loadStudents() {
             studentsTableBody.appendChild(row);
         });
 
-        // Restore checkbox states after appending rows
-        restoreCheckboxStates();
-
-        // Attach event listeners for checkboxes
         document.querySelectorAll('.grade-checkbox').forEach(checkbox => {
             checkbox.addEventListener('change', handleCheckboxChange);
         });
@@ -88,74 +65,83 @@ async function loadStudents() {
     }
 }
 
-function handleShowAllChange(event) {
-    const isChecked = event.target.checked;
+async function updateStudentDegreeVisibility(id, showDegrees) {
+    try {
+        const response = await fetch(`/update-student-degree-visibility/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ showDegrees: showDegrees ? 'show' : 'hide' })
+        });
 
-    if (isChecked) {
-        document.getElementById('hide-all-grades').checked = false;
-
-        // Check all 'Show Grade' checkboxes and uncheck 'Hide Grade'
-        document.querySelectorAll('.show-grade').forEach(checkbox => {
-            checkbox.checked = true;
-            localStorage.setItem(checkbox.name, true); // Save to localStorage
-        });
-        document.querySelectorAll('.hide-grade').forEach(checkbox => {
-            checkbox.checked = false;
-            localStorage.setItem(checkbox.name, false); // Save to localStorage
-        });
-    } else {
-        document.querySelectorAll('.show-grade').forEach(checkbox => {
-            checkbox.checked = false;
-            localStorage.setItem(checkbox.name, false); // Save to localStorage
-        });
+        if (!response.ok) {
+            throw new Error('Failed to update degree visibility');
+        }
+        console.log('Degree visibility updated in the database');
+    } catch (error) {
+        console.error('Error:', error);
     }
 }
 
-function handleHideAllChange(event) {
-    const isChecked = event.target.checked;
-
-    if (isChecked) {
-        document.getElementById('show-all-grades').checked = false;
-
-        // Check all 'Hide Grade' checkboxes and uncheck 'Show Grade'
-        document.querySelectorAll('.hide-grade').forEach(checkbox => {
-            checkbox.checked = true;
-            localStorage.setItem(checkbox.name, true); // Save to localStorage
+async function updateAllStudentsVisibility(showDegrees) {
+    try {
+        const students = await fetch('/students');
+        const studentsList = await students.json();
+        const updates = studentsList.map(student => {
+            return updateStudentDegreeVisibility(student.id, showDegrees);
         });
-        document.querySelectorAll('.show-grade').forEach(checkbox => {
-            checkbox.checked = false;
-            localStorage.setItem(checkbox.name, false); // Save to localStorage
-        });
-    } else {
-        document.querySelectorAll('.hide-grade').forEach(checkbox => {
-            checkbox.checked = false;
-            localStorage.setItem(checkbox.name, false); // Save to localStorage
-        });
+        await Promise.all(updates);
+        console.log('All students visibility updated in the database');
+    } catch (error) {
+        console.error('Error updating all students visibility:', error);
     }
 }
 
 function handleCheckboxChange(event) {
     const clickedCheckbox = event.target;
     const id = clickedCheckbox.dataset.id;
+    const isShowGrade = clickedCheckbox.classList.contains('show-grade');
 
-    // Uncheck the other checkbox in the same row
-    document.querySelectorAll(`input[name^="gradeVisibility-${id}"]`).forEach(checkbox => {
+    // تحديث حالة الرؤية في قاعدة البيانات
+    updateStudentDegreeVisibility(id, isShowGrade);
+
+    // قم بإلغاء تحديد صندوق الاختيار الآخر
+    document.querySelectorAll(`input[data-id="${id}"]`).forEach(checkbox => {
         if (checkbox !== clickedCheckbox) {
             checkbox.checked = false;
-            localStorage.setItem(checkbox.name, false); // Save to localStorage
         }
     });
-
-    // Save the state of the clicked checkbox to localStorage
-    localStorage.setItem(clickedCheckbox.name, clickedCheckbox.checked);
 }
 
-function restoreCheckboxStates() {
-    // Restore states for all grade checkboxes
-    document.querySelectorAll('.grade-checkbox').forEach(checkbox => {
-        const storedValue = localStorage.getItem(checkbox.name);
-        checkbox.checked = storedValue === 'true'; // Convert stored value to boolean
+function handleShowAllChange(event) {
+    const isChecked = event.target.checked;
+    document.getElementById('hide-all-grades').checked = false;
+
+    document.querySelectorAll('.show-grade').forEach(checkbox => {
+        checkbox.checked = isChecked;
     });
+    document.querySelectorAll('.hide-grade').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
+    // تحديث حالة جميع الطلاب في قاعدة البيانات
+    updateAllStudentsVisibility(true);
+}
+
+function handleHideAllChange(event) {
+    const isChecked = event.target.checked;
+    document.getElementById('show-all-grades').checked = false;
+
+    document.querySelectorAll('.hide-grade').forEach(checkbox => {
+        checkbox.checked = isChecked;
+    });
+    document.querySelectorAll('.show-grade').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
+    // تحديث حالة جميع الطلاب في قاعدة البيانات
+    updateAllStudentsVisibility(false);
 }
 
 function sortTableByName() {
@@ -165,14 +151,13 @@ function sortTableByName() {
     table.dataset.sortDirection = isAscending ? 'desc' : 'asc';
 
     rows.sort((rowA, rowB) => {
-        const cellA = rowA.children[0].textContent.trim(); // Name is in the first column
+        const cellA = rowA.children[0].textContent.trim();
         const cellB = rowB.children[0].textContent.trim();
 
-        if (cellA > cellB) return isAscending ? 1 : -1;
-        if (cellA < cellB) return isAscending ? -1 : 1;
-        return 0;
+        return cellA.localeCompare(cellB) * (isAscending ? 1 : -1);
     });
 
     const tbody = table.querySelector('tbody');
-    rows.forEach(row => tbody.appendChild(row)); // Reorder rows in the table
+    rows.forEach(row => tbody.appendChild(row));
 }
+

@@ -1,66 +1,57 @@
-
 document.addEventListener('DOMContentLoaded', function() {
+    const courseData = JSON.parse(localStorage.getItem('courseData'));
+    const courseId = courseData.id;
 
-    const courseId = 123;  // تأكد من أنك استبدلت 123 بالقيمة الصحيحة لـ courseId الخاص بك.
-
-    // تحميل الدرجات عند تحميل الصفحة
+    // Function to load grades when the page loads
     async function loadGrades() {
         try {
-            const response = await fetch('/get-grades');
+            const response = await fetch(`/get-grades/${courseId}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             const grades = await response.json();
-            console.log(grades);
             const gradesTableBody = document.getElementById('gradesTableBody');
 
-            // تفريغ الصفوف الحالية
+            // Clear current rows
             gradesTableBody.innerHTML = '';
 
-            // تعبئة الجدول بالبيانات
-            grades.forEach((grade, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <input type="hidden" value="${grade.id || 'N/A'}" class="student-id" readonly>
-                    <td><input type="text" value="${grade.studentName || 'N/A'}" class="student-name" readonly></td>
-                    <td><input type="number" value="${grade.practicalDegree || 0}" class="practical-degree"></td>
-                    <td><input type="number" value="${grade.midtermDegree || 0}" class="midterm-degree"></td>
-                    <td><input type="number" value="${grade.finalExamDegree || 0}" class="final-exam-degree"></td>
-                    <td><input type="number" value="${grade.lectureAttendance || 0}" class="lecture-attendance" readonly></td>
-                    <td><input type="number" value="${grade.sectionAttendance || 0}" class="section-attendance" readonly></td>
-                `;
-                gradesTableBody.appendChild(row);
-            });
-
-            // عرض زر "التحديث" إذا كانت هناك درجات
+            // Check if there are any grades to display
             if (grades.length > 0) {
-                let updateButton = document.getElementById('updateButton');
-                if (!updateButton) {
-                    updateButton = document.createElement('button');
-                    updateButton.id = 'updateButton';
-                    updateButton.textContent = 'Update';
-                    document.body.appendChild(updateButton);
-                }
-
-                updateButton.addEventListener('click', async function() {
-                    await updateGrades(grades, courseId);  // تمرير courseId هنا
+                // Populate the table with data
+                grades.forEach((grade) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <input type="hidden" value="${grade.studentId}" class="student-id" readonly>
+                        <td><input type="text" value="${grade.studentName}" class="student-name" readonly></td>
+                        <td><input type="number" value="${grade.practicalDegree}" class="practical-degree"></td>
+                        <td><input type="number" value="${grade.midtermDegree}" class="midterm-degree"></td>
+                        <td><input type="number" value="${grade.finalExamDegree}" class="final-exam-degree"></td>
+                        <td><input type="number" value="${grade.lectureAttendance}" class="lecture-attendance" readonly></td>
+                        <td><input type="number" value="${grade.sectionAttendance}" class="section-attendance" readonly></td>
+                    `;
+                    gradesTableBody.appendChild(row);
                 });
+
+                // Show the update button since there's data
+                updateButton.style.display = 'block';
+            } else {
+                // Hide the update button if no data
+                updateButton.style.display = 'none';
             }
         } catch (error) {
             console.error('Error loading grades:', error);
         }
     }
 
-    // دالة تحديث الدرجات
-    async function updateGrades(grades, courseId) {
+    // Function to update grades on the server
+    async function updateGrades() {
         const updatedGrades = [];
         const rows = document.querySelectorAll('#gradesTableBody tr');
 
-        rows.forEach((row, index) => {
+        rows.forEach((row) => {
             const updatedGrade = {
-                id: row.querySelector('.student-id').value,
-                courseId: courseId,  // استخدام courseId مباشرة
-                studentName: grades[index].studentName,
+                student_id: row.querySelector('.student-id').value,
+                courseId: courseId,
                 practicalDegree: row.querySelector('.practical-degree').value,
                 midtermDegree: row.querySelector('.midterm-degree').value,
                 finalExamDegree: row.querySelector('.final-exam-degree').value
@@ -87,7 +78,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // استدعاء الدالة لتحميل الدرجات عند تحميل الصفحة
+    // Create and configure the "Update" button
+    let updateButton = document.getElementById('updateButton');
+    if (!updateButton) {
+        updateButton = document.createElement('button');
+        updateButton.id = 'updateButton';
+        updateButton.textContent = 'Update';
+        document.body.appendChild(updateButton);
+    }
+    updateButton.style.display = 'none'; // Initially hide the button
+
+    // Attach the event listener to update grades
+    updateButton.addEventListener('click', updateGrades);
+
+    // Load grades on page load
     loadGrades();
 });
-
