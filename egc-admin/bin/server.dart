@@ -2,10 +2,12 @@ import 'dart:io';
 
 //import 'package:dart_backend/auth.dart';
 //import 'package:firebase_dart/firebase_dart.dart';
+import 'package:egc_website/announcements.dart';
 import 'package:egc_website/assignment.dart';
 // import 'package:egc_website/attendence.dart';
 import 'package:egc_website/class_schedules.dart';
 import 'package:egc_website/course.dart';
+import 'package:egc_website/course_teaching_assistant.dart';
 import 'package:egc_website/doctor.dart';
 import 'package:egc_website/admin_handlers.dart';
 import 'package:egc_website/grade.dart';
@@ -41,6 +43,8 @@ void main() async {
   ClassSchedule(router);
   StudentHandlers(router);
   Grades(router);
+  CourseTeachingAssistant(router);
+  Announcement(router);
 
   ///Define your routes
   ///Home, News and Login Pag

@@ -3,9 +3,17 @@ document.addEventListener('DOMContentLoaded', loadCoruses);
 async function loadCoruses() {
 
 
-    const doctorData = JSON.parse(localStorage.getItem('userData'));
+    const instructorData = JSON.parse(localStorage.getItem('userData'));
 
-    const response = await fetch('/doctor/courses/' + doctorData.id);
+    let response;
+    if (instructorData.role == "Doctor")
+        response = await fetch(`/doctor/courses/${instructorData.id}`);
+    else
+        response = await fetch(`/teaching-assistant/courses/${instructorData.id}`);
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch courses');
+    }
     if (!response.ok) {
         throw new Error('Failed to fetch courses');
     }
