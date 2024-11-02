@@ -1,9 +1,12 @@
 import 'dart:io';
+import 'dart:convert';
 
 //import 'package:dart_backend/auth.dart';
 //import 'package:dart_backend/configurations.dart';
 //import 'package:firebase_dart/firebase_dart.dart';
 import 'package:shelf/shelf.dart';
+
+
 
 //String privilage = "";
 /*
@@ -12,6 +15,21 @@ String status = "";
 
 Map<String, Object> data = {};
 */
+
+
+// Central function to read HTML files
+Future<String> loadHtmlFile(String path) async {
+  try {
+    return await File(path).readAsString();
+  } catch (e) {
+    throw Exception('Failed to load HTML file: $path. Error: $e');
+  }
+}
+
+
+
+
+
 
 ///Dashboard
 Future<Response> getStaffDashboardHandler(Request request) async {
@@ -71,7 +89,7 @@ Future<Response> getEditCourseHandler(Request request) async {
 }
   Future<Response> getCourseTeachingAssistantsHandler(Request request) async {
   try {
-    var html = File('web/page/staff.html').readAsStringSync();
+    var html = File('web/page/teaching.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
     return Response.internalServerError(body: e.toString());
@@ -87,7 +105,7 @@ Future<Response> getCourseJoinTeachingAssistantsHandler(Request request) async {
 }
   Future<Response> getCourseStudentsHandler(Request request) async {
   try {//Note: change to student.html
-    var html = File('web/page/staff.html').readAsStringSync();
+    var html = File('web/page/student.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
     return Response.internalServerError(body: e.toString());
@@ -228,6 +246,16 @@ Future<Response> getCourseGradesHandler(Request request) async {
 Future<Response> insertStudentDegrees(Request request) async {
   try {
     var html = File('web/page/grades.html').readAsStringSync();
+    return Response.ok(html, headers: {'Content-Type': 'text/html'});
+  } catch (e) {
+    return Response.internalServerError(body: e.toString());
+  }
+}
+
+// Generic request handler
+Future<Response> handleRequest(String path) async {
+  try {
+    var html = await loadHtmlFile(path);
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
     return Response.internalServerError(body: e.toString());

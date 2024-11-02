@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     loadTeachingAssistants();
 
@@ -39,6 +38,11 @@ async function loadTeachingAssistants() {
                 <td>${teachingAssistant.phone || 'N/A'}</td>
                 <td>${teachingAssistant.username || 'N/A'}</td>
                 <td>${teachingAssistant.major || 'N/A'}</td>
+                <td>
+                    <button class="details-btn show-details showCV ${teachingAssistant.cvFile? "" : "btn-disabled"}" data-id="${teachingAssistant.id}" ${teachingAssistant.cvFile? "" : "disabled"}>
+                        Show Cvs
+                    </button>
+                </td>
                 <td>
                     <button class="details-btn edit" data-id="${teachingAssistant.id}">Edit</button>
                     <button class="details-btn delete" data-id="${teachingAssistant.id}">Delete</button>
@@ -112,6 +116,18 @@ function addEventListeners() {
                 console.error('Error:', error);
                 alert('Error fetching Teaching Assistant details');
             }
+        });
+    });
+
+    document.querySelectorAll('.showCV').forEach(button => {
+        button.addEventListener('click', async(event) => {
+            const teachingAssistantId = event.target.dataset.id;
+
+            if (!teachingAssistantId) {
+                alert('Teaching Assistant ID is missing');
+                return;
+            }
+            window.open('/teaching-assistants/cvFile/' + teachingAssistantId, "_blank");
         });
     });
 }

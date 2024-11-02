@@ -1,15 +1,17 @@
-body {
-    font-family: "Roboto Condensed", sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
-    /* Light gray background */
-}
 
+h3{
+    margin-top: 30px;
+    margin-left: 30px;
+}
+.nav-items{
+    margin-top: -55px;
+    position: absolute;
+}
 .students-table {
     width: 95%;
     border-collapse: collapse;
     margin: 0px 40px 0px 40px;
+
 }
 
 .students-table th,
@@ -21,7 +23,7 @@ body {
     font-family: "Roboto Condensed", sans-serif;
 }
 
-.checkbox{margin-left: 880px;margin-top: 50px;  font-family: "Roboto Condensed", sans-serif;font-size: 18px;  color: #1d3c62;}
+.checkbox{margin-left: 880px;margin-top: 40px;  font-family: "Roboto Condensed", sans-serif;font-size: 18px;  color: #1d3c62;}
 .hide{margin-left: 20px;}
 .students-table th {
     background-color: #0f2b4e;
@@ -37,12 +39,12 @@ body {
 .details-btn {
     cursor: pointer;
     margin: 0 5px;
-    padding: 6px 10px; 
+    padding: 5px 10px;
     background-color: #0f2b4e;
     color: #fff;
-    border-radius: 10px;
-    font-size: 17px;
-    border: 1px solid #ccc;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
 
@@ -57,7 +59,7 @@ option{background-color: #fff;color:#000000;}
     /* Vertically center the dropdowns */
     gap: 20px;
     /* Add spacing between the dropdowns */
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .filter-dropdown {
@@ -72,6 +74,7 @@ option{background-color: #fff;color:#000000;}
     background-color: #0F2B4E;
     color: #fff;
     font-size: 1em;
+    
 }
 
 .filter-dropdown select:focus {
@@ -84,3 +87,4 @@ option{background-color: #fff;color:#000000;}
     /* Ensures white background on focus too */
     color: #0F2B4E;
 }
+

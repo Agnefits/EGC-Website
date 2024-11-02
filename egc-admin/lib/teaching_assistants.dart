@@ -124,7 +124,7 @@ class TeachingAssistant {
     router.get('/teaching-assistants', (Request request) async {
       try {
         final results = DatabaseHelper._db.select(
-            'SELECT id, name, email, phone, username, major FROM teaching_assistants');
+            'SELECT id, name, email, phone, username, major, photo, cvFile FROM teaching_assistants');
         final teachingAssistantList = results
             .map((row) => {
                   'id': row['id'],
@@ -132,7 +132,9 @@ class TeachingAssistant {
                   'email': row['email'],
                   'phone': row['phone'],
                   'username': row['username'],
-                  'major': row['major']
+                  'major': row['major'],
+                  "photo": row['photo'].length > 0,
+                  "cvFile": row['cvFile'].length > 0
                 })
             .toList();
 
@@ -197,6 +199,33 @@ class TeachingAssistant {
           return Response.ok(profilePictureBytes, headers: {
             'Content-Type': 'image/png',
             'Content-Disposition': 'inline; filename="profile_picture.png"',
+            'Access-Control-Allow-Origin': '*'
+          });
+        } else {
+          return Response.notFound('Teaching Assistant not found');
+        }
+      } catch (e) {
+        print('Error: $e');
+        return Response.internalServerError(
+            body: 'Error processing request',
+            headers: {'Access-Control-Allow-Origin': '*'});
+      }
+    });
+
+    router.get('/teaching-assistants/cvFile/<id>',
+        (Request request, String id) async {
+      try {
+        // Query the database to get the profile picture
+        final result = DatabaseHelper._db
+            .select('SELECT cvFile FROM teaching_assistants WHERE id = ?', [id]);
+
+        if (result.isNotEmpty) {
+          final cvFileBytes = result.first['cvFile'];
+
+          // Set the appropriate content-type header (assuming the file is in PDF format)
+          return Response.ok(cvFileBytes, headers: {
+            'Content-Type': 'file/pdf',
+            'Content-Disposition': 'inline; filename="cvFile.pdf"',
             'Access-Control-Allow-Origin': '*'
           });
         } else {
@@ -291,7 +320,7 @@ class TeachingAssistant {
       }
     });
   }
- 
+
   // Function to authenticate user
   static Future<Map<String, dynamic>?> authenticateUser(
       String username, String password) async {

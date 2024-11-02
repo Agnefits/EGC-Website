@@ -180,3 +180,24 @@ async function fetchStudents(sectionId) {
         });
     }
 }
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> 4c672dc4b39cdc8c218bcd7dd6241c9b6ed0722a

@@ -43,16 +43,18 @@ body {
 
 .sidebar .logo-details .logo_name {
     color: #fff;
+    display: none;
     font-size: 20px;
     font-weight: 600;
     opacity: 0;
     text-align: center;
     transition: all 0.5s ease;
-    margin-top: 20px;
+    margin: 20px 40px 0px 0px;
 }
 
 .sidebar.open .logo-details .icon,
 .sidebar.open .logo-details .logo_name {
+    display: block;
     opacity: 1;
 }
 
@@ -236,10 +238,11 @@ body {
     color: #0F2B4E;
     cursor: pointer;
 }
+
 .sidebar.open .profile #log_out {
     width: 50px;
     background: none;
-    color:#fff;
+    color: #fff;
 }
 
 .sidebar.open .profile #log_out:hover {
@@ -248,6 +251,7 @@ body {
     color: #0F2B4E;
     cursor: pointer;
 }
+
 main {
     position: relative;
     background: #f0f0f0;

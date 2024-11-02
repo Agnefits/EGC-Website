@@ -63,7 +63,7 @@ function fetchQuizzesForCourse(courseId) {
       <img src="/img/quiz.png" alt="Quiz icon">
       <div class="student-quiz-title-details">
         <div class="student-quiz-name">${quiz.title}</div>
-        <div class="student-quiz-date">Publication date: ${quiz.date}</div>
+        <div class="student-quiz-date">Publication Date : ${quiz.date}</div>
       </div>
     </div>
     <div class="student-quiz-details">
@@ -135,7 +135,7 @@ function fetchQuizzesForAllCourses(studentId) {
               <img src="/img/quiz.png" alt="Quiz icon">
               <div class="student-quiz-title-details">
                 <div class="student-quiz-name">${quiz.title}</div>
-                <div class="student-quiz-date">Publication date: ${quiz.date}</div>
+                <div class="student-quiz-date">Publication Date : ${quiz.date}</div>
               </div>
             </div>
             <div class="student-quiz-details">

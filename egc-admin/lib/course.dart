@@ -296,6 +296,50 @@ GROUP BY
   }
 });
 
+router.get('/teaching-assistant/courses/<teachingId>', (Request request, String teachingId) async {
+  try {
+    final queryParams = request.url.queryParameters;
+    final limit = int.tryParse(queryParams['limit'] ?? '3') ?? 3;  // Default limit of 3 courses
+    final page = int.tryParse(queryParams['page'] ?? '1') ?? 1;  // Default to page 1
+    final offset = (page - 1) * limit;  // Calculate offset based on page
+
+    final results = DatabaseHelper._db.select(
+      'SELECT C.id, C.name, C.courseId, C.description, C.hours, C.lectureAttendance, C.sectionAttendance, '
+      'C.practicalDegree, C.midtermDegree, C.finalExamDegree, C.department, C.year, C.photo '
+      'FROM courses C JOIN course_teaching_assistant CTA WHERE C.id = CTA.courseId AND CTA.teaching_assistantId = ? LIMIT ? OFFSET ?',
+      [teachingId, limit, offset]
+    );
+
+    final courseList = results.map((row) => {
+      'id': row['id'],
+      'name': row['name'],
+      'courseId': row['courseId'],
+      'description': row['description'],
+      'hours': row['hours'],
+      'lectureAttendance': row['lectureAttendance'],
+      'sectionAttendance': row['sectionAttendance'],
+      'practicalDegree': row['practicalDegree'],
+      'midtermDegree': row['midtermDegree'],
+      'finalExamDegree': row['finalExamDegree'],
+      'department': row['department'],
+      'year': row['year'],
+      'photo': row['photo'] != null && row['photo'].length > 0,
+    }).toList();
+
+    final jsonResponse = jsonEncode(courseList);
+    return Response.ok(jsonResponse, headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+  } catch (e) {
+    print('Error: $e');
+    return Response.internalServerError(
+      body: 'Error processing request',
+      headers: {'Access-Control-Allow-Origin': '*'}
+    );
+  }
+});
+
 
     // عرض كورس حسب ID
     router.get('/courses/Details/<id>', (Request request, String id) async {

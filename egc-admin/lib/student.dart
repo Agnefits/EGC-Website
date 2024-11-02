@@ -142,7 +142,7 @@ class Student {
     router.get('/students', (Request request) async {
       try {
         final results = DatabaseHelper._db.select(
-            'SELECT id, name, email, phone, username, department, year_level, national_id, gender, number, sectionNo FROM students');
+            'SELECT id, name, email, phone, username, department, year_level, national_id, gender, number, sectionNo, photo FROM students');
         final studentList = results
             .map((row) => {
                   'id': row['id'],
@@ -155,7 +155,8 @@ class Student {
                   'national_id': row['national_id'],
                   'gender': row['gender'],
                   'number': row['number'],
-                  'No_section': row['sectionNo']
+                  'No_section': row['sectionNo'],
+                  "photo": row['photo'].length > 0
                 })
             .toList();
 
@@ -240,8 +241,7 @@ class Student {
     router.get('/Last-Student-Number/<year_level>/<department>',
         (Request request, String yearLevel, String department) async {
       try {
-        int number =
-            DatabaseHelper.getLastStudentNumber(department, yearLevel);
+        int number = DatabaseHelper.getLastStudentNumber(department, yearLevel);
         return Response.ok("Last-Student-Number", headers: {
           'Content-Type': 'application/json',
           "Number": number.toString(),
@@ -332,7 +332,6 @@ class Student {
       }
     });
   }
-
 
   static Future<Map<String, dynamic>?> authenticateUser(
       String username, String password) async {

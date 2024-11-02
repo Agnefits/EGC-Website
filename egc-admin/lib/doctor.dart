@@ -119,7 +119,7 @@ class Doctor {
     router.get('/doctors', (Request request) async {
       try {
         final results = DatabaseHelper._db.select(
-            'SELECT id, name, email, phone, username, major FROM doctors');
+            'SELECT id, name, email, phone, username, major, photo, cvFile FROM doctors');
         final doctorList = results
             .map((row) => {
                   'id': row['id'],
@@ -128,6 +128,8 @@ class Doctor {
                   'phone': row['phone'],
                   'username': row['username'],
                   'major': row['major'],
+                  "photo": row['photo'].length > 0,
+                  "cvFile": row['cvFile'].length > 0
                 })
             .toList();
 
@@ -191,6 +193,32 @@ class Doctor {
           return Response.ok(profilePictureBytes, headers: {
             'Content-Type': 'image/png',
             'Content-Disposition': 'inline; filename="profile_picture.png"',
+            'Access-Control-Allow-Origin': '*'
+          });
+        } else {
+          return Response.notFound('Doctor not found');
+        }
+      } catch (e) {
+        print('Error: $e');
+        return Response.internalServerError(
+            body: 'Error processing request',
+            headers: {'Access-Control-Allow-Origin': '*'});
+      }
+    });
+
+    router.get('/doctors/cvFile/<id>', (Request request, String id) async {
+      try {
+        // Query the database to get the profile picture
+        final result = DatabaseHelper._db
+            .select('SELECT cvFile FROM doctors WHERE id = ?', [id]);
+
+        if (result.isNotEmpty) {
+          final cvFileBytes = result.first['cvFile'];
+
+          // Set the appropriate content-type header (assuming the file is in PDF format)
+          return Response.ok(cvFileBytes, headers: {
+            'Content-Type': 'file/pdf',
+            'Content-Disposition': 'inline; filename="cvfile.pdf"',
             'Access-Control-Allow-Origin': '*'
           });
         } else {
