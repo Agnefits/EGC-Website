@@ -1,26 +1,36 @@
+
 body {
     font-family: "Roboto Condensed", sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
-    /* Light gray background */
 }
 
 main {
     padding: 50px;
 }
-.nav-items{margin-top: -40px;margin-left: -40px;cursor: pointer;}
+
+.h {
+    font-size: 30px;
+    text-align: center;
+    color: #0F2B4E;
+}
+
+.nav-items {
+    margin-top: -40px;
+    margin-left: -40px;
+    cursor: pointer;
+}
+
 .add-class {
     background-color: #fff;
-    /* White background for form */
-    border-radius: 15px;
+    border-radius: 40px;
     padding: 20px;
-    width: 600px;
-    /* Adjust width as needed */
+    width: 600px; 
     margin: 0 auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow effect */
 }
+
 main>h2 {
     font-size: 26px;
     color: #0F2B4E;
@@ -36,6 +46,7 @@ main form textarea {
     border-radius: 5px;
     margin-bottom: 10px;
     box-sizing: border-box;
+    font-size: medium;
 }
 
 main form label {
@@ -44,19 +55,69 @@ main form label {
 }
 
 #add-class-button {
-    background-color: rgb(42, 165, 232);
+    background-color: #0F2B4E;
     color: white;
     padding: 12px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
     width: 100%;
-}
 
+}
+option
+{
+    font-size: 18px;
+}
 label {
     font-size: 16px;
     font-weight: 600;
+    margin-bottom: 5px;
+    color: #0F2B4E;
 }
 
+#add-class-button:hover {
+    box-shadow: 0 4px 10px #1e88e5;
+}
+
+
+@media (max-width: 768px) {
+    main {
+        padding: 30px; 
+    }
+    .add-class {
+        width: 80%; 
+        padding: 15px;
+    }
+    .h {
+        font-size: 24px;  
+    }
+    #add-class-button {
+        padding: 10px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 20px;
+    }
+    .add-class {
+        width: 100%; 
+        padding: 10px;
+    }
+    .h {
+        font-size: 22px;
+    }
+    main form input,
+    main form select,
+    main form textarea {
+        padding: 8px; 
+        font-size: 14px; 
+    }
+    #add-class-button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

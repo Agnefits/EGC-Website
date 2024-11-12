@@ -2,27 +2,29 @@ body {
     font-family: "Roboto Condensed", sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
-    /* Light gray background */
+    background-color: #f0f0f0; 
 }
 
 main {
     padding: 50px;
 }
 
-.add-doctor {
-    background-color: #fff;
-    /* White background for form */
-    border-radius: 15px;
-    padding: 20px;
-    width: 600px;
-    /* Adjust width as needed */
-    margin: 0 auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow effect */
+.h {
+    color: #0F2B4E;
+    text-align: center;
+    font-size: 30px;
 }
 
-.add-doctor>h2 {
+.add-doctor {
+    background-color: #fff; 
+    border-radius: 15px;
+    padding: 20px;
+    width: 600px; 
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+}
+
+.add-doctor > h2 {
     font-size: 26px;
     color: #0F2B4E;
     font-weight: 600;
@@ -62,15 +64,19 @@ main {
 }
 
 #add-doctor-button {
-    background-color: rgb(42, 165, 232);
+    background-color: #0F2B4E;
     color: white;
     padding: 12px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
     width: 100%;
+}
+
+#add-doctor-button:hover {
+    box-shadow: 0 4px 10px #1e88e5;
 }
 
 #added-fields {
@@ -114,33 +120,25 @@ main {
 label {
     font-size: 16px;
     font-weight: 600;
+    color: #0F2B4E;
 }
 
 #profilePicUpload {
     visibility: hidden;
 }
 
-
-/*.btnProfilePicUpload {
-    background-color: #4CAF50;
-    color: white;
-    padding: 6px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    width: 170px;
-}*/
-
 .btnProfilePicUpload {
     text-wrap: nowrap;
     display: inline-block;
     padding: 0.5em 1em;
-    background-color: rgb(42, 165, 232);
+    background-color: #0F2B4E;
     color: #fff;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 25px;
+}
+
+.btnProfilePicUpload:hover {
+    box-shadow: 0 4px 10px #1e88e5
 }
 
 .btnCvUpload {
@@ -162,4 +160,69 @@ label {
 
 .lblShowPassword {
     font-weight: lighter;
+}
+
+@media (max-width: 768px) {
+    .add-doctor {
+        width: 90%; 
+        padding: 15px; 
+        margin: 0; 
+    }
+
+    .add-doctor > h2 {
+        font-size: 24px; 
+    }
+
+    .profile-picture img {
+        width: 80px; 
+        height: 80px; 
+    }
+
+    #add-doctor-button {
+        padding: 10px; 
+        font-size: 14px; 
+    }
+
+    label {
+        font-size: 14px; 
+    }
+
+    .add-doctor form input,
+    .add-doctor form select,
+    .add-doctor form textarea {
+        padding: 8px; 
+    }
+}
+
+@media (max-width: 480px) {
+    .add-doctor {
+        width: 95%; 
+        padding: 10px; 
+        margin: 0; 
+    }
+
+    .add-doctor > h2 {
+        font-size: 22px; 
+    }
+
+    .profile-picture img {
+        width: 70px; 
+        height: 70px; 
+    }
+
+    #add-doctor-button {
+        padding: 8px; 
+        font-size: 12px; 
+    }
+
+    label {
+        font-size: 12px; 
+        
+    }
+
+    .add-doctor form input,
+    .add-doctor form select,
+    .add-doctor form textarea {
+        padding: 6px; 
+    }
 }

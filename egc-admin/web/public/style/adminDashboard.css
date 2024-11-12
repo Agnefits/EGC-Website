@@ -269,8 +269,8 @@ main {
 }
 
 main .text {
-    display: inline-block;
-    color: #11101d;
+    text-align: center;
+    color: #0F2B4E;
     font-size: 25px;
     font-weight: 500px;
 }
@@ -283,4 +283,7 @@ main .text {
 
 main {
     position: relative;
+}
+h3{
+    color: #0F2B4E;
 }

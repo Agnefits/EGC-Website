@@ -1,4 +1,7 @@
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+* {
+    box-sizing: border-box;
+}
 
 /* Style the filter dropdowns */
 .filter-section {
@@ -35,12 +38,6 @@
     color: #0F2B4E;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
-* {
-    box-sizing: border-box;
-    font-family: "Roboto Condensed", sans-serif;
-}
-
 body {
     background-color: #f0f0f0;
 }
@@ -60,7 +57,7 @@ body {
 }
 
 .sidebar.open {
-    width: 270px;
+    width: 250px;
 }
 
 .sidebar .logo-details {
@@ -68,7 +65,7 @@ body {
     display: flex;
     align-items: center;
     position: relative;
-    font-family: "Roboto Condensed", sans-serif;
+    font-family:"Roboto Condensed", sans-serif;
 }
 
 .sidebar .logo-details .icon {
@@ -81,33 +78,30 @@ body {
 
 .sidebar .logo-details .logo_name {
     color: #fff;
-    display: none;
     font-size: 20px;
     font-weight: 600;
     opacity: 0;
     text-align: center;
     transition: all 0.5s ease;
-    margin: 20px 40px 0px 0px;
+    margin-top: 20px;
 }
 
 .sidebar.open .logo-details .icon,
 .sidebar.open .logo-details .logo_name {
     opacity: 1;
-    display: block;
 }
-
-.logo_style {
+.logo_style{
     text-decoration: none;
     color: #fff;
 }
-
 .sidebar .logo-details #btn {
     position: absolute;
     top: 50%;
     right: 0;
     transform: translateY(-50%);
-    font-size: 35px;
+    font-size: 22px;
     transition: all 0.4s ease;
+    font-size: 23px;
     text-align: center;
     cursor: pointer;
     transition: all 0.5s ease;
@@ -123,7 +117,7 @@ body {
     color: #fff;
     height: 60px;
     min-width: 50px;
-    font-size: 30px;
+    font-size: 28px;
     text-align: center;
     line-height: 60px;
 }
@@ -207,13 +201,12 @@ body {
 .sidebar li a:hover i {
     transition: all 0.5s ease;
     color: #0F2B4E;
-    cursor: pointer;
 }
 
 .sidebar li i {
     height: 50px;
     line-height: 50px;
-    font-size: 30px;
+    font-size: 18px;
     border-radius: 12px;
     margin-left: 2.5px;
 }
@@ -223,7 +216,7 @@ body {
     height: 60px;
     width: 78px;
     left: 0;
-    bottom: 5px;
+    bottom: -8px;
     padding: 10px 14px;
     background: #0F2B4E;
     transition: all 0.5s ease;
@@ -273,23 +266,9 @@ body {
     transition: all 0.5s ease;
 }
 
-.sidebar .profile #log_out:hover {
-    background: #fff;
-    color: #0F2B4E;
-    cursor: pointer;
-}
-
 .sidebar.open .profile #log_out {
     width: 50px;
     background: none;
-    color: #fff;
-}
-
-.sidebar.open .profile #log_out:hover {
-    background: #fff;
-    width: 60px;
-    color: #0F2B4E;
-    cursor: pointer;
 }
 
 main {
@@ -308,13 +287,18 @@ main {
     width: calc(100% - 250px);
 }
 
-main .text {
-    display: inline-block;
-    color: #11101d;
-    font-size: 25px;
+h3 {
+    color: #0f2b4e;
+    font-size: 30px;
     font-weight: 500px;
     font-family:"Libre Baskerville", serif;
-
+    text-align: center;
+}
+.filter-dropdown {
+    font-size: 20px;
+    color: #0F2B4E;
+    font-weight: 600;
+    display: inline-block; 
 }
 
 @media (max-width: 420px) {
@@ -331,7 +315,7 @@ main {
     margin: 20px 50px;
     padding: 20px;
     border-radius: 40px;
-    box-shadow: 2px 2px 5px rgb(48, 47, 47);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     position: relative;
     min-width: 650px;
 }
@@ -357,8 +341,8 @@ main {
 }
 
 .student-quiz-date {
-    font-size: 16px;
-    font-family:"Roboto Condensed", sans-serif;
+    font-size: 12px;
+    font-family: "Roboto Condensed", sans-serif;
 }
 
 .student-quiz-details {
@@ -376,7 +360,7 @@ main {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-family:"Roboto Condensed", sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
 }
 
 .btn-preview-quiz {
@@ -385,14 +369,66 @@ main {
     background-color: #0F2B4E;
     color: white;
     border: none;
-    border-radius: 15px;
+    border-radius: 25px;
     cursor: pointer;
     position: absolute;
     right: 25px;
     bottom: 20px;
-    font-family:"Roboto Condensed", sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
 }
-.btn-preview-quiz:hover
-{
-    box-shadow: 0 0 10px #0F2B4E;
+
+.btn-preview-quiz:hover {
+    box-shadow: 0 4px 10px #1e88e5;
+}
+
+@media (max-width: 768px) {
+    .student-quiz-container {
+        width: 90%;
+        padding: 15px;
+        margin: 20px auto;
+        min-width: auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .student-quiz-title,
+    .student-quiz-details {
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0;
+    }
+
+    .student-quiz-title img {
+        width: 50px;
+        margin-bottom: 10px;
+    }
+
+    .student-quiz-name {
+        font-size: 20px;
+    }
+
+    .student-quiz-date {
+        font-size: 10px;
+    }
+
+    .student-quiz-details p {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+
+    .btn-preview-quiz {
+        position: relative;
+        width: 100%;
+        right: auto;
+        bottom: auto;
+        margin-top: 15px;
+        text-align: center;
+    }
+    
+}
+@media (max-width: 768px) {
+    .filter-dropdown {
+        display: block; 
+        margin: 0 auto; 
+        text-align: center; 
+    }
 }

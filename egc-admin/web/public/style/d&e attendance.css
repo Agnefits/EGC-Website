@@ -296,13 +296,16 @@ body {
 label {
     margin-top: 10px;
     display: block;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 25px;
+    color:  #0F2B4E;
 }
 
 select {
     padding: 8px;
     margin: 5px 0;
     border: 1px solid #ccc;
+    font-size: 15px;
 }
 
 ul {
@@ -321,6 +324,11 @@ li {
     width: 95%;
 }
 
+.h {
+    text-align: center;
+    color: #0F2B4E;
+    font-size: 30px;
+}
 strong {
     margin-right: 10px;
     flex-basis: auto;
@@ -355,7 +363,7 @@ button {
 
 button:hover {
     background-color: #0F2C4E;
-    box-shadow: 0 0 10px #0F2B4E;
+    box-shadow: 0 4px 10px #1e88e5;
 }
 
 .student-list-item {
@@ -387,7 +395,6 @@ button:hover {
 }
 
 
-/* Responsive styles for mobile view */
 
 @media screen and (max-width: 600px) {
     .container {
@@ -396,12 +403,11 @@ button:hover {
 }
 
 .submit_att {
-    background-color: rgb(42, 165, 232);
-    /* Green button */
+    background-color: #0F2B4E;
     color: white;
     padding: 12px 20px;
     border: none;
-    border-radius: 20px;
+    border-radius: 25px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
@@ -426,7 +432,6 @@ button:hover {
 }
 
 
-/* Add some basic styling to the notes section */
 
 #notes {
     margin-top: -30px;
@@ -466,37 +471,52 @@ button:hover {
     background-color: #f9f9f9;
 }
 .present {
-    background-color: #c6efce; /* Light green */
+    background-color: #c6efce;
 }
 
 .absent {
-    background-color: #ffc7ce; /* Light red */
+    background-color: #ffc7ce;
 }
 
 label {
-    margin-right: 5px; /* Add space between label and select */
+    margin-right: 5px; 
+    font-size: 25px;
+
 }
 
 
 
 .form-group{
    
-    display: inline-block; /* Make the groups inline */
-    margin-right: 20px; /* Add some space between groups */
+    display: inline-block; 
+    margin-right: 20px; 
 }
 .form-group {
     margin-bottom: 15px;
 }
+#yearlevel
+{
+    border-radius: 25px;
+}
+#department
+{
+    border-radius: 25px;
 
+}
+#n_section
+{
+    border-radius: 25px;
+   
+}
 .test {
     margin-right: 30%;
-    width: 70%; /* Space between form and notes section */
+    width: 70%; 
     margin-top: 6%;
 }
 
 #notes-textarea {
-    width: 100%; /* Makes the textarea take full width */
-    height: 100px; /* Set a height for the textarea */
+    width: 100%; 
+    height: 100px; 
 }
 #resultSection{
     width: 100%;
@@ -511,4 +531,91 @@ label {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300%;
     background-color: #ecf0f1;
+}
+select {
+    background-color: #0F2B4E; 
+    color: white; 
+    border: 1px solid #ccc;
+    padding: 8px; 
+    font-size: 15px;
+}
+
+select:focus {
+    background-color: 0F2B4E;
+    color: white; 
+    outline: none; 
+}
+
+option {
+    background-color: white; 
+    color: #0F2B4E; 
+}
+
+option:hover {
+    background-color: #ffffff; 
+    color: #0F2B4E;
+}
+h2{
+    color: #0F2B4E;
+
+}
+h3
+{
+    color: #0F2B4E;
+
+}
+p{
+    color: #0F2B4E;
+    
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        width: 90%; 
+        padding: 10px; 
+        box-shadow: none; 
+    }
+
+    .h {
+        font-size: 24px; 
+    }
+
+    label {
+        font-size: 20px; 
+    }
+
+    select {
+        font-size: 14px;
+    }
+
+    .student-list-item {
+        flex-direction: column; 
+        align-items: flex-start;
+    }
+
+    .attendance-buttons {
+        flex-direction: column; 
+    }
+
+    .attendance-button {
+        width: 100%; 
+        margin: 5px 0;
+    }
+
+    #notes {
+        width: 280px; 
+        padding: 15px; 
+    }
+
+    #notes-textarea {
+        height: 80px; 
+    }
+
+    .submit_att {
+        width: 100%; 
+    }
+
+    #summarySection {
+        width: 100%; 
+    }
 }

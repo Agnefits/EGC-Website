@@ -4,12 +4,8 @@
 
 .btnAddClass {
     position: absolute;
-}
-
-.btnAddClass {
     background: #0F2B4E;
     color: white;
-    text-decoration: none;
     font-size: 18px;
     font-weight: 500;
     padding: 8px 15px;
@@ -18,20 +14,13 @@
     border: none;
     right: 10px;
     top: 15px;
-    position: absolute;
 }
-
-
-/* Style the filter dropdowns */
 
 .filter-section {
     display: flex;
     justify-content: center;
-    /* Align items to the left */
     align-items: center;
-    /* Vertically center the dropdowns */
     gap: 20px;
-    /* Add spacing between the dropdowns */
     margin-bottom: 20px;
 }
 
@@ -56,14 +45,17 @@
 
 .filter-dropdown select:focus option {
     background-color: white;
-    /* Ensures white background on focus too */
     color: #0F2B4E;
 }
+.h{
+    color: #0f2b4e;
+    font-size: 30px;
 
+}
 .scedule {
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    margin: 0px 70px 0px 70px;
+    margin: 0px 70px;
 }
 
 table {
@@ -82,7 +74,7 @@ thead th {
 }
 
 .scedule td {
-    padding: 14px 0px 14px 0px;
+    padding: 14px 0;
     text-align: center;
 }
 
@@ -107,11 +99,41 @@ table tr {
 }
 
 .cell div {
-    margin: 2PX;
+    margin: 2px;
     height: 100%;
     border: 1px solid #0f2b4e;
     border-radius: 10px;
     background-color: #cfd8e9;
     color: #0f2b4e;
     font-family: "Roboto Condensed", sans-serif;
+}
+
+@media (max-width: 768px) {
+    .filter-section {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .filter-dropdown select {
+        width: 100%;
+        font-size: 0.9em;
+    }
+
+    .scedule {
+        margin: 0 10px;
+    }
+
+    table {
+        height: auto;
+    }
+
+    table th, table td {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .time-cell {
+        font-size: 12px; 
+    }
 }

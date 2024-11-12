@@ -7,6 +7,13 @@ body {
 #header
 {
   text-align: center;
+  color: #0f2b4e;
+  font-size: 20px;
+  margin-left: 15px;
+}
+label
+{
+  color: #0f2b4e;
 }
 #cont
 {
@@ -17,9 +24,9 @@ body {
   background-color: hsl(0, 0%, 100%);  
   width: 450px; 
   height: 470px;
-  box-shadow: 0 10px 10px rgba(5, 5, 5, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 40px;
 }
 .profile-picture img {
   display: flex;
@@ -33,6 +40,10 @@ body {
   margin-top: -70px;
 }
 
+option
+{
+  font-size: 20px;
+}
 
 @media (max-width: 560px) {
 
@@ -90,11 +101,11 @@ form select{
 }
 
 button {
-  background-color: rgb(42, 165, 232);
+  background-color: #0f2b4e;
   color: white;
   padding: 10px ;
   border: none;
-  border-radius: 4px;
+  border-radius: 25px;
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
@@ -103,8 +114,7 @@ button {
 }
 button:hover {
   opacity:1;
-  background-color: rgb(126, 180, 209);
-}
+  box-shadow: 0 4px 10px #1e88e5}
 
 #goBackImage
 {

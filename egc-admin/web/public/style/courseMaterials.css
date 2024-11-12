@@ -6,6 +6,7 @@ body {
 
 .nav {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 20px;
 }
@@ -25,8 +26,15 @@ body {
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
+    
 }
 
+h1
+{
+    text-align: center;
+    color: #0F2B4E;
+    font-size: 30px;
+}
 .card {
     position: relative;
     display: flex;
@@ -40,7 +48,6 @@ body {
     border: 1px solid #ddd;
     margin-bottom: 20px;
 }
-
 .dropdown-content2 {
     display: none;
     position: absolute;
@@ -101,6 +108,7 @@ body {
     display: inline-block;
     margin-top: 20px;
     margin-left: 70%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .dropdown-button {
@@ -109,11 +117,25 @@ body {
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 25px;
     font-size: 16px;
-    margin-top: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
-
+.dropdown-button:hover{
+    box-shadow: 0 4px 10px #1e88e5;
+}
+.center
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center; 
+    margin-top: 30px;
+    margin-bottom: 30px;  
+}
 .dropdown-content {
     display: none;
     position: absolute;
@@ -165,4 +187,39 @@ h1 {
     font-size: 30px;
     font-weight: bold;
     margin: auto;
+}
+
+@media (max-width: 768px) {
+    .card {
+        width: 90%; 
+        flex-direction: column; 
+    }
+
+    .back-button, .dropdown-button {
+        font-size: 14px; 
+        padding: 8px 15px; 
+    }
+
+    .MaterialSaveAs {
+        font-size: 18px; 
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .back-button, .dropdown-button {
+        font-size: 12px; 
+        padding: 6px 10px; 
+    }
+
+    .MaterialSaveAs {
+        font-size: 16px; 
+    }
+
+    h1 {
+        font-size: 20px; 
+    }
 }

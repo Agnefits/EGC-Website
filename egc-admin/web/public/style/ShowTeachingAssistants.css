@@ -1,17 +1,16 @@
 h3 {
-    margin-top: 30px;
-    margin-left: 30px;
+    text-align: center;
+    color: #0f2b4e;
 }
 
 .nav-items {
     margin-top: -55px;
     position: absolute;
 }
-
 .assistants-table {
     width: 95%;
     border-collapse: collapse;
-    margin: 20px 40px 0px 40px;
+    margin: 20px auto;
 }
 
 .assistants-table th,
@@ -30,10 +29,6 @@ h3 {
     font-size: 16px;
 }
 
-.assistants-table tr {
-    background-color: #ffffff;
-}
-
 .details-btn {
     cursor: pointer;
     margin: 0 5px;
@@ -47,54 +42,41 @@ h3 {
 
 .details-btn.edit {
     background-color: #28a745;
-    cursor: pointer;
-    margin: 0 5px;
-    padding: 6px 10px;
     color: #fff;
     border-radius: 10px;
     font-size: 17px;
+    padding: 6px 10px;
     border: 1px solid #ccc;
 }
 
 .details-btn.delete {
     background-color: #dc3545;
-    cursor: pointer;
-    margin: 0 5px;
-    padding: 6px 10px;
     color: #fff;
     border-radius: 10px;
     font-size: 17px;
+    padding: 6px 10px;
     border: 1px solid #ccc;
 }
 
 .add-btn {
     background: #0F2B4E;
     color: white;
-    text-decoration: none;
     font-size: 18px;
     font-weight: 500;
     padding: 8px 15px;
     border-radius: 5px;
     cursor: pointer;
     border: none;
+    position: absolute;
     right: 10px;
     top: 15px;
-    position: absolute
-}
-
-option {
-    background-color: #fff;
-    color: #000000;
 }
 
 .filter-section {
     display: flex;
     justify-content: center;
-    /* Align items to the left */
     align-items: center;
-    /* Vertically center the dropdowns */
     gap: 20px;
-    /* Add spacing between the dropdowns */
     margin-bottom: 30px;
 }
 
@@ -119,10 +101,86 @@ option {
 
 .filter-dropdown select:focus option {
     background-color: white;
-    /* Ensures white background on focus too */
     color: #0F2B4E;
 }
 
-.btn-disabled {
-    background-color: #aaa;
+@media (max-width: 768px) {
+    .assistants-table {
+        width: 100%;
+        font-size: 1.2em;
+    }
+
+    .assistants-table th,
+    .assistants-table td {
+        padding: 15px;
+        font-size: 1.1em;
+    }
+
+    .details-btn,
+    .add-btn {
+        font-size: 1em;
+        padding: 8px 12px;
+    }
+
+    .filter-section {
+        flex-direction: column;
+        align-items: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .filter-dropdown select {
+        width: 220px; 
+        font-size: 1.1em; 
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    h3 {
+        font-size: 1.5em; 
+        text-align: center; 
+    }
+}
+
+@media (max-width: 480px) {
+    .assistants-table {
+        width: 100%;
+        font-size: 1.3em;
+    }
+
+    .assistants-table th,
+    .assistants-table td {
+        padding: 18px;
+        font-size: 1.2em;
+    }
+
+    .details-btn,
+    .add-btn {
+        font-size: 1.1em;
+        padding: 10px 14px;
+    }
+
+    .filter-dropdown select {
+        width: 240px;
+        font-size: 1.2em;
+        padding: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    h3 {
+        font-size: 1.6em;
+        text-align: center;
+    }
+    .filter-section {
+        flex-direction: column;
+        align-items: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }

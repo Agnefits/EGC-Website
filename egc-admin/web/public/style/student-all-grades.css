@@ -257,11 +257,11 @@ body {
     position: relative;
 }
 .container .text{
-    display: inline-block;
-    color: #11101d;
-    font-size: 25px;
+    color: #0f2b4e;
+    font-size: 30px;
     font-weight: 500px;
     font-family:"Libre Baskerville", serif;
+    text-align: center;
 }
 table {
     width: 90%;
@@ -269,6 +269,8 @@ table {
     margin-top: 25px;
     margin-left: 80px; 
     box-shadow: 0 5px 10px rgba(14, 13, 13, 0.3);
+    color: #0f2b4e;
+    font-weight: 300;
 }
 
 table th,
@@ -297,4 +299,36 @@ table tr:hover {
 strong {
     display: block;
     margin: 10px 0;
+}
+.tr{
+    color: #0f2b4e;
+    font-weight: 600;
+}
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    table th, 
+    table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .container .text {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    table th, 
+    table td {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .container .text {
+        font-size: 20px;
+    }
 }
