@@ -11,23 +11,32 @@ body {
 
 main {
     padding: 50px;
+    max-width: 600px; /* Set the max-width for the main container */
+    margin: 0 auto; /* Center the main container */
 }
 
 .edit-quiz {
     background-color: #fff;
-    border-radius: 15px;
+    border-radius: 40px;
     padding: 20px;
-    width: 600px;
-    margin: 0 auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Full width of the main */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Ensure all children are full width */
 }
 
-.edit-quiz>h2 {
-    font-size: 26px;
+.edit-quiz > h2 {
+    font-size: 30px;
     color: #0F2B4E;
     font-weight: bold;
+    text-align: center; /* Center the text */
 }
-
+input , select ,textarea
+{
+    border-radius: 25px;
+    border-color: #0F2B4E;
+}
 .type_q,
 .q_text,
 .answer-choice,
@@ -50,6 +59,17 @@ textarea,
 select {
     font-size: 16px;
     font-weight: 600;
+    padding-left: 10px;
+    
+}
+textarea,label
+{
+    width: 95%;
+}
+label
+{
+    font-size: 20px;
+    color: #0F2B4E;
 }
 
 .text {
@@ -78,8 +98,11 @@ select {
     height: 30px;
 }
 
+
 .l {
     padding-left: 25px;
+    color: #0F2B4E;
+    font-size: 20px;
 }
 
 .answer {
@@ -88,29 +111,37 @@ select {
 }
 
 #add-question {
-    margin-left: 125px;
-    margin-top: 20px;
-    width: 100px;
-    height: 40px;
-    background-color: rgb(42, 165, 232);
+    background-color: #0F2B4E;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    width: 95%;
+    height: 40px;
+    font-size: 20px;
     font-weight: 600;
+    border-radius: 25px;
+    margin-top: 20px; /* Reduced space */
+    margin-left: 15px; /* Reduced space */
+}
+#add-question:hover {
+    background-color: #0F2B4E;
+    box-shadow: 0 4px 10px #1e88e5;
 }
 
 .upload {
-    margin-left: 150px;
-    margin-top: 20px;
-    width: 100px;
-    height: 40px;
-    background-color: #4CAF50;
+    background-color: green;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    width: 95%;
+    height: 40px;
+    font-size: 20px;
     font-weight: 600;
+    border-radius: 25px;
+    margin-top: 20px; /* Reduced space */
+    margin-left: 15px; /* Reduced space */
+}
+.upload:hover {
+    background-color: #4CAF50;
+    box-shadow: 0 4px 10px #367d38;
 }
 
 .remove-quiz {
@@ -119,15 +150,97 @@ select {
     border: none;
     width: 95%;
     height: 40px;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
-    border-radius: 5px;
-    margin-top: 40px;
-    margin-left: 30px;
+    border-radius: 25px;
+    margin-top: 20px; /* Reduced space */
+    margin-left: 15px; /* Reduced space */
+}
+.remove-quiz:hover {
+    background-color: red;
+    box-shadow: 0 4px 10px rgb(136, 6, 6);
 }
 
 .questionTitle {
     resize: vertical;
     width: 100%;
     height: 50px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    main {
+        padding: 20px;
+    }
+    
+    .edit-quiz {
+        width: 90%; /* Adjust container width */
+        padding: 15px;
+    }
+    
+    .edit-quiz > h2 {
+        font-size: 24px;
+    }
+    
+    input, select, textarea {
+        font-size: 14px;
+    }
+    
+    #add-question,
+    .upload,
+    .remove-quiz {
+        font-size: 18px;
+        padding: 8px 16px;
+    }
+    
+    .upload, #add-question {
+        margin-left: 0; /* Center align on smaller screens */
+        align-self: center;
+    }
+    .l
+    {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .edit-quiz {
+        width: 100%; /* Full width on small screens */
+        padding: 10px;
+        border-radius: 20px;
+    }
+    
+    .edit-quiz > h2 {
+        font-size: 20px;
+    }
+    
+    label, input, select, textarea {
+        font-size: 14px;
+        padding-left: 8px;
+    }
+    
+    #add-question,
+    .upload,
+    .remove-quiz {
+        font-size: 16px;
+        padding: 6px 12px;
+        width: 100%; /* Full width for buttons */
+        margin: 10px 0;
+    }
+    
+    .upload, #add-question {
+        margin-left: 0;
+        align-self: center;
+    }
+    .l
+    {
+        font-size: 14px;
+
+    }
+
+}
+
+#goBackImage
+{
+  padding:10px ;
 }

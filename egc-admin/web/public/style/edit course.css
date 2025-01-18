@@ -5,12 +5,15 @@ body {
 
 #editCourseForm {
     background-color: #fff;
+    border-radius: 40px;
     padding: 20px;
-    max-width: 600px;
-    width: 100%;
+    width: 600px;
     margin: 0 auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    border-radius: 40px;
+}
+h2{
+    font-size: 30px;
+    color: #0F2B4E;
 }
 
 .picture-course {
@@ -36,12 +39,14 @@ body {
     background-color: #0F2B4E;
     color: #fff;
     cursor: pointer;
-    font-size: 17px;
+    border-radius: 25px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .course_label:hover {
+    background-color: #0F2C4E;
     box-shadow: 0 4px 10px #1e88e5;
-
 }
 
 .course-input {
@@ -53,69 +58,44 @@ body {
 }
 
 label {
-    font-size: 18px;
     display: block;
     margin-bottom: 5px;
+    font-size: 20px;
     color: #0F2B4E;
-    font-weight: bold;
 }
 
 input[type="text"],
-textarea,
-select {
+textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
     box-sizing: border-box;
+    border-radius: 25px;
+    font-size: 18px;
 }
 
 button {
+    border-radius: 25px;
     background-color: #0F2B4E;
     color: #fff;
     border: none;
-    width: 100%; 
-    font-size: 16px;
+    width: 100%;
+    font-size: 20px;
     height: 40px;
     font-weight: bold;
-    border-radius: 25px;
 }
 
 button:hover {
+    background-color: #0F2B4E;
     box-shadow: 0 4px 10px #1e88e5;
-
 }
 
 textarea {
     resize: vertical;
 }
-h3 {
-    font-size: 30px;
-    text-align: center;
+
+.filter-dropdown select
+{
+    border-radius: 25px;
+    font-size: 18px;
     color: #0F2B4E;
 }
-
-#edit-course-btn, .course_label{
-    border-radius: 25px;
-}
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .picture-course {
-        flex-direction: column; /* Stack image and label vertically */
-        align-items: flex-start; /* Align items to the start */
-    }
-
-    .picture-course img {
-        margin-bottom: 10px; /* Add space below the image */
-    }
-
-    .form-group {
-        margin-bottom: 15px; /* Increased margin for better spacing */
-    }
-    
-    button {
-        height: 50px; /* Increase button height for easier tapping */
-    }
-}
-

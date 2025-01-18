@@ -117,7 +117,7 @@ class Course {
 
  router.get('/TodayAttendance', (Request request) async {
   try {
-    final results = await DatabaseHelper._db.select('''
+    final results = DatabaseHelper._db.select('''
 SELECT 
     s.id AS studentId,
     s.name AS studentName,
@@ -169,7 +169,7 @@ GROUP BY
  router.get('/TotalAttendance', (Request request) async {
   try {
     // استعلام SQL لجلب البيانات المطلوبة من الجداول المختلفة
-    final results = await DatabaseHelper._db.select('''
+    final results = DatabaseHelper._db.select('''
       SELECT 
         s.name AS "Student Name", 
         s.department AS "Department", 
@@ -226,7 +226,7 @@ GROUP BY
 
     router.get('/courses', (Request request) async {
   try {
-    final results = await DatabaseHelper._db.select(
+    final results = DatabaseHelper._db.select(
       'SELECT id, name, courseId, year FROM courses'  // اختيار فقط الأعمدة المطلوبة
     );
 

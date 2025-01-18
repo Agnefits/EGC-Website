@@ -1,30 +1,27 @@
-document.addEventListener('DOMContentLoaded', loadDoctorData);
-
-async function loadDoctorData() {
+document.addEventListener("DOMContentLoaded", () => {
     const courseData = JSON.parse(localStorage.getItem('courseData'));
-
     if (courseData) {
-        document.getElementsByClassName('name_c')[0].innerText = courseData.name;
-        document.querySelector('.log img').src = courseData.photo ? "/courses/photo/" + courseData.id : "/img/img-course.png";
+        document.getElementById('course').innerText = courseData.name;
+        document.getElementById("imgnav").src = courseData.photo ? "/courses/photo/" + courseData.id : "/img/img-course.png";
     } else {
         alert('Course ID is missing');
         window.location.href = '/staff/ShowCourses';
     }
 
-    const userData = localStorage.getItem('userData');
-    const parsedData = JSON.parse(userData); // Parse the JSON string
-    const role = parsedData.role; // Get the role
-    if (role !== 'Doctor') {
-        document.getElementById("joinInstructorButton").style.display = "none";
-    }
-}
+    // Load students when the page loads
+    loadStudents();
+
+    // Add event listeners for dropdowns
+    document.getElementById("filter").addEventListener("change", loadStudents);
+});
+
 
 
 
 function goBackToCoursePage() {
     console.log('Go Back button clicked!'); // Debug log
     window.location.href = '/staff/Dashboard';
-}
+  }
 
 /*
 document.getElementById('message-form').addEventListener('submit', async(event) => {

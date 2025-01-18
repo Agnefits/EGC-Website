@@ -13,19 +13,18 @@ main {
 .add-teaching-assistant {
     background-color: #fff;
     /* White background for form */
-    border-radius: 15px;
+    border-radius: 40px;
     padding: 20px;
     width: 600px;
     /* Adjust width as needed */
     margin: 0 auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow effect */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);    /* Subtle shadow effect */
 }
 
 .add-teaching-assistant>h2 {
-    font-size: 26px;
-    color: #102749;
-    font-weight: 600;
+    font-size: 30px;
+    color: #0f2b4e;
+    font-weight: bold;
 }
 
 input[type=text],
@@ -35,7 +34,7 @@ select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 25px;
     margin-bottom: 10px;
     box-sizing: border-box;
 }
@@ -69,7 +68,7 @@ label.male,
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 25px;
     margin-bottom: 10px;
     box-sizing: border-box;
 }
@@ -77,20 +76,27 @@ label.male,
 .add-teaching-assistant form label {
     display: inline-block;
     margin-bottom: 5px;
+    
 }
 
 #add-teaching-assistant-button {
-    background-color: rgb(42, 165, 232);
+    background-color: #0f2b4e;
     /* Green button */
     color: white;
     padding: 12px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     width: 100%;
 }
+#add-teaching-assistant-button:hover
+ {
+    background-color: #0F2B4E;
+    box-shadow: 0 4px 10px #1e88e5;
+ }
+
 
 label.male,
 .female,
@@ -118,23 +124,30 @@ select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 25px;
     margin-bottom: 10px;
     box-sizing: border-box;
+    font-size: 16px;
 }
 
 label {
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .image_label {
     display: inline-block;
     padding: 0.5em 1em;
-    background-color: rgb(42, 165, 232);
+    background-color: #0f2b4e;
     color: #fff;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 25px;
+    font-size: 18px;
+}
+.image_label:hover
+{
+    background-color: #0f2b4e;
+    box-shadow: 0 4px 10px #1e88e5; 
 }
 
 .image-input {
@@ -150,3 +163,107 @@ label {
 }
 
 .nav-items{margin-top: -40px;margin-left: -40px;cursor: pointer;}
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    /* Smaller screens: Tablet and large phones */
+    main {
+        padding: 20px;
+    }
+
+    .add-teaching-assistant {
+        width: 90%;
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .add-teaching-assistant > h2 {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    label {
+        font-size: 18px; /* Smaller font size for labels */
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    #add-teaching-assistant-button {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .male {
+        padding-right: 80px;
+    }
+
+    .profile-picture img {
+        width: 80px;
+        height: 80px;
+        margin-right: 15px;
+    }
+
+    .image_label {
+        font-size: 16px;
+        padding: 0.4em 0.8em;
+    }
+
+    .nav-items {
+        margin-top: -20px;
+        margin-left: -20px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Extra small screens: Phones */
+    .add-teaching-assistant {
+        width: 100%;
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .add-teaching-assistant > h2 {
+        font-size: 20px;
+    }
+
+    label {
+        font-size: 16px; /* Smaller font size for very small screens */
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    #add-teaching-assistant-button {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .profile-picture img {
+        width: 60px;
+        height: 60px;
+        margin-right: 10px;
+    }
+
+    .image_label {
+        font-size: 14px;
+        padding: 0.3em 0.6em;
+    }
+
+    .nav-items {
+        margin-top: -10px;
+        margin-left: -10px;
+    }
+}
+

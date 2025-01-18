@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
-import 'package:mime/mime.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_multipart/form_data.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -19,14 +17,14 @@ class DatabaseHelper {
     ''');
   }
 
-  static void add_teaching_assistant(Map<String, dynamic>course_teaching_assistant ) {
+  static void add_teaching_assistant(Map<String, dynamic>courseTeachingAssistant ) {
     final statement = _db.prepare('''
       INSERT INTO course_teaching_assistant (courseId,teaching_assistantId )
       VALUES (?, ? )
     ''');
     statement.execute([
-      course_teaching_assistant['courseId'],
-      course_teaching_assistant['teaching_assistantId'],
+      courseTeachingAssistant['courseId'],
+      courseTeachingAssistant['teaching_assistantId'],
     
     ]);
     statement.dispose();
@@ -34,9 +32,9 @@ class DatabaseHelper {
 
 
 
-  static void delete_course_teaching(  int courseId ,int teaching_assistantId) {
+  static void delete_course_teaching(  int courseId ,int teachingAssistantid) {
     final statement = _db.prepare('DELETE FROM course_teaching_assistant WHERE courseId = ? and teaching_assistantId =?');
-    statement.execute([  courseId , teaching_assistantId]);
+    statement.execute([  courseId , teachingAssistantid]);
     statement.dispose();
   }
 
@@ -123,9 +121,9 @@ class CourseTeachingAssistant {
    
   
     // حذف مادة
-    router.delete('/delete-course-teaching-assistant/<courseId>/<teaching_assistantId>', (Request request,String courseId ,String teaching_assistantId ) async {
+    router.delete('/delete-course-teaching-assistant/<courseId>/<teaching_assistantId>', (Request request,String courseId ,String teachingAssistantid ) async {
       try {
-        DatabaseHelper.delete_course_teaching(int.parse(courseId),int.parse(teaching_assistantId));
+        DatabaseHelper.delete_course_teaching(int.parse(courseId),int.parse(teachingAssistantid));
         return Response.ok('teaching is deleted successfully', headers: {
           'Access-Control-Allow-Origin': '*',
         });

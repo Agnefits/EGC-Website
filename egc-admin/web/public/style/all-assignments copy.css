@@ -359,8 +359,6 @@ body {
     width: 100%;
     max-width: 800px; /* Adjust this for larger card width */
     align-items: center; /* Center the cards */
-    flex-flow:row wrap ;
-
 }
 
 /* Assignment card styling */

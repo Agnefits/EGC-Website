@@ -1,16 +1,36 @@
+/* Centering the main content */
+.content {
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    flex-direction: column; /* Arrange items in a column */
+    position: relative; /* Needed to ensure positioning of .nav-items */
+}
 
-h3{
-    margin-top: 30px;
-    margin-left: 30px;
+/* Header styling */
+.text h3 {
+    font-size: 40px;
+    font-weight: bold;
+    color: #0f2b4e;
+    text-align: center; /* Keep the h3 centered */
 }
-.nav-items{
-    margin-top: -55px;
-    position: absolute;
+
+/* Positioning for nav-items (move to the left) */
+.nav-items {
+    position: absolute; /* Keep it absolute so it's positioned relative to .content */
+    top: 55px; /* Adjust the vertical positioning if needed */
+    left: 30px; /* Position the image on the left */
 }
+/* General Table Styles */
 .students-table {
     width: 95%;
     border-collapse: collapse;
     margin: 20px 40px 0px 40px;
+}
+
+.students-table thead tr th {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .students-table th,
@@ -20,6 +40,7 @@ h3{
     text-align: center;
     color: #0f2b4e;
     font-family: "Roboto Condensed", sans-serif;
+    font-size: 20px;
 }
 
 .students-table th {
@@ -33,42 +54,38 @@ h3{
     background-color: #ffffff;
 }
 
-.details-btn {
-    cursor: pointer;
-    margin: 0 5px;
-    padding: 5px 10px;
-    background-color: #0f2b4e;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
+/* Button Styles */
 .details-btn.edit {
     background-color: #28a745;
     cursor: pointer;
     margin: 0 5px;
-    padding: 6px 10px; 
+    padding: 6px 10px;
     color: #fff;
-    border-radius: 10px;
-    font-size: 17px;
-    border: 1px solid #ccc;
+    border-radius: 25px;
+    font-size: 18px;
+    border: none;
+}
+.details-btn.edit:hover {
+    background-color: #4CAF50;
+    box-shadow: 0 4px 10px #367d38;
 }
 
 .details-btn.delete {
-    background-color: #dc3545;
+    background-color: red;
     cursor: pointer;
     margin: 0 5px;
-    padding: 6px 10px; 
+    padding: 6px 10px;
     color: #fff;
-    border-radius: 10px;
-    font-size: 17px;
-    border: 1px solid #ccc;
+    border-radius: 25px;
+    font-size: 18px;
+    border: none;
+}
+.details-btn.delete:hover {
+    background-color: red;
+    box-shadow: 0 4px 10px rgb(136, 6, 6);
 }
 
-
-
-
+/* Add Button */
 .add-btn {
     background: #0F2B4E;
     color: white;
@@ -81,39 +98,32 @@ h3{
     border: none;
     right: 10px;
     top: 15px;
-    position: absolute
 }
 
+option {
+    background-color: #fff;
+    color: #000000;
+}
 
-
-
-
-option{background-color: #fff;color:#000000;}
-
-
+/* Filter Section */
 .filter-section {
     display: flex;
     justify-content: center;
-    /* Align items to the left */
     align-items: center;
-    /* Vertically center the dropdowns */
     gap: 20px;
-    /* Add spacing between the dropdowns */
-    margin-bottom: 30px;
-}
-
-.filter-dropdown {
-    display: inline-block;
+    margin-top: 10px;
 }
 
 .filter-dropdown select {
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 15px;
-    width: 180px;
+    border-radius: 25px;
+    width: auto;
+    min-width: 150px;
     background-color: #0F2B4E;
     color: #fff;
-    font-size: 1em;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .filter-dropdown select:focus {
@@ -123,6 +133,81 @@ option{background-color: #fff;color:#000000;}
 
 .filter-dropdown select:focus option {
     background-color: white;
-    /* Ensures white background on focus too */
     color: #0F2B4E;
+}
+
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .text h3 {
+        font-size: 32px;
+    }
+    
+    .nav-items {
+        top: 30px;
+        left: 15px;
+    }
+    .students-table th,
+    .students-table td {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .students-table {
+        width: 100%;
+        margin: 15px 0;
+    }
+
+    .add-btn {
+        font-size: 16px;
+        padding: 6px 12px;
+    }
+
+    .filter-section {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filter-dropdown select {
+        width: 100%;
+    }
+
+    .students-table thead tr th {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .text h3 {
+        font-size: 24px;
+    }
+    .students-table th,
+    .students-table td {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .details-btn,
+    .details-btn.edit,
+    .details-btn.delete,
+    .add-btn {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+
+    /* Make table scrollable */
+    .students-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .filter-dropdown select {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+
+    .students-table thead tr th {
+        font-size: 16px;
+    }
 }
