@@ -5,11 +5,12 @@ body {
 
 #addstudentForm {
     background-color: #fff;
-    border-radius: 15px;
     padding: 20px;
-    width: 600px;
+    max-width: 600px;
+    width: 100%;
     margin: 0 auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 40px;
 }
 
 .profile-picture-student {
@@ -64,10 +65,15 @@ select {
 label.male,
 .female,
 .lblShowPassword {
-    font-size: 16px;
+    font-size: 18px;
+    color: #0F2B4E;
     font-weight: lighter;
 }
-
+label{
+    font-size: 18px;
+    color: #0F2B4E;
+    font-weight: bold;
+}
 #gender-radio {
     padding-bottom: 10px;
 }
@@ -76,21 +82,19 @@ label.male,
     padding-right: 130px;
 }
 
-label {
-    font-weight: bold;
-}
-
-#add-student-btn {
-    border-radius: 5px;
-    background-color: rgb(42, 165, 232);
+button {
+    background-color: #0F2C4E;
     color: #fff;
     border: none;
-    width: 100%;
+    width: 100%; 
     font-size: 16px;
     height: 40px;
     font-weight: bold;
+    border-radius: 25px;
 }
-
+button:hover {
+    box-shadow: 0 4px 10px #1e88e5;
+}
 #message {
     display: none;
     background: #f1f1f1;
@@ -108,14 +112,66 @@ label {
 .image_label {
     display: inline-block;
     padding: 0.5em 1em;
-    background-color: rgb(42, 165, 232);
+    background-color: #0F2C4E;
     color: #fff;
     cursor: pointer;
-    border-radius: 5px;
+    font-size: 17px;
 }
-
+.image_label:hover {
+    box-shadow: 0 4px 10px #1e88e5;
+}
 .image-input {
     display: none;
 }
+h3 {
+    font-size: 30px;
+    text-align: center;
+    color: #0F2B4E;
+}
+#add-student-btn, .image_label{
+    border-radius: 25px;
 
+}
 .nav-items{margin-top: 10px;margin-left: 5px;cursor: pointer;}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .student_name,
+    .department-year-format,
+    .list-format {
+        flex-direction: column; /* Stack elements vertically */
+    }
+
+    .firstname,
+    .lastname,
+    .Dep-Year,
+    .list {
+        width: 100%; /* Full width on smaller screens */
+    }
+
+    .profile-picture-student {
+        flex-direction: column; /* Stack image and label vertically */
+        align-items: center; /* Center align */
+    }
+
+    .profile-picture-student img {
+        margin-bottom: 10px; /* Add space below the image */
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 24px; /* Smaller heading on very small screens */
+    }
+
+    button {
+        font-size: 14px; /* Smaller button text */
+    }
+
+    input[type=text],
+    input[type=email],
+    input[type=password],
+    select {
+        padding: 8px; /* Smaller padding for inputs */
+    }
+}

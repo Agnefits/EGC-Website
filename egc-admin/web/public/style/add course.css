@@ -5,11 +5,12 @@ body {
 
 #addCourseForm {
     background-color: #fff;
-    border-radius: 15px;
     padding: 20px;
-    width: 600px;
+    max-width: 600px;
+    width: 100%;
     margin: 0 auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 40px;
 }
 
 .picture-course {
@@ -32,15 +33,15 @@ body {
 .course_label {
     display: inline-block;
     padding: 0.5em 1em;
-    background-color: rgb(42, 165, 232);
+    background-color: #0F2B4E;
     color: #fff;
     cursor: pointer;
-    border-radius: 15px;
+    font-size: 17px;
 }
 
 .course_label:hover {
-    background-color: #0F2C4E;
-    box-shadow: 0 0 10px #0F2B4E;
+    box-shadow: 0 4px 10px #1e88e5;
+
 }
 
 .course-input {
@@ -52,35 +53,72 @@ body {
 }
 
 label {
+    font-size: 18px;
     display: block;
     margin-bottom: 5px;
+    color: #0F2B4E;
+    font-weight: bold;
 }
 
 input[type="text"],
-textarea {
+textarea,
+select {
     width: 100%;
-    padding: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
     box-sizing: border-box;
 }
 
 button {
-    border-radius: 15px;
-    background-color: rgb(42, 165, 232);
+    background-color: #0F2B4E;
     color: #fff;
     border: none;
-    width: 100%;
+    width: 100%; 
     font-size: 16px;
     height: 40px;
     font-weight: bold;
+    border-radius: 25px;
 }
 
 button:hover {
-    background-color: #0F2C4E;
-    box-shadow: 0 0 10px #0F2B4E;
+    box-shadow: 0 4px 10px #1e88e5;
+
 }
 
 textarea {
     resize: vertical;
 }
 
+h3 {
+    font-size: 30px;
+    text-align: center;
+    color: #0F2B4E;
+}
 
+#add-course-btn, .course_label{
+    border-radius: 25px;
+}
+
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .picture-course {
+        flex-direction: column; /* Stack image and label vertically */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    .picture-course img {
+        margin-bottom: 10px; /* Add space below the image */
+    }
+
+    .form-group {
+        margin-bottom: 15px; /* Increased margin for better spacing */
+    }
+    
+    button {
+        height: 50px; /* Increase button height for easier tapping */
+    }
+}

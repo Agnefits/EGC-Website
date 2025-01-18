@@ -5,23 +5,33 @@
 
 body {
     background-color: #f0f0f0;
+    font-family: "Roboto Condensed", sans-serif;
 }
-
+.text h3 {
+    font-size: 40px;
+    font-weight: bold;
+    color: #0f2b4e;
+    text-align: center; /* Keep the h3 centered */
+}
 .li_nav {
     background: #0f2c4e;
 }
 
-.home-section {
-    position: relative;
-    background: #f0f0f0;
-    min-height: 100vh;
-    top: 0;
-    left: 78px;
-    width: calc(100% - 78px);
-    transition: all 0.5s ease;
-    z-index: 2;
+.container{
+    background-color: #fff;
+    padding: 20px;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 40px;
 }
 
+label{
+    font-size: 18px;
+    color: #0F2B4E;
+    font-weight: bold;
+}
 .sidebar {
     position: fixed;
     left: 0;
@@ -35,6 +45,7 @@ body {
     margin: 0;
     padding: 0;
 }
+
 
 .sidebar.open {
     width: 250px;
@@ -272,26 +283,6 @@ body {
     }
 }
 
-.container {
-    background-color: #fff;
-    /* White background for form */
-    border-radius: 15px;
-    padding: 20px;
-    width: 85%;
-    /* Adjust width as needed */
-    margin: 0 auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow effect */
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-    box-sizing: border-box;
-    max-height: 80vh;
-    overflow-y: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
 
 label {
     margin-top: 10px;
@@ -313,7 +304,7 @@ ul {
 li {
     margin: 10px 0;
     padding: 10px;
-    background-color: #ecf0f1;
+    background: #0f2c4e;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-wrap: wrap;
@@ -509,7 +500,7 @@ label {
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300%;
+    width: 250%;
     background-color: #ecf0f1;
     
 }
