@@ -92,7 +92,7 @@ function populateStudentsTable(students) {
     students.forEach(student => {
         const listItem = document.createElement('li');
         listItem.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center;" data-id="${student.id}" data-status="A" class="student-data">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
             <div>
                 <button class="attendance-button" data-attendance="A">A</button>
                 <button class="attendance-button" data-attendance="P">P</button>
@@ -100,6 +100,10 @@ function populateStudentsTable(students) {
             <span style="margin-left: auto;">${student.name || 'N/A'}</span>
         </div>
     `;
+
+        listItem.dataset.id = student.id;
+        listItem.dataset.status = "A";
+        listItem.classList.add('student-data');
 
         // Add event listeners for attendance buttons
         listItem.querySelector('button[data-attendance="P"]').addEventListener('click', () => markAttendance(listItem, 'P'));
@@ -149,7 +153,7 @@ function updateAttendanceSummary() {
     document.getElementById('totalAbsent').textContent = totalAbsent;
 }
 
-document.getElementById('save-notes-btn').addEventListener('click', function() {
+document.getElementById('save-notes-btn').addEventListener('click', function () {
     // Get the notes text from the textarea
     const notesText = document.getElementById('notes-textarea').value;
 
@@ -164,7 +168,13 @@ document.getElementById('save-notes-btn').addEventListener('click', function() {
 async function submitAttendance() {
     const sectionNo = document.getElementById('n_section').value;
     const courseId = document.getElementById('course').value;
-    const notes = document.getElementById('notes-textarea').value;
+    const notes = document.getElementById('notes-display').innerText;
+
+    if(!sectionNo || !courseId)
+    {
+        alert('Please select section and course');
+        return;
+    }
 
     const userData = JSON.parse(localStorage.getItem('userData'));
     const formData = new FormData();
