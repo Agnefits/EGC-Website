@@ -137,3 +137,86 @@ table tr {
         font-size: 12px; 
     }
 }
+#goBackImage
+{
+  margin-left: 10px;
+  margin-top: 30px;
+  cursor: pointer;
+
+}
+
+
+.edit-btn, .delete-btn {
+    padding: 5px 10px;
+    border: none; /* إزالة الحدود */
+    cursor: pointer;
+    border-radius: 4px;
+    outline: none; /* إزالة خط التركيز (outline) عند الضغط على الزر */
+}
+
+.edit-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+/* Style for the modal */
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* يجعل النافذة في منتصف الصفحة */
+    width: 400px; /* حجم النافذة */
+    background-color: rgba(0, 0, 0, 0.5); /* الخلفية الشفافة */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 100%; /* عرض النافذة بالكامل */
+    max-width: 400px; /* الحد الأقصى للعرض */
+    box-sizing: border-box;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+form label {
+    display: block;
+    margin-top: 10px;
+}
+
+form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #45a049;
+}

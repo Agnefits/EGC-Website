@@ -72,7 +72,11 @@
             </li>
         </ul>
     </div>
+
     <main>
+       
+        <img src="/img/arrow.png" alt="Go Back" id="goBackImage" width="20px" height="20px" onclick="goBack()">
+
         <div class="content">
             <div class="text">
                 <h3 class="h">Class Schedules</h3>
@@ -115,6 +119,7 @@
                     </select>
                 </div>
             </div>
+            
             <div class="scedule">
                 <div class="schedule-container">
                     <table>
@@ -148,6 +153,37 @@
                 </div>
             </div>
         </div>
+        <!-- Modal Structure -->
+<!-- Modal for editing class -->
+<!-- Popup Modal -->
+<!-- Popup Modal -->
+<div id="popup" class="popup">
+    <div id="popup-content" class="popup-content">
+        <button id="close-btn" class="close-btn">X</button>
+        <h2>Edit Class</h2>
+        <form id="edit-form">
+            <label for="edit-title">Title:</label>
+            <input type="text" id="edit-title" name="title" required><br>
+
+            <label for="edit-instructor">Instructor:</label>
+            <input type="text" id="edit-instructor" name="instructor" required><br>
+
+            <label for="edit-place">Place:</label>
+            <input type="text" id="edit-place" name="place" required><br>
+
+            <label for="edit-time-from">Time From:</label>
+            <input type="time" id="edit-time-from" name="timeFrom" required><br>
+
+            <label for="edit-time-to">Time To:</label>
+            <input type="time" id="edit-time-to" name="timeTo" required><br>
+
+            <button type="submit" id="save-btn">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+
+
     </main>
     <script src="/script/admin-class-schedules.js"></script>
     <script src="/script/AdminDashboard.js"></script>

@@ -72,6 +72,12 @@ h3 {
     top: 15px;
 }
 
+.details-btn.show-details.showCV:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
+
 .filter-section {
     display: flex;
     justify-content: center;

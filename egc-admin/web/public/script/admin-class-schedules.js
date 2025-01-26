@@ -1,4 +1,6 @@
 let deletedCells = [-1, -1, -1, -1, -1, -1];
+let classes = []; // متغير لتخزين قائمة الفصول الدراسية
+
 // Function to generate time slots in 5-minute intervals from 8:00 AM to 6:00 PM
 function generateTimeSlots() {
     const startHour = 8;
@@ -105,105 +107,127 @@ function populateSchedule(classList) {
         // Merge the cells spanning the class duration
         const duration = toIndex - fromIndex + 1;
         const cell = row.cells[fromIndex]; // Get the starting cell
-        cell.classList += "cell";
+        cell.classList.add("cell");
         if (cell) {
             cell.colSpan = duration; // Merge cells to show the entire class span
-            cell.innerHTML = `<div>${title}<br>${instructor}<br>${place}<br>${timeFrom} - ${timeTo}</div>`;
+            cell.innerHTML = `
+                <div>
+                    <strong>${title}</strong><br>
+                    ${instructor}<br>
+                    ${place}<br>
+                    ${timeFrom} - ${timeTo}
+                    <br>
+                    <br>
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                <br>
+                <br>
+                </div>
+            `;
             // Remove the next cells that are now part of the span
             for (let i = fromIndex + 1; i <= toIndex; i++) {
                 row.deleteCell(fromIndex + 1); // Keep deleting the next cell after the first one
             }
+
+            // Add event listeners for Edit and Delete buttons
+            const editButton = cell.querySelector(".edit-btn");
+            const deleteButton = cell.querySelector(".delete-btn");
+
+            editButton.addEventListener("click", () => {
+                showPopup(classItem); // Show the popup when the "Edit" button is clicked
+            });
+
+            deleteButton.addEventListener("click", () => {
+                // Handle the delete logic
+                deleteClass(classItem, row, fromIndex, toIndex);
+            });
         }
     });
 }
-/*
-// Example class data (can include times with minutes)
-const classList = [{
-        title: "Math",
-        instructor: "Dr. A",
-        place: "Room 101",
-        day: "Saturday",
-        timeFrom: "8:00",
-        timeTo: "9:30"
-    },
-    {
-        title: "Physics",
-        instructor: "Dr. B",
-        place: "Room 202",
-        day: "Saturday",
-        timeFrom: "9:30",
-        timeTo: "11:00"
-    },
-    {
-        title: "Physics",
-        instructor: "Dr. B",
-        place: "Room 202",
-        day: "Saturday",
-        timeFrom: "11:30",
-        timeTo: "12:00"
-    },
-    {
-        title: "Physics",
-        instructor: "Dr. B",
-        place: "Room 202",
-        day: "Saturday",
-        timeFrom: "12:00",
-        timeTo: "14:00"
-    },
-    {
-        title: "Physics",
-        instructor: "Dr. B",
-        place: "Room 202",
-        day: "Saturday",
-        timeFrom: "14:30",
-        timeTo: "16:00"
-    },
-    {
-        title: "Chemistry",
-        instructor: "Dr. C",
-        place: "Room 303",
-        day: "Monday",
-        timeFrom: "10:10",
-        timeTo: "11:45"
-    }
-];
 
-// Call populateSchedule with the class list
-populateSchedule(classList);
-*/
-/*
-document.getElementById("addClassButton").addEventListener("click", (e) => {
-    if (document.getElementById("department").value && document.getElementById("year_level").value && document.getElementById("section").value) {
+// Function to delete a class from the schedule
+function deleteClass(classItem, row, fromIndex, toIndex) {
+    // Find the index of the class to delete in the classes array
+    const classIndex = classes.findIndex(item => item.title === classItem.title && item.timeFrom === classItem.timeFrom);
+    if (classIndex !== -1) {
+        // Remove the class from the array
+        classes.splice(classIndex, 1);
+    }
+
+    // Remove the merged cells for the class
+    for (let i = fromIndex; i <= toIndex; i++) {
+        row.deleteCell(fromIndex); // Remove the cells
+    }
+
+    // Re-populate the schedule to reflect changes
+    populateSchedule(classes); // Assuming `classes` is your class data
+}
+
+// Function to show the popup with class details
+function showPopup(classItem) {
+    const popup = document.getElementById('popup');
+    const popupContent = document.getElementById('popup-content');
+    const closeBtn = document.getElementById('close-btn');
+    const editForm = document.getElementById('edit-form');
+
+    // Populate the popup with class details
+    document.getElementById('edit-title').value = classItem.title;
+    document.getElementById('edit-instructor').value = classItem.instructor;
+    document.getElementById('edit-place').value = classItem.place;
+    document.getElementById('edit-time-from').value = classItem.timeFrom;
+    document.getElementById('edit-time-to').value = classItem.timeTo;
+
+    // Show the popup
+    popup.style.display = 'block';
+
+    // Close the popup when the close button is clicked
+    closeBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+
+    // Handle form submission (Save Changes)
+    editForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        document.getElementsByClassName("popup")[0].style.visibility = "visible";
-    } else {
-        alert("Select Department, Year and Section first");
-    }
-});
 
-document.getElementById("close-add-class-button").addEventListener("click", (e) => {
-    e.preventDefault();
-    document.getElementsByClassName("popup")[0].style.visibility = "hidden";
-});
-*/
+        // Update the class details with the new values
+        classItem.title = document.getElementById('edit-title').value;
+        classItem.instructor = document.getElementById('edit-instructor').value;
+        classItem.place = document.getElementById('edit-place').value;
+        classItem.timeFrom = document.getElementById('edit-time-from').value;
+        classItem.timeTo = document.getElementById('edit-time-to').value;
+
+        // Close the popup
+        popup.style.display = 'none';
+
+        // Update the classes array with the modified classItem
+        const index = classes.findIndex(item => item.title === classItem.title && item.timeFrom === classItem.timeFrom);
+        if (index !== -1) {
+            classes[index] = { ...classItem }; // Update the class in the array
+        }
+
+        // Re-populate the schedule to reflect changes
+        populateSchedule(classes); // Assuming `classes` is your class data
+    });
+}
+
 document.getElementById("department").addEventListener("change", loadClasses);
 document.getElementById("year_level").addEventListener("change", loadClasses);
 document.getElementById("section").addEventListener("change", loadClasses);
 
 async function loadClasses() {
     if (document.getElementById("department").value && document.getElementById("year_level").value && document.getElementById("section").value) {
-        {
-            const response = await fetch(`/class-schedule/${document.getElementById("department").value}/${document.getElementById("year_level").value}/${document.getElementById("section").value}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch class schedule');
-            }
-
-            const classes = await response.json();
-            console.log('Fetched classes:', classes); // أضف هذا السطر للتحقق من البيانات
-
-            populateSchedule(classes);
+        const response = await fetch(`/class-schedule/${document.getElementById("department").value}/${document.getElementById("year_level").value}/${document.getElementById("section").value}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch class schedule');
         }
+
+        classes = await response.json();
+        console.log('Fetched classes:', classes); // أضف هذا السطر للتحقق من البيانات
+
+        populateSchedule(classes);
     }
 }
-
-populateSchedule([]);
+function goBack() {
+    window.location.href = "/admin/ClassSchedules";
+}
+populateSchedule([]); // Initial empty schedule
