@@ -32,7 +32,7 @@ class DatabaseHelper {
         gender TEXT NOT NULL,
         number INTEGER NOT NULL,
         sectionNo INTEGER NOT NULL,
-        showDegrees TEXT NULL,
+        showDegrees TEXT DEFAULT 'hide',
         photo BLOB
       )
     ''');

@@ -152,13 +152,13 @@ void main() async {
   router.get('/student/Quiz.html',getQuizHandler);
 
   ///Get Files
-  router.get('/style/<name>', () {
+  /*router.get('/style/<name>', () {
     return Response.ok({}, headers: {
       'Content-Type': 'text/json',
     });
   });
   router.get('/script/<name>', deleteStudentHandler);
-  router.get('/img/<name>', deleteStudentHandler);
+  router.get('/img/<name>', deleteStudentHandler);*/
 
   // Path to your static files directory
   var staticFilesPath = Directory('web/public');
