@@ -35,15 +35,20 @@ body {
 
 #updateButton {
     border-radius: 5px;
-    background-color: rgb(42, 165, 232);
+    background-color: #0F2C4E;
     color: #fff;
     border: none;
     width: 100%;
     font-size: 16px;
     height: 40px;
     font-weight: bold;
+    border-radius: 25px;
+
 }
 
+#updateButton:hover {
+    box-shadow: 0 4px 10px #1e88e5;
+}
 
  .grades-table {
     width: 100%;
@@ -95,3 +100,63 @@ body {
 .text{margin-top: 150px;}
 .content{margin-bottom: 50px;}
 .nav{margin-top: -140px;}
+/* Basic reset */
+ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  /* Container for the nav */
+  .ul {
+    display: flex; /* Align items horizontally */
+    justify-content: space-around; /* Space items evenly */
+    padding: 10px 0; /* Vertical padding for the nav */
+  }
+  
+  /* Style for each link */
+  .a {
+    text-decoration: none; /* Remove underlines from links */
+    color: #0f2b4e; /* Black text color for visibility */
+    padding:  2px; /* Padding around the links */
+    font-size: 22px; /* Set font size */
+    font-weight: 600; /* Set font weight */
+    border: none; /* No borders */
+  }
+  
+  /* Responsive styling (for smaller screens) */
+  @media (max-width: 768px) {
+    .ul {
+      flex-direction: column; /* Stack items vertically on small screens */
+      align-items: center; /* Center the items */
+    }
+  
+    .a {
+      padding: 12px; /* Increase padding on small screens */
+      font-size: 18px; /* Increase font size */
+    }
+  }
+  @media (max-width: 480px) {
+    #grades {
+        padding: 10px;
+    }
+
+    input[type="text"], 
+    input[type="number"] {
+        font-size: 12px;
+    }
+
+    #updateButton {
+        font-size: 12px;
+        height: 30px;
+    }
+
+    .grades-table th,
+    .grades-table td {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .a {
+        font-size: 16px;
+    }
+}

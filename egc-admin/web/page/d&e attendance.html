@@ -68,7 +68,7 @@
             </li>
         </ul>
     </div>
-    
+
     <h3 class="h">Add Student Attendance</h3>
 
     <section class="home-section">
@@ -80,7 +80,7 @@
                 <div style="flex: 1; margin-right: 20px;">
                     <div class="form-group">
                         <label for="department">Department:</label>
-                        <select id="department" name="department">
+                        <select id="department" name="department" required>
                             <option>Select Department</option>
                             <option value="IT">Information Technology</option>
                             <option value="Mechanic">Mechanic</option>
@@ -98,17 +98,24 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="class">Section:</label>
-                        <select id="n_section" name="class">
+                        <label for="n_section">Section:</label>
+                        <select id="n_section" name="section" required>
                             <option value="">Select Section</option>
                         </select>
-                        
+
+                    </div>
+                    <div class="form-group">
+                        <label for="course">Course:</label>
+                        <select id="course" name="course" required>
+                            <option value="">Select Course</option>
+                        </select>
+
                     </div>
                     <ul id="studentsTableBody">
                         <!-- Filtered students will be populated here -->
                     </ul>
                 </div>
-            
+
                 <div class="test" style="flex: 0;">
                     <section id="notes">
                         <h2>Notes</h2>
@@ -116,49 +123,49 @@
                         <button id="save-notes-btn">Save Notes</button>
                         <div id="notes-display"></div>
                     </section>
-                    
-                <div id="summarySection">
-                    <h3>Summary</h3>
-                    <p>
-                        Total Students:
-                        <span id="totalStudents">0</span>
-                    </p>
-                    <p>
-                        Total Present:
-                        <span id="totalPresent">0</span>
-                    </p>
-                    <p>
-                        Total Absent:
-                        <span id="totalAbsent">0</span>
-                    </p>
-  <!-- Result Section -->
-                <div id="resultSection" style="display: none;">
-                    <p>
-                        Date:
-                        <span id="attendanceDate"></span>
-                    </p>
-                    <p>
-                        Time:
-                        <span id="attendanceTime"></span>
-                    </p>
-                  
-                </div>
 
-                    
-                </div>
+                    <div id="summarySection">
+                        <h3>Summary</h3>
+                        <p>
+                            Total Students:
+                            <span id="totalStudents">0</span>
+                        </p>
+                        <p>
+                            Total Present:
+                            <span id="totalPresent">0</span>
+                        </p>
+                        <p>
+                            Total Absent:
+                            <span id="totalAbsent">0</span>
+                        </p>
+                        <!-- Result Section -->
+                        <div id="resultSection" style="display: none;">
+                            <p>
+                                Date:
+                                <span id="attendanceDate"></span>
+                            </p>
+                            <p>
+                                Time:
+                                <span id="attendanceTime"></span>
+                            </p>
+
+                        </div>
+
+
+                    </div>
                 </div>
             </div>
 
-        
-                
 
 
-                <button class="submit_att" onclick="submitAttendance()">
+
+
+            <button class="submit_att" onclick="submitAttendance()">
                 Submit Attendance
             </button>
 
-              
-            </div>
+
+        </div>
         </div>
     </section>
 

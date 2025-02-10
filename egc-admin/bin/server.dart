@@ -4,6 +4,7 @@ import 'dart:io';
 //import 'package:firebase_dart/firebase_dart.dart';
 import 'package:egc_website/announcements.dart';
 import 'package:egc_website/assignment.dart';
+import 'package:egc_website/attendence.dart';
 // import 'package:egc_website/attendence.dart';
 import 'package:egc_website/class_schedules.dart';
 import 'package:egc_website/course.dart';
@@ -45,6 +46,7 @@ void main() async {
   Grades(router);
   CourseTeachingAssistant(router);
   Announcement(router);
+  Attendence(router);
 
   ///Define your routes
   ///Home, News and Login Pag
@@ -150,13 +152,13 @@ void main() async {
   router.get('/student/Quiz.html',getQuizHandler);
 
   ///Get Files
-  router.get('/style/<name>', () {
+  /*router.get('/style/<name>', () {
     return Response.ok({}, headers: {
       'Content-Type': 'text/json',
     });
   });
   router.get('/script/<name>', deleteStudentHandler);
-  router.get('/img/<name>', deleteStudentHandler);
+  router.get('/img/<name>', deleteStudentHandler);*/
 
   // Path to your static files directory
   var staticFilesPath = Directory('web/public');

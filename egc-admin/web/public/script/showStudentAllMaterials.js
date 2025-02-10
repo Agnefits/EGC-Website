@@ -60,7 +60,7 @@ function fetchMaterialsForCourse(courseId) {
           const materialHTML = `
             <div class="material-container">
               <div class="material-title">
-                <img src="/img/material_icon.png" alt="Material icon">
+                <img src="/img/materials.png" alt="Material icon">
                 <div class="material-title-details">
                   <div class="material-name">${material.saveAs}</div>
                   <div class="material-date">Publication Date: ${material.date}</div>
@@ -134,7 +134,7 @@ function fetchMaterialsForAllCourses(studentId) {
         const materialHTML = `
           <div class="material-container">
             <div class="material-title">
-              <img src="/img/material_icon.png" alt="Material icon">
+              <img src="/img/materials.png" alt="Material icon">
               <div class="material-title-details">
                 <div class="material-name">${material.saveAs}</div>
                 <div class="material-date">Publication Date: ${material.date}</div>
