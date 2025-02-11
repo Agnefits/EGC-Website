@@ -1,4 +1,3 @@
-@ -1,415 +0,0 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 * {
     box-sizing: border-box;
@@ -39,6 +38,7 @@
     color: #0F2B4E;
 }
 
+/* إعدادات أساسية للصفحة */
 body {
     background-color: #f0f0f0;
 }
@@ -58,7 +58,7 @@ body {
 }
 
 .sidebar.open {
-    width: 250px;
+    width: 270px;
 }
 
 .sidebar .logo-details {
@@ -66,7 +66,7 @@ body {
     display: flex;
     align-items: center;
     position: relative;
-    font-family:"Roboto Condensed", sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
 }
 
 .sidebar .logo-details .icon {
@@ -79,30 +79,33 @@ body {
 
 .sidebar .logo-details .logo_name {
     color: #fff;
+    display: none;
     font-size: 20px;
     font-weight: 600;
     opacity: 0;
     text-align: center;
     transition: all 0.5s ease;
-    margin-top: 20px;
+    margin: 20px 40px 0px 0px;
 }
 
 .sidebar.open .logo-details .icon,
 .sidebar.open .logo-details .logo_name {
     opacity: 1;
+    display: block;
 }
-.logo_style{
+
+.logo_style {
     text-decoration: none;
     color: #fff;
 }
+
 .sidebar .logo-details #btn {
     position: absolute;
     top: 50%;
     right: 0;
     transform: translateY(-50%);
-    font-size: 22px;
+    font-size: 35px;
     transition: all 0.4s ease;
-    font-size: 23px;
     text-align: center;
     cursor: pointer;
     transition: all 0.5s ease;
@@ -118,7 +121,7 @@ body {
     color: #fff;
     height: 60px;
     min-width: 50px;
-    font-size: 28px;
+    font-size: 30px;
     text-align: center;
     line-height: 60px;
 }
@@ -202,12 +205,13 @@ body {
 .sidebar li a:hover i {
     transition: all 0.5s ease;
     color: #0F2B4E;
+    cursor: pointer;
 }
 
 .sidebar li i {
     height: 50px;
     line-height: 50px;
-    font-size: 18px;
+    font-size: 30px;
     border-radius: 12px;
     margin-left: 2.5px;
 }
@@ -217,7 +221,7 @@ body {
     height: 60px;
     width: 78px;
     left: 0;
-    bottom: -8px;
+    bottom: 5px;
     padding: 10px 14px;
     background: #0F2B4E;
     transition: all 0.5s ease;
@@ -267,9 +271,23 @@ body {
     transition: all 0.5s ease;
 }
 
+.sidebar .profile #log_out:hover {
+    background: #fff;
+    color: #0F2B4E;
+    cursor: pointer;
+}
+
 .sidebar.open .profile #log_out {
     width: 50px;
     background: none;
+    color: #fff;
+}
+
+.sidebar.open .profile #log_out:hover {
+    background: #fff;
+    width: 60px;
+    color: #0F2B4E;
+    cursor: pointer;
 }
 
 main {
@@ -293,8 +311,28 @@ main .text {
     color: #11101d;
     font-size: 25px;
     font-weight: 500px;
-    font-family:"Libre Baskerville", serif;
+      position: relative;
+    font-family: "Libre Baskerville", serif;
+}
 
+@media (max-width: 420px) {
+    .sidebar li .tooltip {
+        display: none;
+    }
+}
+
+h3 {
+    color: #0f2b4e;
+    font-size: 30px;
+    font-weight: 500px;
+    font-family:"Libre Baskerville", serif;
+    text-align: center;
+}
+.filter-dropdown {
+    font-size: 20px;
+    color: #0F2B4E;
+    font-weight: 600;
+    display: inline-block; 
 }
 
 @media (max-width: 420px) {
@@ -309,108 +347,82 @@ main {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-/* General styling for the main section */
-main {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items:flex-start;
-}
-
-.text h3 {
-    font-family: 'Arial', sans-serif;
-    font-size: 28px;
-    text-align: center;
-    margin-bottom: 30px;
-    color: #333;
-}
-
-/* Styling for the staff section */
+/* حاوية الفريق */
 .staff {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
-    max-width: 1200px;
+    padding: 20px;
 }
 
-/* Card styles */
+/* تصميم بطاقة كل عضو */
 .column {
-    background-color: #fff;
+    background: #fff;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 15px;
     text-align: center;
-    width: 250px;
-    transition: transform 0.3s ease;
+    width: 300px;
+    transition: transform 0.3s ease-in-out;
 }
 
 .column:hover {
-    transform: translateY(-10px);
+    transform: scale(1.05);
 }
 
-.column img.im {
+/* تنسيق صورة العضو */
+.im {
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
     object-fit: cover;
-    margin-bottom: 15px;
+    border: 3px solid #007bff;
+    margin-bottom: 10px;
 }
 
+/* تنسيق معلومات العضو */
 .column h3 {
-    font-family: 'Arial', sans-serif;
-    font-size: 18px;
-    color: #555;
-    margin-bottom: 5px;
+    font-size: 20px;
+    color: #333;
+    margin: 10px 0;
 }
 
 .column p {
-    font-size: 14px;
-    color: #888;
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
 }
 
+/* تنسيق ساعات العمل */
 .column b p {
     font-size: 14px;
-    color: #333;
-    margin-top: 10px;
+    color: #007bff;
+    margin-top: 8px;
 }
 
+/* تنسيق أيقونة الإيميل */
 .icon2 {
     margin-top: 10px;
 }
 
-/* Icon styling */
-.icon2 img {
-    width: 25px;
-    height: 25px;
-    transition: opacity 0.3s ease;
+.icon2 .img {
+    width: 35px;
+    transition: transform 0.3s;
 }
 
-.icon2 img:hover {
-    opacity: 0.7;
+.icon2 a:hover .img {
+    transform: scale(1.2);
 }
 
-/* Responsive styling */
-@media (max-width: 768px) {
+/* جعل الصفحة متجاوبة */
+@media screen and (max-width: 768px) {
     .staff {
         flex-direction: column;
         align-items: center;
     }
 
     .column {
-        width: 100%;
-        max-width: 300px;
+        width: 90%;
     }
 }

@@ -57,7 +57,7 @@ body {
 }
 
 .sidebar.open {
-    width: 250px;
+    width: 270px;
 }
 
 .sidebar .logo-details {
@@ -65,7 +65,7 @@ body {
     display: flex;
     align-items: center;
     position: relative;
-    font-family:"Roboto Condensed", sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
 }
 
 .sidebar .logo-details .icon {
@@ -78,30 +78,33 @@ body {
 
 .sidebar .logo-details .logo_name {
     color: #fff;
+    display: none;
     font-size: 20px;
     font-weight: 600;
     opacity: 0;
     text-align: center;
     transition: all 0.5s ease;
-    margin-top: 20px;
+    margin: 20px 40px 0px 0px;
 }
 
 .sidebar.open .logo-details .icon,
 .sidebar.open .logo-details .logo_name {
     opacity: 1;
+    display: block;
 }
-.logo_style{
+
+.logo_style {
     text-decoration: none;
     color: #fff;
 }
+
 .sidebar .logo-details #btn {
     position: absolute;
     top: 50%;
     right: 0;
     transform: translateY(-50%);
-    font-size: 22px;
+    font-size: 35px;
     transition: all 0.4s ease;
-    font-size: 23px;
     text-align: center;
     cursor: pointer;
     transition: all 0.5s ease;
@@ -117,7 +120,7 @@ body {
     color: #fff;
     height: 60px;
     min-width: 50px;
-    font-size: 28px;
+    font-size: 30px;
     text-align: center;
     line-height: 60px;
 }
@@ -201,12 +204,13 @@ body {
 .sidebar li a:hover i {
     transition: all 0.5s ease;
     color: #0F2B4E;
+    cursor: pointer;
 }
 
 .sidebar li i {
     height: 50px;
     line-height: 50px;
-    font-size: 18px;
+    font-size: 30px;
     border-radius: 12px;
     margin-left: 2.5px;
 }
@@ -216,7 +220,7 @@ body {
     height: 60px;
     width: 78px;
     left: 0;
-    bottom: -8px;
+    bottom: 5px;
     padding: 10px 14px;
     background: #0F2B4E;
     transition: all 0.5s ease;
@@ -266,9 +270,23 @@ body {
     transition: all 0.5s ease;
 }
 
+.sidebar .profile #log_out:hover {
+    background: #fff;
+    color: #0F2B4E;
+    cursor: pointer;
+}
+
 .sidebar.open .profile #log_out {
     width: 50px;
     background: none;
+    color: #fff;
+}
+
+.sidebar.open .profile #log_out:hover {
+    background: #fff;
+    width: 60px;
+    color: #0F2B4E;
+    cursor: pointer;
 }
 
 main {
@@ -285,6 +303,21 @@ main {
 .sidebar.open~main {
     left: 250px;
     width: calc(100% - 250px);
+}
+
+main .text {
+    display: inline-block;
+    color: #11101d;
+    font-size: 25px;
+    font-weight: 500px;
+      position: relative;
+    font-family: "Libre Baskerville", serif;
+}
+
+@media (max-width: 420px) {
+    .sidebar li .tooltip {
+        display: none;
+    }
 }
 
 h3 {
