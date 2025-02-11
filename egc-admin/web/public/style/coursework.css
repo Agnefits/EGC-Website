@@ -1,21 +1,87 @@
+/* General Styles */
+/* General Styles */
 body {
     background: #f0f1f6;
     font-family: "Roboto Condensed", sans-serif;
-    height: 90vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent scrolling */
+}
 
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 
+/* Navbar */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px 0px 0px 40px;
+}
+
+.nav-items {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between items */
+}
+
+.ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding-right: 60px;
+}
+
+.ul li {
+    padding-left: 20px; /* Space between menu items */
+}
+ul li:hover{
+    text-decoration: none;
+}
+#goBackImage {
+    cursor: pointer;
+}
+
+.log img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: -2px 2px 5px gray;
+}
+
+.name_c {
+    color: #0F2C4E;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.a {
+    text-decoration: none;
+    color: #0F2B4E;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 2px;
+}
+/* Course Section */
 .course-section {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-top: 80px;
-    /* Adjust to avoid navbar overlap */
-    background: #f0f1f6;
+    width: 100%;
     padding-bottom: 40px;
 }
 
@@ -23,15 +89,16 @@ body {
     width: 100%;
     max-width: 1200px;
     padding: 20px;
+    margin-bottom: 10%;
 }
 
 .course-row {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
-/* New Card Style */
+/* Course Cards */
 .course-item {
     position: relative;
     width: 320px;
@@ -79,7 +146,6 @@ body {
     font-size: 22px;
     font-weight: bold;
     text-align: center;
-    margin: 0;
     transition: transform 0.3s ease;
 }
 
@@ -87,59 +153,51 @@ body {
     transform: translateY(-10px);
 }
 
-.nav {
-    display: flex;
-    flex-direction: row-reverse; /* Reverse the order of the flex items */
-    justify-content: space-between; /* Space between ul and nav-items */
-    align-items: center; /* Center items vertically */
-    position: fixed;
-    width: 100%;
-    background-color: none; /* Add background if needed */
-    z-index: 100; /* Ensure it's on top */
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px 10px;
+    }
+
+    .ul {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .ul li {
+        margin-bottom: 8px;
+    }
+
+    .nav-items {
+        margin-top: 10px;
+        gap: 10px;
+    }
+
+    .course-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .course-item {
+        width: 90%;
+    }
 }
 
-.ul {
-    display: flex; /* Use flex for the ul */
-    list-style-type: none;
-    margin-top: 13px;
-    margin-left: -10px;
-    margin-right: 10px;
-}
+@media (max-width: 480px) {
+    .name_c {
+        font-size: 18px;
+    }
 
-.ul li {
-    padding-right: 70px;
-}
+    #goBackImage {
+        width: 20px;
+        height: 20px;
+    }
 
-.nav-items {
-    display: flex;
-    align-items: center; /* Align items vertically */
-   margin-left: 10px;
-}
-
-#goBackImage {
-    margin-right: 20px; /* Space between elements */
-}
-
-.name_c {
-    color: #0F2C4E;
-    font-size: 30px;
-    font-weight: bold;
-    margin-right: 5px; /* Reduced space */
-    margin-left: 15px; /* Adjust for slight right shift */
-}
-
-.log img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: -5px 5px 10px gray;
-}
-
-a {
-    text-decoration: none;
-    color: #0F2B4E;
-    font-size: 20px;
-    padding: 20px;
-    font-weight: bold;
+    .log img {
+        width: 40px;
+        height: 40px;
+    }
 }
