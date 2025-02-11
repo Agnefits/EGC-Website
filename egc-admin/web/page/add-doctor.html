@@ -34,9 +34,9 @@
                 </div>
                 <div class="contact-details">
                     <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required placeholder="Enter Doctor's Email">
+                    <input type="email" id="email" name="email"  placeholder="Enter Doctor's Email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"  title="Enter a valid email address (e.g., user@example.com)" required>
                     <label for="phone">Phone Number:</label>
-                    <input type="tel" id="phone" name="phone" required placeholder="Enter Phone Number">
+                    <input type="tel" id="phone" name="phone"  placeholder="Enter Phone Number" pattern="\d{11}" title="Must contain 11 digits" required>
                 </div>
                 <div class="user-details">
                     <label for="username">Username:</label>

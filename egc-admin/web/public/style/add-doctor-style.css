@@ -23,7 +23,7 @@ main {
 }
 
 .add-doctor>h2 {
-    font-size: 26px;
+    font-size: 30px;
     color: #0F2B4E;
     font-weight: 600;
 }
@@ -62,16 +62,18 @@ main {
 }
 
 #add-doctor-button {
-    background-color: rgb(42, 165, 232);
+    background-color: #0F2C4E;
     color: white;
     padding: 12px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
     width: 100%;
 }
+#add-doctor-button:hover {
+    box-shadow: 0 4px 10px #1e88e5;}
 
 #added-fields {
     display: inline-flex;
@@ -137,11 +139,13 @@ label {
     text-wrap: nowrap;
     display: inline-block;
     padding: 0.5em 1em;
-    background-color: rgb(42, 165, 232);
+    background-color: #0F2C4E;
     color: #fff;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 25px;
 }
+.btnProfilePicUpload:hover {
+    box-shadow: 0 4px 10px #1e88e5;}
 
 .btnCvUpload {
     background-color: #4CAF50;

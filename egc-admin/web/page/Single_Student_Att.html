@@ -9,10 +9,14 @@
 <body>
     <div class="container">
         <header>
-            <h1>Student Attendance Record</h1>
+            <h3>Student Attendance Record</h3>
+            <div class="nav-items">
+                <img src="/img/arrow.png" alt="Go Back" id="goBackImage" width="20px" height="20px" onclick="goBackToCoursePage()">  
+            </div>
         </header>
-        
+       
         <section class="filters">
+            
             <select id="major" onchange="filterAttendance()">
                 <option value="all">Select Major</option>
                 <option value="science">Mechanical</option>
@@ -94,5 +98,12 @@
         </table>
     </div>
     <script src="/script/Single_Student_Att.js"></script>
+    <script>
+         function goBackToCoursePage() 
+         {
+          console.log('Go Back button clicked!'); // Debug log
+          window.location.href = '/admin/StudentAttendance';
+         }
+    </script>
 </body>
 </html>

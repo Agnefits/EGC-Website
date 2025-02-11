@@ -79,9 +79,6 @@
             <div class="text">
                 <h3>Total Students Attendance</h3>
             </div>
-            <div class="nav-items">
-                <img src="/img/arrow.png" alt="Go Back" id="goBackImage" width="20px" height="20px" onclick="goBackToCoursePage()">  
-            </div>
             <div class="filter-section">
                 <div class="filter-dropdown">
                     <select id="department" name="department" required>
@@ -141,13 +138,6 @@
     </main>
     <script src="/script/AdminDashboard.js"></script>
     <script src="/script/TotalAttendance.js"></script>
-    <script>
-        function goBackToCoursePage() 
-         {
-          console.log('Go Back button clicked!'); // Debug log
-          window.location.href = '/admin/StudentAttendance';
-         }
-      </script>
 </body>
 
 </html>

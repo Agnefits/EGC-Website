@@ -44,7 +44,7 @@ body {
 .sidebar .logo-details .logo_name {
     color: #fff;
     display: none;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
     opacity: 0;
     text-align: center;
@@ -150,7 +150,7 @@ body {
 
 .sidebar li a .links_name {
     color: #fff;
-    font-size: 15px;
+    font-size: 19px;
     font-weight: 700;
     white-space: nowrap;
     opacity: 0;
@@ -217,7 +217,7 @@ body {
 }
 
 .sidebar li.profile .email {
-    font-size: 12px;
+    font-size: 18px;
 }
 
 .sidebar .profile #log_out {
@@ -269,17 +269,108 @@ main {
 }
 
 main .text {
-    text-align: center;
+    /* text-align: center; */
+    padding-left: 15px;
     color: #0F2B4E;
-    font-size: 25px;
+    font-size: 30px;
     font-weight: 500px;
 }
 
-@media (max-width: 420px) {
-    .sidebar li .tooltip {
+@media (max-width: 450px) {
+    /* .sidebar li .tooltip {
+        display: none;
+    } */
+    .sidebar {
+        min-width: 78px;
+        max-width: 20px;
+        width: 78px;
+        overflow: hidden;
+    }
+    .sidebar.open {
+        width: 270px;
+    }
+    .sidebar {
+        display: block; /* Ensure it's visible */
+    }
+    .sidebar {
+        /* min-width: 78px;
+        max-width: 270px; */
+        width: 78px;
+        overflow: hidden;
+    }
+    .sidebar.open {
+        width: 270px;
+    }
+    
+    #btn
+    {
         display: none;
     }
+
+    /* li span {display: none;} */
+    /* li{display: block;} */
+
+    /* .sidebar .nav-list {
+        position:fixed;
+        margin-top: 30px;
+        height: 100%;
+        margin-left: 10px;
+        padding: -100px;
+        width: 30px;
+        overflow: au;   
+
+    } */
+    
+    .sidebar .nav-list {
+        display: flex; /* تحويل القائمة إلى نموذج Flexbox */
+        flex-direction: column; /* ترتيب العناصر عموديًا */
+        margin-top: 15px;
+        height: 0%;
+        margin-left: 5px;
+        padding: 0;
+    }
+
+    .sidebar li {
+        display: block; /* تأكيد عرض كل عنصر على سطر منفصل */
+        width: 100%; /* اجعل العناصر تأخذ المساحة الكاملة */
+        padding: 5px 0; /* تحسين التباعد */
+    }
+    
+    .sidebar li a {
+        display: flex;
+        align-items: center;
+        width: 100%; /* اجعل الرابط يأخذ عرض العنصر */
+        padding: 5px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.4s ease;
+        background: #0F2B4E;
+    }
+
+    .Items {
+        grid-template-columns: repeat(1, 80%);
+        grid-gap: 15px;
+    }
+
+    .item{
+        width: 200px;
+        height: 200px;
+        margin-bottom: 30px;
+    }
+    /* .sidebar li {
+        position:fixed;
+        margin: 8px 0;
+        list-style: none;
+        margin: 10;
+        padding: 10;
+        overflow: hidden;   
+        display: block;
+ } */
+    
 }
+
+
+
 
 main {
     position: relative;
@@ -287,3 +378,97 @@ main {
 h3{
     color: #0F2B4E;
 }
+
+@media (max-width: 768px) {
+    /* .sidebar li .tooltip {
+        display: none;
+    } */
+    .sidebar {
+        min-width: 78px;
+        max-width: 20px;
+        width: 78px;
+        overflow: hidden;
+    }
+    .sidebar.open {
+        width: 270px;
+    }
+    .sidebar {
+        display: block; /* Ensure it's visible */
+    }
+    .sidebar {
+        /* min-width: 78px;
+        max-width: 270px; */
+        width: 78px;
+        overflow: hidden;
+    }
+    .sidebar.open {
+        width: 270px;
+    }
+    
+    #btn
+    {
+        display: none;
+    }
+
+    /* li span {display: none;} */
+    /* li{display: block;} */
+
+    /* .sidebar .nav-list {
+        position:fixed;
+        margin-top: 30px;
+        height: 100%;
+        margin-left: 10px;
+        padding: -100px;
+        width: 30px;
+        overflow: au;   
+
+    } */
+    
+    .sidebar .nav-list {
+        display: flex; /* تحويل القائمة إلى نموذج Flexbox */
+        flex-direction: column; /* ترتيب العناصر عموديًا */
+        margin-top: 15px;
+        height: 0%;
+        margin-left: 5px;
+        padding: 0;
+    }
+
+    .sidebar li {
+        display: block; /* تأكيد عرض كل عنصر على سطر منفصل */
+        width: 100%; /* اجعل العناصر تأخذ المساحة الكاملة */
+        padding: 5px 0; /* تحسين التباعد */
+    }
+    
+    .sidebar li a {
+        display: flex;
+        align-items: center;
+        width: 100%; /* اجعل الرابط يأخذ عرض العنصر */
+        padding: 5px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.4s ease;
+        background: #0F2B4E;
+    }
+
+    .Items {
+        grid-template-columns: repeat(1, 80%);
+        grid-gap: 15px;
+    }
+
+    .item{
+        width: 350px;
+        height: 350px;
+        margin-bottom: 30px;
+    }
+    /* .sidebar li {
+        position:fixed;
+        margin: 8px 0;
+        list-style: none;
+        margin: 10;
+        padding: 10;
+        overflow: hidden;   
+        display: block;
+ } */
+    
+}
+

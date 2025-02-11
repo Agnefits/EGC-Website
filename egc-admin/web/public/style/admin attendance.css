@@ -288,12 +288,19 @@ label {
     margin-top: 10px;
     display: block;
     font-weight: bold;
+   
 }
 
 select {
     padding: 8px;
     margin: 5px 0;
     border: 1px solid #ccc;
+    color: white;
+    background: #0F2B4E;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 25px;
 }
 
 ul {
@@ -504,4 +511,12 @@ label {
     background-color: #ecf0f1;
     
 }
-input{padding: 5px;}
+input{
+    padding: 5px;
+     background: #0F2B4E;
+     color: white;
+     font-size: 18px;
+     font-weight: 500;
+     padding: 8px 15px;
+     border-radius: 25px;
+    }

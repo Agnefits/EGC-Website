@@ -9,36 +9,55 @@ body {
     width: 80%;
     margin: 20px auto;
     background-color: #fff;
-    padding: 20px;
+    padding-left: 20px;
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 header {
-    text-align: center;
-    margin-bottom: 20px;
+   
+    margin-bottom: 30px;
+    padding-left: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #0f2b4e;
 }
-
+.nav-items{margin-left: -150px;margin-top: -70px;}
 .filters {
     margin-bottom: 20px;
 }
 
 .filters label {
-    margin-right: 10px;
+    margin-right: 16px;
+    color: #0f2b4e;
+    font-weight: 500;
+    font-size: 20px;
 }
 
 .filters input {
-    margin-right: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    /* width: auto; */
+    min-width: 150px;
+    background-color: #0F2B4E;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    
 }
 #major, #year, #coursefilter, #section, #name{
-    width: 19.5%;
-    text-align: center;
-    padding: 5px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-    color: #fff;
+
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    /* width: auto; */
+    min-width: 150px;
     background-color: #0F2B4E;
-    border: 6px solid transparent;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+   margin-bottom: 10px;
 }
 option{
     color: #000;
@@ -71,3 +90,10 @@ th {
 tr:hover {
     background-color: #f1f1f1;
 }
+
+#name 
+{
+    margin-right: 150px;
+}
+
+h3{padding-top: 20px;}

@@ -43,7 +43,7 @@ h3 {
 .details-btn.edit {
     background-color: #28a745;
     color: #fff;
-    border-radius: 10px;
+    border-radius: 25px;
     font-size: 17px;
     padding: 6px 10px;
     border: 1px solid #ccc;
@@ -52,7 +52,7 @@ h3 {
 .details-btn.delete {
     background-color: #dc3545;
     color: #fff;
-    border-radius: 10px;
+    border-radius: 25px;
     font-size: 17px;
     padding: 6px 10px;
     border: 1px solid #ccc;
@@ -76,6 +76,7 @@ h3 {
     background-color: #ccc;
     color: #666;
     cursor: not-allowed;
+    border-radius: 25px;
   }
 
 .filter-section {
@@ -93,11 +94,13 @@ h3 {
 .filter-dropdown select {
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 15px;
-    width: 180px;
+    border-radius: 25px;
+    width: auto;
+    min-width: 150px;
     background-color: #0F2B4E;
     color: #fff;
-    font-size: 1em;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .filter-dropdown select:focus {
