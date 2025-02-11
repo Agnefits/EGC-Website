@@ -277,6 +277,20 @@ main .text {
     font-size: 25px;
     font-weight: 500px;
     font-family: "Libre Baskerville", serif;
+    
+}
+
+.text {
+    text-align: center;  /* يجعل النص في المنتصف أفقيًا */
+    width: 100%; /* يضمن أن div يمتد على العرض الكامل */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.text h3{
+    font-size: 40px;
 }
 
 

@@ -27,6 +27,14 @@ h1 {
     padding-left: 130px;
     font-family: "Libre Baskerville", serif;
 }
+.text {
+    text-align: center;  /* يجعل النص في المنتصف أفقيًا */
+    width: 100%; /* يضمن أن div يمتد على العرض الكامل */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 hr {
     border: 1px solid #f1f1f1;
     margin-bottom: 25px;
@@ -207,40 +215,132 @@ a {
     color: #0F2B4E;
 }
 
+
+@media (max-width: 1024px) {
+    .course {
+        width: 95%; /* اجعلها تأخذ العرض الكامل */
+    }
+    .img_style {
+        max-width: 260px;
+        margin-top: 50px;
+    }
+}
+
 @media (max-width: 768px) {
     .course-container {
-        flex-direction: column;
+        flex-direction: column; /* جعل العناصر تحت بعضها */
         align-items: center;
     }
 
     .card-course {
-        margin-top: -40px; /* تقليل المسافة العلوية */
+        margin-top: 10px; /* تقليل المسافة العلوية */
+        max-width: 90%; /* تصغيرها قليلاً على الشاشات الصغيرة */
     }
 
     .img_style {
-        max-width: 250px; /* تصغيرها قليلاً على الشاشات الصغيرة */
-        margin: 50px auto; /* ضمان بقائها في المنتصف */
-        width: 100%;
+        max-width: 230px; /* تقليل حجم الصورة */
+        margin: 40px auto;
     }
 
     .course-name {
-        font-size: 30px;
-        top: 25px; /* ضبط مكان العنوان */
+        font-size: 28px;
+        top: 20px; /* ضبط مكان العنوان */
+        text-align: center;
     }
 
     .filter-section {
-        flex-direction: column; /* جعل العناصر تحت بعضها */
-        align-items: center; /* توسيط العناصر أفقيًا */
-        gap: 10px; /* تقليل المسافة بين العناصر */
+        flex-direction: column; /* جعل الفلاتر أسفل بعضها */
+        align-items: center;
+        gap: 10px;
+        width: 100%;
     }
 
     .filter-dropdown {
-        width: 90%; /* جعل كل عنصر يأخذ عرض الحاوية */
+        width: 90%;
         text-align: center;
     }
 
     .filter-dropdown select {
-        width: 90%; /* تقليل عرض الـ select ليتناسب مع الشاشة */
-        max-width: 200px; /* تحديد حد أقصى للعرض */
+        width: 100%;
+        max-width: 250px;
+    }
+
+   
+        .btnAddCourse {
+            width: 100%; /* جعله بنفس عرض زر الفلتر */
+            max-width: 250px; /* تحديد عرض مشابه لزر "All Departments" */
+            display: block;
+            margin: 0 auto 10px; /* جعله في المنتصف مع مسافة أسفل */
+            position: relative;
+            top: 0; /* وضعه في الأعلى */
+        }
+    
+    
+}
+
+@media (max-width: 768px) {
+    .btnAddCourse {
+        width: 100%;
+        max-width: 240px;
+        height: 43px;
+        background-color: #112D4E;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin: 0 auto 10px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease-in-out;
+
+        /* ✅ تحريك الزر إلى اليمين */
+        transform: translateX(50px); /* يمكنك تعديل الرقم حسب الحاجة */
+        
+        /* بديل: يمكنك استخدام margin-right بدلاً من transform */
+        /* margin-right: -20px; */
+    }
+
+    .btnAddCourse:hover {
+        background-color: #0F233F;
+    }
+}
+
+
+
+@media (max-width: 480px) {
+    h1 {
+        padding-left: 0;
+        text-align: center;
+        font-size: 22px;
+    }
+
+    .img_style {
+        max-width: 200px;
+    }
+
+    .course-name {
+        font-size: 24px;
+        top: 10px;
+    }
+
+    .text {
+        font-size: 25px;
+    }
+
+    .btnAddCourse {
+        width: 80%;
+        text-align: center;
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .pagination button {
+        font-size: 14px;
+        padding: 6px 12px;
     }
 }
