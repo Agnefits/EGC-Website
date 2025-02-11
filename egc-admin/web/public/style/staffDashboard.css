@@ -273,18 +273,198 @@ main {
 
 main .text {
     display: inline-block;
-    color: #11101d;
+    color: #0F2B4E;
     font-size: 25px;
     font-weight: 500px;
     font-family: "Libre Baskerville", serif;
 }
 
-@media (max-width: 420px) {
-    .sidebar li .tooltip {
-        display: none;
+
+.cutom-box {
+    background-color: hsl(0, 0%, 100%);
+    margin: 4% auto 5% auto;
+    max-width: 45%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    border-radius: 40px;
+    animation: fadeInRight 2s ease;
+    color: #0F2B4E;
+
+    overflow: hidden;
+    position: relative;
+}
+
+.profile-picture img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto;
+    display: block;
+}
+
+.home-box {
+    padding: 10px;
+    text-align: center;
+}
+
+.home-box h3, .home-box p {
+    word-wrap: break-word;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 767px) {
+    .cutom-box {
+        max-width: 90%;
+        padding: 15px; 
+        border-radius: 20px;
+        margin: 10px auto;
+        max-width: 90%;
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .cutom-box h1 {
+        font-size: 24px;
+        text-align: center;
+        padding: 10px 0;
+        width: 80px;
+        height: 80px;
+
+    }
+
+    .profile-picture img {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .home-box h3, .home-box p {
+        font-size: 16px;
+        text-align: center;
+        line-height: 1.5;
+        font-size: 16px;
+    }
+
+    .btn {
+        font-size: 14px;
+        padding: 8px; 
     }
 }
 
+
+
+@media (max-width: 767px) {
+    .row {
+        display: flex; 
+        flex-direction: column; 
+        align-items: center;
+    }
+
+    .card {
+        width: 90%; 
+        margin-bottom: 20px; 
+    }
+
+    .card-hover {
+        width: 100%; 
+        max-width: 350px; 
+        margin: 0 auto 20px auto; 
+    }
+
+    img {
+        width: 100%; 
+        height: auto; 
+    }
+
+    h2 {
+        font-size: 20px;
+        text-align: center; 
+    }
+
+    #text {
+        font-size: 24px; 
+    }
+    .sidebar{
+        width: 68px;
+    }
+}
+@media (max-width: 767px) {
+    /* ... (Existing responsive styles for .cutom-box, .row, .card, etc.) ... */
+
+    .sidebar {
+        /* ... (Existing styles) ... */
+        background-color: #0F2B4E; /* Or any color you prefer */
+    }
+
+    .sidebar li.profile {
+        width: 66px; /* Maintain the original width on small screens */
+    }
+
+    .sidebar.open li.profile {
+        width: 250px; /* Keep open width the same */
+    }
+
+    .sidebar .profile #log_out {
+        font-size: 1.2em; /* Smaller logout icon size */
+        width: auto; /* Make width adjust to content */
+        padding: 20px 20px; /* Add some padding around the icon */
+        background: #0F2B4E; /* Keep the background color */
+        border-radius: 5px; /* Add some border radius */
+        height: auto; /* Adjust height to content */
+        line-height: normal; /* Remove fixed line-height */
+        display: inline-block; /* Make it behave like an inline element */
+        margin: 5px; /* Add some margin around the button */
+    }
+
+    .sidebar.open .profile #log_out {
+        width: auto; /* Adjust width to content */
+        max-width: 90%; /* Ensure it doesn't exceed parent's width with some margin */
+        background: none;
+        color: #fff;
+        font-size: 1.2em;
+        height: auto;
+        line-height: normal;
+        display: inline-block;
+        margin: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sidebar.open .profile #log_out:hover {
+        background: #fff;
+        width: auto;
+        color: #0F2B4E;
+        cursor: pointer;
+        font-size: 1.2em;
+    }
+
+    .sidebar li.profile .name,
+    .sidebar li.profile .email {
+        display: none; /* Hide name and email on small screens */
+    }
+
+    .sidebar.open li.profile .name,
+    .sidebar.open li.profile .email {
+        display: block; /* Show name and email when sidebar is open */
+    }
+
+    .sidebar .profile-details {
+        flex-direction: column; /* Stack name and email vertically */
+        align-items: flex-start; /* Align items to the left */
+    }
+
+    .sidebar.open .profile-details {
+        flex-direction: row; /* Stack name and email horizontally */
+        align-items: center; /* Align items to the center */
+    }
+
+    /* ... other responsive styles ... */
+}
 main {
     position: relative;
+    color: #0F2B4E;
 }

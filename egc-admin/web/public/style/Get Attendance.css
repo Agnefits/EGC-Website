@@ -65,26 +65,22 @@ table th i.bx {
     transition: transform 0.3s;
 }
 
-
-/*
-.edit-button {
-    text-decoration: none;
-    color: #0f2b4e;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    width: 5%;
-}
-    */
-
-    /* Media Queries for Responsive Design */
+/* Media Queries for Responsive Design */
 @media (max-width: 768px) {
     #centeredText h3 {
         font-size: 1.8rem; /* Smaller font size for tablets */
     }
 
     .attendance-table {
-        max-width: 100%; /* Allow the table to use full width */
+        max-width: 90%; /* جعل الجدول أصغر قليلاً ليتناسب مع الشاشات الصغيرة */
+        font-size: 0.8rem; /* تصغير حجم النص */
+    }
+   
+}
+
+@media (max-width: 480px) {
+    .attendance-table {
+        transform: translateX(-3%);
     }
 
     .attendance-table th,
@@ -95,17 +91,22 @@ table th i.bx {
 }
 
 @media (max-width: 480px) {
-    #centeredText h3 {
-        font-size: 1.5rem; /* Smaller font size for mobile */
+    .attendance-table {
+        max-width: 90%; /* تقليل عرض الجدول أكثر */
+        font-size: 0.6rem; /* تقليل حجم الخط */
     }
 
     .attendance-table th,
     .attendance-table td {
-        padding: 3px; /* Even less padding for mobile */
-        font-size: 0.7rem; /* Further reduce font size for mobile devices */
+        padding: 2px; /* تقليل المسافات بين النصوص */
+        font-size: 0.6rem; /* جعل النص أصغر */
+    }
+
+    #centeredText h3 {
+        font-size: 1.2rem; /* تقليل حجم العنوان */
     }
 
     p, .summary-title {
-        font-size: 1rem; /* Keep smaller for mobile */
+        font-size: 0.9rem; /* تصغير حجم النصوص الأخرى */
     }
 }

@@ -1,45 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 * {
     box-sizing: border-box;
+    font-family: "Roboto Condensed", sans-serif;
 }
 
 body {
     background-color: #f0f0f0;
-}
+    padding-top: 20px; /* أو أي قيمة مناسبة */
 
-.li_nav {
-    background: #0f2c4e;
 }
-
-.home-section {
-    position: relative;
-    background: #f0f0f0;
-    min-height: 100vh;
-    top: 0;
-    left: 78px;
-    width: calc(100% - 78px);
-    transition: all 0.5s ease;
-    z-index: 2;
-}
-
 .sidebar {
     position: fixed;
     left: 0;
     top: 0;
     height: 100%;
     width: 78px;
-    background: #0f2c4e;
+    background: #0F2B4E;
     padding: 6px 14px;
     z-index: 99;
     transition: all 0.5s ease;
     margin: 0;
     padding: 0;
 }
-
 .sidebar.open {
-    width: 250px;
+    width: 270px;
 }
-
 .sidebar .logo-details {
     height: 60px;
     display: flex;
@@ -58,17 +43,19 @@ body {
 
 .sidebar .logo-details .logo_name {
     color: #fff;
+    display: none;
     font-size: 20px;
-    text-align: center;
     font-weight: 600;
     opacity: 0;
+    text-align: center;
     transition: all 0.5s ease;
-    margin-top: 20px;
+    margin: 20px 40px 0px 0px;
 }
 
 .sidebar.open .logo-details .icon,
 .sidebar.open .logo-details .logo_name {
     opacity: 1;
+    display: block;
 }
 
 .logo_style {
@@ -81,9 +68,8 @@ body {
     top: 50%;
     right: 0;
     transform: translateY(-50%);
-    font-size: 22px;
+    font-size: 35px;
     transition: all 0.4s ease;
-    font-size: 23px;
     text-align: center;
     cursor: pointer;
     transition: all 0.5s ease;
@@ -99,7 +85,7 @@ body {
     color: #fff;
     height: 60px;
     min-width: 50px;
-    font-size: 28px;
+    font-size: 30px;
     text-align: center;
     line-height: 60px;
 }
@@ -183,12 +169,13 @@ body {
 .sidebar li a:hover i {
     transition: all 0.5s ease;
     color: #0F2B4E;
+    cursor: pointer;
 }
 
 .sidebar li i {
     height: 50px;
     line-height: 50px;
-    font-size: 18px;
+    font-size: 30px;
     border-radius: 12px;
     margin-left: 2.5px;
 }
@@ -248,17 +235,43 @@ body {
     transition: all 0.5s ease;
 }
 
+.sidebar .profile #log_out:hover {
+    background: #fff;
+    color: #0F2B4E;
+    cursor: pointer;
+}
+
 .sidebar.open .profile #log_out {
     width: 50px;
     background: none;
+    color: #fff;
 }
 
-.sidebar.open~.home-section {
+.sidebar.open .profile #log_out:hover {
+    background: #fff;
+    width: 60px;
+    color: #0F2B4E;
+    cursor: pointer;
+}
+
+main {
+    position: relative;
+    background: #f0f0f0;
+    min-height: 100vh;
+    top: 0;
+    left: 78px;
+    width: calc(100% - 78px);
+    transition: all 0.5s ease;
+    z-index: 2;
+
+}
+
+.sidebar.open~main {
     left: 250px;
     width: calc(100% - 250px);
 }
 
-.home-section .text {
+main .text {
     display: inline-block;
     color: #11101d;
     font-size: 25px;
@@ -272,64 +285,61 @@ body {
     }
 }
 
+main {
+    position: relative;
+}
+
+.home-section
+{
+    display: flex;
+    justify-content: center;
+}
+
 .container {
     background-color: #fff;
     /* White background for form */
-    border-radius: 15px;
+    border-radius: 25px;
     padding: 20px;
-    width: 990px;
+    width: 70%;
     /* Adjust width as needed */
-    margin: 0 auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow:0 0 10px rgba(0, 0, 0, 0.3);
     /* Subtle shadow effect */
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
+    /* position: absolute; */
+    /* top: 55%;
+    left: 50%; */
     box-sizing: border-box;
-    max-height: 80vh;
-    overflow-y: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    height: 800px;
+    color: #0F2B4E;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
 }
 
 label {
     margin-top: 10px;
     display: block;
-    font-weight: 600;
-    font-size: 25px;
+    font-weight: bold;
     color: #0F2B4E;
+    font-size: 20px;
+    margin-left: 10px;
 }
 
 select {
     padding: 8px;
     margin: 5px 0;
-    border: 1px solid #ccc;
-    font-size: 15px;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #ecf0f1;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    width: 95%;
-}
-
-.h {
+    background-color: #0F2B4E;
+    border-radius: 25px;
+    color: #fff;
     text-align: center;
-    color: #0F2B4E;
-    font-size: 30px;
+    font-size: 14px;
+    margin-left: -10px;
 }
-
+option{
+    background-color: #fff;
+    color: black;
+}
 strong {
     margin-right: 10px;
     flex-basis: auto;
@@ -358,14 +368,20 @@ button {
     padding: 10px;
     border: none;
     cursor: pointer;
-    margin-right: 10px;
+    
 }
 
 button:hover {
     background-color: #0F2C4E;
-    box-shadow: 0 4px 10px #1e88e5;
+    box-shadow: 0 0 10px #0F2B4E;
 }
-
+.btns
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
 .student-list-item {
     display: flex;
     align-items: center;
@@ -394,14 +410,9 @@ button:hover {
     background-color: #2980b9;
 }
 
-@media screen and (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-}
-
 .submit_att {
-    background-color: #0F2B4E;
+    background-color:#0F2B4E;
+    /* Green button */
     color: white;
     padding: 12px 20px;
     border: none;
@@ -410,7 +421,9 @@ button:hover {
     font-size: 16px;
     font-weight: 600;
     width: 52%;
-    margin-top: -60px;
+}
+.submit_att:hover{
+    box-shadow: 0 4px 10px #1e88e5
 }
 
 #resultSection {
@@ -428,21 +441,21 @@ button:hover {
 #resultSection span {
     font-weight: bold;
 }
+/* Add some basic styling to the notes section */
 
 #notes {
-    margin-top: -30px;
     padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300%;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    width: 580px;
 }
 
 #notes-textarea {
     width: 100%;
     height: 100px;
     padding: 10px;
-    font-size: 16px;
+    font-size: 19px;
     border: 1px solid #ccc;
 }
 
@@ -451,158 +464,144 @@ button:hover {
     color: #fff;
     padding: 10px 20px;
     border: none;
-    border-radius: 15px;
+    border-radius: 25px;
     cursor: pointer;
+    margin-left: 190px;
+    margin-top: 5px;
 }
 
 #save-notes-btn:hover {
     box-shadow: 0 0 10px #168931;
+
 }
 
 #notes-display {
     margin-top: 20px;
     padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 25px;
     background-color: #f9f9f9;
 }
-
 .present {
-    background-color: #c6efce;
+    background-color: #c6efce; /* Light green */
 }
 
 .absent {
-    background-color: #ffc7ce;
+    background-color: #ffc7ce; /* Light red */
 }
 
 label {
-    margin-right: 5px;
-    font-size: 25px;
+    margin-right: 5px; /* Add space between label and select */
 }
 
-.form-group {
-    display: inline-block;
+
+.form-group{
+   display: inline-block;
+    margin-top: 20px;
     margin-right: 20px;
+    /* Add some space between groups */
 }
 
-.form-group {
-    margin-bottom: 15px;
-}
-
-#yearlevel {
-    border-radius: 25px;
-}
-
-#department {
-    border-radius: 25px;
-}
-
-#n_section {
-    border-radius: 25px;
-}
-
-#course {
-    border-radius: 25px;
-}
 
 .test {
     margin-right: 30%;
-    width: 70%;
+    width: 70%; /* Space between form and notes section */
     margin-top: 6%;
 }
 
 #notes-textarea {
+    width: 100%; /* Makes the textarea take full width */
+    height: 100px; /* Set a height for the textarea */
+}
+#resultSection{
     width: 100%;
-    height: 100px;
 }
 
-#resultSection {
-    width: 100%;
-}
+#summarySection{
 
-#summarySection {
     margin-top: 20px;
     padding: 15px;
     border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300%;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    width: 580px;
     background-color: #ecf0f1;
+    font-size: 19px;
 }
-
-select {
-    background-color: #0F2B4E;
-    color: white;
-    border: 1px solid #ccc;
-    padding: 8px;
-    font-size: 15px;
-}
-
-select:focus {
-    background-color: 0F2B4E;
-    color: white;
-    outline: none;
-}
-
-option {
-    background-color: white;
+#text{
     color: #0F2B4E;
+    text-align: center;
+    font-size: 30px;
 }
-
-option:hover {
-    background-color: #ffffff;
-    color: #0F2B4E;
-}
-
-h2 {
-    color: #0F2B4E;
-}
-
-h3 {
-    color: #0F2B4E;
-}
-
-p {
-    color: #0F2B4E;
-}
-
-@media screen and (max-width: 600px) {
+@media (max-width: 768px) {
     .container {
-        width: 90%;
-        padding: 10px;
-        box-shadow: none;
+        width: 90%; /* Make container wider on small screens */
+        padding: 15px; /* Reduced padding */
+        gap: 15px; /* Reduced gap */
+        font-size: smaller; /* Reduce font size for everything inside */
+        height: auto;
+        margin-left: 45px;
+         /* Remove fixed height */
     }
-    .h {
-        font-size: 24px;
-    }
+
     label {
-        font-size: 20px;
+        font-size: 16px; /* Smaller label font */
+        margin-left: 0;
+        text-align: center; /* Remove left margin */
     }
+
+    select,
+    button,
+    #notes,
+    #summarySection,
+    .submit_att {
+        font-size: smaller; /* Smaller font for form elements */
+    }
+
     select {
-        font-size: 14px;
-    }
-    .student-list-item {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .attendance-buttons {
-        flex-direction: column;
-    }
-    .attendance-button {
         width: 100%;
-        margin: 5px 0;
     }
+
     #notes {
-        width: 280px;
-        padding: 15px;
+        width: 250px;
+        margin-left: 30px; /* notes full width */
     }
-    #notes-textarea {
-        height: 80px;
+
+    #summarySection {
+        width: 250px; 
+        margin-left: 30px; /* notes full width */
     }
+
     .submit_att {
         width: 100%;
+        margin-left: 15px; /* submit button full width */
     }
-    #summarySection {
+
+    .form-group {
+        display: block;
         width: 100%;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+
+    .btns {
+        flex-direction: column; /* Stack buttons */
+        align-items: center; /* Center buttons */
+        gap: 10px; /* Space between buttons */
+    }
+    #text
+    {
+        font-size: larger;
+        margin-left: 15px;
+    }
+    #save-notes-btn {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+       margin-left: 5px;
     }
 }

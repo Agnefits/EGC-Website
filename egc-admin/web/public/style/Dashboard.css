@@ -9,7 +9,7 @@
     cursor: pointer;
     width: 0%;
     height: 100%;
-    border-radius: 10%;
+    border-radius: 25px;
 }
 
 .card-hover {
@@ -39,7 +39,7 @@ a {
 }
 
 img {
-    border-radius: 10%;
+    border-radius: 25px;
     width: 100%;
     height: 100%;
 }
@@ -48,6 +48,11 @@ h2 {
     font-size: 26px;
     color: #0F2B4E;
     font-weight: bold;
+}
+#text{
+    color: #0F2B4E;
+    text-align: center;
+    font-size: 30px;
 }
 
 .img {
@@ -91,4 +96,51 @@ h2 {
 .row-container{
     margin-left: 2vw;
 }
+@media (max-width: 767px) {
+    /* تعديل تخطيط الكروت */
+    .row {
+        display: flex;
+        flex-direction: column; /* وضع الكروت تحت بعضها */
+        align-items: center; /* توسيط الكروت */
+        margin: 0 auto; /* ضبط الهوامش */
+    }
 
+    .card {
+        width: 90%; /* تصغير عرض الكارد */
+        margin-bottom: 20px; /* مسافة بين الكروت */
+        border-radius: 15px; /* تقليل الزوايا */
+    }
+
+    .card-hover {
+        width: 100%; /* جعل الكارد يأخذ العرض الكامل */
+        max-width: 350px; /* أقصى عرض للكارد */
+        margin: 0 auto 15px auto; /* توسيط الكارد وإضافة مسافة من الأسفل */
+    }
+
+    /* تعديل الصور */
+    img {
+        width: 100%; /* الصور تتناسب مع عرض الكارد */
+        height: auto; /* ضبط الطول تلقائيًا */
+    }
+
+    /* النصوص */
+    h2 {
+        font-size: 20px; /* تصغير حجم النصوص */
+        text-align: center; /* توسيط النصوص */
+    }
+
+    #text {
+        font-size: 18px; /* تقليل حجم النص */
+    }
+
+    /* الأزرار */
+    .btn {
+        font-size: 14px; /* تصغير الأزرار */
+        padding: 10px; /* تقليل الحواف الداخلية */
+    }
+
+    /* تحسين الحاويات */
+    .row-container {
+        padding: 10px; /* تقليل الحواف الداخلية للحاويات */
+    }
+}
