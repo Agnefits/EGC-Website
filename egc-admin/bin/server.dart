@@ -84,7 +84,7 @@ void main() async {
   //router.post('/admin/EditStudent', postEditStudentHandler);
   //router.post('/admin/DeleteStudent', deleteStudentHandler);
   router.get('/admin/ShowStudentGrades', getShowStudentGradesHandler);
-  router.get('/admin/Grades', getAdminGradesHandler);
+  router.get('/admin/AdminStudentGrades', getAdminGradesHandler);
 
   ///Student Attendance
   router.get('/admin/StudentAttendance', getAdminStudentAttendanceHandler);

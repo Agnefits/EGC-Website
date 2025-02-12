@@ -21,8 +21,8 @@ nav {
 #containernav {
   display: flex;
   list-style: none;
+  margin-left: 20%;
   padding-left: 22%;
-  margin: 0;
 }
 
 

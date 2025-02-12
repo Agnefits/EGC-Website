@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grades</title>
+    <link rel="icon" href="/img/logo.png" sizes="48x32">
+    <link rel="stylesheet" href="/style/student-all-grades.css">
+    <link rel="stylesheet" href="/style/AdminDashboard.css">
+    <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+</head>
+
+<body>
+    
+    
+    <div class="sidebar">
+        <div class="logo-details">
+            <a href="/home"><img src="/img/logo.png" class="icon"></a>
+            <a href="/home">
+                <div class="logo_name">Egyptian Germany College</div>
+            </a>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+            <li>
+                <a href="/admin/Doctors">
+                    <i class='bx bxs-school'></i>
+                    <span class="links_name">Doctors</span>
+                </a>
+                <span class="tooltip">Doctors</span>
+            </li>
+            <li>
+                <a href="/admin/TeachingAssistants">
+                    <i class='bx bx-chalkboard'></i>
+                    <span class="links_name">Teaching Assistant</span>
+                </a>
+                <span class="tooltip">Teaching Assistant</span>
+            </li>
+            <li>
+                <a href="/admin/Students">
+                    <i class='bx bx-user'></i>
+                    <span class="links_name"> Student</span>
+                </a>
+                <span class="tooltip">Student</span>
+            </li>
+            <li>
+                <a href="/admin/StudentAttendance">
+                    <i class='bx bx-spreadsheet'></i>
+                    <span class="links_name">Student Attendance</span>
+                </a>
+                <span class="tooltip">Student Attendance</span>
+            </li>
+            <li>
+                <a href="/admin/ClassSchedules">
+                    <i class='bx bx-calendar'></i>
+                    <span class="links_name">Class Schedules</span>
+                </a>
+                <span class="tooltip">Class Schedules</span>
+            </li>
+            <li class="profile">
+                <div class="profile-details">
+                    <img src="/img/person1.JPG" alt="profileImg">
+                    <div class="name_email">
+                        <div class="name">Mariam Magdy</div>
+                        <div class="email">mariammagdy@gmail.com</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out"></i>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="text">
+        <h3>Grades for Ali Ahmed</h3>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="tr">Grade item</th>
+                    <th class="tr">Grade</th>
+                    <th class="tr">Student Grade</th>
+                    <th class="tr">Percentage</th>
+                    <th class="tr">Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="5"><strong>English</strong></td>
+                </tr>
+                <tr>
+                    <td>Report</td>
+                    <td>40.00</td>
+                    <td>39.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Attendance</td>
+                    <td>10.00</td>
+                    <td>10.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Midterm Exam</td>
+                    <td>20.00</td>
+                    <td>15.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Final Exam</td>
+                    <td>30.00</td>
+                    <td>29.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td>100.00</td>
+                    <td>93.00</td>
+                    <td>93.00%</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td colspan="5"><strong>M1 </strong></td>
+                </tr>
+                <tr>
+                    <td>Quizzes</td>
+                    <td>40.00</td>
+                    <td>34.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Assignments</td>
+                    <td>50.00</td>
+                    <td>50.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Attendance</td>
+                    <td>10.00</td>
+                    <td>10.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Midterm Exam</td>
+                    <td>70.00</td>
+                    <td>61.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Practical Exam</td>
+                    <td>60.00</td>
+                    <td>55.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Final Exam</td>
+                    <td>90.00</td>
+                    <td>88.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td>320.00</td>
+                    <td>298.00</td>
+                    <td>93.125%</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td colspan="5"><strong>M2</strong></td>
+                </tr>
+                <tr>
+                    <td>Quizzes</td>
+                    <td>40.00</td>
+                    <td>34.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Assignments</td>
+                    <td>50.00</td>
+                    <td>50.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Attendance</td>
+                    <td>10.00</td>
+                    <td>10.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Midterm Exam</td>
+                    <td>70.00</td>
+                    <td>61.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Practical Exam</td>
+                    <td>60.00</td>
+                    <td>55.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Final Exam</td>
+                    <td>90.00</td>
+                    <td>88.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td>320.00</td>
+                    <td>298.00</td>
+                    <td>93.125%</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td colspan="5"><strong>Math</strong></td>
+                </tr>
+                <tr>
+                    <td>Attendance</td>
+                    <td>20.00</td>
+                    <td>20.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Midterm Exam</td>
+                    <td>20.00</td>
+                    <td>15.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Final Exam</td>
+                    <td>50.00</td>
+                    <td>44.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td>100.00</td>
+                    <td>93.00</td>
+                    <td>93.00%</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td colspan="1"><strong>Course total</strong></td>
+                    <td>800.00</td>
+                    <td>755.00</td>
+                    <td>94.375%</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="/script/student-all-grades.js"></script>
+</body>
+
+</html>

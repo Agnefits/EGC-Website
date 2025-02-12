@@ -467,7 +467,7 @@ Future<Response> getAddStudentHandler(Request request) async {
 }
 Future<Response> getAdminGradesHandler(Request request) async {
   try {
-    var html = File('web/page/student-all-grades.html').readAsStringSync();
+    var html = File('web/page/admin_students_all_grades.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
     return Response.internalServerError(body: e.toString());

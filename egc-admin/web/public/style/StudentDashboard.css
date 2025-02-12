@@ -337,6 +337,7 @@ p {
     border-collapse: collapse;
     height: 700px;
 }
+
 .notification {
     margin-top: 10px;
     width: 100%;
@@ -393,7 +394,8 @@ table tr {
 }
 
 #notification-list {
-    max-height: 640px;
+    max-height: 700px;
+    /* adjust the max height as needed */
     overflow-y: auto;
 }
 
@@ -460,64 +462,4 @@ table tr {
     background-color: #cfd8e9;
     color: #0f2b4e;
     font-family: "Roboto Condensed", sans-serif;
-}
-
-@media screen and (max-width: 1024px) {
- 
-    .cards {
-        flex-wrap: wrap;
-    }
-
-    .card {
-        width: 45%;  /* Two cards per row */
-    }
-
-    .chat, .scedule {
-        width: 100%;
-        margin-top: 20px;
-    }
-}
-
-@media screen and (max-width: 768px) {
-
-
-    .home-section {
-        left: 0;
-        width: 100%;
-    }
-
-    .cards {
-        flex-direction: column;
-    }
-
-    .card {
-        width: 100%;
-    }
-
-    .chat, .scedule {
-        width: 100%;
-    }
-
-
-}
-
-@media screen and (max-width: 480px) {
-    .home-section .text {
-        font-size: 18px;
-    }
-
-    .card h1 {
-        font-size: 20px;
-    }
-
-    .card p {
-        font-size: 14px;
-    }
-
-}
-
-@media (max-width: 420px) {
-    .sidebar li .tooltip {
-        display: none;
-    }
 }

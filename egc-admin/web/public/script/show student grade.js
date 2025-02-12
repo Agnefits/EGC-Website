@@ -15,7 +15,7 @@ async function loadStudents() {
             throw new Error('Failed to fetch students');
         }
 
-        const students = await response.json();
+        const students = await response.json(); 
         const studentsTableBody = document.getElementById('studentsTableBody');
         studentsTableBody.innerHTML = '';
         studentsTableBody.innerHTML = ''; // Clear the table before adding new rows
@@ -47,7 +47,7 @@ async function loadStudents() {
                     Hide Grade
                 </td>
                 <td>
-                    <button class="details-btn show-details" data-id="${student.id}" onclick="window.location.href='/admin/Grades?studentId=${student.id}'">
+                    <button class="details-btn show-details" data-id="${student.id}" onclick="window.location.href='/admin/AdminStudentGrades?studentId=${student.id}'">
                         Show Grades
                     </button>
                 </td>
