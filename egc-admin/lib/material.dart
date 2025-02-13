@@ -294,6 +294,9 @@ class Material {
             headers: {'Content-Type': 'application/json', "Error": '$e'});
       }
     });
+
+
+    
   
     // حذف مادة
     router.delete('/delete-material/<id>', (Request request, String id) async {
@@ -306,6 +309,8 @@ class Material {
         return Response.internalServerError(body: 'Error: $e');
       }
     });
+
+
 
    }
 }

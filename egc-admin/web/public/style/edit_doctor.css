@@ -153,6 +153,10 @@ label {
     width: 97%;
     text-align: center;
 }
+.nav-items
+{
+margin-left: -35px;
+}
 
 #showPassword {
     width: max-content;

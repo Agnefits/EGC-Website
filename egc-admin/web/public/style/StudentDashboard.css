@@ -463,3 +463,62 @@ table tr {
     color: #0f2b4e;
     font-family: "Roboto Condensed", sans-serif;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* للأجهزة الصغيرة (الجوال) */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 60px; /* تصغير القائمة الجانبية */
+    }
+    .sidebar .logo_name {
+        display: none; /* إخفاء النص */
+    }
+    .sidebar .nav-list li a span {
+        display: none; /* إخفاء أسماء القوائم */
+    }
+    .sidebar .icon {
+        width: 40px; /* تصغير الأيقونات */
+    }
+    .home-section {
+        margin-left: 60px; /* تقليل المساحة بجانب القائمة */
+        width: calc(100% - 60px);
+    }
+    .cards {
+        flex-direction: column; /* جعل الكروت في عمود بدلاً من صف */
+        align-items: center;
+    }
+    .card {
+        width: 90%; /* تكبير عرض الكروت */
+    }
+    .schedule-container {
+        overflow-x: auto; /* جعل الجدول قابلًا للتمرير أفقيًا */
+    }
+    .chat {
+        width: 100%; /* تكبير منطقة الإشعارات */
+    }
+    th{padding-left: 20px;}
+}
+
+/* للأجهزة المتوسطة */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 80px; /* تقليل عرض القائمة */
+    }
+    .sidebar .logo_name {
+        font-size: 12px;
+    }
+    .cards {
+        flex-wrap: wrap; /* السماح للكروت بالنزول لأسفل */
+    }
+}

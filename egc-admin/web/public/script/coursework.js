@@ -1,4 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+    const courseData = JSON.parse(localStorage.getItem('courseData'));
+    if (courseData) {
+        document.getElementById('name_c a').innerText = courseData.name;
+        document.getElementById("log").src = courseData.photo ? "/courses/photo/" + courseData.id : "/img/img-course.png";
+    } else {
+        alert('Course ID is missing');
+        window.location.href = '/staff/ShowCourses';
+    }
+
+
+
+
     const courseItems = document.querySelectorAll('.course-item');
 
     courseItems.forEach(item => {

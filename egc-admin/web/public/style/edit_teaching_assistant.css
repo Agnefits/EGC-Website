@@ -83,7 +83,10 @@ label.male,
     display: inline-block;
     margin-bottom: 5px;
 }
-
+.nav-items
+{
+margin-left: -35px;
+}
 #update-teaching-assistant-button {
     background-color: #0f2b4e;
     /* Green button */
