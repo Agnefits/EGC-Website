@@ -100,7 +100,7 @@ form select{
   border: 1px solid rgba(128, 128, 128, 0.514);
 }
 
-button {
+.btn {
   background-color: #0f2b4e;
   color: white;
   padding: 10px ;
@@ -112,9 +112,13 @@ button {
   width: 100%;
 
 }
-button:hover {
+.btn:hover {
   opacity:1;
   box-shadow: 0 4px 10px #1e88e5}
+  .custom-popup {
+    padding: 5px !important;  /* تقليل المسافات الداخلية */
+    min-height: 20px !important; /* تقليل الطول */
+}
 
 #goBackImage
 {

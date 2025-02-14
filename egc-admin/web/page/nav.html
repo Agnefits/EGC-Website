@@ -7,6 +7,7 @@
     <title>Course - Home</title>
     <link rel="icon" href="/img/logo.png" sizes="48x32">
     <link rel="stylesheet" href="/style/nav.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -44,9 +45,9 @@
             <input type="file" id="fileInput" name="attachment">
             <p id="fileHints" style="color: grey; font-size: small;"></p>
 
-            <button type="submit" class="button">Send Your Announcement</button>
+            <button class="btn">Send Your Announcement</button>
         </form>
-
+        
         <div id="messages-container">
             <!-- Messages will appear here -->
         </div>
@@ -54,6 +55,7 @@
 
     <script src="/script/course-nav.js"></script>
     <script src="/script/staff-announcement.js"></script>
+    <script src="popup.js"></script>
 </body>
 
 </html>

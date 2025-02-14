@@ -13,11 +13,9 @@ fileInput.addEventListener('change', function() {
     console.log(fileInput.files[0]);
     const file = fileInput.files[0];
     const reader = new FileReader();
-
     reader.onload = function(e) {
         imageContainer.src = e.target.result;
     };
-
     reader.readAsDataURL(file);
 });
 
@@ -36,8 +34,7 @@ document.getElementById('addTeachingAssistantForm').addEventListener('submit', a
         if (!response.ok) {
             alert(response.headers.get('Error'));
         } else {
-            alert('Teaching Assistant added successfully');
-            window.location.href = '/admin/AddTeachingAssistant';
+            showPopup(); // استدعاء الـ popup
         }
     } catch (error) {
         console.error('Error:', error);
@@ -62,3 +59,25 @@ async function loadTeachingAssistants() {
 
 // تحميل المعيدين عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', loadTeachingAssistants);
+
+
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'successfully !',
+        text: 'Teaching Assistant added',
+        width: '320px', 
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false, 
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon' 
+        },
+        didClose: () => {
+            window.location.href = '/admin/AddTeachingAssistant';
+        }
+    });
+}
