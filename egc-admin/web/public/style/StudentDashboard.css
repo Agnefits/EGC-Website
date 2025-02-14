@@ -391,10 +391,11 @@ table tr {
 
 .container .chat {
     background: white;
+    height: 710px;
 }
 
 #notification-list {
-    max-height: 700px;
+    max-height: 640px;
     /* adjust the max height as needed */
     overflow-y: auto;
 }
