@@ -63,12 +63,33 @@ document.getElementById('updateTeachingAssistantForm').addEventListener('submit'
         if (!response.ok) {
             throw new Error('Failed to update Teaching Assistant');
         }
-
-        alert('Teaching Assistant updated successfully');
+        showPopup();
         this.reset();
-        window.location.href = '/admin/ShowTeachingAssistants'; // Redirect to the page showing the updated list
     } catch (error) {
         console.error('Error:', error);
         alert('Failed to update Teaching Assistant: ' + error.message);
     }
 });
+
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'success!',
+        text: 'The student has been updated',
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        },
+        didClose: () =>{
+            window.location.href = '/admin/ShowTeachingAssistants';
+        }
+    });
+
+ 
+}

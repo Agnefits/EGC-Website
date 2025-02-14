@@ -5,13 +5,34 @@ document.getElementById('addClassForm').addEventListener('submit', async functio
 
     const response = await fetch('/add-class-schedule', {
         method: 'POST',
-        body: formData // Send FormData object directly
+        body: formData // Send FormData object directly   
+
     });
 
     if (!response.ok) {
         alert(response.headers.get('Error'));
     } else {
-        alert('Class added successfully');
+        showPopup();
+
         document.getElementById('addClassForm').reset();
     }
 });
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'success!',
+        text: 'The class has been added',
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        },
+    });
+
+ 
+}

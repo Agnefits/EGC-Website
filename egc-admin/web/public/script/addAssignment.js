@@ -24,8 +24,7 @@ document.getElementById("uploadForm").addEventListener("submit", async function(
     if (!response.ok) {
         alert(response.headers.get('Error'));
     } else {
-        alert('Assignment uploaded successfully');
-        window.location.href = '/staff/Course/Assignments';
+        showPopup();
     }
 });
 
@@ -35,3 +34,24 @@ document.getElementById("degree").addEventListener("change", function changeValu
     else
         e.target.value = parseFloat(e.target.value);
 });
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'success!',
+        text: 'The assignment has been added',
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        },
+   
+    didClose: () =>{
+        window.location.href = '/staff/Course/Assignments';
+    }
+  });
+}

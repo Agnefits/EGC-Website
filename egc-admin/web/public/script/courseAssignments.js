@@ -97,7 +97,7 @@ async function deleteAssignment(id) {
             method: 'DELETE',
         });
         if (response.ok) {
-            alert('Assignment deleted successfully!');
+            showPopup();
             loadAssignments(); // إعادة تحميل المواد بعد الحذف
         } else {
             console.error('Failed to delete assignment', response.status);
@@ -143,4 +143,23 @@ function goBack() {
 
 function addAssignment() {
     window.location.href = "/staff/Course/AddAssignment";
+}
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'success!',
+        text: 'The assignment has been deleted',
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        }
+    });
+
+ 
 }
