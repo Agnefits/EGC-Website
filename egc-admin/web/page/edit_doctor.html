@@ -13,9 +13,6 @@
     <header>
     </header>
     <main>
-        <div class="nav-items">
-            <img src="/img/arrow.png" alt="Go Back" id="goBackImage" width="20px" height="20px" onclick="goBackToCoursePage()">  
-        </div>
         <section class="add-doctor">
             <h2 class="h">Edit Doctor</h2>
             <form id="UploadDoctorForm" method="POST" enctype="multipart/form-data">
@@ -67,13 +64,8 @@
     <footer>
     </footer>
     <script src="/script/edit_doctor.js"></script>
-    <script>
-         function goBackToCoursePage() 
-{
-    console.log('Go Back button clicked!'); // Debug log
-    window.location.href = '/admin/ShowDoctors';
-}
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
 </html>

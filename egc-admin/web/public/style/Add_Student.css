@@ -123,9 +123,9 @@ button:hover {
 .image-input {
     display: none;
 }
-h2 {
+h3 {
     font-size: 30px;
-    /* text-align: center; */
+    text-align: center;
     color: #0F2B4E;
 }
 #add-student-btn, .image_label{
@@ -175,3 +175,11 @@ h2 {
         padding: 8px; /* Smaller padding for inputs */
     }
 }
+
+
+
+.custom-popup {
+    padding: 10px;
+}
+
+

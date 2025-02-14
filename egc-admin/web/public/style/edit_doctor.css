@@ -153,10 +153,6 @@ label {
     width: 97%;
     text-align: center;
 }
-.nav-items
-{
-margin-left: -35px;
-}
 
 #showPassword {
     width: max-content;
@@ -230,3 +226,10 @@ margin-left: -35px;
         padding: 6px; 
     }
 }
+
+
+
+.custom-popup {
+    padding: 10px !important;
+}
+

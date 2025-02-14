@@ -1,41 +1,6 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const courseData = JSON.parse(localStorage.getItem('courseData'));
-    if (courseData) {
-        document.getElementById('name_c').innerText = courseData.name;
-        document.getElementById("log").src = courseData.photo ? "/courses/photo/" + courseData.id : "/img/img-course.png";
-    } else {
-        alert('Course ID is missing');
-        window.location.href = '/staff/ShowCourses';
-    }
-
-   
-
-    // Load students when the page loads
-    loadStudents();
-
-    // Add event listeners for dropdowns
-    document.getElementById("filter").addEventListener("change", loadStudents);
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
     const courseData = JSON.parse(localStorage.getItem('courseData'));
     const courseId = courseData.id;
-    
-    
 
     // Function to load grades when the page loads
     async function loadGrades() {
@@ -104,7 +69,8 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             if (response.ok) {
-                alert('Grades updated successfully!');
+                // إظهار البوب أب عند نجاح التحديث
+                showPopup();
             } else {
                 alert('Failed to update grades.');
             }
@@ -129,3 +95,29 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load grades on page load
     loadGrades();
 });
+
+// دالة إظهار البوب أب
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'Done!',
+        text: 'Grades updated successfully',
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        },
+        didOpen: () => {
+            const popup = Swal.getPopup();
+        },
+        willClose: () => {
+            // إعادة التوجيه بعد انتهاء المؤقت (3 ثواني)
+            window.location.href = '/staff/Course/Home';
+                }
+    });
+}

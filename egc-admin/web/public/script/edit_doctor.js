@@ -48,7 +48,6 @@ async function loadDoctorData() {
         }
     }
 }
-
 document.getElementById('UploadDoctorForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
@@ -68,11 +67,34 @@ document.getElementById('UploadDoctorForm').addEventListener('submit', async fun
             throw new Error('Failed to update doctor');
         }
 
-        alert('Doctor updated successfully');
+        showPopup();
+
         this.reset();
-        window.location.href = '/admin/ShowDoctors';
+
     } catch (error) {
         console.error('Error:', error);
         alert('Failed to update doctor: ' + error.message);
     }
 });
+
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'success!',
+        text: 'The doctor has been edited',
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000, // مدة البوب أب 3 ثوانٍ
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        },
+        didClose: () => {
+            // عند إغلاق البوب أب، يتم تنفيذ التوجيه
+            window.location.href = '/admin/ShowDoctors';
+        }
+    });
+}
