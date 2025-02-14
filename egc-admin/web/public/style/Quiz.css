@@ -144,7 +144,7 @@ hr {
     border-radius: 5px;
     margin-bottom: 10px;
     cursor: pointer;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     opacity: 0;
     animation: fadeIn 0.3s ease forwards;
     position: relative;
@@ -273,6 +273,23 @@ hr {
     margin-right: 20px;
 }
 
+.text-answer-input
+{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.correct-answer {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #155724;
+  }
+  
 @media (max-width: 767px) {
     body {
         padding: 15px;

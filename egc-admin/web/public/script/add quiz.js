@@ -73,9 +73,9 @@ function changeQuestionType(questionsId) {
             <div class="correctAnswer" id="corectAnswer-${questionsId}">
               <label> Correct Answer : </label>
               <input type="radio" id="radioButton-T-${questionsId}" name="correctAnswer-${questionsId}" value="true" required>
-              <label for="radioButton-T-${questionsId}">True</label>
+              <label for="radioButton-T-${questionsId}">true</label>
               <input type="radio" id="radioButton-F-${questionsId}" name="correctAnswer-${questionsId}" value="false" required>
-              <label for="radioButton-F-${questionsId}">False</label>
+              <label for="radioButton-F-${questionsId}">false</label>
               <br>
               <br>
               <label for="degree-${questionsId}">Degree</label>

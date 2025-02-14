@@ -124,21 +124,22 @@ final results = _db.select(
     };
   }
 
-  static void addQuizQuestion(Map<String, dynamic> quizQuestionData, quizId) {
-    final statement = _db.prepare('''
-      INSERT INTO quiz_questions (quizId, title, type, answers, correctAnswer, degree)
-      VALUES (?, ?, ?, ?, ?, ?)
-    ''');
-    statement.execute([
-      quizId,
-      quizQuestionData['title'],
-      quizQuestionData['type'],
-      quizQuestionData['answers'] ?? "NULL",
-      quizQuestionData['correctAnswer'],
-      quizQuestionData['degree'],
-    ]);
-    statement.dispose();
-  }
+static void addQuizQuestion(Map<String, dynamic> quizQuestionData, quizId) {
+  final statement = _db.prepare('''
+    INSERT INTO quiz_questions (quizId, title, type, answers, correctAnswer, degree)
+    VALUES (?, ?, ?, ?, ?, ?)
+  ''');
+  statement.execute([
+    quizId,
+    quizQuestionData['title'],
+    quizQuestionData['type'],
+    quizQuestionData['answers'] ?? "",
+    quizQuestionData['correctAnswer'],
+    quizQuestionData['degree'],
+  ]);
+  statement.dispose();
+}
+
 
   static void updateQuizQuestion(Map<String, dynamic> quizQuestionData) {
     final statement = _db.prepare('''
@@ -293,14 +294,25 @@ class Quiz {
         // Add quiz to the database here
         int quizId = DatabaseHelper.addQuiz(quizData);
 
-        questionsData.forEach(
-          (key, value) {
-            if (value["type"] == "multi") {
-              value["answers"] = jsonEncode(value["answers"]);
-            }
-            DatabaseHelper.addQuizQuestion(value, quizId);
-          },
-        );
+questionsData.forEach(
+  (key, value) {
+    if (value["type"] == "multi") {
+      // إذا كان النوع "multi"، نقوم بتخزين الإجابات كـ JSON
+      value["answers"] = jsonEncode(value["answers"]);
+    } else if (value["type"] == "bool") {
+      // إذا كان النوع "True or False"، نقوم بتخزين الإجابات كـ ["True", "False"]
+      value["answers"] = jsonEncode(["true", "false"]);
+    }
+
+    else if (value["type"] == "short") {
+        value["answers"] = value["correctAnswer"];  // الإجابة النصية فقط
+      }
+
+    // حفظ السؤال في قاعدة البيانات
+    DatabaseHelper.addQuizQuestion(value, quizId);
+  },
+);
+
 
         return Response.ok('Quiz added successfully', headers: {
           'Access-Control-Allow-Origin': '*',

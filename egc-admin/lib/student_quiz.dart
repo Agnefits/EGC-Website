@@ -112,13 +112,26 @@ static void addStudentQuestionAnswers(String quizId, String studentId, List<Map<
 static Map<String, dynamic> getQuizQuestionsWithCount(String quizId) {
     final results = _db.select('SELECT * FROM quiz_questions WHERE quizId = ?', [quizId]);
 
-    List<Map<String, dynamic>> questions = results.map((row) => {
-        'id': row['id'],
-        'title': row['title'],
-        'type': row['type'],
-        'answers': jsonDecode(row['answers']), // افترض أنك خزنت الإجابات كـ JSON
-        'correctAnswer': row['correctAnswer'],
-        'degree': row['degree'],
+    List<Map<String, dynamic>> questions = results.map((row) {
+        List<dynamic> answers = [];
+        // تحقق من وجود قيمة صالحة قبل فك التشفير
+        if (row['answers'] != null && row['answers'].isNotEmpty) {
+            try {
+                answers = jsonDecode(row['answers']);
+            } catch (e) {
+                print("Error decoding answers: $e");
+                answers = [];  // في حال حدوث خطأ، قم بتعيين الإجابات إلى قائمة فارغة
+            }
+        }
+
+        return {
+            'id': row['id'],
+            'title': row['title'],
+            'type': row['type'],
+            'answers': answers,
+            'correctAnswer': row['correctAnswer'],
+            'degree': row['degree'],
+        };
     }).toList();
 
     int count = results.length;
@@ -128,6 +141,8 @@ static Map<String, dynamic> getQuizQuestionsWithCount(String quizId) {
         'count': count,
     };
 }
+
+
 
 
 }
@@ -146,6 +161,19 @@ class StudentQuiz {
 router.get('/student-quizzes/<quizId>', (Request request, String quizId) async {
     try {
         final questions = DatabaseHelper.getQuizQuestionsWithCount(quizId);
+
+        // إذا كانت الأسئلة فارغة أو غير موجودة، قم بإرجاع استجابة مع رسالة مناسبة
+        if (questions['questions'].isEmpty) {
+            return Response.notFound(
+                jsonEncode({'message': 'No questions found for this quiz.'}),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                },
+            );
+        }
+
+        // إرجاع الأسئلة بشكل JSON صحيح
         final jsonQuestions = jsonEncode(questions);
         return Response.ok(
             jsonQuestions,
@@ -155,10 +183,17 @@ router.get('/student-quizzes/<quizId>', (Request request, String quizId) async {
             },
         );
     } catch (e) {
-        print(e);
-        return Response.internalServerError(body: 'Error: $e');
+        print("Error fetching quiz questions: $e");
+        return Response.internalServerError(
+            body: jsonEncode({'message': 'Error fetching quiz questions.', 'error': e.toString()}),
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+        );
     }
 });
+
 
 
     // عرض أحد المواد
