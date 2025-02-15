@@ -7,6 +7,7 @@
     <title>Add Doctor</title>
     <link rel="icon" href="/img/logo.png" sizes="48x32">
     <link rel="stylesheet" href="/style/add-doctor-style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -58,7 +59,7 @@
                     <label for="cvUpload">CV:</label>
                     <input type="file" id="cvUpload" name="cvUpload" accept="application/pdf">
                 </div>
-                <button type="submit" id="add-doctor-button">Add Doctor</button>
+                <button type="submit" onclick="showPopup()" class="btn" id="add-doctor-button">Add Doctor</button>
 
             </form>
         </section>

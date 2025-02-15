@@ -7,6 +7,7 @@
     <title>Add Course</title>
     <link rel="icon" href="/img/logo.png" sizes="48x32">
     <link rel="stylesheet" href="/style/add course.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -90,7 +91,7 @@
                 <label for="totalDegree">Course Total Degree:</label>
                 <input type="text" id="totalDegree" value="0" readonly>
             </div>
-            <button type="submit" id="add-course-btn">Add Course</button>
+            <button type="submit" onclick="showPopup()" class="btn" id="add-course-btn">Add Course</button>
         </form>
     </main>
     <script src="/script/add course.js"></script>

@@ -1,36 +1,40 @@
 document.getElementById('addCourseForm').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Prevent the form from submitting the default way
+    event.preventDefault();
 
     const formData = new FormData(this);
     formData.append('year', document.getElementById('yearFilter').value);
-    
-
-    
 
     const doctorData = JSON.parse(localStorage.getItem('userData'));
-
     formData.append("doctorId", doctorData.id);
 
     const response = await fetch('/add-course', {
         method: 'POST',
-        body: formData // Send FormData object directly
+        body: formData
     });
 
     if (!response.ok) {
-        alert(response.headers.get('Error'));
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: response.headers.get('Error'),
+            width: '320px',
+            heightAuto: false,
+            position: 'top',
+            showConfirmButton: true,
+            backdrop: false
+        });
     } else {
-        alert('Course added successfully');
-        window.location.href = '/staff/AddCourse';
+        showPopup();
+        // 🟢 Added: Force pagination reset
+        localStorage.setItem('forcePageReset', 'true');
+        setTimeout(() => {
+            window.location.href = '/staff/ShowCourses';
+        }, 3000);
     }
 });
 
 const fileInput = document.getElementById('course_image');
 const imageContainer = document.getElementById('picturecourse');
-
-
-
-
-
 
 fileInput.addEventListener('change', function() {
     const file = fileInput.files[0];
@@ -71,3 +75,23 @@ function changeValue(e) {
 function goBackToCoursePage() {
     window.location.href = '/staff/ShowCourses';
 }
+
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'Success !',
+        text: 'The course has been added successfully',
+        width: '320px', 
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false, 
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon' 
+        }
+    });
+}
+
+

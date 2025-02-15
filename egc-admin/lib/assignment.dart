@@ -26,6 +26,18 @@ class DatabaseHelper {
         teaching_assistantId INTEGER REFERENCES teaching_assistants(id)
       )
     ''');
+
+    _db.execute('''
+      CREATE TABLE IF NOT EXISTS assignment_submissions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        studentId INTEGER NOT NULL,
+        assignmentId INTEGER NOT NULL,
+        filename TEXT NOT NULL,
+        file BLOB,
+        submissionDate TEXT NOT NULL
+      )
+    ''');
+  
   }
 
   static void addAssignment(
@@ -280,31 +292,67 @@ class Assignment {
         return Response.internalServerError(body: 'Error: $e');
       }
     });
-    router.post('/student/submit-assignment',
-        (Request request, String id) async {
-      try {
-        var data = await request.readAsString(); // Expecting a JSON payload
-        var params = Uri.splitQueryString(data);
 
-        // Extracting fields from POST request
-        var studentId = params['studentId'];
-        var assignmentId = params['assignmentId'];
-        var filename = params['filename'];
+  router.post('/student/submit-assignment', (Request request) async {
+  try {
+    final form = request.multipartFormData;
+    final data = <String, dynamic>{};
+    Uint8List? file;
 
-        // You can handle file uploads here if necessary
+    await for (final formData in form) {
+      if (formData.name == "file") {
+        final fileName = formData.part.headers['content-disposition']
+            ?.split(';')
+            .firstWhere((element) => element.trim().startsWith('filename='))
+            .split('=')[1]
+            .replaceAll('"', '');
+        print('Uploaded file name: $fileName'); // Debugging
+        data.addAll({"fileName": fileName});
 
-        DatabaseHelper._db.execute('''
-          INSERT INTO assignments (studentId, filename, assignmentId)
-          VALUES (?, ?, ?);
-        ''', [studentId, filename, assignmentId]);
-
-        DatabaseHelper._db.dispose();
-
-        return Response.ok('Assignment submitted successfully');
-      } catch (e) {
-        return Response.internalServerError(body: 'Error: $e');
+        file = await formData.part.readBytes();
+      } else {
+        data.addAll({formData.name: await formData.part.readString()});
       }
-    });
+    }
+
+    // Debugging: Log the received data
+    print('Received data: $data');
+
+    // Ensure required fields are present
+    if (!data.containsKey('studentId') || !data.containsKey('assignmentId')) {
+      return Response.badRequest(body: 'Missing studentId or assignmentId');
+    }
+
+    // Check file size (10 MB limit)
+    if (file != null && file.length > 10485760) {
+      return Response.badRequest(body: 'File size exceeds 10 MB');
+    }
+
+    // Debugging: Log the database query
+    print('Executing database query...');
+
+    // Insert the assignment submission into the database
+    final statement = DatabaseHelper._db.prepare('''
+      INSERT INTO assignment_submissions (studentId, assignmentId, filename, file, submissionDate)
+      VALUES (?, ?, ?, ?, ?)
+    ''');
+    statement.execute([
+      int.parse(data['studentId']), // Convert to int
+      int.parse(data['assignmentId']), // Convert to int
+      data['fileName'],
+      file ?? Uint8List(0),
+      DateTime.now().toString(),
+    ]);
+    statement.dispose();
+
+    return Response.ok('Assignment submitted successfully');
+  } catch (e) {
+    print('Error: $e'); // Log the error
+    return Response.internalServerError(body: 'Error processing request: $e');
+  }
+});
+
+
     router.get('/student/get-assignments', (Request request, String id) async {
       try {
         var result = DatabaseHelper._db.select('SELECT * FROM assignments');

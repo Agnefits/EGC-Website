@@ -1,16 +1,39 @@
+// استدعاء `showPopup()` مع الرسالة المخصصة
+function showPopup(icon, title, text) {
+    Swal.fire({
+        icon: icon,
+        title: title,
+        text: text,
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        }
+    });
+}
+
 document.querySelectorAll('button[type="submit"]').forEach(button => {
-    button.addEventListener('click', function(event) {
+    button.addEventListener('click', function (event) {
         event.preventDefault();
 
         const assignmentElement = this.closest('.assignment');
         const assignmentId = assignmentElement.dataset.assignmentId;
         const fileInput = assignmentElement.querySelector('input[type="file"]');
-        const studentId = JSON.parse(localStorage.getItem("userData"))["id"]; // Example student ID, replace with actual value
+        const studentId = JSON.parse(localStorage.getItem("userData"))?.id;
 
-        // Check if a file is selected
         if (!fileInput.files.length) {
-            alert('Please select a file before submitting.');
-            return; // Stop if no file is selected
+            showPopup('warning', 'No File Selected', 'Please select a file before submitting.');
+            return;
+        }
+
+        if (!assignmentId || !studentId) {
+            showPopup('error', 'Invalid Data', 'Invalid assignment or student ID.');
+            return;
         }
 
         const formData = new FormData();
@@ -19,23 +42,29 @@ document.querySelectorAll('button[type="submit"]').forEach(button => {
         formData.append('file', fileInput.files[0]);
 
         fetch('/student/submit-assignment', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.text())
-            .then(result => {
-                if (result === 'Assignment submitted successfully') {
-                    alert('File uploaded successfully.');
-                } else {
-                    alert('Failed to upload file. Please try again.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while uploading the file.');
-            });
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(result => {
+            if (result === 'Assignment submitted successfully') {
+                showPopup('success', 'Success!', 'File uploaded successfully.');
+            } else {
+                showPopup('error', 'Upload Failed', 'Failed to upload file. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showPopup('error', 'Error', 'An error occurred while uploading the file.');
+        });
     });
 });
+
 
 
 document.getElementById('subject-filter').addEventListener('change', function() {
