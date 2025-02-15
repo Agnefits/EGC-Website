@@ -1,6 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // const courseData = JSON.parse(localStorage.getItem('courseData'));
+    // const courseId = courseData.id;
+
     const courseData = JSON.parse(localStorage.getItem('courseData'));
-    const courseId = courseData.id;
+    if (courseData) {
+        document.getElementById('name_c').innerText = courseData.name;
+        document.getElementById("log").src = courseData.photo ? "/courses/photo/" + courseData.id : "/img/img-course.png";
+    } else {
+        alert('Course ID is missing');
+        window.location.href = '/staff/ShowCourses';
+    }
 
     // Function to load grades when the page loads
     async function loadGrades() {
@@ -100,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function showPopup() {
     Swal.fire({
         icon: 'success',
-        title: 'Done!',
+        title: 'success!',
         text: 'Grades updated successfully',
         width: '320px',
         heightAuto: false,

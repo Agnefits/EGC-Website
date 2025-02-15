@@ -136,6 +136,11 @@ ul li:hover{
     object-fit: cover;
     box-shadow: -2px 2px 5px gray;
 }
+label {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0F2C4E;
+}
 
 .name_c {
     color: #0F2C4E;
