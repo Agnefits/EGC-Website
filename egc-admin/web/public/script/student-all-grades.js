@@ -19,15 +19,83 @@ function displayGrades(grades) {
 
     // Loop through each course and display its grades
     grades.forEach(grade => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>Course ID: ${grade.course_id}</td>
-            <td>Final Exam: ${grade.finalExamDegree}</td>
-            <td>Midterm: ${grade.midtermDegree}</td>
-            <td>Practical: ${grade.practicalDegree}</td>
-            <td>Attendance: ${grade.sectionAttendance + grade.lectureAttendance}</td>
+        tableBody.innerHTML += `
+                <tr>
+                  <td> ${grade.name}</td>
+                  </tr>
+                  <tr>
+                <td>finalExamDegree</td>
+                  <td> ${grade.finalExamDegree}</td>
+                  <td>--</td>
+                  <td>-- </td>
+                  <td> --</td>
+                  </tr>
+
+                  <tr>
+                  <td> midtermDegree</td>
+<td> ${grade.midtermDegree}</td>
+  <td>--</td>
+ <td>-- </td>
+<td> --</td>
+</tr>
+
+
+<tr>
+<td> practicalDegree</td>
+<td> ${grade.practicalDegree}</td>
+  <td>--</td>
+    <td>-- </td>
+     <td> --</td>
+     </tr>
+     
+<tr>
+<td>Total Attendance</td>
+<td> ${grade.sectionAttendance + grade.lectureAttendance}</td>
+  <td>--</td>
+ <td>-- </td>
+<td> --</td> 
+</tr>
+                
+                <tr>
+                    <td>Report</td>
+                    <td>40.00</td>
+                    <td>39.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Attendance</td>
+                    <td>10.00</td>
+                    <td>10.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Midterm Exam</td>
+                    <td>20.00</td>
+                    <td>15.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Final Exam</td>
+                    <td>30.00</td>
+                    <td>29.00</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td>100.00</td>
+                    <td>93.00</td>
+                    <td>93.00%</td>
+                    <td>-</td>
+                </tr>
+           
         `;
-        tableBody.appendChild(row);
+
+        
+        
     });
 }
 

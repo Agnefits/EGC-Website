@@ -39,14 +39,7 @@ document.getElementById('addstudentForm').addEventListener('submit', async funct
                 customClass: {
                     popup: 'custom-popup',
                 },
-                didOpen: () => {
-                    const popup = Swal.getPopup();
-                    const closeBtn = document.createElement('button');
-                    closeBtn.innerHTML = '&times;';
-                    closeBtn.classList.add('close-btn');
-                    closeBtn.onclick = () => Swal.close();
-                    popup.appendChild(closeBtn);
-                },
+          
                 timer: 3000, // Auto-close after 3 seconds
                 showConfirmButton: false // Hide the "OK" button
             });
@@ -71,30 +64,21 @@ document.getElementById('addstudentForm').addEventListener('submit', async funct
             });
         }
     } catch (error) {
-        console.error("Fetch Error:", error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'A network error occurred. Please try again later.',
-            position: 'top',
-            backdrop: false,
-            customClass: {
-                popup: 'custom-popup',
-            },
-            didOpen: () => {
-                const popup = Swal.getPopup();
-                const closeBtn = document.createElement('button');
-                closeBtn.innerHTML = '&times;';
-                closeBtn.classList.add('close-btn');
-                closeBtn.onclick = () => Swal.close();
-                popup.appendChild(closeBtn);
-            },
-            timer: 3000,
-            showConfirmButton: false
-        });
+    //     console.error("Fetch Error:", error);
+    //     Swal.fire({
+    //         icon: 'error',
+    //         title: 'Error',
+    //         text: 'A network error occurred. Please try again later.',
+    //         position: 'top',
+    //         backdrop: false,
+    //         customClass: {
+    //             popup: 'custom-popup',
+    //         },
+    //         timer: 3000,
+    //     });
+    // }
     }
 })
-
 document.addEventListener('DOMContentLoaded', () => {
     const studentData = JSON.parse(localStorage.getItem('studentData'));
 

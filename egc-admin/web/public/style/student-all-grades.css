@@ -310,9 +310,17 @@ strong {
     display: block;
     margin: 10px 0;
 }
-.tr{
+.tr {
     color: #0f2b4e;
     font-weight: 600;
+    text-align: center; /* Centers text horizontally */
+    vertical-align: middle; /* Centers text vertically */
+    justify-content: center; /* Not needed for table cells */
+    
+}
+tbody td, tbody th {
+    text-align: center; /* Centers text horizontally */
+    vertical-align: middle; /* Centers text vertically */
 }
 @media (max-width: 768px) {
     table {

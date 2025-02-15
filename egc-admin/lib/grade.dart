@@ -73,20 +73,19 @@ static List<Map<String, dynamic>> getGrades(int courseId) {
 static List<Map<String, dynamic>> fetchStudentGrades(int studentId) {
     final db = sqlite3.open('egcDB.db');
     final results = db.select(
-        'SELECT * FROM student_course_degrees WHERE student_id = ?',
+        'SELECT c.id , g.course_id, g.finalExamDegree , g.midtermDegree , g.practicalDegree , g.sectionAttendance , g.lectureAttendance, c.name from courses c left JOIN student_course_degrees g  on g.course_id = c.id WHERE g.student_id = ?',
         [studentId]);
 
     // Convert the results to a list of maps
     final List<Map<String, dynamic>> grades = [];
     for (var row in results) {
       grades.add({
-        'id': row['id'],
+        'name': row['name'],
         'finalExamDegree': row['finalExamDegree'],
         'midtermDegree': row['midtermDegree'],
         'practicalDegree': row['practicalDegree'],
         'sectionAttendance': row['sectionAttendance'],
-        'lectureAttendance': row['lectureAttendance'],
-        'course_id': row['course_id'],
+        'lectureAttendance': row['lectureAttendance']
       });
     }
 
