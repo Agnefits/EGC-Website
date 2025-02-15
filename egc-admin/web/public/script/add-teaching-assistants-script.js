@@ -1,27 +1,5 @@
-document.getElementById("showPassword").addEventListener("click", function() {
-    var x = document.getElementById("password");
-    if (x.type === "password") {
-        x.type = "text";
-    } else {
-        x.type = "password";
-    }
-});
-const fileInput = document.getElementById('profilePicUpload');
-const imageContainer = document.getElementById('picture');
-
-fileInput.addEventListener('change', function() {
-    console.log(fileInput.files[0]);
-    const file = fileInput.files[0];
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        imageContainer.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-});
-
 document.getElementById('addTeachingAssistantForm').addEventListener('submit', async function(event) {
-    event.preventDefault(); // منع الإرسال الافتراضي للنموذج
-
+    event.preventDefault(); // Prevent the default form submission
 
     try {
         const formData = new FormData(this); // Automatically handles file inputs
@@ -32,40 +10,49 @@ document.getElementById('addTeachingAssistantForm').addEventListener('submit', a
         });
 
         if (!response.ok) {
-            alert(response.headers.get('Error'));
+            // Handle server error response
+            const errorText = await response.headers.get('Error') || 'An error occurred while adding the Teaching Assistant.';
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error processing request',
+                width: '320px',
+                heightAuto: false,
+                position: 'top',
+                backdrop: false,
+                customClass: {
+                    popup: 'custom-popup',
+                },
+                timer: 3000, // Auto-close after 3 seconds
+                showConfirmButton: false // Hide "OK" button
+            });
         } else {
-            showPopup(); // استدعاء الـ popup
+            showPopup(); // Call the success pop-up function
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('An error occurred while adding the Teaching Assistant');
+        // Show error pop-up for network issues
+        Swal.fire({
+            icon: 'error',
+            title: 'Network Error',
+            text: 'A network error occurred. Please try again later.',
+            position: 'top',
+            backdrop: false,
+            customClass: {
+                popup: 'custom-popup',
+            },
+            timer: 3000, // Auto-close after 3 seconds
+            showConfirmButton: false
+        });
     }
 });
 
-// وظيفة لتحميل قائمة المعيدين وعرضها في القائمة
-async function loadTeachingAssistants() {
-    try {
-        const response = await fetch('/teaching-assistants');
-        if (!response.ok) {
-            throw new Error('Network response was not ok.');
-        }
-
-        const teachingAssistants = await response.json();
-        // يمكن الآن استخدام البيانات لتحميلها وعرضها في واجهة المستخدم
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-
-// تحميل المعيدين عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', loadTeachingAssistants);
-
-
+// Function to show success pop-up
 function showPopup() {
     Swal.fire({
         icon: 'success',
-        title: 'successfully !',
-        text: 'Teaching Assistant added',
+        title: 'Successfully Added!',
+        text: 'Teaching Assistant added successfully.',
         width: '320px', 
         heightAuto: false,
         position: 'top',
@@ -77,7 +64,7 @@ function showPopup() {
             icon: 'custom-icon' 
         },
         didClose: () => {
-            window.location.href = '/admin/AddTeachingAssistant';
+            window.location.href = '/admin/AddTeachingAssistant'; // Redirect after success
         }
     });
 }

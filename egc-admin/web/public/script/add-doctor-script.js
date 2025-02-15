@@ -57,7 +57,7 @@ document.getElementById('addDoctorForm').addEventListener('submit', async functi
             Swal.fire({
                 icon: 'error',
                 title: 'Error!',
-                text: errorMsg,
+                text: 'Error processing request',
                 width: '320px',
                 heightAuto: false,
                 position: 'top',
