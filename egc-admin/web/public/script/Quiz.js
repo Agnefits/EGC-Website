@@ -5,6 +5,12 @@ const homeBox = document.querySelector(".home-box");
 const quizBox = document.querySelector(".quiz-box");
 const resultBox = document.querySelector(".result-box");
 
+
+let quizTime; // عدد الثواني المتاحة للاختبار
+let timerInterval; // لتخزين معرف المؤقت حتى يمكن إيقافه
+const timerDisplay = document.querySelector(".timer"); // عنصر لعرض الوقت المتبقي
+
+
 let questionCounter = 0;
 let currentQuestion;
 let availableQuestion = [];
@@ -18,31 +24,41 @@ const urlParams = new URLSearchParams(window.location.search);
 const quizId = urlParams.get('quizId');
 document.querySelector('.Quiz_id').innerText = quizId;
 
+
+
 async function fetchQuizzes() {
     try {
+        // جلب البيانات من الـ API
         const response = await fetch(`/student-quizzes/${quizId}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const { questions, count } = await response.json();
-
-        if (!questions || questions.length === 0) {
-            console.error('No quizzes found or empty response:', questions);
-            document.querySelector('.Total-question').innerText = '0';
-            return;
+        const { questions, count, time } = await response.json(); // استخراج `time`
+        if (time && !isNaN(time)) {
+            quizTime = parseInt(time) * 60; // تحويل الدقائق إلى ثوانٍ مع التأكد من أنها رقم صحيح
+        } else {
+            console.error('Invalid time received:', time);
+            quizTime = 0;  // تعيين قيمة افتراضية في حال كانت القيمة غير صالحة
         }
 
+        // فرز الأسئلة حسب ID
         availableQuestion = questions.sort((a, b) => a.id - b.id);
-        document.querySelector('.Total-question').innerText = count;
 
+        // لا تعرض الأسئلة إلا إذا لم تكن هناك محاولة سابقة
         const studentId = JSON.parse(localStorage.getItem('userData')).id;
         const previousAttempt = await checkPreviousAttempt(studentId, quizId);
 
+        // إذا كانت هناك محاولة سابقة
         if (previousAttempt) {
+
+            homeBox.classList.add("hide");
             quizBox.classList.add("hide");
             resultBox.classList.remove("hide");
-            displayResult(previousAttempt);
+            // عرض النتيجة
+            resultBox.querySelector(".Total-Score").innerText = `${previousAttempt.score}`;
+        } else {
+            document.querySelector('.Total-question').innerText = count;  // عرض عدد الأسئلة
         }
 
     } catch (error) {
@@ -51,30 +67,48 @@ async function fetchQuizzes() {
     }
 }
 
+function startTimer() {
+    if (isNaN(quizTime) || quizTime <= 0) {
+        console.error("Invalid quizTime:", quizTime);
+        timerDisplay.textContent = "Error: No Time Set"; // عرض رسالة خطأ بدلاً من NaN:NaN
+        return;
+    }
+
+    function updateTimer() {
+        let minutes = Math.floor(quizTime / 60);
+        let seconds = quizTime % 60;
+        timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        
+        if (quizTime <= 0) {
+            clearInterval(timerInterval);
+            quizOver(); // إنهاء الاختبار تلقائيًا عند انتهاء الوقت
+        }
+        quizTime--;
+    }
+
+    updateTimer(); // تحديث الوقت فورًا عند بدء المؤقت
+    timerInterval = setInterval(updateTimer, 1000); // تحديث كل ثانية
+}
+
 async function checkPreviousAttempt(studentId, quizId) {
     try {
-        const response = await fetch(`/courses/student-quizzes/${studentId}`);
+        const response = await fetch(`/courses/student-quizzes/${studentId}/${quizId}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const attempts = await response.json();
-        return attempts.find(attempt => attempt.quizId === quizId);
+        console.log('Attempts data:', attempts);  // طباعة البيانات المرسلة من الخادم
+
+        return attempts.find(attempt => attempt.quizId === parseInt(quizId));
     } catch (error) {
         console.error('Error checking previous attempt:', error);
         return null;
     }
 }
 
-function displayResult(attempt) {
-    resultBox.querySelector(".Total-question").textContent = attempt.totalQuestions;
-    resultBox.querySelector(".Total-correct").textContent = attempt.correctAnswers;
-    resultBox.querySelector(".Total-wrong").textContent = attempt.wrongAnswers;
 
-    const percentage = (attempt.correctAnswers / attempt.totalQuestions) * 100;
-    resultBox.querySelector(".Total-Percentage").textContent = `${percentage.toFixed(2)}%`;
-    resultBox.querySelector(".Total-Score").textContent = `${attempt.score} / ${attempt.totalQuestions * attempt.degree}`;
-}
+
 
 function getNewQuestion() {
     if (questionCounter >= availableQuestion.length) {
@@ -120,7 +154,7 @@ function getNewQuestion() {
 
 
 
-function startQuiz() {
+async function startQuiz() {
     if (availableQuestion.length === 0) {
         alert('No questions available to start the quiz.');
         return;
@@ -133,6 +167,7 @@ function startQuiz() {
     questionCounter = 0;
     correctAnswers = 0;
     totalScore = 0;
+    startTimer(); 
     getNewQuestion();
 }
 
@@ -205,11 +240,6 @@ function showCorrectAnswer() {
             }
         });
     } else if (currentQuestion.type === 'multi') {
-        // Array.from(optionContainer.children).forEach(option => {
-        //     if (String.fromCharCode(65 + parseInt(option.id)) === currentQuestion.correctAnswer) {
-        //         option.classList.add("correct");
-        //     }
-        // });
         const optionLen = optionContainer.children.length;
         for (let i = 0; i < optionLen; i++) {
             if (String.fromCharCode(65 + i) === currentQuestion.correctAnswer) {
@@ -226,167 +256,6 @@ function showCorrectAnswer() {
 }
 
 
-
-
-
-// function getResult(element) {
-//     const selectedOptionIndex = parseInt(element.id);
-//     let selectedOptionValue;
-
-//     if (currentQuestion.type === 'bool') {
-//         selectedOptionValue = element.textContent.toLowerCase();
-//     } else if (currentQuestion.type === 'multi') {
-//         selectedOptionValue = String.fromCharCode(65 + selectedOptionIndex);
-//     } else {
-//         // إذا كانت الإجابة من نوع النص المفتوح
-//         const inputElement = optionContainer.querySelector(".text-answer-input");
-//         const userAnswer = inputElement.value.trim().toLowerCase();  // إجابة الطالب
-//         const correctAnswer = currentQuestion.correctAnswer.toLowerCase();  // الإجابة الصحيحة
-        
-//         // التحقق من الإجابة
-//         if (userAnswer === correctAnswer) {
-//             inputElement.classList.add("correct");  // إضافة تنسيق للإجابة الصحيحة
-//             correctAnswers++;
-//             totalScore += currentQuestion.degree;
-//         } else {
-//             inputElement.classList.add("wrong");  // تنسيق للإجابة الخاطئة
-//             // عرض الإجابة الصحيحة
-//             const correctAnswerElement = document.createElement("div");
-//             correctAnswerElement.textContent = `Correct Answer: ${currentQuestion.correctAnswer}`;
-//             correctAnswerElement.classList.add("correct-answer");
-//             optionContainer.appendChild(correctAnswerElement);
-//         }
-//         return;  // إنهاء الدالة بعد التحقق من الإجابة النصية
-//     }
-
-//     const answerData = {
-//         answers: selectedOptionValue,
-//         questionId: currentQuestion.id,
-//         studentId: JSON.parse(localStorage.getItem('userData')).id
-//     };
-
-//     answers.push(answerData);
-//     recordAnswers();
-
-//     let correctAnswer;
-//     if (currentQuestion.type === 'bool') {
-//         correctAnswer = currentQuestion.correctAnswer.toLowerCase();
-//     } else if (currentQuestion.type === 'multi') {
-//         correctAnswer = currentQuestion.correctAnswer;
-//     }
-
-//     if (selectedOptionValue === correctAnswer) {
-//         element.classList.add("correct");
-//         correctAnswers++;
-//         totalScore += currentQuestion.degree;
-//     } else {
-//         element.classList.add("wrong");
-//         if (currentQuestion.type === 'bool') {
-//             Array.from(optionContainer.children).forEach(option => {
-//                 if (option.textContent.toLowerCase() === currentQuestion.correctAnswer.toLowerCase()) {
-//                     option.classList.add("correct");
-//                 }
-//             });
-//         } else if (currentQuestion.type === 'multi') {
-//             Array.from(optionContainer.children).forEach(option => {
-//                 if (String.fromCharCode(65 + parseInt(option.id)) === currentQuestion.correctAnswer) {
-//                     option.classList.add("correct");
-//                 }
-//             });
-//         }
-//     }
-
-//     unclickableOptions();
-
-//     if (questionCounter >= availableQuestion.length) {
-//         setTimeout(quizOver, 1000);
-//     } else {
-//         setTimeout(getNewQuestion, 1000);
-//     }
-// }
-
-
-
-// function getResult(element) {
-//     const selectedOptionIndex = parseInt(element.id);
-//     let selectedOptionValue;
-
-//     if (currentQuestion.type === 'bool') {
-//         selectedOptionValue = element.textContent.toLowerCase();
-//     } else if (currentQuestion.type === 'multi') {
-//         selectedOptionValue = String.fromCharCode(65 + selectedOptionIndex);
-//     } else {
-//         // إذا كانت الإجابة من نوع النص المفتوح، قم بالحصول على القيمة المدخلة من المستخدم
-//         const inputElement = optionContainer.querySelector(".text-answer-input");
-//         selectedOptionValue = inputElement ? inputElement.value.trim().toLowerCase() : "";
-//     }
-
-//     // تسجيل الإجابة
-//     const answerData = {
-//         answers: selectedOptionValue,
-//         questionId: currentQuestion.id,
-//         studentId: JSON.parse(localStorage.getItem('userData')).id
-//     };
-
-//     answers.push(answerData);
-//     recordAnswers();
-
-//     let correctAnswer = currentQuestion.correctAnswer.toLowerCase();  // الإجابة الصحيحة
-//     if (currentQuestion.type === 'bool') {
-//         correctAnswer = currentQuestion.correctAnswer.toLowerCase();
-//     } else if (currentQuestion.type === 'multi') {
-//         correctAnswer = currentQuestion.correctAnswer;
-//     } else {
-//         // إذا كانت الإجابة من نوع النص المفتوح، قم باستخدام الإجابة الصحيحة المخزنة في correctAnswer
-//         correctAnswer = currentQuestion.correctAnswer.toLowerCase();
-//     }
-
-//     if (selectedOptionValue === correctAnswer) {
-//         if (currentQuestion.type === 'bool' || currentQuestion.type === 'multi') {
-//             element.classList.add("correct");
-//         } else {
-//             const inputElement = optionContainer.querySelector(".text-answer-input");
-//             inputElement.classList.add("correct");
-//         }
-//         correctAnswers++;
-//         totalScore += currentQuestion.degree;
-//     } else {
-//         if (currentQuestion.type === 'bool') {
-//             element.classList.add("wrong");
-//             Array.from(optionContainer.children).forEach(option => {
-//                 if (option.textContent.toLowerCase() === currentQuestion.correctAnswer.toLowerCase()) {
-//                     option.classList.add("correct");
-//                 }
-//             });
-//         } else if (currentQuestion.type === 'multi') {
-//             element.classList.add("wrong");
-//             Array.from(optionContainer.children).forEach(option => {
-//                 if (String.fromCharCode(65 + parseInt(option.id)) === currentQuestion.correctAnswer) {
-//                     option.classList.add("correct");
-//                 }
-//             });
-//         } else {
-//             // إذا كانت الإجابة مفتوحة، قم بإظهار الإجابة الصحيحة
-//             const inputElement = optionContainer.querySelector(".text-answer-input");
-//             inputElement.classList.add("wrong");
-//             const correctAnswerElement = document.createElement("div");
-//             correctAnswerElement.textContent = `Correct Answer: ${currentQuestion.correctAnswer}`;
-//             correctAnswerElement.classList.add("correct-answer");
-//             optionContainer.appendChild(correctAnswerElement);
-//         }
-//     }
-
-//     unclickableOptions();
-
-//     // إذا كان هذا هو السؤال الأخير، اعرض النتيجة مباشرة بعد 1 ثانية
-//     if (questionCounter >= availableQuestion.length) {
-//         setTimeout(quizOver, 1000); // الانتقال إلى النهاية بعد فترة قصيرة
-//     } else {
-//         setTimeout(getNewQuestion, 1000); // عرض السؤال التالي بعد فترة قصيرة
-//     }
-// }
-
-
 function next()
 {
     if (questionCounter >= availableQuestion.length) {
@@ -397,6 +266,7 @@ function next()
 }
 
 async function quizOver() {
+    clearInterval(timerInterval); // إيقاف المؤقت عند انتهاء الاختبار
     quizBox.classList.add("hide");
     resultBox.classList.remove("hide");
     quizResult();
@@ -406,10 +276,6 @@ async function quizOver() {
         score: totalScore,
         quizId: quizId,
         studentId: JSON.parse(localStorage.getItem('userData')).id,
-        totalQuestions: availableQuestion.length,
-        correctAnswers: correctAnswers,
-        wrongAnswers: availableQuestion.length - correctAnswers,
-        degree: currentQuestion.degree
     };
     await recordAttempt(attemptData);
 }
@@ -422,7 +288,9 @@ function quizResult() {
 
     const percentage = (correctAnswers / availableQuestion.length) * 100; // Use availableQuestion.length
     resultBox.querySelector(".Total-Percentage").textContent = `${percentage.toFixed(2)}%`;
-    resultBox.querySelector(".Total-Score").textContent = `${totalScore} / ${availableQuestion.length * currentQuestion.degree}`; // Use availableQuestion.length
+    resultBox.querySelector(".Total-Score").textContent = `${totalScore} / ${availableQuestion.length * currentQuestion.degree}`; 
+
+// Use availableQuestion.length
 }
 
 

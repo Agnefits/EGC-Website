@@ -32,14 +32,15 @@ class DatabaseHelper {
 
   static int addQuiz(Map<String, dynamic> quizData) {
     final statement = _db.prepare('''
-      INSERT INTO quizzes (courseId, title, date, deadline, ${quizData.containsKey("doctorId") ? "doctorId" : "teaching_assistantId"})
-      VALUES (?, ?, ?, ?, ?)
+      INSERT INTO quizzes (courseId, title, date, deadline, time, ${quizData.containsKey("doctorId") ? "doctorId" : "teaching_assistantId"})
+      VALUES (?, ?, ?, ?, ?, ?)
     ''');
     statement.execute([
       quizData['courseId'],
       quizData['title'],
       quizData['date'],
       quizData['deadline'],
+      quizData['time'],
       quizData[quizData.containsKey("doctorId")
           ? "doctorId"
           : "teaching_assistantId"]
@@ -55,10 +56,10 @@ class DatabaseHelper {
   static void updateQuiz(String id, Map<String, dynamic> quizData) {
     final statement = _db.prepare('''
       UPDATE quizzes
-      SET title = ?, date = ?, deadline = ?
+      SET title = ?, date = ?, deadline = ? , time = ?
       WHERE id = ?
     ''');
-    List data = [quizData['title'], quizData['date'], quizData['deadline'], id];
+    List data = [quizData['title'], quizData['date'], quizData['deadline'], quizData['time'], id];
 
     statement.execute(data);
     statement.dispose();
@@ -73,7 +74,7 @@ class DatabaseHelper {
 
   static List<Map<String, dynamic>> getAllQuizzes(String studentId) {
 final results = _db.select(
-  'SELECT Q.id, Q.title, Q.date, Q.deadline, '
+  'SELECT Q.id, Q.title, Q.date, Q.deadline, Q.time,'
   'CASE WHEN Q.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor '
   'FROM quizzes Q '
   'LEFT JOIN doctors D ON Q.doctorId = D.id '
@@ -99,13 +100,14 @@ final results = _db.select(
 
   static List<Map<String, dynamic>> getQuizzes(String courseId) {
     final results = _db.select(
-        'SELECT Q.id, Q.title, Q.date, Q.deadline, CASE WHEN Q.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor FROM quizzes Q LEFT JOIN doctors D ON Q.doctorId = D.id LEFT JOIN teaching_assistants T ON Q.teaching_assistantId = T.id WHERE Q.courseId = $courseId');
+        'SELECT Q.id, Q.title, Q.date, Q.deadline, Q.time, CASE WHEN Q.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor FROM quizzes Q LEFT JOIN doctors D ON Q.doctorId = D.id LEFT JOIN teaching_assistants T ON Q.teaching_assistantId = T.id WHERE Q.courseId = $courseId');
     return results
         .map((row) => {
               'id': row['id'],
               'title': row['title'],
               'date': row['date'],
               'deadline': row['deadline'],
+              'time': row['time'],
               'instructor': row['instructor'],
             })
         .toList();
@@ -113,13 +115,14 @@ final results = _db.select(
 
   static Map<String, dynamic> getQuiz(String id) {
     final results = _db.select(
-        'SELECT Q.id, Q.title, Q.date, Q.deadline, CASE WHEN Q.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor FROM quizzes Q LEFT JOIN doctors D ON Q.doctorId = D.id LEFT JOIN teaching_assistants T ON Q.teaching_assistantId = T.id WHERE Q.id = $id');
+        'SELECT Q.id, Q.title, Q.date, Q.deadline, Q.time, CASE WHEN Q.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor FROM quizzes Q LEFT JOIN doctors D ON Q.doctorId = D.id LEFT JOIN teaching_assistants T ON Q.teaching_assistantId = T.id WHERE Q.id = $id');
     var quiz = results.first;
     return {
       'id': quiz['id'],
       'title': quiz['title'],
       'date': quiz['date'],
       'deadline': quiz['deadline'],
+      'time': quiz['time'],
       'instructor': quiz['instructor'],
     };
   }

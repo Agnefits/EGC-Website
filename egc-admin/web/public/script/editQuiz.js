@@ -67,6 +67,8 @@ async function loadQuizData() {
     } else {
       document.getElementById('title').value = quizData[0].title;
       document.getElementById('deadline').value = quizData[0].deadline;
+      document.getElementById('time').value = quizData[0].time;
+
 
       for (let i = 1; i < quizData.length; i++) {
         addQuestion(i != 1, quizData[i]);

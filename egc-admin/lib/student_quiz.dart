@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:sqlite3/sqlite3.dart';
 
+
 class DatabaseHelper {
   static late Database _db;
 
@@ -94,52 +95,62 @@ static void addStudentQuestionAnswers(String quizId, String studentId, List<Map<
     statement.dispose();
   }
 
-  static List<Map<String, dynamic>> getStudentQuizAttempts(String quizId) {
-    final results = _db.select(
-        'SELECT SQ.id, SQ.date, SQ.score, S.Name student FROM student_quiz_attempts SQ LEFT JOIN students S ON SQ.studentId = S.id WHERE SQ.quizId = ' +
-            quizId);
-    return results
-        .map((row) => {
-              'id': row['id'],
-              'date': row['date'],
-              'score': row['score'],
-              'student': row['student'],
-            })
-        .toList();
-  }
+static List<Map<String, dynamic>> getStudentQuizAttempts(String studentId , String quizId) {
+  final results = _db.select(
+      'SELECT SQ.id, SQ.date, SQ.score, SQ.studentId, SQ.quizId FROM student_quiz_attempts SQ WHERE SQ.quizId = ' +
+          quizId + ' AND SQ.studentId = ' + studentId);
+  return results
+      .map((row) => {
+            'id': row['id'],
+            'quizId': row['quizId'],
+            'date': row['date'],
+            'score': row['score'],
+            'studentId': row['studentId'],
+          })
+      .toList();
+}
+
 
 
 static Map<String, dynamic> getQuizQuestionsWithCount(String quizId) {
-    final results = _db.select('SELECT * FROM quiz_questions WHERE quizId = ?', [quizId]);
+  final results = _db.select('''
+    SELECT q.*, quizzes.time 
+    FROM quiz_questions q
+    JOIN quizzes ON q.quizId = quizzes.id
+    WHERE q.quizId = ?
+  ''', [quizId]);
 
-    List<Map<String, dynamic>> questions = results.map((row) {
-        List<dynamic> answers = [];
-        // تحقق من وجود قيمة صالحة قبل فك التشفير
-        if (row['answers'] != null && row['answers'].isNotEmpty) {
-            try {
-                answers = jsonDecode(row['answers']);
-            } catch (e) {
-                print("Error decoding answers: $e");
-                answers = [];  // في حال حدوث خطأ، قم بتعيين الإجابات إلى قائمة فارغة
-            }
-        }
-
-        return {
-            'id': row['id'],
-            'title': row['title'],
-            'type': row['type'],
-            'answers': answers,
-            'correctAnswer': row['correctAnswer'],
-            'degree': row['degree'],
-        };
-    }).toList();
-
-    int count = results.length;
+  List<Map<String, dynamic>> questions = results.map((row) {
+    List<dynamic> answers = [];
+    // تحقق من وجود قيمة صالحة قبل فك التشفير
+    if (row['answers'] != null && row['answers'].isNotEmpty) {
+      try {
+        answers = jsonDecode(row['answers']);
+      } catch (e) {
+        print("Error decoding answers: $e");
+        answers = [];  // في حال حدوث خطأ، قم بتعيين الإجابات إلى قائمة فارغة
+      }
+    }
 
     return {
-        'questions': questions,
-        'count': count,
+      'id': row['id'],
+      'title': row['title'],
+      'type': row['type'],
+      'answers': answers,
+      'correctAnswer': row['correctAnswer'],
+      'degree': row['degree'],
+      'time': row['time'], // إضافة الوقت هنا
     };
+  }).toList();
+
+  int count = results.length;
+
+  // إرجاع time مع count
+  return {
+    'questions': questions,
+    'count': count,
+    'time': results.isNotEmpty ? results.first['time'] : null, // إرجاع قيمة time من السطر الأول
+  };
 }
 
 
@@ -148,6 +159,7 @@ static Map<String, dynamic> getQuizQuestionsWithCount(String quizId) {
 }
 
 class StudentQuiz {
+
   final router;
   StudentQuiz(this.router) {
     main();
@@ -198,10 +210,15 @@ router.get('/student-quizzes/<quizId>', (Request request, String quizId) async {
 
     // عرض أحد المواد
     // Endpoint لجلب المحاولات السابقة للطالب بناءً على studentId
-router.get('/courses/student-quizzes/<studentId>', (Request request, String studentId) async {
+router.get('/courses/student-quizzes/<studentId>/<quizId>', (Request request, String studentId, String quizId) async {
     try {
-        final attempts = DatabaseHelper.getStudentQuizAttempts(studentId);
+        // الحصول على محاولات الطالب بناءً على studentId و quizId
+        final attempts = await DatabaseHelper.getStudentQuizAttempts(studentId,quizId);
+        
+        // تحويل النتائج إلى JSON
         final jsonAttempts = jsonEncode(attempts);
+        
+        // إرجاع النتيجة مع رأس HTTP
         return Response.ok(
             jsonAttempts,
             headers: {
@@ -210,9 +227,11 @@ router.get('/courses/student-quizzes/<studentId>', (Request request, String stud
             },
         );
     } catch (e) {
+        // في حال حدوث خطأ
         return Response.internalServerError(body: 'Error: $e');
     }
 });
+
 
 
 
