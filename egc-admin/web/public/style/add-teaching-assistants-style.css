@@ -79,7 +79,7 @@ label.male,
     
 }
 
-#add-teaching-assistant-button {
+.btn {
     background-color: #0f2b4e;
     /* Green button */
     color: white;
@@ -91,7 +91,7 @@ label.male,
     font-weight: 600;
     width: 100%;
 }
-#add-teaching-assistant-button:hover
+.btn:hover
  {
     background-color: #0F2B4E;
     box-shadow: 0 4px 10px #1e88e5;
@@ -164,6 +164,10 @@ label {
 
 .nav-items{margin-top: -40px;margin-left: -40px;cursor: pointer;}
 
+.custom-popup {
+    padding: 5px !important;  /* تقليل المسافات الداخلية */
+    min-height: 20px !important; /* تقليل الطول */
+}
 
 /* Responsive Styles */
 @media (max-width: 768px) {

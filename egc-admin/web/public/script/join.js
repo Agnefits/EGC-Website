@@ -57,7 +57,26 @@ document.getElementById("join-Student").addEventListener("submit", async functio
     if (!response.ok) {
         alert(response.headers.get('Error'));
     } else {
-        alert('Teaching Assistant joined');
+        showPopup();
     }
 });
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'success!',
+        text: 'The teaching assistant has been joined',
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        }
+    });
+
+ 
+}
 

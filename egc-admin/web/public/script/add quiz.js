@@ -134,32 +134,96 @@ function changeQuestionType(questionsId) {
   questionContent.dataType = type;
 }
 
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'Success !',
+        text: 'The course has been added successfully',
+        width: '320px', 
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false, 
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon' 
+        }
+    });
+}
+
+// دالة عرض النافذة المنبثقة عند النجاح
+function showPopup() {
+  Swal.fire({
+      icon: 'success',
+      title: 'Success !',
+      text: 'The quiz has been added successfully',
+      width: '320px', 
+      heightAuto: false,
+      position: 'top',
+      showConfirmButton: false,
+      timer: 3000,
+      backdrop: false, 
+      customClass: {
+          popup: 'custom-popup',
+          icon: 'custom-icon' 
+      }
+  });
+}
+
+// دالة عرض النافذة المنبثقة عند الفشل
+function showErrorPopup(message) {
+  Swal.fire({
+      icon: 'error',
+      title: 'Failed!',
+      text: message || 'An error occurred while adding the quiz. Please try again.',
+      width: '320px',
+      heightAuto: false,
+      position: 'top',
+      showConfirmButton: true,
+      backdrop: false,
+      customClass: {
+          popup: 'custom-popup',
+          icon: 'custom-icon'
+      }
+  });
+}
+
+// إضافة استماع لحدث إرسال النموذج
 document.getElementById("addQuizForm").addEventListener("submit", function (event) {
   event.preventDefault();
   let formData = new FormData(this);
 
+  // استرجاع بيانات المادة من localStorage
   const courseData = JSON.parse(localStorage.getItem('courseData'));
-
   formData.append("courseId", courseData.id);
 
+  // استرجاع بيانات المستخدم وإضافة معرفه
   const userData = JSON.parse(localStorage.getItem('userData'));
-
   if (userData["role"] == 'Doctor')
-    formData.append("doctorId", userData.id);
+      formData.append("doctorId", userData.id);
   else
-    formData.append("teaching_assistantId", userData.id);
+      formData.append("teaching_assistantId", userData.id);
 
-  // Send quiz data via POST request
+  // إرسال بيانات الاختبار عبر طلب POST
   fetch('/add-quiz', {
       method: 'POST',
       body: formData,
-    })
-    .then(response => response.text())
-    .then(result => {
-      alert(result);
-      window.location.href = '/staff/Course/Quizzes';
-    })
-    .catch(error => {
+  })
+  .then(response => {
+      if (!response.ok) {
+          throw new Error(`Failed to add quiz: ${response.statusText}`);
+      }
+      return response.text();
+  })
+  .then(result => {
+      showPopup(); // عرض النافذة المنبثقة عند النجاح
+      setTimeout(() => {
+          window.location.href = '/staff/Course/Quizzes'; // إعادة التوجيه بعد 3 ثوانٍ
+      }, 3000);
+  })
+  .catch(error => {
       console.error('Error:', error);
-    });
+      showErrorPopup(error.message || "Failed to add the quiz. Please check your network and try again."); // عرض النافذة المنبثقة للخطأ
+  });
 });

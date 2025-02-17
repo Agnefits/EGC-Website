@@ -87,18 +87,7 @@ label.male,
 {
 margin-left: -35px;
 }
-#update-teaching-assistant-button {
-    background-color: #0f2b4e;
-    /* Green button */
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    width: 100%;
-}
+
 
 #update-teaching-assistant-button:hover {
     box-shadow: 0 4px 10px #1e88e5
@@ -201,5 +190,26 @@ label{
     label {
         font-size: 14px; 
     }
+}
+
+.btn {
+    background-color: #0f2b4e;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+}
+
+.btn:hover {
+    box-shadow: 0 4px 10px #1e88e5
+}
+
+.custom-popup {
+    padding: 5px !important;  /* تقليل المسافات الداخلية */
+    min-height: 20px !important; /* تقليل الطول */
 }
 

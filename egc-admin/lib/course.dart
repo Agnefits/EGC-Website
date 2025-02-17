@@ -252,48 +252,51 @@ GROUP BY
 });
 
 
-   router.get('/doctor/courses/<doctorId>', (Request request, String doctorId) async {
-  try {
-    final queryParams = request.url.queryParameters;
-    final limit = int.tryParse(queryParams['limit'] ?? '3') ?? 3;  // Default limit of 3 courses
-    final page = int.tryParse(queryParams['page'] ?? '1') ?? 1;  // Default to page 1
-    final offset = (page - 1) * limit;  // Calculate offset based on page
+router.get('/doctor/courses/<doctorId>', (Request request, String doctorId) async {
+    try {
+        final queryParams = request.url.queryParameters;
+        final limit = int.tryParse(queryParams['limit'] ?? '3') ?? 3;
+        final page = int.tryParse(queryParams['page'] ?? '1') ?? 1;
+        final offset = (page - 1) * limit;
 
-    final results = DatabaseHelper._db.select(
-      'SELECT id, name, courseId, description, hours, lectureAttendance, sectionAttendance, '
-      'practicalDegree, midtermDegree, finalExamDegree, department, year, photo '
-      'FROM courses WHERE doctorId = ? LIMIT ? OFFSET ?',
-      [doctorId, limit, offset]
-    );
+        // 🟢 Modified: Added ORDER BY id DESC
+       final results = DatabaseHelper._db.select(
+    'SELECT id, name, courseId, description, hours, lectureAttendance, sectionAttendance, '
+    'practicalDegree, midtermDegree, finalExamDegree, department, year, photo '
+    'FROM courses WHERE doctorId = ? '
+    'ORDER BY id DESC',  // إزالة LIMIT لتحديد كل الدورات
+    [doctorId]
+);
 
-    final courseList = results.map((row) => {
-      'id': row['id'],
-      'name': row['name'],
-      'courseId': row['courseId'],
-      'description': row['description'],
-      'hours': row['hours'],
-      'lectureAttendance': row['lectureAttendance'],
-      'sectionAttendance': row['sectionAttendance'],
-      'practicalDegree': row['practicalDegree'],
-      'midtermDegree': row['midtermDegree'],
-      'finalExamDegree': row['finalExamDegree'],
-      'department': row['department'],
-      'year': row['year'],
-      'photo': row['photo'] != null && row['photo'].length > 0,
-    }).toList();
 
-    final jsonResponse = jsonEncode(courseList);
-    return Response.ok(jsonResponse, headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    });
-  } catch (e) {
-    print('Error: $e');
-    return Response.internalServerError(
-      body: 'Error processing request',
-      headers: {'Access-Control-Allow-Origin': '*'}
-    );
-  }
+        final courseList = results.map((row) => {
+            'id': row['id'],
+            'name': row['name'],
+            'courseId': row['courseId'],
+            'description': row['description'],
+            'hours': row['hours'],
+            'lectureAttendance': row['lectureAttendance'],
+            'sectionAttendance': row['sectionAttendance'],
+            'practicalDegree': row['practicalDegree'],
+            'midtermDegree': row['midtermDegree'],
+            'finalExamDegree': row['finalExamDegree'],
+            'department': row['department'],
+            'year': row['year'],
+            'photo': row['photo'] != null && row['photo'].length > 0,
+        }).toList();
+
+        final jsonResponse = jsonEncode(courseList);
+        return Response.ok(jsonResponse, headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        });
+    } catch (e) {
+        print('Error: $e');
+        return Response.internalServerError(
+            body: 'Error processing request',
+            headers: {'Access-Control-Allow-Origin': '*'}
+        );
+    }
 });
 
 router.get('/teaching-assistant/courses/<teachingId>', (Request request, String teachingId) async {

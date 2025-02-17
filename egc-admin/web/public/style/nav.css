@@ -19,6 +19,11 @@ nav {
     gap: 15px; /* Adjust spacing between logo elements */
 }
 
+.custom-popup {
+    padding: 5px !important;  /* تقليل المسافات الداخلية */
+    min-height: 20px !important; /* تقليل الطول */
+}
+
 #containernav {
     display: flex;
     list-style: none;
@@ -179,7 +184,7 @@ textarea {
     border-radius: 25px; /* Rounded edges */
 }
 
-.button {
+.btn {
     background-color: #0F2B4E;
     color: white;
     padding: 10px 30px;
@@ -193,7 +198,7 @@ textarea {
     font-weight:bold;
 }
 
-.button:hover {
+.btn:hover {
     background-color: #0F2B4E; /* Darker on hover */
     box-shadow: 0 4px 10px #1e88e5;
 

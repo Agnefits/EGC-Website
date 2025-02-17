@@ -73,21 +73,6 @@ textarea {
     font-size: 18px;
 }
 
-button {
-    border-radius: 25px;
-    background-color: #0F2B4E;
-    color: #fff;
-    border: none;
-    width: 100%;
-    font-size: 20px;
-    height: 40px;
-    font-weight: bold;
-}
-
-button:hover {
-    background-color: #0F2B4E;
-    box-shadow: 0 4px 10px #1e88e5;
-}
 
 textarea {
     resize: vertical;
@@ -98,4 +83,24 @@ textarea {
     border-radius: 25px;
     font-size: 18px;
     color: #0F2B4E;
+}
+
+.btn {
+    border-radius: 25px;
+    background-color: #0F2B4E;
+    color: #fff;
+    border: none;
+    width: 100%;
+    font-size: 20px;
+    height: 40px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    box-shadow: 0 4px 10px #1e88e5
+}
+
+.custom-popup {
+    padding: 5px !important;  /* تقليل المسافات الداخلية */
+    min-height: 20px !important; /* تقليل الطول */
 }

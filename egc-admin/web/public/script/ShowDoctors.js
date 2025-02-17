@@ -1,19 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     loadDoctors();
 
-    // إضافة مستمع حدث لقائمة الأقسام
     document.getElementById('major').addEventListener('change', loadDoctors);
 });
 
 async function loadDoctors() {
-
     const response = await fetch('/doctors');
     if (!response.ok) {
         throw new Error('Failed to fetch doctors');
     }
 
     const doctors = await response.json();
-    console.log('Fetched doctors:', doctors); // أضف هذا السطر للتحقق من البيانات
+    console.log('Fetched doctors:', doctors);
 
     const DoctorsTableBody = document.getElementById('doctorsTableBody');
     if (!DoctorsTableBody) {
@@ -26,7 +24,6 @@ async function loadDoctors() {
         return !selectedMajor || doctor.major === selectedMajor;
     });
 
-
     filtereddoctors.forEach(doctor => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -36,27 +33,25 @@ async function loadDoctors() {
             <td>${doctor.username || 'N/A'}</td>
             <td>${doctor.major || 'N/A'}</td> 
             <td>
-                    <button class="details-btn show-details showCV ${doctor.cvFile? "" : "btn-disabled"}" data-id="${doctor.id}" ${doctor.cvFile? "" : "disabled"}>
-                        Show Cvs
-                    </button>
-                </td>
+                <button class="details-btn show-details showCV ${doctor.cvFile? "" : "btn-disabled"}" data-id="${doctor.id}" ${doctor.cvFile? "" : "disabled"}>
+                    Show Cvs
+                </button>
+            </td>
             <td>
                 <button class="details-btn edit" data-id="${doctor.id}">Edit</button>
                 <button class="details-btn delete" data-id="${doctor.id}">Delete</button>
             </td>
-           
         `;
 
         DoctorsTableBody.appendChild(row);
     });
 
-    addEventListeners(); // نقل عملية إضافة المستمعات إلى دالة منفصلة
-
+    addEventListeners();
 }
 
 function addEventListeners() {
     document.querySelectorAll('.delete').forEach(button => {
-        button.addEventListener('click', async(event) => {
+        button.addEventListener('click', async (event) => {
             const doctorId = event.target.dataset.id;
             if (!doctorId) {
                 alert('Doctor ID is missing for delete action');
@@ -66,6 +61,8 @@ function addEventListeners() {
             const confirmation = confirm('Are you sure you want to delete this doctor?');
             if (confirmation) {
                 try {
+                    showPopup();
+
                     const deleteResponse = await fetch(`/delete-doctor/${doctorId}`, {
                         method: 'DELETE'
                     });
@@ -74,7 +71,10 @@ function addEventListeners() {
                         throw new Error('Failed to delete doctor');
                     }
 
-                    loadDoctors(); // Reload the list of students after deletion
+                    loadDoctors(); // Reload the list of doctors after deletion
+
+                    // عرض البوب أب بعد نجاح الحذف
+
                 } catch (error) {
                     console.error('Error:', error);
                     alert('Error deleting doctor');
@@ -84,7 +84,7 @@ function addEventListeners() {
     });
 
     document.querySelectorAll('.edit').forEach(button => {
-        button.addEventListener('click', async(event) => {
+        button.addEventListener('click', async (event) => {
             const doctorId = event.target.dataset.id;
 
             if (!doctorId) {
@@ -100,9 +100,8 @@ function addEventListeners() {
                 }
 
                 const doctor = await response.json();
-                console.log('Fetched doctor:', doctor); // أضف هذا السطر للتحقق من البيانات
+                console.log('Fetched doctor:', doctor);
 
-                // Ensure the data contains ID
                 if (doctor && doctor.id) {
                     localStorage.setItem('doctorData', JSON.stringify(doctor));
                     window.location.href = '/admin/EditDoctor';
@@ -117,7 +116,7 @@ function addEventListeners() {
     });
 
     document.querySelectorAll('.showCV').forEach(button => {
-        button.addEventListener('click', async(event) => {
+        button.addEventListener('click', async (event) => {
             const doctorId = event.target.dataset.id;
 
             if (!doctorId) {
@@ -126,6 +125,24 @@ function addEventListeners() {
             }
             window.open('/doctors/cvFile/' + doctorId, "_blank");
         });
+    });
+}
+
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'success !',
+        text: 'The doctor has been deleted',
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        },
     });
 }
 

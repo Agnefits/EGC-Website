@@ -6,6 +6,8 @@
     <link rel="icon" href="/img/logo.png" sizes="48x32">
     <link rel="stylesheet" href="/style/all-assignments.css">
     <link rel="stylesheet" href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -101,32 +103,30 @@
             </select>
         </div>
     
-        <div id="assignments-container">
-            <div class="assignment" data-subject="Module 3">
-                <h3>Module 3 Assignment</h3>
-                <p>Title: Meeting preparation task</p>
-                <p>Description: Prepare the necessary documents and slides for the meeting.</p>
-                <p>Due date: 08-15-2023</p>
-                <p>Status: In progress</p>
-                <p>Points: 50</p>
-                <label for="file-upload-1">Upload your assignment:</label>
-                <input type="file" id="file-upload-1" name="file-upload-1" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png,.zip">
-                <br><br>
-                <button type="submit">Submit</button>
-            </div>
-    
-            <div class="assignment" data-subject="Module 2">
-                <h3>Module 2 Assignment</h3>
-                <p>Title: Design a website</p>
-                <p>Description: Create a responsive website with modern design principles.</p>
-                <p>Due date: 08-20-2023</p>
-                <p>Status: Not started</p>
-                <p>Points: 75</p>
-                <label for="file-upload-2">Upload your assignment:</label>
-                <input type="file" id="file-upload-2" name="file-upload-2" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png,.zip">
-                <br><br>
-                <button type="submit">Submit</button>
-            </div>
+        <div class="assignment" data-subject="Module 3" data-assignment-id="1">
+            <h3>Module 3 Assignment</h3>
+            <p>Title: Meeting preparation task</p>
+            <p>Description: Prepare the necessary documents and slides for the meeting.</p>
+            <p>Due date: 08-15-2023</p>
+            <p>Status: In progress</p>
+            <p>Points: 50</p>
+            <label for="file-upload-1">Upload your assignment:</label>
+            <input type="file" id="file-upload-1" name="file-upload-1" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png,.zip">
+            <br><br>
+            <button type="submit">Submit</button>
+        </div>
+        
+        <div class="assignment" data-subject="Module 2" data-assignment-id="2">
+            <h3>Module 2 Assignment</h3>
+            <p>Title: Design a website</p>
+            <p>Description: Create a responsive website with modern design principles.</p>
+            <p>Due date: 08-20-2023</p>
+            <p>Status: Not started</p>
+            <p>Points: 75</p>
+            <label for="file-upload-2">Upload your assignment:</label>
+            <input type="file" id="file-upload-2" name="file-upload-2" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png,.zip">
+            <br><br>
+            <button type="submit" onclick="showPopup()">Submit</button>
         </div>
     </div>
     

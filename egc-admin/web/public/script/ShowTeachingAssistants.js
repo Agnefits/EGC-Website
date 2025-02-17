@@ -70,6 +70,7 @@ function addEventListeners() {
             const confirmation = confirm('Are you sure you want to delete this Teaching Assistant?');
             if (confirmation) {
                 try {
+                    showPopup();
                     const deleteResponse = await fetch(`/delete-teaching-assistant/${teachingAssistantId}`, {
                         method: 'DELETE'
                     });
@@ -136,3 +137,22 @@ document.getElementsByClassName("add-btn")[0].addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "/admin/AddTeachingAssistant";
 });
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'success!',
+        text: 'The teaching assistant has been deleted',
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        }
+    });
+
+ 
+}

@@ -3,6 +3,17 @@ function togglePassword() {
     passwordField.type = passwordField.type === "password" ? "text" : "password";
 }
 
+// دالة لعرض رسالة منبثقة
+function showPopup(message, type = 'success') {
+    Swal.fire({
+        icon: type,
+        title: type === 'success' ? 'Success!' : 'Error!',
+        text: message,
+        timer: 3000,
+        showConfirmButton: false
+    });
+}
+
 const fileInput = document.getElementById('student_image');
 const imageContainer = document.getElementById('picture');
 
@@ -22,11 +33,9 @@ const studentData = JSON.parse(localStorage.getItem('studentData'));
 document.addEventListener('DOMContentLoaded', loadStudentData);
 
 async function loadStudentData() {
-
-
     if (studentData) {
         if (!studentData.id) {
-            alert('Student ID is missing');
+            showPopup('Student ID is missing', 'error');
             return;
         } else {
             document.getElementById('firstname').value = studentData.name.split(' ')[0] || '';
@@ -39,8 +48,8 @@ async function loadStudentData() {
             document.getElementById('national_id').value = studentData.national_id;
             document.getElementById('password').value = studentData.password;
             document.getElementById('No_list').value = studentData.number;
-            document.getElementById('No_section').value = studentData.no_section;            ;
-            //document.getElementById('id').value = id;
+            document.getElementById('No_section').value = studentData.no_section;
+            
             document.querySelector(`input[name="gender"][value="${studentData.gender}"]`).checked = true;
 
             currentDepartment = studentData.department;
@@ -55,13 +64,12 @@ async function loadStudentData() {
             localStorage.removeItem('studentData');
         }
     }
-
 }
 
 document.getElementById('updatestudentForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
-    const formData = new FormData(this); // Automatically handles file inputs
+    const formData = new FormData(this);
 
     try {
         if (!studentData.id) {
@@ -77,12 +85,14 @@ document.getElementById('updatestudentForm').addEventListener('submit', async fu
             throw new Error('Failed to update student');
         }
 
-        alert('Student updated successfully');
-        this.reset();
-        window.location.href = '/admin/ShowStudents';
+        showPopup('The student information has been updated successfully!', 'success');
+
+        setTimeout(() => {
+            window.location.href = '/admin/ShowStudents';
+        }, 3000);
+
     } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to update student: ' + error.message);
+        showPopup(error.message, 'error');
     }
 });
 
@@ -98,9 +108,8 @@ department.addEventListener("change", getLastStudentNumber);
 yearlevel.addEventListener("change", getLastStudentNumber);
 
 async function getLastStudentNumber() {
-
-    if (department.value == null || yearlevel.value == null)
-        return;
+    if (department.value == null || yearlevel.value == null) return;
+    
     if (department.value == currentDepartment && yearlevel.value == currentYearlevel) {
         document.getElementsByName('No_list')[0].value = currentNoList;
         document.getElementsByName('No_section')[0].value = currentSection;

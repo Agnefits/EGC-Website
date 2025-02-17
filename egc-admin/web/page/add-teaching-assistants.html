@@ -7,6 +7,7 @@
     <title>Add Teaching Assistant</title>
     <link rel="icon" href="/img/logo.png" sizes="48x32">
     <link rel="stylesheet" href="/style/add-teaching-assistants-style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -54,7 +55,7 @@
                         <label for="cvUpload">CV:</label>
                         <input type="file" id="cvUpload" name="cvUpload" accept="application/pdf">
                     </div>
-                    <button type="submit" id="add-teaching-assistant-button">Add Teaching Assistant</button>
+                    <button class="btn">Add Teaching Assistant</button>
                 </div>
             </form>
         </section>
@@ -67,6 +68,7 @@
     window.location.href = '/admin/TeachingAssistants';
 }
     </script>
+     <script src="popup.js"></script>
 </body>
 
 </html>

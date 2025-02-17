@@ -15,6 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         return;
                     }
 
+                 else {
+                    showPopup(); // عرض الـ popup
+                    }
+
                     // Fetch course data from localStorage
                     const courseData = JSON.parse(localStorage.getItem('courseData'));
                     formData.append("courseId", courseData.id); // Append courseId to formData
@@ -41,9 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
 
                         if (response.ok) {
-                            alert('Announcement sent successfully!');
-                            loadAnnouncements(); // Load updated announcements
-                            messageForm.reset(); // Reset form after success
+
+                            showPopup(); // عرض الـ popup
+
                         } else {
                             alert('Failed to send announcement');
                         }
@@ -94,3 +98,20 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Form with ID "message-form" not found.');
     }
 });
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'Successfully!',
+        text: 'Announcement sent',
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        },
+    });
+}

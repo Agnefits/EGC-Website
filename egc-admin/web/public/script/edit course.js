@@ -85,8 +85,7 @@ document.getElementById('editCourseForm').addEventListener("submit", async funct
     if (!response.ok) {
         alert(response.headers.get('Error'));
     } else {
-        alert('Course uploaded successfully');
-        window.location.href = '/staff/ShowCourses';
+        showPopup();
     }
 });
 
@@ -111,8 +110,7 @@ function submitEditForm() {
         })
         .then(response => {
             if (response.ok) {
-                alert('Course updated successfully');
-                window.location.href = '/course'; // Redirect to course page after successful edit
+                showPopup();
             } else {
                 alert('Failed to update course');
             }
@@ -134,3 +132,25 @@ function goBackToCoursePage() {
 //function goBackToCoursePage() {
 //   window.location.href = '/staff/ShowCourses';
 //}
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'success!',
+        text: 'The course has been edited',
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        },
+   
+        didClose: () =>{
+            window.location.href = '/course';
+            window.location.href = '/staff/ShowCourses';
+        }
+  });
+}

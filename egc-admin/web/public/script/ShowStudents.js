@@ -76,6 +76,7 @@ function addEventListeners() {
             const confirmation = confirm('Are you sure you want to delete this student?');
             if (confirmation) {
                 try {
+                    showPopup();
                     const deleteResponse = await fetch(`/delete-student/${studentId}`, {
                         method: 'DELETE'
                     });
@@ -131,3 +132,22 @@ document.getElementsByClassName("add-btn")[0].addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "/admin/AddStudent";
 });
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'success!',
+        text: 'The student has been deleted',
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        }
+    });
+
+ 
+}
