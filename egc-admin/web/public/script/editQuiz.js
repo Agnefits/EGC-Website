@@ -180,21 +180,50 @@ function changeQuestionType(questionsId) {
   }
   questionContent.dataType = type;
 }
+function showPopup() {
+  Swal.fire({
+      icon: 'success',
+      title: 'Done !',
+      text: 'Quiz has been updated',
+      width: '320px',
+      heightAuto: false,
+      position: 'top',
+      showConfirmButton: false,
+      timer: 3000, // You can adjust or remove the timer
+      backdrop: false,
+      customClass: {
+          popup: 'custom-popup',
+          icon: 'custom-icon'
+      },
+      didOpen: () => {
+          const popup = Swal.getPopup();
+      },
+      // This is the key change: using the 'didClose' callback
+      didClose: () => {
+          window.location.href = '/staff/Course/Quizzes';
+      }
+  });
+}
 
 document.getElementById("editQuizForm").addEventListener("submit", async function (event) {
   event.preventDefault();
   let formData = new FormData(this);
 
   fetch('/update-quiz/' + quizData[0].id, {
-    method: 'PUT',
-    body: formData,
+      method: 'PUT',
+      body: formData,
   })
-  .then(response => response.text())
-  .then(result => {
-    alert(result);
-    window.location.href = '/staff/Course/Quizzes';
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+      .then(response => response.text())
+      .then(result => {
+          showPopup(); // Show the popup
+          // REMOVE the redirect from here!  It's now in showPopup's didClose
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          Swal.fire({
+              icon: 'error',
+              title: 'Error!',
+              text: 'An error occurred while updating the quiz.',
+          });
+      });
 });
