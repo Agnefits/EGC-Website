@@ -140,7 +140,7 @@ function fetchQuizzesForAllCourses(studentId) {
             </div>
             <div class="student-quiz-details">
               <div class="student-quiz-dead-line">
-                <p>Deadline: ${quiz.deadline}</p>
+<p>Deadline: ${quiz.deadline.replace("T", " ")}</p>
               </div>
               <div class="student-quiz-instructor">
                 <p>Instructor: ${quiz.instructor}</p>

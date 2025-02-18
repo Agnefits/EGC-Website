@@ -29,7 +29,7 @@ function displayQuizzes(quizzes) {
         card.innerHTML = `
             <div class="card-left">
                 <div class="menu-icon" onclick="toggleDropdown(${quizzes.id})">&#x2022;&#x2022;&#x2022;</div>
-                <span>${quizzes.date.split(" ")[0]}</span>
+<span>${quizzes.deadline.replace("T", " ")}</span>
             </div>
             <div class="card-right" onclick="showQuizDetails(${quizzes.id})">
                 <div class = "card-info">

@@ -34,7 +34,27 @@ async function fetchQuizzes() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const { questions, count, time } = await response.json(); // استخراج `time`
+        const { questions, count, time, deadline } = await response.json(); // استخراج البيانات
+
+// إزالة "T" من الـ deadline لجعله بصيغة "YYYY-MM-DD HH:MM"
+const formattedDeadline = deadline;
+
+// الحصول على الوقت الحالي بتنسيق متطابق
+const currentDate = new Date();
+const currentFormatted = currentDate.toISOString().slice(0, 16).replace("T", " "); 
+
+// مقارنة الموعد النهائي بالوقت الحالي
+if (formattedDeadline <= currentFormatted) {
+    // إذا انتهى الموعد النهائي، عرض النتيجة فقط وإخفاء الكويز
+    homeBox.classList.add("hide");
+    quizBox.classList.add("hide");
+    resultBox.classList.remove("hide");
+
+    // عرض رسالة انتهاء الوقت
+    // عرض النتيجة السابقة للطالب إن وجدت
+    resultBox.querySelector(".Total-Score").innerText = `${previousAttempt?.score || 0}`;
+}
+ // استخراج `time`
         if (time && !isNaN(time)) {
             quizTime = parseInt(time) * 60; // تحويل الدقائق إلى ثوانٍ مع التأكد من أنها رقم صحيح
         } else {

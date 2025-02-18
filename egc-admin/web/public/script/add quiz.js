@@ -207,23 +207,35 @@ document.getElementById("addQuizForm").addEventListener("submit", function (even
 
   // إرسال بيانات الاختبار عبر طلب POST
   fetch('/add-quiz', {
-      method: 'POST',
-      body: formData,
-  })
-  .then(response => {
-      if (!response.ok) {
-          throw new Error(`Failed to add quiz: ${response.statusText}`);
-      }
-      return response.text();
-  })
-  .then(result => {
-      showPopup(); // عرض النافذة المنبثقة عند النجاح
-      setTimeout(() => {
-          window.location.href = '/staff/Course/Quizzes'; // إعادة التوجيه بعد 3 ثوانٍ
-      }, 3000);
-  })
-  .catch(error => {
-      console.error('Error:', error);
-      showErrorPopup(error.message || "Failed to add the quiz. Please check your network and try again."); // عرض النافذة المنبثقة للخطأ
-  });
+    method: 'POST',
+    body: formData,
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error(`Failed to add quiz: ${response.statusText}`);
+    }
+    return response.text();
+})
+.then(result => {
+    // تعليق الـ Popup الناجح
+    /*
+    showPopup(); // عرض النافذة المنبثقة عند النجاح
+    setTimeout(() => {
+        window.location.href = '/staff/Course/Quizzes'; // إعادة التوجيه بعد 3 ثوانٍ
+    }, 3000);
+    */
+    
+    // إعادة التوجيه مباشرة بدون Popup
+    window.location.href = '/staff/Course/Quizzes';
+})
+.catch(error => {
+    console.error('Error:', error);
+    
+    // تعليق الـ Popup الخاص بالأخطاء
+    /*
+    showErrorPopup(error.message || "Failed to add the quiz. Please check your network and try again."); // عرض النافذة المنبثقة للخطأ
+    */
+
+    // طباعة الخطأ في الكونسول فقط بدون Popup
+});
 });

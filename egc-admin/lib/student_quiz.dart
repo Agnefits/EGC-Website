@@ -114,7 +114,7 @@ static List<Map<String, dynamic>> getStudentQuizAttempts(String studentId , Stri
 
 static Map<String, dynamic> getQuizQuestionsWithCount(String quizId) {
   final results = _db.select('''
-    SELECT q.*, quizzes.time 
+    SELECT q.*, quizzes.time , quizzes.deadline
     FROM quiz_questions q
     JOIN quizzes ON q.quizId = quizzes.id
     WHERE q.quizId = ?
@@ -140,6 +140,7 @@ static Map<String, dynamic> getQuizQuestionsWithCount(String quizId) {
       'correctAnswer': row['correctAnswer'],
       'degree': row['degree'],
       'time': row['time'], // إضافة الوقت هنا
+      'deadline': row['deadline'], // إضافة الوقت هنا
     };
   }).toList();
 
@@ -150,6 +151,7 @@ static Map<String, dynamic> getQuizQuestionsWithCount(String quizId) {
     'questions': questions,
     'count': count,
     'time': results.isNotEmpty ? results.first['time'] : null, // إرجاع قيمة time من السطر الأول
+    'deadline': results.isNotEmpty ? results.first['deadline'] : null, // إرجاع قيمة time من السطر الأول
   };
 }
 
