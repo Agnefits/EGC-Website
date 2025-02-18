@@ -83,36 +83,83 @@ class DatabaseHelper {
     statement.dispose();
   }
 
-  static void updateStudent(
-      String id, Map<String, dynamic> studentData, Uint8List? image) {
-    final statement = _db.prepare('''
-      UPDATE students
-      SET name = ?, email = ?, phone = ?, username = ?, department = ?, year_level = ?, password = ?, national_id = ?, gender = ?, number = ?, sectionNo = ? ${image != null && image.isNotEmpty ? ", photo = ? ,  showDegrees = ?" : ""}
-      WHERE id = ?
-    ''');
-    List data = [
-      studentData['firstname'] + " " + studentData['lastname'],
-      studentData['email'],
-      studentData['phone_no'],
-      studentData['username'],
-      studentData['department'],
-      studentData['year_level'],
-      studentData['password'],
-      studentData['national_id'],
-      studentData['gender'],
-      studentData['showDegrees'],
-      studentData['No_list'],
-      ((int.parse(studentData['No_list'].toString()) - 1) / 30 + 1)
-          .floor()
-          .toString(),
-    ];
-    if (image != null && image.isNotEmpty) {
-      data.add(image);
-    }
-    data.add(id);
-    statement.execute(data);
-    statement.dispose();
+  // static void updateStudent(
+  //     String id, Map<String, dynamic> studentData, Uint8List? image) {
+  //   final statement = _db.prepare('''
+  //     UPDATE students
+  //     SET name = ?, email = ?, phone = ?, username = ?, department = ?, year_level = ?, password = ?, national_id = ?, gender = ?, number = ?, sectionNo = ? ${image != null && image.isNotEmpty ? ", photo = ? ,  showDegrees = ?" : ""}
+  //     WHERE id = ?
+  //   ''');
+  //   List data = [
+  //     studentData['firstname'] + " " + studentData['lastname'],
+  //     studentData['email'],
+  //     studentData['phone_no'],
+  //     studentData['username'],
+  //     studentData['department'],
+  //     studentData['year_level'],
+  //     studentData['password'],
+  //     studentData['national_id'],
+  //     studentData['gender'],
+  //     studentData['showDegrees'],
+  //     studentData['No_list'],
+  //     ((int.parse(studentData['No_list'].toString()) - 1) / 30 + 1)
+  //         .floor()
+  //         .toString(),
+  //   ];
+  //   if (image != null && image.isNotEmpty) {
+  //     data.add(image);
+  //   }
+  //   data.add(id);
+  //   statement.execute(data);
+  //   statement.dispose();
+  // }
+
+
+
+static void updateStudent(
+    String id, Map<String, dynamic> studentData, Uint8List? image) {
+  final bool hasImage = image != null && image.isNotEmpty;
+
+  final statement = _db.prepare('''
+    UPDATE students
+    SET name = ?, email = ?, phone = ?, username = ?, department = ?, year_level = ?, 
+        password = ?, national_id = ?, gender = ?, number = ?, sectionNo = ? 
+        ${hasImage ? ", photo = ?, showDegrees = ?" : ""}
+    WHERE id = ?
+  ''');
+
+  List data = [
+    studentData['firstname'] + " " + studentData['lastname'],
+    studentData['email'],
+    studentData['phone_no'],
+    studentData['username'],
+    studentData['department'],
+    studentData['year_level'],
+    studentData['password'],
+    studentData['national_id'],
+    studentData['gender'],
+    studentData['No_list'],
+    ((int.parse(studentData['No_list'].toString()) - 1) / 30 + 1)
+        .floor()
+        .toString(),
+  ];
+
+  if (hasImage) {
+    data.add(image);
+    data.add(studentData['showDegrees']); // إضافة showDegrees فقط مع الصورة
   }
+
+  data.add(id);
+
+  statement.execute(data);
+  statement.dispose();
+}
+
+
+
+
+
+
 
   static void deleteStudent(String id) {
     final deleteStatement = _db.prepare('DELETE FROM students WHERE id = ?');
