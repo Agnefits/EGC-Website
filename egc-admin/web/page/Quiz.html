@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,19 +8,22 @@
     <link rel="stylesheet" href="/style/Quiz.css">
 </head>
 <body>
+    <div class="nav-items">
+        <img src="/img/arrow.png" alt="Go Back" id="goBackImage" width="20px" height="20px" style="margin: 10px;" onclick="goBackToCoursePage()">
+    </div>
     <form class="quiz_page">
-        <div class="timer-container">
-            <span>Time Left: </span><span class="timer">00:00</span>
-        </div>
-        
         <div class="home-box cutom-box">
-            <h1>Quiz <span class="Quiz_id"></span></h1>
-            <div class="profile-picture">
-                <img src="/img/picture.png">
+            <div class="quiz-header">
+                <div class="profile-picture">
+                    <img src="/img/picture.png" alt="Quiz Image">
+                </div>
+                <h1>Quiz <span class="Quiz_id">1</span></h1>
             </div>
-            <br>
             <hr>
             <p>Total number of questions: <span class="Total-question">0</span></p>
+            <div class="timer-container">
+                <span>Time Left: </span><span class="timer">00:00</span>
+            </div>
             <button type="button" class="btn" onclick="startQuiz()">Start Quiz</button>
         </div>
 
@@ -61,6 +64,15 @@
             <button type="button" class="btn" onclick="myFunction()"> Submit</button>
         </div>
     </form>
+    <script>
+        function goBackToCoursePage() {
+            console.log('Go Back button clicked!');
+            window.location.href = '/student/AllQuizzes';
+        }
+
+    
+        
+    </script>
     <script src="/script/Quiz.js"></script>
 </body>
 </html>

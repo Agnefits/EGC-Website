@@ -14,11 +14,12 @@ body {
 .cutom-box {
     background-color: hsl(0, 0%, 100%);
     margin: 4% auto 5% auto;
-    max-width: 45%;
+    max-width: 60%; /* زيادة الحجم */
     box-shadow: 0 10px 10px rgba(5, 5, 5, 0.1);
-    padding: 30px;
+    padding: 60px;
     border-radius: 15px;
     animation: fadeInRight 2s ease;
+    position: relative; /* للحفاظ على هيكلة التايمر */
 }
 
 @keyframes fadeInRight {
@@ -32,33 +33,71 @@ body {
     }
 }
 
+.cutom-box::before,
+.cutom-box::after {
+    content: '';
+    clear: both;
+    display: table;
+}
+
 .cutom-box.hide {
     display: none;
 }
 
+/* تعديل حجم الصورة ووضعها داخل الكارد */
+.profile-picture {
+    float: left;
+}
+
 .profile-picture img {
-    width: 100px;
-    height: 100px;
+    width: 120px; /* تكبير الصورة */
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
     box-shadow: -5px 5px 10px gray;
     margin-right: 20px;
     padding: 5px;
-    margin-top: -65px;
+    margin-top: 0;
+}
+
+/* ضبط العنوان بجوار الصورة */
+.quiz-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 h1 {
-    padding-left: 135px;
-    padding-top: 15px;
     font-family: "Libre Baskerville", serif;
+    font-size: 24px;
 }
 
+/* إدخال المؤقت داخل الديف */
+.timer-container {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    background: #0F2B4E;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+
+/* باقي التنسيقات */
 hr {
     border: 1px solid #f1f1f1;
     margin-bottom: 15px;
 }
 
-.home-box h3,
+.home-box h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    line-height: 25px;
+}
+
 .home-box p {
     font-size: 16px;
     margin-bottom: 10px;
@@ -66,12 +105,16 @@ hr {
     font-weight: 400;
 }
 
+.home-box p span {
+    font-weight: 500;
+}
+
 .home-box .btn {
     margin-top: 20px;
 }
 
 .btn {
-    background-color: rgb(42, 165, 232);
+    background-color: #0F2B4E;
     color: white;
     padding: 10px;
     border: none;
@@ -85,10 +128,8 @@ hr {
 
 .btn:hover {
     box-shadow: 0 0 10px #0F2B4E;
-    background-color: #0F2B4E;
 }
 
-<<<<<<< HEAD
 .quiz-box .question-number,
 .quiz-box .question-text,
 .quiz-box .option-container,
@@ -115,7 +156,7 @@ hr {
 }
 
 .quiz-box .question-text img {
-    max-width: 100;
+    max-width: 100%;
     display: block;
     margin-top: 15px;
 }
@@ -128,7 +169,6 @@ hr {
     border-radius: 5px;
     margin-bottom: 10px;
     cursor: pointer;
-    /* text-transform: capitalize; */
     opacity: 0;
     animation: fadeIn 0.3s ease forwards;
     position: relative;
@@ -142,75 +182,33 @@ hr {
 @keyframes fadeIn {
     0% {
         opacity: 0;
-=======
-/* Adjustments for mobile devices */
-@media (max-width: 1024px) {
-    .cutom-box {
-        max-width: 70%;
-        margin: 5% auto;
-        padding: 20px;
->>>>>>> d1a98573f05948e93cf5714c73d864bc2bdea2d7
     }
-
-    h1 {
-        padding-left: 0;
-        text-align: center;
-    }
-
-    .profile-picture img {
-        margin: 0 auto;
-        display: block;
-        margin-bottom: 20px;
-    }
-
-    .home-box h3,
-    .home-box p {
-        font-size: 14px;
-    }
-
-    .quiz-box .question-text {
-        font-size: 18px;
-        line-height: 24px;
-    }
-
-    .quiz-box .option-container .option {
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    .quiz-box .answers-indicator div {
-        height: 30px;
-        width: 30px;
+    100% {
+        opacity: 1;
     }
 }
 
-/* Smaller screens */
-@media (max-width: 768px) {
-    .cutom-box {
-        max-width: 90%;
-        margin: 5% auto;
-    }
+.quiz-box .option-container .option.correct::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: green;
+    z-index: -1;
+    animation: slidenInleft .5s ease forwards;
+}
 
-    h1 {
-        font-size: 24px;
+@keyframes slidenInleft {
+    0% {
+        transform: translateX(-100%);
     }
-
-    .quiz-box .question-text {
-        font-size: 16px;
-    }
-
-    .quiz-box .option-container .option {
-        font-size: 12px;
-        padding: 8px;
-    }
-
-    .btn {
-        font-size: 14px;
-        padding: 8px;
+    100% {
+        transform: translateX(0%);
     }
 }
 
-<<<<<<< HEAD
 .quiz-box .option-container .option.wrong::before {
     content: '';
     position: absolute;
@@ -220,8 +218,7 @@ hr {
     width: 100%;
     background-color: red;
     z-index: -1;
-    color: #ffffff;
-    animation: slidenInleft .5s ease forwards
+    animation: slidenInleft .5s ease forwards;
 }
 
 .quiz-box .option-container .option.wrong {
@@ -298,8 +295,7 @@ hr {
     margin-right: 20px;
 }
 
-.text-answer-input
-{
+.text-answer-input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -313,30 +309,35 @@ hr {
     margin-top: 10px;
     font-weight: bold;
     color: #155724;
-  }
-  
+}
+
 @media (max-width: 767px) {
     body {
-=======
-@media (max-width: 480px) {
-    .cutom-box {
-        max-width: 100%;
-        margin: 5% auto;
->>>>>>> d1a98573f05948e93cf5714c73d864bc2bdea2d7
         padding: 15px;
     }
 
-    h1 {
-        font-size: 20px;
+    .cutom-box {
+        max-width: 90%;
     }
 
-    .quiz-box .option-container .option {
-        font-size: 12px;
+    .timer-container {
+        font-size: 14px;
+        padding: 5px 8px;
+    }
+    .profile-picture img {
+        width: 100px; /* تكبير الصورة */
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: -5px 5px 10px gray;
+        margin-right: 20px;
         padding: 5px;
+        margin-top: 0;
     }
-
-    .btn {
-        font-size: 12px;
-        padding: 6px;
+    .home-box p {
+        font-size: 13px;
+        margin-bottom: 10px;
+        line-height: 22px;
+        font-weight: 400;
     }
 }

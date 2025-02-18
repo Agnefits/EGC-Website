@@ -2,240 +2,207 @@ const container = document.getElementById("container");
 let questionsNo = 0;
 
 function addQuestion(deletable) {
-    {
-        questionsNo++;
+    questionsNo++;
 
-        const question = document.createElement('div');
-        question.className = 'question-container';
-        question.id = 'question-' + questionsNo;
+    const question = document.createElement('div');
+    question.className = 'question-container';
+    question.id = 'question-' + questionsNo;
 
-        question.innerHTML = `
-            <br>
-            <hr>
-            <div class="type_q">
-              <label for="type-${questionsNo}">Question Type</label>
-              <select name="type-${questionsNo}" class="type_of_Quisetion" class="t_quiz" id="type-${questionsNo}" required>
+    question.innerHTML = `
+        <br>
+        <hr>
+        <div class="type_q">
+            <label for="type-${questionsNo}">Question Type</label>
+            <select name="type-${questionsNo}" class="type_of_Quisetion" class="t_quiz" id="type-${questionsNo}" required>
                 <option value="">Please select</option>
                 <option value="bool">True or False</option>
                 <option value="multi">Multiple Choice</option>
                 <option value="short">Short Answer</option>
-              </select>
-              </div>
-              <div class="q_text">
-                  <label for="title-${questionsNo}">Question</label><br>
-                  <textarea name="title-${questionsNo}" class="questionTitle" id="title-${questionsNo}" placeholder="Enter your quisetion here" required></textarea>
-              </div>
-              <div id="q-content-${questionsNo}" dataType="none">
-              </div>
-              ${deletable? 
-              `<button class="remove-quiz">
-                  <h5 onclick="removeQuestion(${questionsNo})">Remove Question</h5>
-              </button>`:""}
-            </div>
-        `;
+            </select>
+        </div>
+        <div class="q_text">
+            <label for="title-${questionsNo}">Question</label><br>
+            <textarea name="title-${questionsNo}" class="questionTitle" id="title-${questionsNo}" placeholder="Enter your quisetion here" required></textarea>
+        </div>
+        <div id="q-content-${questionsNo}" dataType="none">
+        </div>
+        ${deletable ?
+            `<button class="remove-quiz">
+                <h5 onclick="removeQuestion(${questionsNo})">Remove Question</h5>
+            </button>` : ""}
+    `;
 
     container.appendChild(question);
 
     document.getElementById(`type-${questionsNo}`).addEventListener("change", (e) => {
-      changeQuestionType(questionsNo);
-    })
+        changeQuestionType(questionsNo);
+    });
 
-  }
 }
 
-document.getElementById("add-question").addEventListener("click", function(event) {
+document.getElementById("add-question").addEventListener("click", function (event) {
     event.preventDefault();
     addQuestion(true);
 });
 
 document.addEventListener('DOMContentLoaded', addQuestion(false));
 
-
 function removeQuestion(questionsId) {
-  document.getElementById('question-' + questionsId).remove();
+    document.getElementById('question-' + questionsId).remove();
 }
 
 function changeQuestionType(questionsId) {
-  const type = document.getElementById(`type-${questionsId}`).value;
-  const questionContent = document.getElementById(`q-content-${questionsId}`);
+    const type = document.getElementById(`type-${questionsId}`).value;
+    const questionContent = document.getElementById(`q-content-${questionsId}`);
 
 
-  if (type == questionContent.dataType)
-    return;
-  else {
-    const degree = questionContent.dataType ? document.getElementById(`degree-${questionsId}`).value : 0;
-    switch (type) {
-      case "":
-        questionContent.innerHTML = ``;
-        break;
-      case "bool":
-        questionContent.innerHTML = `  
-            <div class="correctAnswer" id="corectAnswer-${questionsId}">
-              <label> Correct Answer : </label>
-              <input type="radio" id="radioButton-T-${questionsId}" name="correctAnswer-${questionsId}" value="true" required>
-              <label for="radioButton-T-${questionsId}">true</label>
-              <input type="radio" id="radioButton-F-${questionsId}" name="correctAnswer-${questionsId}" value="false" required>
-              <label for="radioButton-F-${questionsId}">false</label>
-              <br>
-              <br>
-              <label for="degree-${questionsId}">Degree</label>
-              <input type="number" id="degree-${questionsId}" name="degree-${questionsId}" class="degree" placeholder="Enter Degree" value="${degree}" required>
-            </div>
-            `
-        break;
-      case "multi":
-        questionContent.innerHTML = ` 
-            <div class="answer-choice">
-                <label for="answers-A-${questionsId}">Answer A</label>
-                <input type="text" id="answers-A-${questionsId}" name ="answers-A-${questionsId}" class="Choice" placeholder="Enter Answer A" required>
-            </div>
-            <div class="answer-choice">
-                <label for="answers-B-${questionsId}">Answer B</label>
-                <input type="text" id="answers-B-${questionsId}" name ="answers-B-${questionsId}" class="Choice" placeholder="Enter Answer B" required>
-            </div>
-            <div class="answer-choice">
-                <label for="answers-C-${questionsId}">Answer C</label>
-                <input type="text" id="answers-C-${questionsId}" name ="answers-C-${questionsId}" class="Choice" placeholder="Enter Answer C" required>
-            </div>
-            <div class="answer-choice">
-                <label for="answers-D-${questionsId}">Answer D</label>
-                <input type="text" id="answers-D-${questionsId}" name ="answers-D-${questionsId}" class="Choice" placeholder="Enter Answer D" required>
-            </div>
-            <div class="correctAnswer" id="corectAnswer-${questionsId}">
-            <label for="select-${questionsId}">Correct Answer</label>
-            <select id="select-${questionsId}" name="correctAnswer-${questionsId}" class="type_of_Quisetion" required>
-                    <option value="">Check Answer</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                </select>
-            <br>
-            <br>
-              <label>Degree</label>
-              <input type="number" id="degree-${questionsId}" name="degree-${questionsId}" class="degree" placeholder="Enter Degree" value="${degree}" required>
-        </div>
-        `
-        break;
-      case "short":
-        questionContent.innerHTML = `  
-        <div class="correctAnswer" id="corectAnswer-${questionsId}">
-            <label for="correctAnswer-${questionsId}">Correct Answer</label>
-            <input type="text" class="c_a" id="correctAnswer-${questionsId}" name="correctAnswer-${questionsId}" placeholder="Correct Answer" required>
-            <br>
-            <br>
-             <label>Degree</label>
-              <input type="number" id="degree-${questionsId}" name="degree-${questionsId}" class="degree" placeholder="Enter Degree" value="${degree}" required>
-         </div>`
-        break;
+    if (type == questionContent.dataType)
+        return;
+    else {
+        const degree = questionContent.dataType ? document.getElementById(`degree-${questionsId}`).value : 0;
+        switch (type) {
+            case "":
+                questionContent.innerHTML = ``;
+                break;
+            case "bool":
+                questionContent.innerHTML = `  
+                    <div class="correctAnswer" id="corectAnswer-${questionsId}">
+                        <label> Correct Answer : </label>
+                        <input type="radio" id="radioButton-T-${questionsId}" name="correctAnswer-${questionsId}" value="true" required>
+                        <label for="radioButton-T-${questionsId}">true</label>
+                        <input type="radio" id="radioButton-F-${questionsId}" name="correctAnswer-${questionsId}" value="false" required>
+                        <label for="radioButton-F-${questionsId}">false</label>
+                        <br>
+                        <br>
+                        <label for="degree-${questionsId}">Degree</label>
+                        <input type="number" id="degree-${questionsId}" name="degree-${questionsId}" class="degree" placeholder="Enter Degree" value="${degree}" required>
+                    </div>
+                    `;
+                break;
+            case "multi":
+                questionContent.innerHTML = ` 
+                    <div class="answer-choice">
+                        <label for="answers-A-${questionsId}">Answer A</label>
+                        <input type="text" id="answers-A-${questionsId}" name ="answers-A-${questionsId}" class="Choice" placeholder="Enter Answer A" required>
+                    </div>
+                    <div class="answer-choice">
+                        <label for="answers-B-${questionsId}">Answer B</label>
+                        <input type="text" id="answers-B-${questionsId}" name ="answers-B-${questionsId}" class="Choice" placeholder="Enter Answer B" required>
+                    </div>
+                    <div class="answer-choice">
+                        <label for="answers-C-${questionsId}">Answer C</label>
+                        <input type="text" id="answers-C-${questionsId}" name ="answers-C-${questionsId}" class="Choice" placeholder="Enter Answer C" required>
+                    </div>
+                    <div class="answer-choice">
+                        <label for="answers-D-${questionsId}">Answer D</label>
+                        <input type="text" id="answers-D-${questionsId}" name ="answers-D-${questionsId}" class="Choice" placeholder="Enter Answer D" required>
+                    </div>
+                    <div class="correctAnswer" id="corectAnswer-${questionsId}">
+                        <label for="select-${questionsId}">Correct Answer</label>
+                        <select id="select-${questionsId}" name="correctAnswer-${questionsId}" class="type_of_Quisetion" required>
+                            <option value="">Check Answer</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                        <br>
+                        <br>
+                        <label>Degree</label>
+                        <input type="number" id="degree-${questionsId}" name="degree-${questionsId}" class="degree" placeholder="Enter Degree" value="${degree}" required>
+                    </div>
+                    `;
+                break;
+            case "short":
+                questionContent.innerHTML = `  
+                    <div class="correctAnswer" id="corectAnswer-${questionsId}">
+                        <label for="correctAnswer-${questionsId}">Correct Answer</label>
+                        <input type="text" class="c_a" id="correctAnswer-${questionsId}" name="correctAnswer-${questionsId}" placeholder="Correct Answer" required>
+                        <br>
+                        <br>
+                        <label>Degree</label>
+                        <input type="number" id="degree-${questionsId}" name="degree-${questionsId}" class="degree" placeholder="Enter Degree" value="${degree}" required>
+                   </div>`;
+                break;
 
+        }
     }
-  }
-  questionContent.dataType = type;
+    questionContent.dataType = type;
 }
 
 function showPopup() {
     Swal.fire({
         icon: 'success',
         title: 'Success !',
-        text: 'The course has been added successfully',
-        width: '320px', 
+        text: 'The quiz has been added successfully',
+        width: '320px',
         heightAuto: false,
         position: 'top',
         showConfirmButton: false,
         timer: 3000,
-        backdrop: false, 
+        backdrop: false,
         customClass: {
             popup: 'custom-popup',
-            icon: 'custom-icon' 
+            icon: 'custom-icon'
         }
     });
 }
 
-// دالة عرض النافذة المنبثقة عند النجاح
-function showPopup() {
-  Swal.fire({
-      icon: 'success',
-      title: 'Success !',
-      text: 'The quiz has been added successfully',
-      width: '320px', 
-      heightAuto: false,
-      position: 'top',
-      showConfirmButton: false,
-      timer: 3000,
-      backdrop: false, 
-      customClass: {
-          popup: 'custom-popup',
-          icon: 'custom-icon' 
-      }
-  });
-}
-
-// دالة عرض النافذة المنبثقة عند الفشل
 function showErrorPopup(message) {
-  Swal.fire({
-      icon: 'error',
-      title: 'Failed!',
-      text: message || 'An error occurred while adding the quiz. Please try again.',
-      width: '320px',
-      heightAuto: false,
-      position: 'top',
-      showConfirmButton: true,
-      backdrop: false,
-      customClass: {
-          popup: 'custom-popup',
-          icon: 'custom-icon'
-      }
-  });
+    Swal.fire({
+        icon: 'error',
+        title: 'Failed!',
+        text: message || 'An error occurred while adding the quiz. Please try again.',
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: true,
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        }
+    });
 }
 
-// إضافة استماع لحدث إرسال النموذج
 document.getElementById("addQuizForm").addEventListener("submit", function (event) {
-  event.preventDefault();
-  let formData = new FormData(this);
+    event.preventDefault();
 
-  // استرجاع بيانات المادة من localStorage
-  const courseData = JSON.parse(localStorage.getItem('courseData'));
-  formData.append("courseId", courseData.id);
-
-  // استرجاع بيانات المستخدم وإضافة معرفه
-  const userData = JSON.parse(localStorage.getItem('userData'));
-  if (userData["role"] == 'Doctor')
-      formData.append("doctorId", userData.id);
-  else
-      formData.append("teaching_assistantId", userData.id);
-
-  // إرسال بيانات الاختبار عبر طلب POST
-  fetch('/add-quiz', {
-    method: 'POST',
-    body: formData,
-})
-.then(response => {
-    if (!response.ok) {
-        throw new Error(`Failed to add quiz: ${response.statusText}`);
+    const form = document.getElementById("addQuizForm");
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
     }
-    return response.text();
-})
-.then(result => {
-    // تعليق الـ Popup الناجح
-    /*
-    showPopup(); // عرض النافذة المنبثقة عند النجاح
-    setTimeout(() => {
-        window.location.href = '/staff/Course/Quizzes'; // إعادة التوجيه بعد 3 ثوانٍ
-    }, 3000);
-    */
-    
-    // إعادة التوجيه مباشرة بدون Popup
-    window.location.href = '/staff/Course/Quizzes';
-})
-.catch(error => {
-    console.error('Error:', error);
-    
-    // تعليق الـ Popup الخاص بالأخطاء
-    /*
-    showErrorPopup(error.message || "Failed to add the quiz. Please check your network and try again."); // عرض النافذة المنبثقة للخطأ
-    */
 
-    // طباعة الخطأ في الكونسول فقط بدون Popup
-});
+    let formData = new FormData(this);
+
+    const courseData = JSON.parse(localStorage.getItem('courseData'));
+    formData.append("courseId", courseData.id);
+
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    if (userData["role"] == 'Doctor')
+        formData.append("doctorId", userData.id);
+    else
+        formData.append("teaching_assistantId", userData.id);
+
+    fetch('/add-quiz', {
+        method: 'POST',
+        body: formData,
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to add quiz: ${response.statusText}`);
+            }
+            return response.text();
+        })
+        .then(result => {
+            showPopup();
+            setTimeout(() => {
+                window.location.href = '/staff/Course/Quizzes'; 
+            }, 3000);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showErrorPopup(error.message || "Failed to add the quiz. Please check your network and try again.");
+        });
 });
