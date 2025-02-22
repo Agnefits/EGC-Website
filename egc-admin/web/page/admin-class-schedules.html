@@ -74,8 +74,8 @@
     </div>
 
     <main>
-       
-        
+
+
         <div class="content">
             <div class="text">
                 <h3 class="h">Class Schedules</h3>
@@ -118,7 +118,7 @@
                     </select>
                 </div>
             </div>
-            
+
             <div class="scedule">
                 <div class="schedule-container">
                     <table>
@@ -153,33 +153,44 @@
             </div>
         </div>
         <!-- Modal Structure -->
-<!-- Modal for editing class -->
-<!-- Popup Modal -->
-<!-- Popup Modal -->
-<div id="popup" class="popup">
-    <div id="popup-content" class="popup-content">
-        <button id="close-btn" class="close-btn">X</button>
-        <h2>Edit Class</h2>
-        <form id="edit-form">
-            <label for="edit-title">Title:</label>
-            <input type="text" id="edit-title" name="title" required><br>
+        <!-- Modal for editing class -->
+        <!-- Popup Modal -->
+        <!-- Popup Modal -->
+        <div id="popup" class="popup">
+            <div id="popup-content" class="popup-content">
+                <button id="close-btn" class="close-btn">X</button>
+                <h2>Edit Class</h2>
+                <form id="edit-form">
+                    <label for="edit-title">Title:</label>
+                    <input type="text" id="edit-title" name="title" required><br>
 
-            <label for="edit-instructor">Instructor:</label>
-            <input type="text" id="edit-instructor" name="instructor" required><br>
+                    <label for="edit-instructor">Instructor:</label>
+                    <input type="text" id="edit-instructor" name="instructor" required><br>
 
-            <label for="edit-place">Place:</label>
-            <input type="text" id="edit-place" name="place" required><br>
+                    <label for="edit-place">Place:</label>
+                    <input type="text" id="edit-place" name="place" required><br>
 
-            <label for="edit-time-from">Time From:</label>
-            <input type="time" id="edit-time-from" name="timeFrom" required><br>
+                    <label for="edit-day">Day:</label>
+                    <select id="edit-day" name="day" required>
+                        <option value="">Select Day</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                    </select><br>
 
-            <label for="edit-time-to">Time To:</label>
-            <input type="time" id="edit-time-to" name="timeTo" required><br>
+                    <label for="edit-time-from">Time From:</label>
+                    <input type="time" id="edit-time-from" name="timeFrom" required><br>
 
-            <button type="submit" id="save-btn">Save Changes</button>
-        </form>
-    </div>
-</div>
+                    <label for="edit-time-to">Time To:</label>
+                    <input type="time" id="edit-time-to" name="timeTo" required><br>
+
+                    <button type="submit" id="save-btn">Save Changes</button>
+                </form>
+            </div>
+        </div>
 
 
 

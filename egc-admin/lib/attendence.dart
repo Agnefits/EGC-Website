@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shelf/shelf.dart';
 import 'package:shelf_multipart/form_data.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -129,5 +131,31 @@ class Attendence {
         );
       }
     });
+  
+  router.get('/single-student-attendance/<studentId>', (Request request, String studentId) async {
+     
+        try {
+        final results = DatabaseHelper._db.select(
+            "SELECT a.date, a.courseId, sa.status FROM attendance a LEFT JOIN student_attendance sa ON a.id = sa.attendanceId WHERE sa.studentId = ${studentId}");
+        final courseList = results
+            .map((row) => {
+                  'date': row[0],
+                  'courseId': row[1],
+                  'status': row[2],
+                })
+            .toList();
+
+        return Response.ok(jsonEncode(courseList), headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        });
+      } catch (e) {
+        print('Error: $e');
+        return Response.internalServerError(
+            body: 'Error processing request',
+            headers: {'Access-Control-Allow-Origin': '*'});
+      }
+    });
+ 
   }
 }

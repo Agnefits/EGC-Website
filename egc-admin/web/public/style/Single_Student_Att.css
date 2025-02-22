@@ -46,7 +46,7 @@ header {
     font-weight: bold;
     
 }
-#major, #year, #coursefilter, #section, #name{
+select{
 
     padding: 10px;
     border: 1px solid #ccc;

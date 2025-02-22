@@ -17,53 +17,44 @@
        
         <section class="filters">
             
-            <select id="major" onchange="filterAttendance()">
-                <option value="all">Select Major</option>
-                <option value="science">Mechanical</option>
-                <option value="arts">Electric</option>
-                <option value="commerce">Information Technolgy</option>
+            <select id="department">
+                <option>Select Department</option>
+                <option value="IT">Information Technology</option>
+                <option value="Mechanic">Mechanic</option>
+                <option value="Electrical">Electrical</option>
             </select>
 
-            <select id="year" onchange="filterAttendance()">
-                <option value="all">Select Year</option>
-                <option value="1">1st Year</option>
-                <option value="2">2nd Year</option>
-                <option value="3">3rd Year</option>
+            <select id="yearlevel">
+                <option>Select Year Level</option>
+                <option value="1st">1st Year</option>
+                <option value="2nd">2nd Year</option>
+                <option value="3rd">3rd Year</option>
+                <option value="4th">4th Year</option>
             </select>
 
-            <select id="section" onchange="filterAttendance()">
-                <option value="all">Select Section</option>
-                <option value="a">Section 1</option>
-                <option value="b">Section 2</option>
-                <option value="c">Section 3</option>
-                <option value="d">Section 4</option>
-                <option value="e">Section 5</option>
+            <select id="n_section">
+                <option value="">Select Section</option>
             </select>
 
-            <select id="coursefilter" onchange="filterAttendance()">
-                <option value="all">Select Course</option>
-                <option value="network">Network</option>
-                <option value="programming">Programming</option>
-                <option value="english">English</option>  
+            <select id="course" onchange="showAttendance()">
+                <option value="">Select Course</option>  
             </select>
-            <select id="name" onchange="filterAttendance()">
-                <option value="">Select Name</option>
-                <option value="">Mariam Magdy</option>
-                <option value="">Salma Hussien</option>
-                <option value="">Mariem Mohamed</option>
+
+            <select id="name" onchange="showAttendance()">
+                <option value="">Select Student</option>
             </select>
             <label for="date-from">Date From:</label>
-            <input type="date" id="date-from" onchange="filterAttendance()">
+            <input type="date" id="date-from" onchange="showAttendance()">
 
             <label for="date-to">Date To:</label>
-            <input type="date" id="date-to" onchange="filterAttendance()">
+            <input type="date" id="date-to" onchange="showAttendance()">
         </section>
 
         <section class="student-info">
-            <h2>Student Name: Mariam Magdy</h2>
-            <p>ID: 123456</p>
-            <p>Year: 2nd Year</p>
-            <p>Section: 5</p>
+            <h2>Student Name: </h2>
+            <p>ID: </p>
+            <p>Year: </p>
+            <p>Section: </p>
         </section>
 
         <table id="attendance-table">

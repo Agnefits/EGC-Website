@@ -1,35 +1,163 @@
-function filterAttendance() {
-    const nameFilter = document.getElementById('name').value.toLowerCase();
-    const majorFilter = document.getElementById('major').value;
-    const yearFilter = document.getElementById('year').value;
-    const sectionFilter = document.getElementById('section').value;
-    const courseFilter = document.getElementById('coursefilter').value;
-    const dateFrom = new Date(document.getElementById('date-from').value);
-    const dateTo = new Date(document.getElementById('date-to').value);
-    const rows = document.querySelectorAll('#attendance-table tbody tr');
+document.getElementById('department').addEventListener('change', loadStudents);
+document.getElementById('yearlevel').addEventListener('change', loadStudents);
+document.getElementById('n_section').addEventListener('change', loadStudents);
 
-    rows.forEach(row => {
-        const major = row.getAttribute('data-major');
-        const year = row.getAttribute('data-year');
-        const section = row.getAttribute('data-section');
-        const course = row.getAttribute('data-course');
-        const rowDate = new Date(row.getAttribute('data-date'));
-        
-        // Extracting name from the student info section
-        const studentName = document.querySelector('.student-info h2').textContent.split(': ')[1].toLowerCase();
+async function loadStudents() {
+    const department = document.getElementById('department').value;
+    const yearLevel = document.getElementById('yearlevel').value;
+    const section = document.getElementById('n_section').value;
+    const course = document.getElementById('course').value;
 
-        // Filtering logic
-        const isNameMatch = nameFilter === '' || studentName.includes(nameFilter);
-        const isMajorMatch = majorFilter === 'all' || major === majorFilter;
-        const isYearMatch = yearFilter === 'all' || year === yearFilter;
-        const isSectionMatch = sectionFilter === 'all' || section === sectionFilter;
-        const isCourseMatch = courseFilter === 'all' || course === courseFilter;
-        const isDateMatch = (!dateFrom || rowDate >= dateFrom) && (!dateTo || rowDate <= dateTo);
+    try {
+        let response = await fetch(`/admin/courses/${department}/${yearLevel}`);
 
-        if (isNameMatch && isMajorMatch && isYearMatch && isSectionMatch && isCourseMatch && isDateMatch) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
+        if (!response.ok) {
+            throw new Error('Failed to fetch courses');
         }
-    });
+
+        const courses = await response.json();
+        console.log('Fetched courses:', courses); // أضف هذا السطر للتحقق من البيانات
+
+        const CourseSelect = document.getElementById('course');
+        if (!CourseSelect) {
+            throw new Error('Table body element not found');
+        }
+        CourseSelect.innerHTML = "<option value=''>Select Course</option>";
+
+        courses.forEach(course => {
+            const option = document.createElement('option');
+            option.value = course.id; // Assuming each section has a unique ID
+            option.textContent = course.name; // Display section name
+            CourseSelect.appendChild(option);
+        });
+
+        CourseSelect.value = course;
+
+        response = await fetch('/students'); // Fetch all students
+        if (!response.ok) throw new Error('Failed to fetch students');
+
+        const students = await response.json();
+        const sectionSelect = document.getElementById('n_section');
+        const sections = [];
+        sectionSelect.innerHTML = "<option value=''>Select Section</option>";
+        students.forEach(element => {
+            if (!sections.includes(element.No_section)) {
+                sections.push(element.No_section);
+                const option = document.createElement('option');
+                option.value = element.No_section; // Assuming each section has a unique ID
+                option.textContent = "Section " + element.No_section; // Display section name
+                sectionSelect.appendChild(option);
+            }
+        });
+
+        sectionSelect.value = section;
+
+        const filteredStudents = students.filter(student => {
+            return (!department || student.department === department) &&
+                (!yearLevel || student.year_level === yearLevel) &&
+                (!section || student.No_section == section);
+        });
+
+        const studentSelect = document.getElementById('name');
+        studentSelect.innerHTML = "<option value=''>Select Student</option>";
+
+        filteredStudents.forEach(element => {
+            const option = document.createElement('option');
+            option.value = element.id; // Assuming each section has a unique ID
+            option.textContent = element.name; // Display section name
+            studentSelect.appendChild(option);
+        });
+
+        if (studentSelect.value) {
+            let response = await fetch(`/students/${studentId}`);
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch student details');
+            }
+
+            const student = await response.json();
+            console.log('Fetched student:', student); // For debugging
+
+            const studentInfo = document.getElementById("student-info");
+            studentInfo.innerHTML = `
+            <h2>Student Name: ${student.name}</h2>
+            <p>ID: ${student.id}</p>
+            <p>Year: ${student.year} Year</p>
+            <p>Section: ${student.section}</p>`
+
+            response = await fetch(`/single-student-attendance/${studentSelect.value}`);
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch attendance');
+            }
+
+            const attendance = await response.json();
+            console.log('Fetched attendances:', attendance); // أضف هذا السطر للتحقق من البيانات
+
+        }
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error loading students');
+    }
+}
+
+
+async function showAttendance() {
+    try {
+        const studentSelect = document.getElementById('name');
+        if (studentSelect.value) {
+            let response = await fetch(`/students/${studentSelect.value}`);
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch student details');
+            }
+
+            const student = await response.json();
+            console.log('Fetched student:', student); // For debugging
+
+            const studentInfo = document.getElementsByClassName("student-info")[0];
+            studentInfo.innerHTML = `
+            <h2>Student Name: ${student.name}</h2>
+            <p>ID: ${student.id}</p>
+            <p>Year: ${student.year_level} Year</p>
+            <p>Section: ${student.No_section}</p>`
+
+            response = await fetch(`/single-student-attendance/${studentSelect.value}`);
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch attendance');
+            }
+
+            const attendance = await response.json();
+            console.log('Fetched attendances:', attendance); // أضف هذا السطر للتحقق من البيانات
+
+            const filteredAttendance = attendance.filter(attendance => {
+                return true;
+            });
+
+            const table = document.querySelector("#attendance-table tbody");
+            table.innerHTML = "";
+
+            filteredAttendance.forEach(element => {
+                table.innerHTML += `<tr data-courseId="${element.courseId}" data-status="${element.status}" data-date="${element.date}">
+                    <td>${element.date}</td>
+                    <td>${element.status === "P"? "Present" : "Absent"}</td>
+                </tr>`;
+            });
+
+        }
+        else {
+            const studentInfo = document.getElementById("student-info");
+            studentInfo.innerHTML = `
+            <h2>Student Name: </h2>
+            <p>ID: </p>
+            <p>Year: </p>
+            <p>Section: </p>`
+        }
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error loading students');
+    }
 }

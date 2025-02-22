@@ -254,10 +254,10 @@ GROUP BY
 
 router.get('/doctor/courses/<doctorId>', (Request request, String doctorId) async {
     try {
-        final queryParams = request.url.queryParameters;
+        /*final queryParams = request.url.queryParameters;
         final limit = int.tryParse(queryParams['limit'] ?? '3') ?? 3;
         final page = int.tryParse(queryParams['page'] ?? '1') ?? 1;
-        final offset = (page - 1) * limit;
+        final offset = (page - 1) * limit;*/
 
         // 🟢 Modified: Added ORDER BY id DESC
        final results = DatabaseHelper._db.select(
@@ -343,6 +343,30 @@ router.get('/teaching-assistant/courses/<teachingId>', (Request request, String 
   }
 });
 
+router.get('/admin/courses/<department>/<yearLevel>',
+        (Request request, String department, String yearLevel) async {
+      try {
+        final results = DatabaseHelper._db.select(
+            "SELECT id, name, courseId FROM courses WHERE department = '$department' AND year = '$yearLevel'");
+        final courseList = results
+            .map((row) => {
+                  'id': row[0],
+                  'name': row[1],
+                  'courseId': row[2],
+                })
+            .toList();
+
+        return Response.ok(jsonEncode(courseList), headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        });
+      } catch (e) {
+        print('Error: $e');
+        return Response.internalServerError(
+            body: 'Error processing request',
+            headers: {'Access-Control-Allow-Origin': '*'});
+      }
+    });
 
     // عرض كورس حسب ID
     router.get('/courses/Details/<id>', (Request request, String id) async {

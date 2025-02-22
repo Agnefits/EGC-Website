@@ -139,28 +139,23 @@ function populateSchedule(classList) {
 
             deleteButton.addEventListener("click", () => {
                 // Handle the delete logic
-                deleteClass(classItem, row, fromIndex, toIndex);
+                deleteClass(classItem);
             });
         }
     });
 }
 
 // Function to delete a class from the schedule
-function deleteClass(classItem, row, fromIndex, toIndex) {
-    // Find the index of the class to delete in the classes array
-    const classIndex = classes.findIndex(item => item.title === classItem.title && item.timeFrom === classItem.timeFrom);
-    if (classIndex !== -1) {
-        // Remove the class from the array
-        classes.splice(classIndex, 1);
-    }
+async function deleteClass(classItem) {
+    const response = await fetch('/delete-class-schedule/' + classItem.id, {
+        method: 'DELETE'
+    });
 
-    // Remove the merged cells for the class
-    for (let i = fromIndex; i <= toIndex; i++) {
-        row.deleteCell(fromIndex); // Remove the cells
+    if (!response.ok) {
+        alert(response.headers.get('Error'));
+    } else {
+        loadClasses();
     }
-
-    // Re-populate the schedule to reflect changes
-    populateSchedule(classes); // Assuming `classes` is your class data
 }
 
 // Function to show the popup with class details
@@ -174,6 +169,7 @@ function showPopup(classItem) {
     document.getElementById('edit-title').value = classItem.title;
     document.getElementById('edit-instructor').value = classItem.instructor;
     document.getElementById('edit-place').value = classItem.place;
+    document.getElementById('edit-day').value = classItem.day;
     document.getElementById('edit-time-from').value = classItem.timeFrom;
     document.getElementById('edit-time-to').value = classItem.timeTo;
 
@@ -186,27 +182,39 @@ function showPopup(classItem) {
     });
 
     // Handle form submission (Save Changes)
-    editForm.addEventListener('submit', (e) => {
+    editForm.addEventListener('submit', async function(e) {
         e.preventDefault();
 
         // Update the class details with the new values
         classItem.title = document.getElementById('edit-title').value;
         classItem.instructor = document.getElementById('edit-instructor').value;
         classItem.place = document.getElementById('edit-place').value;
+        classItem.day = document.getElementById('edit-day').value;
         classItem.timeFrom = document.getElementById('edit-time-from').value;
         classItem.timeTo = document.getElementById('edit-time-to').value;
 
         // Close the popup
         popup.style.display = 'none';
 
-        // Update the classes array with the modified classItem
-        const index = classes.findIndex(item => item.title === classItem.title && item.timeFrom === classItem.timeFrom);
-        if (index !== -1) {
-            classes[index] = { ...classItem }; // Update the class in the array
-        }
+        const formData = new FormData(this);
+        formData.append(
+            'department', classItem.department);
 
-        // Re-populate the schedule to reflect changes
-        populateSchedule(classes); // Assuming `classes` is your class data
+        formData.append(
+            'year_level', classItem.year_level);
+
+        formData.append(
+            'sectionNo', classItem.sectionNo);
+        const response = await fetch('/update-class-schedule/' + classItem.id, {
+            method: 'PUT',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            alert(response.headers.get('Error'));
+        } else {
+            loadClasses();
+        }
     });
 }
 
