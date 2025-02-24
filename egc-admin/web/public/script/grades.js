@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // const courseData = JSON.parse(localStorage.getItem('courseData'));
-    // const courseId = courseData.id;
+   const courseData = JSON.parse(localStorage.getItem('courseData'));
+    const courseId = courseData.id;
 
-    const courseData = JSON.parse(localStorage.getItem('courseData'));
     if (courseData) {
         document.getElementById('name_c').innerText = courseData.name;
         document.getElementById("log").src = courseData.photo ? "/courses/photo/" + courseData.id : "/img/img-course.png";
@@ -126,7 +125,7 @@ function showPopup() {
         },
         willClose: () => {
             // إعادة التوجيه بعد انتهاء المؤقت (3 ثواني)
-            window.location.href = '/staff/Course/Home';
+            window.location.href = '/staff/Course/grades';
                 }
     });
 }

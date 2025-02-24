@@ -4,15 +4,7 @@ function togglePassword() {
 }
 
 // دالة لعرض رسالة منبثقة
-function showPopup(message, type = 'success') {
-    Swal.fire({
-        icon: type,
-        title: type === 'success' ? 'Success!' : 'Error!',
-        text: message,
-        timer: 3000,
-        showConfirmButton: false
-    });
-}
+
 
 const fileInput = document.getElementById('student_image');
 const imageContainer = document.getElementById('picture');
@@ -85,16 +77,49 @@ document.getElementById('updatestudentForm').addEventListener('submit', async fu
             throw new Error('Failed to update student');
         }
 
-        showPopup('The student information has been updated successfully!', 'success');
+    //     showPopup('The student information has been updated successfully!', 'success');
 
-        setTimeout(() => {
-            window.location.href = '/admin/ShowStudents';
-        }, 3000);
+    //     setTimeout(() => {
+    //         window.location.href = '/admin/ShowStudents';
+    //     }, 3000);
 
-    } catch (error) {
-        showPopup(error.message, 'error');
-    }
+    // } catch (error) {
+    //     showPopup(error.message, 'error');
+    // }
+
+
+
+    showPopup();
+    this.reset();
+} catch (error) {
+    console.error('Error:', error);
+    alert('Failed to update Teaching Assistant: ' + error.message);
+}
 });
+
+
+
+function showPopup() {
+    Swal.fire({
+        icon: 'success',
+        title: 'success!',
+        text: 'The student has been edited',
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000, // مدة البوب أب 3 ثوانٍ
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        },
+        didClose: () => {
+            // عند إغلاق البوب أب، يتم تنفيذ التوجيه
+            window.location.href = '/admin/ShowStudents';
+        }
+    });
+}
 
 let currentDepartment;
 let currentYearlevel;

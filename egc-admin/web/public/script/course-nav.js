@@ -1,20 +1,33 @@
-document.addEventListener("DOMContentLoaded", () => {
+// document.addEventListener("DOMContentLoaded", () => {
+//     const courseData = JSON.parse(localStorage.getItem('courseData'));
+//     if (courseData) {
+//         document.getElementById('course').innerText = courseData.name;
+//         document.getElementById("imgnav").src = courseData.photo ? "/courses/photo/" + courseData.id : "/img/img-course.png";
+//     } else {
+//         alert('Course ID is missing');
+//         window.location.href = '/staff/ShowCourses';
+//     }
+
+//     // Load students when the page loads
+//     loadStudents();
+
+//     // Add event listeners for dropdowns
+//     document.getElementById("filter").addEventListener("change", loadStudents);
+// });
+document.addEventListener('DOMContentLoaded', function() {
     const courseData = JSON.parse(localStorage.getItem('courseData'));
-    if (courseData) {
-        document.getElementById('course').innerText = courseData.name;
-        document.getElementById("imgnav").src = courseData.photo ? "/courses/photo/" + courseData.id : "/img/img-course.png";
-    } else {
-        alert('Course ID is missing');
-        window.location.href = '/staff/ShowCourses';
-    }
-
-    // Load students when the page loads
-    loadStudents();
-
-    // Add event listeners for dropdowns
-    document.getElementById("filter").addEventListener("change", loadStudents);
-});
-
+     const courseId = courseData.id;
+ 
+     if (courseData) {
+         document.getElementById('course').innerText = courseData.name;
+         document.getElementById("imgnav").src = courseData.photo ? "/courses/photo/" + courseData.id : "/img/img-course.png";
+     } else {
+         alert('Course ID is missing');
+         window.location.href = '/staff/ShowCourses';
+     }
+    });
+    
+     
 
 
 
