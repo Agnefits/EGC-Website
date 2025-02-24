@@ -1,3 +1,8 @@
+document.getElementById("showPassword").addEventListener("click", function() {
+    var x = document.getElementById("password");
+    x.type = (x.type === "password") ? "text" : "password";
+});
+
 document.getElementById('addTeachingAssistantForm').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent the default form submission
 

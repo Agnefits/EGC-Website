@@ -1,6 +1,6 @@
-async function fetchAttendance(date) {
+async function fetchAttendance(date,section,course) {
   try {
-      const response = await fetch(`/today_attendance/${date}`);
+      const response = await fetch(`/today_attendance/${date}/${section}/${course}`);
       if (!response.ok) {
           throw new Error('Network response was not ok');
       }
@@ -77,6 +77,8 @@ async function loadStudents() {
           CourseSelect.appendChild(option);
       });
 
+      CourseSelect.value = course;
+
       response = await fetch('/students');
       if (!response.ok) throw new Error('Failed to fetch students');
 
@@ -93,9 +95,11 @@ async function loadStudents() {
               sectionSelect.appendChild(option);
           }
       });
+      sectionSelect.value = section;
+
     
         const dateValue = document.getElementById('date').value; 
-      fetchAttendance(dateValue); 
+      fetchAttendance(dateValue,sectionSelect.value,CourseSelect.value); 
 
   } catch (error) {
       console.error('Error:', error);
@@ -105,8 +109,8 @@ async function loadStudents() {
 
 document.getElementById('department').addEventListener('change', loadStudents);
 document.getElementById('yearlevel').addEventListener('change', loadStudents);
-document.getElementById('course').addEventListener('change', loadStudents);
-document.getElementById('n_section').addEventListener('change', loadStudents);
+// document.getElementById('course').addEventListener('change', loadStudents);
+// document.getElementById('n_section').addEventListener('change', loadStudents);
 document.getElementById('date').addEventListener('change', loadStudents);
 
 document.addEventListener('DOMContentLoaded', () => {

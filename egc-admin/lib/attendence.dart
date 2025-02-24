@@ -160,12 +160,16 @@ class Attendence {
 
 
 
-router.get('/today_attendance/<date>', (Request request, String date) async {
+router.get('/today_attendance/<date>/<section>/<course>', (Request request, String date , String sectionNo , String courseId) async {
   try {
-    final results = await DatabaseHelper._db.select(
-      "SELECT s.name, sa.status FROM students s LEFT JOIN student_attendance sa ON s.id = sa.studentId LEFT JOIN attendance a ON a.id = sa.attendanceId WHERE DATE(a.date) = ?", 
-      [date]
-    );
+final results = await DatabaseHelper._db.select(
+  "SELECT s.name, sa.status FROM students s "
+  "LEFT JOIN student_attendance sa ON s.id = sa.studentId "
+  "LEFT JOIN attendance a ON a.id = sa.attendanceId "
+  "WHERE DATE(a.date) = ? AND a.sectionNo = ? AND a.courseId = ?",
+  [date, sectionNo, courseId],  // تم تمرير القيم بشكل صحيح هنا
+);
+
 
     final courseList = results
         .map((row) => {
