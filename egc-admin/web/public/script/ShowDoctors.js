@@ -58,8 +58,8 @@ function addEventListeners() {
                 return;
             }
 
-            const confirmation = confirm('Are you sure you want to delete this doctor?');
-            if (confirmation) {
+            // const confirmation = confirm('Are you sure you want to delete this doctor?');
+            // if (confirmation) {
                 try {
                     showPopup();
 
@@ -79,7 +79,7 @@ function addEventListeners() {
                     console.error('Error:', error);
                     alert('Error deleting doctor');
                 }
-            }
+            // }
         });
     });
 

@@ -73,8 +73,8 @@ function addEventListeners() {
                 return;
             }
 
-            const confirmation = confirm('Are you sure you want to delete this student?');
-            if (confirmation) {
+            // const confirmation = confirm('Are you sure you want to delete this student?');
+            // if (confirmation) {
                 try {
                     showPopup();
                     const deleteResponse = await fetch(`/delete-student/${studentId}`, {
@@ -90,7 +90,7 @@ function addEventListeners() {
                     console.error('Error:', error);
                     alert('Error deleting student');
                 }
-            }
+            // }
         });
     });
 

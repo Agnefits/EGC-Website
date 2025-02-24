@@ -67,8 +67,8 @@ function addEventListeners() {
                 return;
             }
 
-            const confirmation = confirm('Are you sure you want to delete this Teaching Assistant?');
-            if (confirmation) {
+            // const confirmation = confirm('Are you sure you want to delete this Teaching Assistant?');
+            // if (confirmation) {
                 try {
                     showPopup();
                     const deleteResponse = await fetch(`/delete-teaching-assistant/${teachingAssistantId}`, {
@@ -84,7 +84,7 @@ function addEventListeners() {
                     console.error('Error:', error);
                     alert('Error deleting Teaching Assistant');
                 }
-            }
+            // }
         });
     });
 
