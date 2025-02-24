@@ -157,5 +157,36 @@ class Attendence {
       }
     });
  
+
+
+
+router.get('/today_attendance/<date>', (Request request, String date) async {
+  try {
+    final results = await DatabaseHelper._db.select(
+      "SELECT s.name, sa.status FROM students s LEFT JOIN student_attendance sa ON s.id = sa.studentId LEFT JOIN attendance a ON a.id = sa.attendanceId WHERE DATE(a.date) = ?", 
+      [date]
+    );
+
+    final courseList = results
+        .map((row) => {
+              'name': row[0],
+              'status': row[1],
+            })
+        .toList();
+
+    return Response.ok(jsonEncode(courseList), headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+  } catch (e) {
+    print('Error: $e');
+    return Response.internalServerError(
+        body: 'Error processing request',
+        headers: {'Access-Control-Allow-Origin': '*'});
   }
+});
+  }  
 }
+
+
+
