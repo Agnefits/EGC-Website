@@ -82,64 +82,65 @@ function displayGrades(grades) {
 
         tableBody.innerHTML += `
                 <tr>
-                  <td> ${grade.name}</td>
+                  <td class="name" colspan="4"> ${grade.name}</td>
                   </tr>
                   <tr>
-                <td>finalExamDegree</td>
-                  <td>${grade.cfinal}</td>
-                  <td>${grade.finalExamDegree}</td>
-                  <td>${finalprec} </td>
+                <td class="td">finalExamDegree</td>
+                  <td class="td">${grade.finalExamDegree}</td>
+                  <td class="td">${grade.cfinal}</td>
+                  <td class="td">${finalprec} </td>
                   </tr>
 
                   <tr>
-                  <td> midtermDegree</td>
-<td>${grade.cmid}</td>
-  <td>${grade.midtermDegree}</td>
-   <td>${midprec}</td>
+                  <td class="td">  midtermDegree</td>
+
+  <td class="td">${grade.midtermDegree}</td>
+  <td class="td">${grade.cmid}</td>
+   <td class="td">${midprec}</td>
 </tr>
 
 
 <tr>
-<td> practicalDegree</td>
-<td> ${grade.cpract}</td>
-  <td> ${grade.practicalDegree}</td>
-      <td> ${pracprec}</td>
+<td class="td"> practicalDegree</td>
+  <td class="td"> ${grade.practicalDegree}</td>
+  <td class="td"> ${grade.cpract}</td>
+      <td class="td"> ${pracprec}</td>
      </tr>
      
 <tr>
-<td> lectureAttendance</td>
-<td> ${grade.clec}</td>
-  <td> ${grade.lectureAttendance}</td>
-    <td> ${lecprec}</td>
+<td class="td"> lectureAttendance</td>
+  <td class="td"> ${grade.lectureAttendance}</td>
+  <td class="td"> ${grade.clec}</td>
+    <td class="td"> ${lecprec}</td>
      </tr>
 
 <tr>
-<td> sectionAttendance</td>
-<td> ${grade.csec}</td>
-  <td> ${grade.sectionAttendance}</td>
-     <td> ${secprec}</td>
+<td class="td"> sectionAttendance</td>
+  <td class="td"> ${grade.sectionAttendance}</td>
+  <td class="td"> ${grade.csec}</td>
+     <td class="td"> ${secprec}</td>
      </tr>
 
 
      
 <tr>
-<td>Total Attendance</td>
-<td>${ctotalatt}</td>
-  <td>${totalatt}</td>
- <td>${attprec}</td>
+<td class="td">Total Attendance</td>
+  <td class="td">${totalatt}</td>
+  <td class="td">${ctotalatt}</td>
+ <td class="td">${attprec}</td>
 </tr>
 
 <tr>
-<td>Total</td>
-<td>${ctotal}</td>
-  <td>${total}</td>
- <td>${totalperc} </td>
+<td class="td">Total</td>
+  <td class="td">${total}</td>
+  <td class="td">${ctotal}</td>
+ <td class="td">${totalperc} </td>
 </tr>
                 
            
         `;
 
-        
+     
         
     });
 }

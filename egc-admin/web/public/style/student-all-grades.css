@@ -11,10 +11,11 @@ body {
 }
 h3 {
     color: #0f2b4e;
-    font-size: 30px;
+    font-size: 40px;
     font-weight: 500px;
     font-family:"Libre Baskerville", serif;
     text-align: center;
+
 }
 
 .sidebar {
@@ -316,11 +317,29 @@ strong {
     text-align: center; /* Centers text horizontally */
     vertical-align: middle; /* Centers text vertically */
     justify-content: center; /* Not needed for table cells */
+    font-size: 31px;
     
 }
+.name 
+{
+ font-family:"Libre Baskerville", serif;
+color: #0f2b4e;
+font-size: 30px;
+font-weight: 600;
+/* justify-content: center; 
+display: flex;
+align-items: center; */
+/* text-align: center;
+display:table-cell;
+vertical-align: middle;
+height: 100px; */
+}
+.td{font-size: 23px;}
+
 tbody td, tbody th {
     text-align: center; /* Centers text horizontally */
     vertical-align: middle; /* Centers text vertically */
+    
 }
 @media (max-width: 768px) {
     table {
