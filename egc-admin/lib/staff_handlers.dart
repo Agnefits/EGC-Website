@@ -188,7 +188,7 @@ Future<Response> getCourseQuizzesHandler(Request request) async {
 
 Future<Response> getAddCourseQuizHandler(Request request) async {
   try {
-    var html = File('web/page/add Quiz.html').readAsStringSync();
+    var html = File('web/page/add quiz.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
     return Response.internalServerError(body: e.toString());
@@ -197,7 +197,7 @@ Future<Response> getAddCourseQuizHandler(Request request) async {
 
 Future<Response> getEditCourseQuizHandler(Request request) async {
   try {//Note: change to edit Quiz.html
-    var html = File('web/page/edit_Quiz.html').readAsStringSync();
+    var html = File('web/page/edit_quiz.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
     return Response.internalServerError(body: e.toString());

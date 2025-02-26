@@ -506,7 +506,7 @@ Future<Response> postAddStudentHandler(Request request) async {
 
 Future<Response> getEditStudentHandler(Request request) async {
   try {
-    var html = File('web/page/edit_Student.html').readAsStringSync();
+    var html = File('web/page/edit_student.html').readAsStringSync();
     return Response.ok(html, headers: {'Content-Type': 'text/html'});
   } catch (e) {
     return Response.internalServerError(body: e.toString());
