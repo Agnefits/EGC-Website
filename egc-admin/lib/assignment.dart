@@ -40,8 +40,7 @@ class DatabaseHelper {
   
   }
 
-  static void addAssignment(
-      Map<String, dynamic> assignmentData, Uint8List? file) {
+     static void addAssignment(Map<String, dynamic> assignmentData, Uint8List? file) {
     final statement = _db.prepare('''
       INSERT INTO assignments (courseId, filename, title, date, deadline, description, degree, file, ${assignmentData.containsKey("doctorId") ? "doctorId" : "teaching_assistantId"})
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -55,9 +54,7 @@ class DatabaseHelper {
       assignmentData['description'],
       assignmentData['degree'],
       file ?? "NULL",
-      assignmentData[assignmentData.containsKey("doctorId")
-          ? "doctorId"
-          : "teaching_assistantId"]
+      assignmentData[assignmentData.containsKey("doctorId") ? "doctorId" : "teaching_assistantId"]
     ]);
     statement.dispose();
   }
@@ -93,22 +90,26 @@ class DatabaseHelper {
   }
 
   static List<Map<String, dynamic>> getAssignments(String courseId) {
-    final results = _db.select(
-        'SELECT A.id, A.filename, A.title, A.date, A.deadline, A.description, A.degree, A.file, CASE WHEN A.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor FROM assignments A LEFT JOIN doctors D ON A.doctorId = D.id LEFT JOIN teaching_assistants T ON A.teaching_assistantId = T.id WHERE A.courseId = ' +
-            courseId);
-    return results
-        .map((row) => {
-              'id': row['id'],
-              'filename': row['filename'],
-              'title': row['title'],
-              'date': row['date'],
-              'deadline': row['deadline'],
-              'description': row['description'],
-              'degree': row['degree'],
-              'file': row['file'].length > 0,
-              'instructor': row['instructor'],
-            })
-        .toList();
+    final results = _db.select('''
+        SELECT A.id, A.filename, A.title, A.date, A.deadline, A.description, A.degree, A.file, 
+               CASE WHEN A.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor 
+        FROM assignments A 
+        LEFT JOIN doctors D ON A.doctorId = D.id 
+        LEFT JOIN teaching_assistants T ON A.teaching_assistantId = T.id 
+        WHERE A.courseId = ?
+    ''', [courseId]);
+
+    return results.map((row) => {
+        'id': row['id'],
+        'filename': row['filename'],
+        'title': row['title'],
+        'date': row['date'],
+        'deadline': row['deadline'],
+        'description': row['description'],
+        'degree': row['degree'],
+        'file': row['file'].length > 0,
+        'instructor': row['instructor'],
+    }).toList();
   }
 
   static Map<String, dynamic> getAssignment(String id) {
@@ -128,7 +129,68 @@ class DatabaseHelper {
       'instructor': assignment['instructor'],
     };
   }
+
+  static void addStudentSubmission(Map<String, dynamic> submissionData, Uint8List? file) {
+    final statement = _db.prepare('''
+        INSERT INTO assignment_submissions (studentId, assignmentId, filename, file, submissionDate)
+        VALUES (?, ?, ?, ?, ?)
+    ''');
+    statement.execute([
+        submissionData['studentId'],
+        submissionData['assignmentId'],
+        submissionData['fileName'],
+        file ?? Uint8List(0),
+        DateTime.now().toString(),
+    ]);
+    statement.dispose();
+  }
+
+  static List<Map<String, dynamic>> getCourses() {
+    final results = _db.select('SELECT id, name FROM courses');
+    return results.map((row) => {
+        'id': row['id'],
+        'name': row['name'],
+    }).toList();
+  }
+
+  static List<Map<String, dynamic>> getAllAssignments() {
+    final results = _db.select('''
+        SELECT A.id, A.filename, A.title, A.date, A.deadline, A.description, A.degree, A.file, 
+               CASE WHEN A.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor 
+        FROM assignments A 
+        LEFT JOIN doctors D ON A.doctorId = D.id 
+        LEFT JOIN teaching_assistants T ON A.teaching_assistantId = T.id
+    ''');
+    return results.map((row) => {
+        'id': row['id'],
+        'filename': row['filename'],
+        'title': row['title'],
+        'date': row['date'],
+        'deadline': row['deadline'],
+        'description': row['description'],
+        'degree': row['degree'],
+        'file': row['file'].length > 0,
+        'instructor': row['instructor'],
+    }).toList();
+  }
+
+static List<Map<String, dynamic>> getStudentSubmissions(String assignmentId) {
+    final results = _db.select(
+        'SELECT SA.id, SA.filename, SA.submissionDate, SA.file, S.Name student '
+        'FROM assignment_submissions SA '
+        'LEFT JOIN students S ON SA.studentId = S.id '
+        'WHERE SA.assignmentId = ?', [assignmentId]);
+    
+    return results.map((row) => {
+        'id': row['id'],
+        'filename': row['filename'],
+        'submissionDate': row['submissionDate'],
+        'file': row['file'].length > 0,
+        'student': row['student'],
+    }).toList();
 }
+}
+
 
 class Assignment {
   final router;
@@ -141,72 +203,102 @@ class Assignment {
     DatabaseHelper.init();
 
     // عرض المواد
-    router.get('/courses-assignments/<courseId>',
-        (Request request, String courseId) async {
-      try {
-        final assignments = DatabaseHelper.getAssignments(courseId);
-        final jsonAssignments = jsonEncode(assignments);
-        return Response.ok(
-          jsonAssignments,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
-        );
-      } catch (e) {
-        print(e);
-        return Response.internalServerError(body: 'Error: $e');
-      }
-    });
-
-    // عرض أحد المواد
-    router.get('/courses/assignments/<id>', (Request request, String id) async {
-      try {
-        final assignments = DatabaseHelper.getAssignment(id);
-        final jsonAssignments = jsonEncode(assignments);
-        return Response.ok(
-          jsonAssignments,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
-        );
-      } catch (e) {
-        return Response.internalServerError(body: 'Error: $e');
-      }
-    });
-
-    router.get('/courses/assignments/file/<id>',
-        (Request request, String id) async {
-      try {
-        // Query the database to get the profile picture
-        final result = DatabaseHelper._db.select(
-            'SELECT filename, file FROM assignments WHERE id = ?', [id]);
-
-        if (result.isNotEmpty) {
-          final fileBytes = result.first['file'];
-
-          final mimeType = lookupMimeType(result.first['filename']) ??
-              'application/octet-stream';
-          // Set the appropriate content-type header (assuming the image is in PNG format)
-          return Response.ok(fileBytes, headers: {
-            'Content-Type': mimeType,
-            'Content-Disposition':
-                'inline; filename="${result.first['filename']}"',
-            'Access-Control-Allow-Origin': '*'
-          });
-        } else {
-          return Response.notFound('Assignment not found');
+ router.get('/courses-assignments/<courseId>', (Request request, String courseId) async {
+        try {
+            final assignments = DatabaseHelper.getAssignments(courseId);
+            final jsonAssignments = jsonEncode(assignments);
+            return Response.ok(
+                jsonAssignments,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                },
+            );
+        } catch (e) {
+            print(e);
+            return Response.internalServerError(body: 'Error: $e');
         }
-      } catch (e) {
-        print('Error: $e');
-        return Response.internalServerError(
-            body: 'Error processing request',
-            headers: {'Access-Control-Allow-Origin': '*'});
-      }
     });
 
-    // إضافة مادة جديدة
+    // Fetch all assignments (without filtering by course)
+    router.get('/courses-assignments', (Request request) async {
+        try {
+            final assignments = DatabaseHelper.getAllAssignments();
+            final jsonAssignments = jsonEncode(assignments);
+            return Response.ok(
+                jsonAssignments,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                },
+            );
+        } catch (e) {
+            print(e);
+            return Response.internalServerError(body: 'Error: $e');
+        }
+    });
+
+    // Fetch the list of all courses
+    router.get('/courses', (Request request) async {
+        try {
+            final courses = DatabaseHelper.getCourses();
+            final jsonCourses = jsonEncode(courses);
+            return Response.ok(
+                jsonCourses,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                },
+            );
+        } catch (e) {
+            print(e);
+            return Response.internalServerError(body: 'Error: $e');
+        }
+    });
+
+    // Fetch details of a specific assignment by its id
+    router.get('/courses/assignments/<id>', (Request request, String id) async {
+        try {
+            final assignments = DatabaseHelper.getAssignment(id);
+            final jsonAssignments = jsonEncode(assignments);
+            return Response.ok(
+                jsonAssignments,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                },
+            );
+        } catch (e) {
+            return Response.internalServerError(body: 'Error: $e');
+        }
+    });
+
+    // Fetch the file associated with a specific assignment by its id
+    router.get('/courses/assignments/file/<id>', (Request request, String id) async {
+        try {
+            final result = DatabaseHelper._db.select(
+                'SELECT filename, file FROM assignments WHERE id = ?', [id]);
+
+            if (result.isNotEmpty) {
+                final fileBytes = result.first['file'];
+                final mimeType = lookupMimeType(result.first['filename']) ??
+                    'application/octet-stream';
+                return Response.ok(fileBytes, headers: {
+                    'Content-Type': mimeType,
+                    'Content-Disposition': 'inline; filename="${result.first['filename']}"',
+                    'Access-Control-Allow-Origin': '*'
+                });
+            } else {
+                return Response.notFound('Assignment not found');
+            }
+        } catch (e) {
+            print('Error: $e');
+            return Response.internalServerError(
+                body: 'Error processing request',
+                headers: {'Access-Control-Allow-Origin': '*'});
+        }
+    });
+
     router.post('/add-assignment', (Request request) async {
       try {
         final form = request.multipartFormData;
@@ -219,31 +311,83 @@ class Assignment {
                 ?.split(';')
                 .firstWhere((element) => element.trim().startsWith('filename='))
                 .split('=')[1]
-                .replaceAll('"', ''); // Extract and clean the filename
-            print(
-                'Uploaded file name: $fileName'); // Use or store the file name
+                .replaceAll('"', '');
             data.addAll({"fileName": fileName});
-
             file = await formData.part.readBytes();
           } else {
             data.addAll({formData.name: await formData.part.readString()});
           }
         }
-        data.addAll({"date": DateTime.now().toString()});
 
+        data.addAll({"date": DateTime.now().toString()});
         DatabaseHelper.addAssignment(data, file);
 
-        return Response.ok('Assignment added successfully', headers: {
-          'Access-Control-Allow-Origin': '*',
-        });
+        // Return the updated assignments after addition
+        final updatedAssignments = DatabaseHelper.getAssignments(data['courseId']);
+        return Response.ok(
+          jsonEncode(updatedAssignments),
+          headers: {'Content-Type': 'application/json'}
+        );
       } catch (e) {
         return Response.internalServerError(
-            body: 'Error processing request',
-            headers: {'Content-Type': 'application/json', "Error": '$e'});
+          body: jsonEncode({"error": "Error processing request: $e"}),
+          headers: {'Content-Type': 'application/json'}
+        );
       }
     });
 
-    // تعديل مادة
+router.post('/student/submit-assignment', (Request request) async {
+        try {
+            final form = request.multipartFormData;
+            final data = <String, dynamic>{};
+            Uint8List? file;
+
+            await for (final formData in form) {
+                if (formData.name == "file") {
+                    final fileName = formData.part.headers['content-disposition']
+                        ?.split(';')
+                        .firstWhere((element) => element.trim().startsWith('filename='))
+                        .split('=')[1]
+                        .replaceAll('"', '');
+                    data.addAll({"fileName": fileName});
+                    file = await formData.part.readBytes();
+                } else {
+                    data.addAll({formData.name: await formData.part.readString()});
+                }
+            }
+
+            if (file == null || file.isEmpty) {
+                return Response.internalServerError(body: 'No file received.');
+            }
+
+            DatabaseHelper.addStudentSubmission(data, file);
+            return Response.ok('Assignment submitted successfully');
+        } catch (e) {
+            return Response.internalServerError(body: 'Error processing request: $e');
+        }
+    });
+
+ router.get('/staff/Course/AssignmentDetails/<assignmentId>/submissions', (Request request, String assignmentId) async {
+        try {
+            final submissions = DatabaseHelper.getStudentSubmissions(assignmentId);
+            final jsonSubmissions = jsonEncode(submissions);
+
+            return Response.ok(
+                jsonSubmissions,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                },
+            );
+        } catch (e) {
+            return Response.internalServerError(body: 'Error: $e');
+        }
+    });
+
+
+
+
+
     router.put('/update-assignment/<id>', (Request request, String id) async {
       try {
         final form = request.multipartFormData;
@@ -256,31 +400,30 @@ class Assignment {
                 ?.split(';')
                 .firstWhere((element) => element.trim().startsWith('filename='))
                 .split('=')[1]
-                .replaceAll('"', ''); // Extract and clean the filename
-            print(
-                'Uploaded file name: $fileName'); // Use or store the file name
+                .replaceAll('"', '');
             data.addAll({"fileName": fileName});
-
             file = await formData.part.readBytes();
           } else {
             data.addAll({formData.name: await formData.part.readString()});
           }
         }
         data.addAll({"date": DateTime.now().toString()});
-
+        
         DatabaseHelper.updateAssignment(id, data, file);
-
-        return Response.ok('Assignment updated successfully', headers: {
-          'Access-Control-Allow-Origin': '*',
-        });
+        
+        return Response.ok(
+          jsonEncode({"message": "Assignment updated successfully"}),
+          headers: {'Content-Type': 'application/json'}
+        );
       } catch (e) {
         return Response.internalServerError(
-            body: 'Error processing request',
-            headers: {'Content-Type': 'application/json', "Error": '$e'});
+          body: jsonEncode({"error": "Error processing request: $e"}),
+          headers: {'Content-Type': 'application/json'}
+        );
       }
     });
 
-    // حذف مادة
+    // Delete an assignment
     router.delete('/delete-assignment/<id>',
         (Request request, String id) async {
       try {
@@ -293,65 +436,67 @@ class Assignment {
       }
     });
 
-  router.post('/student/submit-assignment', (Request request) async {
-  try {
-    final form = request.multipartFormData;
-    final data = <String, dynamic>{};
-    Uint8List? file;
+router.get('/staff/Course/AssignmentDetails/<assignmentId>/submissions', (Request request, String assignmentId) async {
+    try {
+        print('Fetching submissions for assignment ID: $assignmentId');
 
-    await for (final formData in form) {
-      if (formData.name == "file") {
-        final fileName = formData.part.headers['content-disposition']
-            ?.split(';')
-            .firstWhere((element) => element.trim().startsWith('filename='))
-            .split('=')[1]
-            .replaceAll('"', '');
-        print('Uploaded file name: $fileName'); // Debugging
-        data.addAll({"fileName": fileName});
+        // Check if the assignment exists
+        final assignment = DatabaseHelper.getAssignment(assignmentId);
+        if (assignment == null) {
+            return Response.notFound('Assignment not found');
+        }
 
-        file = await formData.part.readBytes();
-      } else {
-        data.addAll({formData.name: await formData.part.readString()});
-      }
+        // Fetch student submissions
+        final submissions = DatabaseHelper.getStudentSubmissions(assignmentId);
+        if (submissions.isEmpty) {
+            return Response.ok(
+                jsonEncode([]), // Return an empty array if no submissions are found
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                },
+            );
+        }
+
+        final jsonSubmissions = jsonEncode(submissions);
+        return Response.ok(
+            jsonSubmissions,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+        );
+    } catch (e) {
+        print('Error fetching submissions: $e');
+        return Response.internalServerError(body: 'Error: $e');
     }
-
-    // Debugging: Log the received data
-    print('Received data: $data');
-
-    // Ensure required fields are present
-    if (!data.containsKey('studentId') || !data.containsKey('assignmentId')) {
-      return Response.badRequest(body: 'Missing studentId or assignmentId');
-    }
-
-    // Check file size (10 MB limit)
-    if (file != null && file.length > 10485760) {
-      return Response.badRequest(body: 'File size exceeds 10 MB');
-    }
-
-    // Debugging: Log the database query
-    print('Executing database query...');
-
-    // Insert the assignment submission into the database
-    final statement = DatabaseHelper._db.prepare('''
-      INSERT INTO assignment_submissions (studentId, assignmentId, filename, file, submissionDate)
-      VALUES (?, ?, ?, ?, ?)
-    ''');
-    statement.execute([
-      int.parse(data['studentId']), // Convert to int
-      int.parse(data['assignmentId']), // Convert to int
-      data['fileName'],
-      file ?? Uint8List(0),
-      DateTime.now().toString(),
-    ]);
-    statement.dispose();
-
-    return Response.ok('Assignment submitted successfully');
-  } catch (e) {
-    print('Error: $e'); // Log the error
-    return Response.internalServerError(body: 'Error processing request: $e');
-  }
 });
 
+router.get('/courses/student-assignments/file/<id>', (Request request, String id) async {
+    try {
+        // Fetch the student submission file from the database
+        final result = DatabaseHelper._db.select(
+            'SELECT filename, file FROM assignment_submissions WHERE id = ?', [id]);
+
+        if (result.isNotEmpty) {
+            final fileBytes = result.first['file'];
+            final mimeType = lookupMimeType(result.first['filename']) ?? 'application/octet-stream';
+            return Response.ok(
+                fileBytes,
+                headers: {
+                    'Content-Type': mimeType,
+                    'Content-Disposition': 'inline; filename="${result.first['filename']}"',
+                    'Access-Control-Allow-Origin': '*',
+                },
+            );
+        } else {
+            return Response.notFound('Student submission not found');
+        }
+    } catch (e) {
+        print('Error fetching student submission file: $e');
+        return Response.internalServerError(body: 'Error: $e');
+    }
+});
 
     router.get('/student/get-assignments', (Request request, String id) async {
       try {

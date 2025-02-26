@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
 * {
     box-sizing: border-box;
     font-family: "Roboto Condensed", sans-serif;
@@ -6,6 +7,8 @@
 
 body {
     background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
 }
 
 .sidebar {
@@ -286,8 +289,6 @@ body {
     }
 }
 
-
-
 /* General Reset */
 * {
     box-sizing: border-box;
@@ -341,8 +342,8 @@ body {
     font-size: 20px;
     transition: all 0.3s ease;
 }
-.filter-container select option
-{
+
+.filter-container select option {
     border-radius: 25px;
 }
 
@@ -357,17 +358,12 @@ body {
 #assignments-container {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 30px; /* Adds space between cards */
     width: 100%;
     max-width: 800px; /* Adjust this for larger card width */
     align-items: center; /* Center the cards */
-    flex-flow:row wrap ;
-
+    flex-flow: row wrap;
 }
-.assignment {
-    margin-bottom: 30px !important;
-}
-
 
 /* Assignment card styling */
 .assignment {
@@ -378,52 +374,77 @@ body {
     width: 100%;
     max-width: 800px; /* Makes the card large */
     transition: transform 0.3s ease;
+    margin-bottom: 30px; /* Adds space below each card */
 }
 
 .assignment:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 15px #0F2B4E;
-
 }
 
-.assignment h3 {
+.assignment .assignmentTitle {
     color: #0F2B4E;
     font-size: 28px;
-    margin-bottom: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
 }
 
-.assignment p {
-    font-size: 20px;
+.assignment .instructorName,
+.assignment .deadline,
+.assignment .degree,
+/* Description and Download Attachment */
+.assignment .description {
+    font-size: 18px;
     color: #555;
     margin-bottom: 10px;
+    display: flex;
+    align-items: center; /* Align items vertically */
+    gap: 10px; /* Space between description and download link */
 }
 
-.assignment label {
-    display: block;
-    margin-top: 20px;
-    font-size: 20px;
-    font-weight: 500;
-    color: #333;
+.assignment .attachment-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #0F2B4E;
+    font-size: 14px; /* Smaller font size */
 }
 
-.assignment input[type="file"] {
-    margin-top: 10px;
-    font-size: 16px;
+.assignment .attachment-link img {
+    width: 20px; /* Smaller icon */
+    height: 20px; /* Smaller icon */
+    margin-right: 8px; /* Reduced spacing between icon and text */
 }
 
-.assignment button {
-    margin-top: 20px;
+.assignment .attachment-link:hover {
+    text-decoration: underline;
+}
+
+/* Submit section */
+.submit-section {
+    margin-top: 20px; /* Space above the submit section */
+    display: flex;
+    flex-direction: column; /* Stack file input and button vertically */
+    align-items: flex-start; /* Align items to the left */
+}
+
+.submit-section .file-input {
+    margin-bottom: 10px; /* Space between file input and button */
+}
+
+.submit-section .submit-button {
     padding: 12px 25px;
     background-color: #0F2B4E;
     color: #fff;
     border: none;
     border-radius: 25px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 16px;
     transition: background-color 0.3s ease;
+    align-self: flex-start; /* Align button to the left */
 }
 
-.assignment button:hover {
+.submit-section .submit-button:hover {
     background-color: #0D2340;
 }
 
@@ -438,5 +459,3 @@ body {
         padding: 10px;
     }
 }
-
-

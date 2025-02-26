@@ -1,35 +1,100 @@
-const assignmentData = JSON.parse(localStorage.getItem('assignmentData'));
-
-document.addEventListener('DOMContentLoaded', loadAssignmentData);
-
+document.addEventListener('DOMContentLoaded', () => {
+    loadAssignmentData();
+});
 
 async function loadAssignmentData() {
+    const assignmentData = JSON.parse(localStorage.getItem('assignmentData'));
 
-    if (assignmentData) {
-        if (!assignmentData.id) {
-            alert('Assignment ID is missing');
-            return;
-        } else {
-            document.getElementById('instructor').innerText = assignmentData.instructor;
-            document.getElementById('title').innerText = assignmentData.title;
-            document.getElementById('date').innerText = "Uploaded on: " + assignmentData.date.split(" ")[0];
-            document.getElementById('deadline').innerText = "Deadline on: " + assignmentData.deadline;
-            document.getElementById('degree').innerText = assignmentData.degree + " Degrees";
-            document.getElementById('description').innerText = assignmentData.description;
-            if (assignmentData.file) {
-                document.getElementById('file').href = '/courses/assignments/file/' + assignmentData.id;
-                document.getElementById('file').target = '_blank';
-
-                document.getElementById('fileName').innerText = assignmentData.filename;
-                document.getElementById('fileName').href = '/courses/assignments/file/' + assignmentData.id;
-                document.getElementById('fileName').target = '_blank';
-            } else {
-                document.getElementById('fileName').style.display = "none";
-            }
-        }
+    if (!assignmentData) {
+        console.error('Assignment data not found in localStorage');
+        return;
     }
 
+    // Populate assignment details
+    document.getElementById('instructor').innerText = assignmentData.instructor;
+    document.getElementById('title').innerText = assignmentData.title;
+    document.getElementById('date').innerText = "Uploaded on: " + assignmentData.date.split(" ")[0];
+    document.getElementById('deadline').innerText = "Deadline on: " + assignmentData.deadline;
+    document.getElementById('degree').innerText = assignmentData.degree + " Degrees";
+    document.getElementById('description').innerText = assignmentData.description;
+
+    if (assignmentData.file) {
+        document.getElementById('file').href = '/courses/assignments/file/' + assignmentData.id;
+        document.getElementById('file').target = '_blank';
+        document.getElementById('fileName').innerText = assignmentData.filename;
+        document.getElementById('fileName').href = '/courses/assignments/file/' + assignmentData.id;
+        document.getElementById('fileName').target = '_blank';
+    } else {
+        document.getElementById('fileName').style.display = "none";
+    }
+
+    // Load student submissions
     loadStudentAssignments();
+}
+
+async function loadStudentAssignments() {
+    try {
+        const assignmentData = JSON.parse(localStorage.getItem('assignmentData'));
+        const submissions = JSON.parse(localStorage.getItem('assignmentSubmissions'));
+
+        if (!submissions) {
+            throw new Error('No submissions found');
+        }
+
+        displayStudentAssignments(submissions);
+    } catch (error) {
+        console.error('Error:', error);
+        showPopup('error', 'Error', 'Failed to load student submissions.');
+    }
+}
+
+function displayStudentAssignments(submissions) {
+    const container = document.getElementById('studentSubmissionsContainer');
+
+    if (!container) {
+        console.error('Submissions container not found');
+        return;
+    }
+
+    container.innerHTML = ''; // Clear old data
+
+    submissions.forEach(submission => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        card.innerHTML = `
+            <div class="card-left">
+                <span>${submission.submissionDate.split(" ")[0]}</span>
+            </div>
+            <div class="card-right">
+                <div class="studentName">${submission.student}</div>
+                ${submission.file ? `
+                    <a href="/courses/student-assignments/file/${submission.id}" target="_blank">
+                        <img class="icon" src="/img/file_icon.png" alt="Download">
+                    </a>` : ''}
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+function showPopup(icon, title, text) {
+    Swal.fire({
+        icon: icon,
+        title: title,
+        text: text,
+        width: '320px',
+        heightAuto: false,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        backdrop: false,
+        customClass: {
+            popup: 'custom-popup',
+            icon: 'custom-icon'
+        }
+    });
 }
 
 function toggleDropdown(id) {
@@ -40,7 +105,6 @@ function toggleDropdown(id) {
 }
 
 async function editAssignment(id) {
-
     if (!id) {
         alert('assignment ID is missing');
         return;
@@ -54,7 +118,7 @@ async function editAssignment(id) {
         }
 
         const assignment = await response.json();
-        console.log('Fetched assignment:', assignment); // أضف هذا السطر للتحقق من البيانات
+        console.log('Fetched assignment:', assignment);
 
         // Ensure the data contains ID
         if (assignment && assignment.id) {
@@ -76,83 +140,10 @@ async function deleteAssignment(id) {
         });
         if (response.ok) {
             alert('Assignment deleted successfully!');
-            loadAssignments(); // إعادة تحميل المواد بعد الحذف
+            loadAssignments(); // Reload assignments after deletion
         } else {
             console.error('Failed to delete assignment', response.status);
         }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-
-let fullDegree;
-async function loadStudentAssignments() {
-    try {
-        const assignmentData = JSON.parse(localStorage.getItem('assignmentData'));
-
-        fullDegree = assignmentData.degree;
-
-        const response = await fetch('/student-assignments/' + assignmentData.id);
-        if (response.ok) {
-            const assignments = await response.json();
-            displayStudentAssignments(assignments);
-        } else {
-            console.error('Failed to fetch assignments', response.status);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-
-function displayStudentAssignments(assignments) {
-    const container = document.getElementById('assignmentsContainer');
-
-    assignments.forEach(assignment => {
-        const card = document.createElement('div');
-        card.className = 'card';
-
-        card.innerHTML = `
-            <div class="card-left">
-                <span>${assignment.date.split(" ")[0]}</span>
-                <form class="updateForm Upload-${assignment.id}" id="updateForm-${assignment.id}" method="POST" enctype="multipart/form-data" onSubmit="updateSturentAssignment(id); return false;">
-                    <label for="degree-${assignment.id}">Degree: </label>
-                    <input name="degree" class="studentDegree" id="degree-${assignment.id}" value="${assignment.degree?? ""}">
-                </form>
-            </div>
-            <div class="card-right" ${assignment.file ? ('onclick="window.open(\'/courses/student-assignments/file/' + assignment.id + '\',\'_blank\')"') : ""})">
-                <div class= "studentName">${assignment.student}</div>
-                <a ${assignment.file? 'href="/courses/student-assignments/file/' + assignment.id + '" target="_blank"' : ""}>
-                    <img class="icon" src="/img/file_icon.png" alt="icon">
-                </a>
-            </div>
-        `;
-
-        container.appendChild(card);
-
-        document.getElementById(`degree-${assignment.id}`).addEventListener("change", (e) => { updateSturentAssignment(assignment.id); })
-
-    });
-}
-async function updateSturentAssignment(id) {
-    try {
-        const input = document.getElementById(`degree-${id}`);
-        if (input == null)
-            return;
-
-        if (isNaN(parseFloat(input.value)))
-            input.value = "0";
-        else
-            input.value = parseFloat(input.value);
-
-        if (parseFloat(input.value) > fullDegree)
-            input.value = fullDegree;
-
-        const formData = new FormData(document.getElementById(`updateForm-${id}`));
-        const response = await fetch('/update-student-assignment/' + id, {
-            method: 'PUT',
-            body: formData // Send FormData object directly
-        });
-
     } catch (error) {
         console.error('Error:', error);
     }

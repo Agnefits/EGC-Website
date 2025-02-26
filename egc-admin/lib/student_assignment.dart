@@ -40,6 +40,8 @@ class DatabaseHelper {
     statement.dispose();
   }
 
+  
+
   static void updateStudentAssignment(
       String id, Map<String, dynamic> assignmentData, Uint8List? file) {
     final statement = _db.prepare('''
@@ -87,20 +89,26 @@ class DatabaseHelper {
         .toList();
   }
 
-  static Map<String, dynamic> getStudentAssignment(String id) {
+ static Map<String, dynamic> getStudentAssignment(String id) {
     final results = _db.select(
-        'SELECT SA.id, SA.filename, SA.date, SA.degree, SA.file, S.Name student FROM student_assignments SA LEFT JOIN students S ON SA.studentId = S.id WHERE SA.id = ' +
-            id);
-    var studentAssignment = results.first;
-    return {
-      'id': studentAssignment['id'],
-      'filename': studentAssignment['filename'],
-      'date': studentAssignment['date'],
-      'degree': studentAssignment['degree'],
-      'file': studentAssignment['file'].length > 0,
-      'student': studentAssignment['student'],
-    };
-  }
+        'SELECT SA.id, SA.filename, SA.date, SA.file, S.Name student '
+        'FROM assignment_submissions SA '
+        'LEFT JOIN students S ON SA.studentId = S.id '
+        'WHERE SA.id = ?', [id]);
+
+    if (results.isNotEmpty) {
+        var submission = results.first;
+        return {
+            'id': submission['id'],
+            'filename': submission['filename'],
+            'date': submission['date'],
+            'file': submission['file'].length > 0,
+            'student': submission['student'],
+        };
+    }
+    return {};
+}
+
 }
 
 class StudentAssignment {

@@ -15,6 +15,8 @@
         <button class="back-button" onclick="goBack()">Back</button>
         <h1>Assignment Details</h1>
     </div>
+
+    <!-- Assignment Details Container -->
     <div class="assignment" id="assignmentsContainer">
         <div class="main-card">
             <div class="card-left">
@@ -43,7 +45,12 @@
                 <a href="#" class="delete" onclick="deleteAssignment(assignmentData.id)">Delete</a>
             </div>
         </div>
+
+        <!-- Student Submissions Section -->
         <h2>Student Submissions</h2>
+        <div id="studentSubmissionsContainer">
+            <!-- Student submissions will be dynamically inserted here -->
+        </div>
     </div>
     <script src="/script/assignment_details.js"></script>
 </body>
