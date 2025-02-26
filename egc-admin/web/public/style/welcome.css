@@ -27,6 +27,7 @@ div.cardes div {
     margin-left: 5vw;
     margin-top: 3vh;
     float: left;
+    flex-wrap: wrap;
 }
 
 .contant p {
@@ -38,4 +39,33 @@ div.cardes div {
 .contant img {
     width: 30%;
     margin: 0 10%;
+}
+
+@media (max-width: 967px) {
+    
+    div.cardes div {
+        width: 75%;
+        height: 13vw;
+        padding: 1vw 0;
+        display: flex;
+        align-items: center;
+        border-radius: 3vw;
+        background-color: #0F2B4E;
+        color: white;
+        margin-left: 5vw;
+        margin-top: 3vh;
+        float: left;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .contant img {
+        width: 16%;
+    }
+    .contant p {
+        font-size: 4vw;
+        font-family: "Roboto Condensed", sans-serif;
+        text-align: center;
+    }
+   
+  
 }

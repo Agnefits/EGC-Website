@@ -310,6 +310,18 @@ font-family: "Roboto Condensed", sans-serif;
         margin-bottom: 10px;
         /* add more margin for better spacing */
     }
+    .header ul li a {
+        /* columns: #fff; */
+        font-size: 1.9vw;
+        text-decoration: none;
+        color: #fff;
+        font-family: "Roboto Condensed", sans-serif;
+    }
+    .header ul li {
+        list-style: none;
+        display: inline-block;
+        margin-left: 0.5vw;
+    }
 }
 
 @media (max-width: 320px) {
@@ -321,4 +333,5 @@ font-family: "Roboto Condensed", sans-serif;
         margin-bottom: 8px;
         /* add more margin for better spacing */
     }
+   
 }

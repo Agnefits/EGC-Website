@@ -243,3 +243,15 @@ span {
 [dir='rtl'] .social {
     margin-right: 130px;
 }
+
+
+@media only screen and (max-width: 768px) {
+    .section-header {
+        padding: 1vw 0 1vw 3vw;
+        margin: 0 0 1vw 4vw;
+        font-size: 5vw;
+        border-left: 0.5vw solid rgb(42, 165, 232);
+        font-family: "Libre Baskerville", serif;
+        font-weight: 700;
+    }
+}

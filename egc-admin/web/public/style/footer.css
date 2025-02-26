@@ -61,7 +61,8 @@ h1 {
 
 .Head-Footer h1 {
     margin-left: 10px;
-    font-size: 3em;
+    font-size: 2em;
+    margin-bottom: 5px;
 }
 
 .logo {

@@ -46,7 +46,7 @@ header {
     font-weight: bold;
     
 }
-select{
+#major, #year, #coursefilter, #section, #name{
 
     padding: 10px;
     border: 1px solid #ccc;
@@ -80,6 +80,7 @@ th, td {
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    font-size: large;
 }
 
 th {
