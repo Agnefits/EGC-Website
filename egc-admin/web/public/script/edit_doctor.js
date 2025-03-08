@@ -30,7 +30,17 @@ async function loadDoctorData() {
 
     if (doctorData) {
         if (!doctorData.id) {
-            alert('Doctor ID is missing');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Doctor ID is missing',
+                width: '320px',
+                heightAuto: false,
+                position: 'top',
+                showConfirmButton: false,
+                timer: 3000,
+                backdrop: false,
+            });
             return;
         } else {
             document.getElementById('name').value = doctorData.name;
@@ -48,8 +58,27 @@ async function loadDoctorData() {
         }
     }
 }
+
 document.getElementById('UploadDoctorForm').addEventListener('submit', async function(event) {
     event.preventDefault();
+
+    const emailInput = document.getElementById('email').value;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$/;
+
+    if (!emailPattern.test(emailInput)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Email',
+            text: 'Please enter a valid email ending with .com (e.g., user@example.com)',
+            width: '320px',
+            heightAuto: false,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 3000,
+            backdrop: false,
+        });
+        return; // Stop form submission if email is invalid
+    }
 
     const formData = new FormData(this);
 
@@ -73,14 +102,24 @@ document.getElementById('UploadDoctorForm').addEventListener('submit', async fun
 
     } catch (error) {
         console.error('Error:', error);
-        alert('Failed to update doctor: ' + error.message);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to update doctor: ' + error.message,
+            width: '320px',
+            heightAuto: false,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 3000,
+            backdrop: false,
+        });
     }
 });
 
 function showPopup() {
     Swal.fire({
         icon: 'success',
-        title: 'success!',
+        title: 'Success!',
         text: 'The doctor has been edited',
         width: '320px',
         heightAuto: false,

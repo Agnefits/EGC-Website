@@ -89,16 +89,18 @@ class DatabaseHelper {
     statement.dispose();
   }
 
-  static List<Map<String, dynamic>> getAssignments(String courseId) {
+static List<Map<String, dynamic>> getAssignments(String courseId) {
+    print('Fetching assignments for courseId: $courseId');
     final results = _db.select('''
         SELECT A.id, A.filename, A.title, A.date, A.deadline, A.description, A.degree, A.file, 
-               CASE WHEN A.doctorId IS NULL THEN T.Name ELSE D.Name END AS instructor 
+               A.doctorId, A.teaching_assistantId, 
+               COALESCE(CASE WHEN A.doctorId IS NULL THEN T.Name ELSE D.Name END, 'Not Assigned') AS instructor 
         FROM assignments A 
         LEFT JOIN doctors D ON A.doctorId = D.id 
         LEFT JOIN teaching_assistants T ON A.teaching_assistantId = T.id 
         WHERE A.courseId = ?
     ''', [courseId]);
-
+    print('Query results: $results');
     return results.map((row) => {
         'id': row['id'],
         'filename': row['filename'],
@@ -110,7 +112,7 @@ class DatabaseHelper {
         'file': row['file'].length > 0,
         'instructor': row['instructor'],
     }).toList();
-  }
+}
 
   static Map<String, dynamic> getAssignment(String id) {
     final results = _db.select(
@@ -337,36 +339,43 @@ class Assignment {
     });
 
 router.post('/student/submit-assignment', (Request request) async {
-        try {
-            final form = request.multipartFormData;
-            final data = <String, dynamic>{};
-            Uint8List? file;
+    try {
+        final form = request.multipartFormData;
+        final data = <String, dynamic>{};
+        Uint8List? file;
 
-            await for (final formData in form) {
-                if (formData.name == "file") {
-                    final fileName = formData.part.headers['content-disposition']
-                        ?.split(';')
-                        .firstWhere((element) => element.trim().startsWith('filename='))
-                        .split('=')[1]
-                        .replaceAll('"', '');
-                    data.addAll({"fileName": fileName});
-                    file = await formData.part.readBytes();
-                } else {
-                    data.addAll({formData.name: await formData.part.readString()});
-                }
+        await for (final formData in form) {
+            if (formData.name == "file") {
+                final fileName = formData.part.headers['content-disposition']
+                    ?.split(';')
+                    .firstWhere((element) => element.trim().startsWith('filename='))
+                    .split('=')[1]
+                    .replaceAll('"', '');
+                data.addAll({"fileName": fileName});
+                file = await formData.part.readBytes();
+            } else {
+                data.addAll({formData.name: await formData.part.readString()});
             }
-
-            if (file == null || file.isEmpty) {
-                return Response.internalServerError(body: 'No file received.');
-            }
-
-            DatabaseHelper.addStudentSubmission(data, file);
-            return Response.ok('Assignment submitted successfully');
-        } catch (e) {
-            return Response.internalServerError(body: 'Error processing request: $e');
         }
-    });
 
+        if (file == null || file.isEmpty) {
+            return Response.internalServerError(body: 'No file received.');
+        }
+
+        DatabaseHelper.addStudentSubmission(data, file);
+
+        // Fetch the submission details to return
+        final submissions = DatabaseHelper.getStudentSubmissions(data['assignmentId']);
+        final submission = submissions.firstWhere((sub) => sub['filename'] == data['fileName']);
+
+        return Response.ok(
+            jsonEncode(submission),
+            headers: {'Content-Type': 'application/json'},
+        );
+    } catch (e) {
+        return Response.internalServerError(body: 'Error processing request: $e');
+    }
+});
  router.get('/staff/Course/AssignmentDetails/<assignmentId>/submissions', (Request request, String assignmentId) async {
         try {
             final submissions = DatabaseHelper.getStudentSubmissions(assignmentId);
@@ -436,6 +445,19 @@ router.post('/student/submit-assignment', (Request request) async {
       }
     });
 
+router.delete('/student/delete-submission/<id>', (Request request, String id) async {
+    try {
+        final statement = DatabaseHelper._db.prepare('DELETE FROM assignment_submissions WHERE id = ?');
+        statement.execute([id]);
+        statement.dispose();
+        return Response.ok('Submission deleted successfully', headers: {
+            'Access-Control-Allow-Origin': '*',
+        });
+    } catch (e) {
+        return Response.internalServerError(body: 'Error: $e');
+    }
+});
+
 router.get('/staff/Course/AssignmentDetails/<assignmentId>/submissions', (Request request, String assignmentId) async {
     try {
         print('Fetching submissions for assignment ID: $assignmentId');
@@ -494,6 +516,34 @@ router.get('/courses/student-assignments/file/<id>', (Request request, String id
         }
     } catch (e) {
         print('Error fetching student submission file: $e');
+        return Response.internalServerError(body: 'Error: $e');
+    }
+});
+
+router.get('/student/submission/<assignmentId>/<studentId>', (Request request, String assignmentId, String studentId) async {
+    try {
+        final results = DatabaseHelper._db.select(
+            'SELECT id, filename, submissionDate FROM assignment_submissions WHERE assignmentId = ? AND studentId = ?',
+            [assignmentId, studentId]
+        );
+
+        if (results.isNotEmpty) {
+            final submissions = results.map((row) => ({
+                'id': row['id'],
+                'filename': row['filename'],
+                'submissionDate': row['submissionDate'],
+            })).toList();
+            return Response.ok(
+                jsonEncode(submissions),
+                headers: {'Content-Type': 'application/json'},
+            );
+        } else {
+            return Response.ok(
+                jsonEncode([]), // Return an empty array if no submissions are found
+                headers: {'Content-Type': 'application/json'},
+            );
+        }
+    } catch (e) {
         return Response.internalServerError(body: 'Error: $e');
     }
 });

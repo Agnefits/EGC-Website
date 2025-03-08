@@ -49,8 +49,27 @@ async function loadTeachingAssistantData() {
 
 }
 
+
 document.getElementById('updateTeachingAssistantForm').addEventListener('submit', async function(event) {
     event.preventDefault();
+
+    const emailInput = document.getElementById('email').value;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$/;
+
+    if (!emailPattern.test(emailInput)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Email',
+            text: 'Please enter a valid email ending with .com (e.g., user@example.com)',
+            width: '320px',
+            heightAuto: false,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 3000,
+            backdrop: false,
+        });
+        return; // Stop form submission if email is invalid
+    }
 
     const formData = new FormData(this);
 
@@ -70,6 +89,7 @@ document.getElementById('updateTeachingAssistantForm').addEventListener('submit'
         alert('Failed to update Teaching Assistant: ' + error.message);
     }
 });
+
 
 function showPopup() {
     Swal.fire({

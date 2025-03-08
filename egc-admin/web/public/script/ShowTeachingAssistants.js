@@ -60,34 +60,46 @@ async function loadTeachingAssistants() {
 
 function addEventListeners() {
     document.querySelectorAll('.delete').forEach(button => {
-        button.addEventListener('click', async(event) => {
+        button.addEventListener('click', async (event) => {
             const teachingAssistantId = event.target.dataset.id;
             if (!teachingAssistantId) {
                 alert('Teaching Assistant ID is missing for delete action');
                 return;
             }
-
-            // const confirmation = confirm('Are you sure you want to delete this Teaching Assistant?');
-            // if (confirmation) {
+    
+            // Show SweetAlert2 confirmation popup
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            });
+    
+            if (result.isConfirmed) {
                 try {
-                    showPopup();
                     const deleteResponse = await fetch(`/delete-teaching-assistant/${teachingAssistantId}`, {
                         method: 'DELETE'
                     });
-
+    
                     if (!deleteResponse.ok) {
                         throw new Error('Failed to delete Teaching Assistant');
                     }
-
-                    loadTeachingAssistants(); // إعادة تحميل قائمة المساعدين بعد الحذف
+    
+                    // Reload the list of teaching assistants after successful deletion
+                    loadTeachingAssistants();
+    
+                    // Show success popup after deletion
+                    showPopup();
                 } catch (error) {
                     console.error('Error:', error);
                     alert('Error deleting Teaching Assistant');
                 }
-            // }
+            }
         });
     });
-
     document.querySelectorAll('.edit').forEach(button => {
         button.addEventListener('click', async(event) => {
             const teachingAssistantId = event.target.dataset.id;

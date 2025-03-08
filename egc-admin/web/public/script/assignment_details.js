@@ -35,12 +35,11 @@ async function loadAssignmentData() {
 async function loadStudentAssignments() {
     try {
         const assignmentData = JSON.parse(localStorage.getItem('assignmentData'));
-        const submissions = JSON.parse(localStorage.getItem('assignmentSubmissions'));
-
-        if (!submissions) {
-            throw new Error('No submissions found');
+        const response = await fetch(`/staff/Course/AssignmentDetails/${assignmentData.id}/submissions`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch submissions');
         }
-
+        const submissions = await response.json();
         displayStudentAssignments(submissions);
     } catch (error) {
         console.error('Error:', error);
@@ -50,7 +49,6 @@ async function loadStudentAssignments() {
 
 function displayStudentAssignments(submissions) {
     const container = document.getElementById('studentSubmissionsContainer');
-
     if (!container) {
         console.error('Submissions container not found');
         return;
@@ -78,7 +76,6 @@ function displayStudentAssignments(submissions) {
         container.appendChild(card);
     });
 }
-
 function showPopup(icon, title, text) {
     Swal.fire({
         icon: icon,

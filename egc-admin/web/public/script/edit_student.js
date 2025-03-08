@@ -58,8 +58,27 @@ async function loadStudentData() {
     }
 }
 
+
 document.getElementById('updatestudentForm').addEventListener('submit', async function(event) {
     event.preventDefault();
+
+    const emailInput = document.getElementById('email').value;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$/;
+
+    if (!emailPattern.test(emailInput)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Email',
+            text: 'Please enter a valid email ending with .com (e.g., user@example.com)',
+            width: '320px',
+            heightAuto: false,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 3000,
+            backdrop: false,
+        });
+        return; // Stop form submission if email is invalid
+    }
 
     const formData = new FormData(this);
 
@@ -77,25 +96,14 @@ document.getElementById('updatestudentForm').addEventListener('submit', async fu
             throw new Error('Failed to update student');
         }
 
-    //     showPopup('The student information has been updated successfully!', 'success');
-
-    //     setTimeout(() => {
-    //         window.location.href = '/admin/ShowStudents';
-    //     }, 3000);
-
-    // } catch (error) {
-    //     showPopup(error.message, 'error');
-    // }
-
-
-
-    showPopup();
-    this.reset();
-} catch (error) {
-    console.error('Error:', error);
-    alert('Failed to update Teaching Assistant: ' + error.message);
-}
+        showPopup();
+        this.reset();
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to update Teaching Assistant: ' + error.message);
+    }
 });
+
 
 
 

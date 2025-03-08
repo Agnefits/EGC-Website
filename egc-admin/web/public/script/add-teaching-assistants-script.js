@@ -6,6 +6,28 @@ document.getElementById("showPassword").addEventListener("click", function() {
 document.getElementById('addTeachingAssistantForm').addEventListener('submit', async function(event) {
     event.preventDefault(); // Prevent the default form submission
 
+    // Email validation
+    const emailInput = document.getElementById('email').value;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$/;
+
+    if (!emailPattern.test(emailInput)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Email',
+            text: 'Please enter a valid email ending with .com (e.g., user@example.com)',
+            width: '320px',
+            heightAuto: false,
+            position: 'top',
+            backdrop: false,
+            customClass: {
+                popup: 'custom-popup',
+            },
+            timer: 3000, // Auto-close after 3 seconds
+            showConfirmButton: false // Hide "OK" button
+        });
+        return; // Stop form submission if email is invalid
+    }
+
     try {
         const formData = new FormData(this); // Automatically handles file inputs
 
@@ -51,6 +73,8 @@ document.getElementById('addTeachingAssistantForm').addEventListener('submit', a
         });
     }
 });
+
+
 
 // Function to show success pop-up
 function showPopup() {

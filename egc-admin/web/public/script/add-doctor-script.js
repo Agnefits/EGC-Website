@@ -41,10 +41,29 @@ function showPopup() {
 }
 
 // دالة لإضافة طبيب جديد
-document.getElementById('addDoctorForm').addEventListener('submit', async function(event) {
-    event.preventDefault(); // منع الإرسال الافتراضي
 
-    const formData = new FormData(this); // جمع البيانات بما فيها الصورة
+document.getElementById('addDoctorForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const emailInput = document.getElementById('email').value;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$/;
+
+    if (!emailPattern.test(emailInput)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Email',
+            text: 'Please enter a valid email ending with .com (e.g., user@example.com)',
+            width: '320px',
+            heightAuto: false,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 3000,
+            backdrop: false,
+        });
+        return; // Stop form submission if email is invalid
+    }
+
+    const formData = new FormData(this);
 
     try {
         const response = await fetch('/add-doctor', {
@@ -66,7 +85,7 @@ document.getElementById('addDoctorForm').addEventListener('submit', async functi
                 backdrop: false
             });
         } else {
-            showPopup(); // عرض رسالة النجاح
+            showPopup();
         }
     } catch (error) {
         Swal.fire({
@@ -82,6 +101,7 @@ document.getElementById('addDoctorForm').addEventListener('submit', async functi
         });
     }
 });
+
 
 // تحميل قائمة الأطباء عند تحميل الصفحة
 async function loadDoctors() {

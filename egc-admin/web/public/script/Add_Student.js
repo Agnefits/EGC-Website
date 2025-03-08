@@ -17,8 +17,27 @@ fileInput.addEventListener('change', function() {
     reader.readAsDataURL(file);
 });
 
+
 document.getElementById('addstudentForm').addEventListener('submit', async function(event) {
     event.preventDefault();
+
+    const emailInput = document.getElementById('email').value;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$/;
+
+    if (!emailPattern.test(emailInput)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Email',
+            text: 'Please enter a valid email ending with .com (e.g., user@example.com)',
+            width: '320px',
+            heightAuto: false,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 3000,
+            backdrop: false,
+        });
+        return; // Stop form submission if email is invalid
+    }
 
     const formData = new FormData(this);
 
@@ -39,9 +58,8 @@ document.getElementById('addstudentForm').addEventListener('submit', async funct
                 customClass: {
                     popup: 'custom-popup',
                 },
-          
-                timer: 3000, // Auto-close after 3 seconds
-                showConfirmButton: false // Hide the "OK" button
+                timer: 3000,
+                showConfirmButton: false
             });
         } else {
             Swal.fire({
@@ -55,7 +73,6 @@ document.getElementById('addstudentForm').addEventListener('submit', async funct
                 },
                 didOpen: () => {
                     const popup = Swal.getPopup();
-                   
                 },
                 timer: 3000,
                 showConfirmButton: false
@@ -64,21 +81,12 @@ document.getElementById('addstudentForm').addEventListener('submit', async funct
             });
         }
     } catch (error) {
-    //     console.error("Fetch Error:", error);
-    //     Swal.fire({
-    //         icon: 'error',
-    //         title: 'Error',
-    //         text: 'A network error occurred. Please try again later.',
-    //         position: 'top',
-    //         backdrop: false,
-    //         customClass: {
-    //             popup: 'custom-popup',
-    //         },
-    //         timer: 3000,
-    //     });
-    // }
+        // Handle network errors if needed
     }
-})
+});
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const studentData = JSON.parse(localStorage.getItem('studentData'));
 
@@ -120,6 +128,5 @@ async function getLastStudentNumber() {
         // Handle error, e.g., display a message to the user
         document.getElementsByName('No_list')[0].value = ""; // Or some default value
         document.getElementsByName('No_section')[0].value = ""; // Or some default value
-
     }
 }

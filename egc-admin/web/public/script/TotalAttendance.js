@@ -69,7 +69,7 @@ async function loadAttendance() {
                 <td>${record.yearLevel || 'N/A'}</td>
                 <td>${record.courseName || 'N/A'}</td>
                 <td>${record.section || 'N/A'}</td>
-                <td>${record.presenceTotal || 'N/A'}</td>
+                <td>${record.presenceTotal || '0'}</td>
                 <td>${record.absenceTotal || 'N/A'}</td>
                 <td>${record.percentage + ' % '|| 'N/A'}</td>
             `;

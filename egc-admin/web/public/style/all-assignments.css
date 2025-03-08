@@ -321,35 +321,41 @@ body {
 .filter-container {
     display: flex;
     justify-content: center;
+    /* Align items to the left */
     align-items: center;
-    margin-bottom: 40px;
-    font-size: 20px;
+    /* Vertically center the dropdowns */
+    gap: 20px;
+    /* Add spacing between the dropdowns */
+    margin-bottom: 20px;
 }
 
-.filter-container label {
-    font-weight: 500;
-    margin-right: 10px;
-    color: #333;
+.filter-container {
+    display: inline-block;
 }
 
 .filter-container select {
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 25px;
+    border-radius: 15px;
+    width: 150px;
     background-color: #0F2B4E;
     color: #fefefe;
-    width: 180px;
-    font-size: 20px;
-    transition: all 0.3s ease;
-}
-
-.filter-container select option {
-    border-radius: 25px;
 }
 
 .filter-container select:focus {
     border-color: #aaa;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.filter-container select:focus option {
+    background-color: white;
+    /* Ensures white background on focus too */
+    color: #0F2B4E;
+}
+
+option {
+    color: #000;
+    background-color: #fff;
 }
 
 
@@ -366,15 +372,16 @@ body {
 }
 
 /* Assignment card styling */
+/* Assignment card styling */
 .assignment {
     background-color: #fff;
-    padding: 30px;
+    padding: 40px; /* Increased padding for a larger feel */
     border-radius: 40px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 800px; /* Makes the card large */
+    max-width: 1000px; /* Increased max-width to make the card bigger */
     transition: transform 0.3s ease;
-    margin-bottom: 30px; /* Adds space below each card */
+    margin-bottom: 30px;
 }
 
 .assignment:hover {
@@ -382,80 +389,138 @@ body {
     box-shadow: 0 6px 15px #0F2B4E;
 }
 
+/* Adjust internal elements for proportionality */
 .assignment .assignmentTitle {
     color: #0F2B4E;
-    font-size: 28px;
+    font-size: 32px; /* Increased font size */
     font-weight: 600;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .assignment .instructorName,
 .assignment .deadline,
 .assignment .degree,
-/* Description and Download Attachment */
 .assignment .description {
-    font-size: 18px;
+    font-size: 20px; /* Increased font size */
     color: #555;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center; /* Align items vertically */
-    gap: 10px; /* Space between description and download link */
-}
-
-.assignment .attachment-link {
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
+    gap: 10px;
+}
+
+/* Attachment Container */
+.attachment-container {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 10px 20px; /* Increased padding */
+    margin-top: 15px;
+}
+
+.attachment-link {
     text-decoration: none;
     color: #0F2B4E;
-    font-size: 14px; /* Smaller font size */
+    font-size: 16px; /* Slightly larger font */
 }
 
-.assignment .attachment-link img {
-    width: 20px; /* Smaller icon */
-    height: 20px; /* Smaller icon */
-    margin-right: 8px; /* Reduced spacing between icon and text */
+.attachment-link span {
+    margin-left: 10px;
 }
 
-.assignment .attachment-link:hover {
+.attachment-link:hover {
     text-decoration: underline;
 }
 
-/* Submit section */
-.submit-section {
-    margin-top: 20px; /* Space above the submit section */
+/* File Input Wrapper */
+.file-input-wrapper {
     display: flex;
-    flex-direction: column; /* Stack file input and button vertically */
-    align-items: flex-start; /* Align items to the left */
+    align-items: center;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 10px 20px; /* Increased padding */
+    margin-right: 15px;
 }
 
-.submit-section .file-input {
-    margin-bottom: 10px; /* Space between file input and button */
+.file-input-button {
+    background: none;
+    border: none;
+    color: #0F2B4E;
+    font-size: 18px; /* Increased font size */
+    cursor: pointer;
 }
 
-.submit-section .submit-button {
-    padding: 12px 25px;
+.file-input-label {
+    margin-left: 10px;
+    color: #555;
+    font-size: 16px; /* Increased font size */
+}
+
+/* Submit Section */
+.submit-section {
+    display: flex;
+    align-items: center;
+    margin-top: 25px; /* Increased margin */
+}
+
+.submit-button {
+    padding: 14px 30px; /* Increased padding for a larger button */
     background-color: #0F2B4E;
     color: #fff;
     border: none;
     border-radius: 25px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px; /* Increased font size */
     transition: background-color 0.3s ease;
-    align-self: flex-start; /* Align button to the left */
 }
 
-.submit-section .submit-button:hover {
+.submit-button:hover {
     background-color: #0D2340;
+}
+
+/* Submission File Section */
+.submission-file {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 10px 20px; /* Increased padding */
+    margin-top: 15px;
+}
+
+.submission-file span {
+    color: #555;
+    font-size: 16px; /* Increased font size */
+}
+
+.delete-submission-button {
+    padding: 10px 20px; /* Increased padding for a larger button */
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px; /* Increased font size */
+    transition: background-color 0.3s ease;
+}
+
+.delete-submission-button:hover {
+    background-color: #e60000;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .assignment {
-        padding: 20px;
+        padding: 30px;
         max-width: 100%;
     }
 
     #assignments-container {
-        padding: 10px;
+        padding: 15px;
     }
 }

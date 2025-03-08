@@ -66,31 +66,43 @@ async function loadStudents() {
 
 function addEventListeners() {
     document.querySelectorAll('.delete').forEach(button => {
-        button.addEventListener('click', async(event) => {
+        button.addEventListener('click', async (event) => {
             const studentId = event.target.dataset.id;
             if (!studentId) {
-                alert('Student ID is missing for delete action');
+                alert('student ID is missing for delete action');
                 return;
             }
-
-            // const confirmation = confirm('Are you sure you want to delete this student?');
-            // if (confirmation) {
+    
+            // Show SweetAlert2 confirmation popup
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            });
+    
+            if (result.isConfirmed) {
                 try {
-                    showPopup();
                     const deleteResponse = await fetch(`/delete-student/${studentId}`, {
                         method: 'DELETE'
                     });
-
+    
                     if (!deleteResponse.ok) {
                         throw new Error('Failed to delete student');
                     }
-
-                    loadStudents(); // Reload the list of students after deletion
+    
+                    loadStudents(); // Reload the list of doctors after deletion
+    
+                    // Show success popup after deletion
+                    showPopup();
                 } catch (error) {
                     console.error('Error:', error);
                     alert('Error deleting student');
                 }
-            // }
+            }
         });
     });
 
