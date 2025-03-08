@@ -287,15 +287,21 @@ main {
     width: calc(100% - 250px);
 }
 
-main .text {
+/* main .text {
     display: inline-block;
     color: #11101d;
     font-size: 25px;
     font-weight: 500px;
     font-family:"Libre Baskerville", serif;
 
+} */
+  .text1
+{
+    color: #0f2b4e;
+    font-weight: 500px;
+    font-size: 45px;
+    font-family:"Libre Baskerville", serif;
 }
-
 @media (max-width: 420px) {
     .sidebar li .tooltip {
         display: none;

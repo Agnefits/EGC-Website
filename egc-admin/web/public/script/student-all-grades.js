@@ -85,14 +85,14 @@ function displayGrades(grades) {
                   <td class="name" colspan="4"> ${grade.name}</td>
                   </tr>
                   <tr>
-                <td class="td">finalExamDegree</td>
+                <td class="td">Final Exam Degree</td>
                   <td class="td">${grade.finalExamDegree}</td>
                   <td class="td">${grade.cfinal}</td>
                   <td class="td">${finalprec} </td>
                   </tr>
 
                   <tr>
-                  <td class="td">  midtermDegree</td>
+                  <td class="td">Midterm Degree</td>
 
   <td class="td">${grade.midtermDegree}</td>
   <td class="td">${grade.cmid}</td>
@@ -101,21 +101,21 @@ function displayGrades(grades) {
 
 
 <tr>
-<td class="td"> practicalDegree</td>
+<td class="td">Practical Degree</td>
   <td class="td"> ${grade.practicalDegree}</td>
   <td class="td"> ${grade.cpract}</td>
       <td class="td"> ${pracprec}</td>
      </tr>
      
 <tr>
-<td class="td"> lectureAttendance</td>
+<td class="td">Lecture Attendance</td>
   <td class="td"> ${grade.lectureAttendance}</td>
   <td class="td"> ${grade.clec}</td>
     <td class="td"> ${lecprec}</td>
      </tr>
 
 <tr>
-<td class="td"> sectionAttendance</td>
+<td class="td">Section Attendance</td>
   <td class="td"> ${grade.sectionAttendance}</td>
   <td class="td"> ${grade.csec}</td>
      <td class="td"> ${secprec}</td>

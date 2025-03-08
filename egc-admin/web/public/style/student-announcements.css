@@ -270,13 +270,19 @@ body {
                 left: 250px;
                 width: calc(100% - 250px);
             }
-            
+            h3
+       {
+            color: #0f2b4e;
+            font-size: 45px;
+            font-weight: 500px;
+            font-family:"Libre Baskerville", serif;
+        }
             .container .text {
-                display: inline-block;
-                color: #11101d;
-                font-size: 25px;
+                color: #0f2b4e;
+                font-size: 30px;
                 font-weight: 500px;
-                font-family: "Libre Baskerville", serif;
+                font-family:"Libre Baskerville", serif;
+                text-align: center;
             }
             
             @media (max-width: 420px) {

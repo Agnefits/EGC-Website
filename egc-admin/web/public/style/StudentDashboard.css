@@ -404,7 +404,23 @@ a {
     text-decoration: none;
 }
 
-
+h3
+{
+    color: #0f2b4e;
+    font-size: 45px;
+    font-weight: 500px;
+    font-family:"Libre Baskerville", serif;
+}
+.text {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 100%; 
+    text-align: center; 
+    margin: 0; 
+    padding: 0;
+    box-sizing: border-box; 
+}
 /*.container .scedule tr {
     height: 70px;
 }*/

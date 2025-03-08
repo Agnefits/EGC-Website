@@ -314,6 +314,8 @@ main .text {
     font-family: "Libre Baskerville", serif;
 }
 
+
+
 @media (max-width: 420px) {
     .sidebar li .tooltip {
         display: none;
@@ -322,7 +324,7 @@ main .text {
 
 h3 {
     color: #0f2b4e;
-    font-size: 30px;
+    font-size: 45px;
     font-weight: 500px;
     font-family:"Libre Baskerville", serif;
     text-align: center;

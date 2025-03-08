@@ -1,45 +1,72 @@
-// Function to fetch staff details from the backend
-async function fetchStaff(studentId) {
-    try {
-      const response = await fetch(`http://localhost:8080?studentId=${studentId}`);
+async function fetchStaff(department, year) {
+  try {
+    const response = await fetch(`/showstaff/${department}/${year}`);
+    if (response.ok) {
       const staff = await response.json();
-  
-      // Call display function to show the data on the page
       displayStaff(staff);
-    } catch (error) {
-      console.error('Error fetching staff:', error);
+    } else {
+      console.error("Server Error:", await response.text());
     }
+    
+  } catch (error) {
+    console.error("Error fetching staff:", error);
   }
-  
-  // Function to dynamically display staff on the page
-  function displayStaff(staff) {
-    const staffContainer = document.querySelector('.staff');
-    staffContainer.innerHTML = ''; // Clear existing staff
-  
-    // Iterate through each staff member and create HTML structure
-    staff.forEach(person => {
-      const staffDiv = document.createElement('div');
-      staffDiv.classList.add('column');
-      
-      staffDiv.innerHTML = `
-        <img class="im" src="${person.photo}" alt="${person.name}">
+}
+
+function displayStaff(staff) {
+  const staffContainer = document.querySelector(".staff");
+  staffContainer.innerHTML = ""; // Clear existing staff
+
+  staff.forEach((person) => {
+    if (person.doctorName) {
+      const doctorDiv = document.createElement("div");
+      doctorDiv.classList.add("column");
+
+      doctorDiv.innerHTML = `
+        <img class="im" src="${
+          person.doctorPhoto ? `/staffImage/${person.doctorEmail}` : "/img/profile.png"
+        }" alt="${person.doctorName}">
         <div class="icon2">
-          <a href="mailto:${person.email}"><img class="img" src="/img/email1.png" alt="Email Icon"></a>
+          <a href="mailto:${person.doctorEmail}">
+          <img class="img" src="/img/email1.png" alt="Email Icon">
+           <p>${person.doctorEmail}</p>
+          </a>
         </div>
-        <h3>${person.name}</h3>
-        <p>${person.major}</p>
-        <b><p>Office Hours: ${person.office_hours || "Not available"}</p></b>
+        <h3>${person.doctorName}</h3>
+        <p>${person.doctorMajor}</p>
+        
       `;
-  
-      staffContainer.appendChild(staffDiv);
-    });
-  }
-  
-  // Fetch staff details when the page loads, using a sample studentId
-  document.addEventListener('DOMContentLoaded', () => {
-    const studentId = 1; // Replace this with the dynamic student ID logic
-    fetchStaff(studentId);
+      staffContainer.appendChild(doctorDiv);
+    }
+
+    if (person.assistantName) {
+      const assistantDiv = document.createElement("div");
+      assistantDiv.classList.add("column");
+
+      assistantDiv.innerHTML = `
+        <img class="im" src="${
+          person.assistantPhoto ? `/staffImage/${person.assistantEmail}` : "/img/profile.png"
+        }" alt="${person.assistantName}">
+        <div class="icon2">
+          <a href="mailto:${person.assistantEmail}">
+            <img class="img" src="/img/email1.png" alt="Email Icon">
+                       <p>${person.assistantEmail}</p>
+          </a>
+        </div>
+        <h3>${person.assistantName}</h3>
+        <p>${person.assistantMajor}</p>
+      `;
+      staffContainer.appendChild(assistantDiv);
+    }
   });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  var userData = JSON.parse(localStorage.getItem("userData"));
+  var year = userData.year_level;
+  var department = userData.department;
+  fetchStaff(department, year);
+});
 
 
   

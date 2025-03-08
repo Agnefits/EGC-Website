@@ -24,8 +24,7 @@ async function loadStudents() {
 
         const students = await response.json();
         console.log("Fetched students:", students); // For debugging
-
-        const studentsTableBody = document.getElementById("cards-container");
+        const studentsTableBody = document.querySelector(".staff");
         if (!studentsTableBody) {
             throw new Error("Table body element not found");
         }
@@ -49,19 +48,26 @@ async function loadStudents() {
             );
         });
         filteredStudents.forEach((student) => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-      <div id="card">
-        <img src="${student.photo? "/students/photo/" + student.id:`/img/pexels-photo-1438081.jpeg`}"  id="card-image">
-        <div id="details">
-            <h4 id="text_card">Name: ${student.name}</h4>
-            <h4 id="text_card">Email: ${student.email}</h4>
-            <h4 id="text_card">Year level: ${student.year_level} year</h4>
-            <h4 id="text_card">Department: ${student.department}</h4>
-            <h4 id="text_card"> Section: ${student.No_section}</h4>
+            const studentDiv = document.createElement("div");
+            studentDiv.classList.add("column");
+            studentDiv.innerHTML = `
+<img class="im" src="${
+    student.photo ? `/staffImage/${student.email}` : "/img/profile.png"
+        }" alt="${student.name}">
+        <div class="icon2">
+          <a href="mailto:${student.email}">
+           <img class="img" src="/img/email1.png" alt="Email Icon">
+           <p>${student.email}</p>
+          </a>
         </div>
+        <h3>Name: ${student.name}</h3>
+       <p>Year Level: ${student.year_level}</p>
+        <p>Department: ${student.department}</p>
+        <p>Section: ${student.No_section}</p>
+
+
             `;
-      studentsTableBody.appendChild(row);
+      studentsTableBody.appendChild(studentDiv);
     });
   } catch (error) {
     console.error("Error:", error);

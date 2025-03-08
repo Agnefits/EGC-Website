@@ -53,6 +53,86 @@ class CourseTeachingAssistant {
     // تهيئة قاعدة البيانات
     DatabaseHelper.init();
 
+
+router.get('/showstaff/<department>/<year>', (Request request, String department, String year) async {
+  try {
+    final results = DatabaseHelper._db.select(
+        '''SELECT d.name AS doctorName, d.email AS doctorEmail, d.photo AS doctorPhoto, d.major AS doctorMajor, 
+                  t.name AS assistantName, t.email AS assistantEmail, t.photo AS assistantPhoto, t.major AS assistantMajor 
+           FROM courses c 
+           JOIN doctors d ON c.doctorId = d.id 
+           LEFT JOIN course_teaching_assistant cta ON c.id = cta.courseId 
+           LEFT JOIN teaching_assistants t ON cta.teaching_assistantId = t.id 
+           WHERE c.department = ? AND c.year = ?''', 
+        [department, year]);
+
+    print('Result: $results'); // عشان تشوف البيانات في الكونسول
+
+    final teachingAssistantList = results.map((row) => {
+          'doctorName': row['doctorName'],
+          'doctorEmail': row['doctorEmail'],
+          'doctorPhoto': row['doctorPhoto'] != null && row['doctorPhoto'].length > 0,
+          'doctorMajor': row['doctorMajor'],
+          'assistantName': row['assistantName'],
+          'assistantEmail': row['assistantEmail'],
+          'assistantPhoto': row['assistantPhoto'] != null && row['assistantPhoto'].length > 0,
+          'assistantMajor': row['assistantMajor']
+        }).toList();
+
+    final jsonResponse = jsonEncode(teachingAssistantList);
+
+    return Response.ok(jsonResponse, headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
+  } catch (e) {
+    print('Error: $e');
+    return Response.internalServerError(
+        body: jsonEncode({'error': 'Error processing request'}),
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        });
+  }
+});
+
+router.get('/staffImage/<email>', (Request request, String email) async {
+  try {
+    final result = DatabaseHelper._db.select(
+        '''SELECT photo FROM doctors WHERE email = ? 
+        UNION
+         SELECT photo FROM students WHERE email = ?
+           UNION 
+           SELECT photo FROM teaching_assistants WHERE email = ?''', 
+        [email, email , email]);
+
+    if (result.isNotEmpty && result.first['photo'] != null) {
+      final photo = result.first['photo'];
+      return Response.ok(photo, headers: {
+        'Content-Type': 'image/jpeg',
+        'Access-Control-Allow-Origin': '*',
+      });
+    } else {
+      return Response.notFound('Image not found');
+    }
+  } catch (e) {
+    print(e);
+    return Response.internalServerError(
+        body: jsonEncode({'error': 'Error loading image'}),
+        headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
    router.get('/course-teaching-assistants/<courseId>', (Request request,String courseId) async {
       try {
         final results = DatabaseHelper._db.select(

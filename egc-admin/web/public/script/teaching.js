@@ -37,7 +37,8 @@ async function loadTeachingAssistant() {
         const teaching = await response.json();
         console.log("Fetched teaching", teaching); // For debugging
 
-        const teachingTableBody = document.getElementById("cards-container");
+        //const teachingTableBody = document.getElementById("cards-container");
+        const teachingTableBody = document.querySelector(".staff");
         if (!teachingTableBody) {
             throw new Error("Table body element not found");
         }
@@ -47,17 +48,25 @@ async function loadTeachingAssistant() {
 
 
         teaching.forEach((teacher) => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-        <div id="card">
-          <img src="${teacher.photo? "/teaching-assistants/photo/" + teacher.id:`/img/wallpaperflare.com_wallpaper (25).jpg`}"  id="card-image">
-          <div id="details">
-              <h4 id="text_card">Name: ${teacher.name}</h4>
-              <h4 id="text_card">Email: ${teacher.email}</h4>
-              <h4 id="text_card">Major : ${teacher.major}</h4>
-          </div>
+                    // const row = document.createElement("tr");
+                    const teachDiv = document.createElement("div");
+                     teachDiv.classList.add("column");
+                     teachDiv.innerHTML = `
+       
+ <img class="im" src="${
+    teacher.photo ? `/staffImage/${teacher.email}` : "/img/profile.png"
+        }" alt="${teacher.name}">
+        <div class="icon2">
+          <a href="mailto:${teacher.email}">
+          <img class="img" src="/img/email1.png" alt="Email Icon">
+           <p>${teacher.email}</p>
+          </a>
+        </div>
+        <h3>${teacher.name}</h3>
+        <p>${teacher.major}</p>
+
               `;
-      teachingTableBody.appendChild(row);
+      teachingTableBody.appendChild(teachDiv);
     });
   } catch (error) {
     console.error("Error:", error);
@@ -69,3 +78,11 @@ function goBackToCoursePage() {
     console.log('Go Back button clicked!'); // Debug log
     window.location.href = '/staff/Dashboard';
 }
+
+
+
+
+
+
+
+
