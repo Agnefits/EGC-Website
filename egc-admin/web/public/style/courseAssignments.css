@@ -108,11 +108,17 @@ body {
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 25px;
     font-size: 16px;
-    margin-top: 150px;
-    margin-left: 70%;
+    margin-top: 100px;
+    margin-left: 45%;
+    margin-bottom: 50px;
 }
+.add-assignment-button:hover {
+    box-shadow: 0 4px 10px #1e88e5;
+
+}
+
 
 .dropdown-content {
     display: none;
