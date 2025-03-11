@@ -92,13 +92,16 @@ function populateStudentsTable(students) {
     students.forEach(student => {
         const listItem = document.createElement('li');
         listItem.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <button class="attendance-button" data-attendance="A">A</button>
-                <button class="attendance-button" data-attendance="P">P</button>
-            </div>
-            <span style="margin-left: auto;">${student.name || 'N/A'}</span>
-        </div>
+     <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; border: 1px solid #ccc; border-radius: 10px; background: linear-gradient(135deg, #ffffff, #f3f3f3); box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); margin-bottom: 2px;">
+    <div style="display: flex; gap: 12px;">
+        <button class="attendance-button" data-attendance="A" style="padding: 10px 18px; border: none; background-color: #e74c3c; color: white; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; transition: 0.3s; box-shadow: 2px 2px 5px rgba(231, 76, 60, 0.3);">A</button>
+        <button class="attendance-button" data-attendance="P" style="padding: 10px 18px; border: none; background-color: #2ecc71; color: white; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; transition: 0.3s; box-shadow: 2px 2px 5px rgba(46, 204, 113, 0.3);">P</button>
+    </div>
+    <span style="font-weight: bold; font-size: 16px; color: #333; text-transform: capitalize;">${student.name || 'N/A'}</span>
+</div>
+
+
+
     `;
 
         listItem.dataset.id = student.id;
