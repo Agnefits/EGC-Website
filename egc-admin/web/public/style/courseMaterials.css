@@ -123,6 +123,7 @@ h1
     align-items: center;
     justify-content: center;
     text-align: center;
+    margin-top: 40px;
 }
 .dropdown-button:hover{
     box-shadow: 0 4px 10px #1e88e5;

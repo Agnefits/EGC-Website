@@ -296,25 +296,19 @@ main {
 }
 
 .container {
-    background-color: #fff;
-    /* White background for form */
+    background-color: #fff; /* White background for form */
     border-radius: 25px;
     padding: 20px;
-    width: 70%;
-    /* Adjust width as needed */
-    box-shadow:0 0 10px rgba(0, 0, 0, 0.3);
-    /* Subtle shadow effect */
-    /* position: absolute; */
-    /* top: 55%;
-    left: 50%; */
+    width: 70%; /* Adjust width as needed */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Subtle shadow effect */
     box-sizing: border-box;
-    height: 800px;
+    min-height: 300px; /* Minimum height instead of fixed height */
     color: #0F2B4E;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    gap: 15px; /* Add spacing between elements */
 }
 
 label {
@@ -497,8 +491,8 @@ label {
 
 .form-group{
    display: inline-block;
-    margin-top: 20px;
     margin-right: 20px;
+    margin-bottom: 30px;
     /* Add some space between groups */
 }
 
