@@ -54,7 +54,7 @@ async function loadTeachingAssistant() {
                      teachDiv.innerHTML = `
        
  <img class="im" src="${
-    teacher.photo ? `/staffImage/${teacher.email}` : "/img/profile.png"
+    teacher.photo ? `/staffImage/${teacher.email}` : "/img/images (2).png"
         }" alt="${teacher.name}">
         <div class="icon2">
           <a href="mailto:${teacher.email}">

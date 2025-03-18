@@ -317,7 +317,7 @@ strong {
     text-align: center; /* Centers text horizontally */
     vertical-align: middle; /* Centers text vertically */
     justify-content: center; /* Not needed for table cells */
-    font-size: 31px;
+    font-size:25px;
     
 }
 .name 

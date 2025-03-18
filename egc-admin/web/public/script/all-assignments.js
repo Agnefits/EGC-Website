@@ -130,7 +130,7 @@ async function loadCourses() {
         const courseFilter = document.getElementById('course-filter');
 
         // Clear existing options
-        courseFilter.innerHTML = '<option value="all">All Courses</option>';
+        courseFilter.innerHTML = '<option value="all">All</option>';
 
         courses.forEach(course => {
             const option = document.createElement('option');

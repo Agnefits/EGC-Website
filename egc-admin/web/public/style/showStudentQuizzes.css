@@ -324,16 +324,17 @@ main .text {
 
 h3 {
     color: #0f2b4e;
-    font-size: 45px;
+    font-size: 40px;
     font-weight: 500px;
     font-family:"Libre Baskerville", serif;
     text-align: center;
 }
 .filter-dropdown {
-    font-size: 20px;
+    font-size: 16px;
     color: #0F2B4E;
-    font-weight: 600;
+    font-weight: 500;
     display: inline-block; 
+    font-family:"Roboto Condensed", sans-serif;
 }
 
 @media (max-width: 420px) {

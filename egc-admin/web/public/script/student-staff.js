@@ -24,7 +24,7 @@ function displayStaff(staff) {
 
       doctorDiv.innerHTML = `
         <img class="im" src="${
-          person.doctorPhoto ? `/staffImage/${person.doctorEmail}` : "/img/profile.png"
+          person.doctorPhoto ? `/staffImage/${person.doctorEmail}` : "/img/images (2).png"
         }" alt="${person.doctorName}">
         <div class="icon2">
           <a href="mailto:${person.doctorEmail}">
@@ -45,7 +45,7 @@ function displayStaff(staff) {
 
       assistantDiv.innerHTML = `
         <img class="im" src="${
-          person.assistantPhoto ? `/staffImage/${person.assistantEmail}` : "/img/profile.png"
+          person.assistantPhoto ? `/staffImage/${person.assistantEmail}` : "/img/images (2).png"
         }" alt="${person.assistantName}">
         <div class="icon2">
           <a href="mailto:${person.assistantEmail}">
@@ -98,6 +98,6 @@ if (userData) {
     document.getElementsByClassName("profile")[0].getElementsByClassName("name")[0].innerText = userData.name;
     document.getElementsByClassName("profile")[0].getElementsByClassName("email")[0].innerText = userData.email;
     if (userData.photo) {
-        document.querySelector(".profile-details img").src = (userData.role == "Student") + '/photo/' + userData.id;
+        document.querySelector(".profile-details img").src = (userData.role == "Student") ? '/photo/' + userData.id : "/img/images (2).png";
     }
 }

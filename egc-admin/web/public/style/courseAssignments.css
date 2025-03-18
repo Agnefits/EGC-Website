@@ -1,7 +1,7 @@
 body {
     font-family: "Roboto Condensed", sans-serif;
     margin: 0;
-    background-color: #f0f1f6;
+    background-color: #f0f0f0;
 }
 
 .nav {
@@ -108,17 +108,11 @@ body {
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-    border-radius: 25px;
+    border-radius: 5px;
     font-size: 16px;
-    margin-top: 100px;
-    margin-left: 45%;
-    margin-bottom: 50px;
+    margin-top: 150px;
+    margin-left: 70%;
 }
-.add-assignment-button:hover {
-    box-shadow: 0 4px 10px #1e88e5;
-
-}
-
 
 .dropdown-content {
     display: none;

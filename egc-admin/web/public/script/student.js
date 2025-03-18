@@ -52,7 +52,7 @@ async function loadStudents() {
             studentDiv.classList.add("column");
             studentDiv.innerHTML = `
 <img class="im" src="${
-    student.photo ? `/staffImage/${student.email}` : "/img/profile.png"
+    student.photo ? `/staffImage/${student.email}` : "/img/images (2).png"
         }" alt="${student.name}">
         <div class="icon2">
           <a href="mailto:${student.email}">

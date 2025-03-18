@@ -1,7 +1,4 @@
-body {
-    background: #f0f1f6;
-    font-family: "Roboto Condensed", sans-serif;
-}
+
 /* navbar */
 
 nav {
@@ -364,4 +361,9 @@ p {
     p {
         font-size: 14px;
     }
+}
+
+body {
+    background: #f0f0f0;
+    font-family: "Roboto Condensed", sans-serif;
 }

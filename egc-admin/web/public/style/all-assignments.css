@@ -2,7 +2,8 @@
 
 * {
     box-sizing: border-box;
-    font-family: "Roboto Condensed", sans-serif;
+    color:#0F2B4E;
+    /* font-family: "Roboto Condensed", sans-serif; */
 }
 
 body {
@@ -309,12 +310,14 @@ body {
 }
 
 /* Section Title */
-.home-section .text h3 {
-    font-size: 30px;
-    font-weight: 600;
+ h3 {
+    font-size: 40px;
+    font-weight: 500px;
     color: #0F2B4E;
     text-align: center;
     margin-bottom: 40px;
+    position: relative;
+    font-family: "Libre Baskerville", serif;
 }
 
 /* Filter container styles */

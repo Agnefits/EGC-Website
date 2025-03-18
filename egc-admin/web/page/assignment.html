@@ -12,9 +12,9 @@
 </head>
 
 <body>
+    <img src="/img/arrow.png" alt="Go Back" id="goBackImage" width="20px" height="20px" onclick="goBackToCoursePage()">  
     <form class="Upload" id="uploadForm" method="POST" enctype="multipart/form-data">
         <h1 class="h">Upload Assignment</h1>
-
         <div class="container">
             <div class="picture">
                 <img src="/img/pictures.jpg">
@@ -41,6 +41,14 @@
     </form>
 
     <script src="/script/addAssignment.js"></script>
+
+    <script>
+        function goBackToCoursePage() 
+{
+   console.log('Go Back button clicked!'); // Debug log
+   window.location.href = '/staff/Course/Assignments';
+}
+   </script>
 </body>
 
 </html>

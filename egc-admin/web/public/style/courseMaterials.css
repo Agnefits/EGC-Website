@@ -1,7 +1,7 @@
 body {
     font-family: "Roboto Condensed", sans-serif;
     margin: 0;
-    background-color: #f0f1f6;
+    background-color: #f0f0f0;
 }
 
 .nav {
@@ -16,6 +16,7 @@ body {
     color: white;
     border: none;
     padding: 10px 20px;
+    margin-top: 20px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
@@ -115,19 +116,18 @@ h1
     background-color: #0F2B4E;
     color: white;
     padding: 10px 20px;
+    margin-top: 100px;
+    margin-left: 40%;
     border: none;
     cursor: pointer;
-    border-radius: 25px;
+    border-radius: 5px;
     font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin-top: 40px;
 }
-.dropdown-button:hover{
-    box-shadow: 0 4px 10px #1e88e5;
-}
+
 .center
 {
     display: flex;
@@ -188,6 +188,7 @@ h1 {
     font-size: 30px;
     font-weight: bold;
     margin: auto;
+    
 }
 
 @media (max-width: 768px) {

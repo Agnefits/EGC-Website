@@ -13,7 +13,7 @@ body {
     box-shadow: 0 10px 10px rgba(5, 5, 5, 0.1);
     border-radius: 15px;
 }
-
+#goBackImage{padding-left: 20px;padding-top: 10px;}
 .h {
     color: #0f2b4e;
     font-size: 30px;
